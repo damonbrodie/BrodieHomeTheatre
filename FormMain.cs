@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using HarmonyHub;
 using System.IO;
+using System.Linq;
 using SoapBox.FluentDwelling;
 using SoapBox.FluentDwelling.Devices;
 using System.Runtime.InteropServices;
@@ -58,8 +59,9 @@ namespace BrodieTheatre
 
         public KinectSensor kinect;
         public bool kinectIsAvailable;
+        public int CurrentSkelentonID = 0;
 
-        public SpeechRecognitionEngine recognitionEngine;
+        public SpeechRecognitionEngine recognitionEngine = new SpeechRecognitionEngine();
 
         public static IntPtr SetHook(LowLevelKeyboardProc proc)
         {
@@ -85,7 +87,7 @@ namespace BrodieTheatre
                     case "F12":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.toolStripStatus.Text = "Turning on lights";
+                            formMain.toolStripStatus.Text = "Keypress F12 captured - Turning on lights";
                             formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
                             formMain.trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
                             formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
@@ -96,7 +98,7 @@ namespace BrodieTheatre
                     case "F11":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.toolStripStatus.Text = "Turning off lights";
+                            formMain.toolStripStatus.Text = "Keypress F11 captured - Turning off lights";
                             formMain.setLightLevel(Properties.Settings.Default.potsAddress, 0);
                             formMain.trackBarPots.Value = 0;
                             formMain.setLightLevel(Properties.Settings.Default.trayAddress, 0);
@@ -107,7 +109,7 @@ namespace BrodieTheatre
                     case "F9":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.toolStripStatus.Text = "Dimming lights - Stopped Level";
+                            formMain.toolStripStatus.Text = "Keypress F9 captured - Dimming lights - Stopped Level";
                             formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsStoppedLevel * 10));
                             formMain.trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
                             formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
@@ -118,15 +120,14 @@ namespace BrodieTheatre
                     case "F7":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.toolStripStatus.Text = "Dimming lights - Playback Level";
+                            formMain.toolStripStatus.Text = "Keypress F7 captured - Dimming lights - Playback Level";
                             formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPlaybackLevel * 10));
                             formMain.trackBarPots.Value = Properties.Settings.Default.potsPlaybackLevel;
                             formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
                             formMain.trackBarTray.Value = Properties.Settings.Default.trayPlaybackLevel;
                         }
                         ));
-                        break;
-                        
+                        break;                 
                 }
             }
 
@@ -192,13 +193,13 @@ namespace BrodieTheatre
             await ConnectAsync();
             Program.Client.OnActivityChanged += Client_OnActivityChanged;
 
-            formMain.kinectIsAvailable = false;
-            formMain.currentPLMport = Properties.Settings.Default.plmPort;
-            formMain.connectPLM();
+            kinectIsAvailable = false;
+            currentPLMport = Properties.Settings.Default.plmPort;
+            connectPLM();
 
-            formMain.currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
+            currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
 
-            SpeechRecognitionEngine recognitionEngine = new SpeechRecognitionEngine();
+
             recognitionEngine.SetInputToDefaultAudioDevice();
             //recognitionEngine.InitialSilenceTimeout = TimeSpan.FromSeconds(2);
             //recognitionEngine.EndSilenceTimeout = TimeSpan.FromSeconds(1.5);
@@ -261,7 +262,6 @@ namespace BrodieTheatre
             recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
 
             recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-
             if (Program.Client.Token != "")
             {
                 formMain.labelHarmonyStatus.Text = "Connected";
@@ -272,7 +272,7 @@ namespace BrodieTheatre
                 formMain.labelHarmonyStatus.Text = "Disconnected";
                 formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
             }
- 
+
         }
 
         private async Task ConnectAsync()
@@ -288,28 +288,44 @@ namespace BrodieTheatre
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            if (e.Result.Alternates != null && labelRoomStatus.Text == "Occupied")
+            if (e.Result.Alternates != null && labelRoomStatus.Text == "Occupied" && labelKodiStatus.Text != "Playing")
             {
                 toolStripStatus.Text = e.Result.Text;
                 RecognizedPhrase phrase = e.Result.Alternates[0];
+                
                 string topPhrase = phrase.Semantics.Value.ToString();
+
                 switch (topPhrase)
                 {
                     case "Turn on Theatre":
-                        labelLastVoiceCommand.Text = phrase.Semantics.Value.ToString();
-                        toolStripStatus.Text = "Starting Home Theatre";
-                        startActivityByName("Turn on Theatre");
+
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            labelLastVoiceCommand.Text = topPhrase;
+                            toolStripStatus.Text = "Starting Home Theatre";
+                            startActivityByName("Watch Movie");
+                            formMain.timerStartLights.Enabled = true;
+                        }
+                        ));
                         break;
                     case "Turn off Theatre":
-                        if (labelKodiStatus.Text == "Stopped")
+                        formMain.BeginInvoke(new Action(() =>
                         {
+
                             labelLastVoiceCommand.Text = phrase.Semantics.Value.ToString();
                             toolStripStatus.Text = "Stopping Home Theatre";
                             startActivityByName("PowerOff");
+                            formMain.toolStripStatus.Text = "Turning on pot lights";
+                            formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
+                            formMain.trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
+                            formMain.toolStripStatus.Text = "Turning on tray lights";
+                            formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
+                            formMain.trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
                         }
+                        ));
                         break;
                 }
-            }
+            }           
         }
 
         private async void Client_OnActivityChanged(object sender, string e)
@@ -320,47 +336,27 @@ namespace BrodieTheatre
 
         private async void updateActivities(string currentActivityID)
         {
-            bool keep_looping = true;
-            while (keep_looping)
+            var harmonyConfig = await Program.Client.GetConfigAsync();
+
+            formMain.BeginInvoke(new Action(() =>
             {
-                //Fetch our config
-                try
+                formMain.toolStripStatus.Text = "Updating Activities";
+                formMain.listBoxActivities.Items.Clear();
+                foreach (var activity in harmonyConfig.Activities)
                 {
-                    var harmonyConfig = await Program.Client.GetConfigAsync();
-
-                    formMain.BeginInvoke(new Action(() =>
+                    if (activity.Id == currentActivityID)
                     {
-                        formMain.toolStripStatus.Text = "Updating Activities";
-                        formMain.listBoxActivities.Items.Clear();
-                        foreach (var activity in harmonyConfig.Activities)
-                        {
-                            if (activity.Id == currentActivityID)
-                            {
-                                formMain.labelCurrentActivity.Text = activity.Label;
-                            }
-                            else
-                            {
-                                Activities item = new Activities();
-                                item.Id = activity.Id;
-                                item.Text = activity.Label;
-                                formMain.listBoxActivities.Items.Add(item);
-
-                            }
-                        }
-                    }));
-                    keep_looping = false;
-                }
-                catch
-                {
-                    formMain.BeginInvoke(new Action(() =>
-                    {
-                        formMain.toolStripStatus.Text = "Harmony Timeout - reconnecting";
+                        formMain.labelCurrentActivity.Text = activity.Label;
                     }
-                    ));
-                    Program.Client.Dispose();
-                    await ConnectAsync();
+                    else
+                    {
+                        Activities item = new Activities();
+                        item.Id = activity.Id;
+                        item.Text = activity.Label;
+                        formMain.listBoxActivities.Items.Add(item);
+                    }
                 }
-            }
+            }));
         }
 
         private void listBoxActivities_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -382,19 +378,18 @@ namespace BrodieTheatre
                         formMain.toolStripStatus.Text = "Starting Harmony activity - " + activity.Text;
                         if (Convert.ToInt32(activity.Id) >= 0)
                         {
-                        //An activity is starting
-                        formMain.timerStartLights.Enabled = true;
+                            //An activity is starting
+                            formMain.timerStartLights.Enabled = true;
                         }
                         else
                         {
-                        // Powering off
-                        formMain.toolStripStatus.Text = "Turning on pot lights";
+                            // Powering off
+                            formMain.toolStripStatus.Text = "Turning on pot lights";
                             formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
                             formMain.trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
                             formMain.toolStripStatus.Text = "Turning on tray lights";
                             formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
-                            formMain.trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
-                            
+                            formMain.trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;                    
                         }
                     }
                     ));
@@ -415,7 +410,6 @@ namespace BrodieTheatre
 
         private async void startActivityByName(string activityName)
         {
-
             for (int i = 0; i < listBoxActivities.Items.Count; i++)
             {
                 Activities currItem = (Activities)listBoxActivities.Items[i];
@@ -429,7 +423,7 @@ namespace BrodieTheatre
                     {
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.toolStripStatus.Text = "Failed to start Harmony activity - " + currItem.Text;
+                            formMain.toolStripStatus.Text = "Failed to start Harmony activity - " + activityName;
                         }
                         ));
                     }
@@ -481,7 +475,6 @@ namespace BrodieTheatre
                             trackBarPots.Value = level;
                         }
                     }
-
                 });              
                 timerPLMreceive.Enabled = true;
                 setLightLevel(Properties.Settings.Default.potsAddress, 0);
@@ -503,15 +496,14 @@ namespace BrodieTheatre
                 int integerLevel = Convert.ToInt32(onLevel);
                 float decLevel = (float)integerLevel / 254 *10;
                 level = (int)decLevel;
-            }
-            
+            }            
             return level;
         }
 
         public void setLightLevel(string address, int level)
         {
             DeviceBase device;
-            if (powerlineModem.Network.TryConnectToDevice(address, out device))
+            if (powerlineModem != null && powerlineModem.Network.TryConnectToDevice(address, out device))
             {
                 var lightingControl = device as DimmableLightingControl;
                 float theVal = level * 254 / 10;               
@@ -527,7 +519,6 @@ namespace BrodieTheatre
 
         private void PowerlineModem_OnError(object sender, EventArgs e)
         {
-
             if (powerlineModem.Exception.GetType() == typeof(TimeoutException))
             {
                 plmConnected = false;
@@ -598,6 +589,10 @@ namespace BrodieTheatre
                         trackBarPots.Value = Properties.Settings.Default.potsPlaybackLevel;
                         setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
                         trackBarTray.Value = Properties.Settings.Default.trayPlaybackLevel;
+                        if (kinect != null && kinect.IsRunning)
+                        {
+                            kinect.Stop();
+                        }
                         break;
                     case "stopped":
                         labelKodiStatus.Text = "Stopped";
@@ -606,6 +601,10 @@ namespace BrodieTheatre
                         trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
                         setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
                         trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
+                        if (kinect != null && ! kinect.IsRunning)
+                        {
+                            kinect.Start();
+                        }
                         break;
                     case "paused":
                         labelKodiStatus.Text = "Paused";
@@ -614,6 +613,10 @@ namespace BrodieTheatre
                         trackBarPots.Value = Properties.Settings.Default.potsPausedLevel;
                         setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPausedLevel * 10));
                         trackBarTray.Value = Properties.Settings.Default.trayPausedLevel;
+                        if (kinect != null && kinect.IsRunning)
+                        {
+                            kinect.Stop();
+                        }
                         break;
                     default:
                         labelKodiStatus.Text = "Stopped";
@@ -622,6 +625,11 @@ namespace BrodieTheatre
                         trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
                         setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
                         trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
+                        
+                        if (kinect != null && !kinect.IsRunning)
+                        {
+                            kinect.Start();
+                        }
                         break;
                 }
             }
@@ -630,7 +638,7 @@ namespace BrodieTheatre
         private void timerClearStatus_Tick(object sender, EventArgs e)
         {
             toolStripStatus.Text = "";
-            timerClearStatus.Enabled = false;
+            //timerClearStatus.Enabled = false;
         }
 
         private void timercheckKinect_Tick(object sender, EventArgs e)
@@ -647,32 +655,58 @@ namespace BrodieTheatre
                 kinectIsAvailable = true;
                 labelKinectStatus.Text = "Connected";
                 labelKinectStatus.ForeColor = System.Drawing.Color.ForestGreen;
-                kinect = KinectSensor.KinectSensors[0];
+                kinect = KinectSensor.KinectSensors.Where(item => item.Status == KinectStatus.Connected).FirstOrDefault();
+                if (!kinect.SkeletonStream.IsEnabled)
+                {
+                    kinect.SkeletonStream.Enable();
+                    kinect.SkeletonFrameReady += Kinect_SkeletonFrameReady;
+                }
                 kinect.Start();
-                kinect.SkeletonStream.Enable();
-                
-                kinect.SkeletonFrameReady += Kinect_SkeletonFrameReady;
+                kinect.ElevationAngle = 20;
+                kinect.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
             }
+            
         }
 
         private void Kinect_SkeletonFrameReady(object sender, SkeletonFrameReadyEventArgs e)
         {
-            timerSkeletonTracker.Enabled = true;
-            if (labelRoomStatus.Text == "Unoccupied")
+            using (SkeletonFrame skeletonFrame = e.OpenSkeletonFrame())
             {
-                //Room is state changing to occupied
-                labelRoomStatus.Text = "Occupied";
-
+                //kinect.ForceInfraredEmitterOff = true;
+                if (skeletonFrame == null)
+                {
+                    return;
+                }
+                Skeleton[] totalSkeleton = new Skeleton[skeletonFrame.SkeletonArrayLength];
+                skeletonFrame.CopySkeletonDataTo(totalSkeleton);
+                Skeleton firstSkeleton = (from trackskeleton in totalSkeleton where trackskeleton.TrackingState == SkeletonTrackingState.Tracked select trackskeleton).FirstOrDefault();
+                if (firstSkeleton != null && firstSkeleton.Joints[JointType.Head].TrackingState != JointTrackingState.NotTracked)
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.labelRoomStatus.Text = "Occupied";
+                        formMain.timerSkeletonTracker.Enabled = false;
+                    }
+                    ));
+                   
+                }
+                else
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.timerSkeletonTracker.Enabled = true;
+                    }
+                    ));
+                }
             }
+
+            
         }
 
         private void timerSkeletonTracker_Tick(object sender, EventArgs e)
         {
-            if (kinect.SkeletonStream.FrameSkeletonArrayLength == 0)
-            {
-                //Room state is changing to unoccupied
-                labelRoomStatus.Text = "Unoccupied";
-            }
+            timerSkeletonTracker.Enabled = false;
+            labelRoomStatus.Text = "Unoccupied";
         }
 
         private void labelRoomStatus_TextChanged(object sender, EventArgs e)
@@ -681,6 +715,7 @@ namespace BrodieTheatre
             {
                 timerUnoccupiedRoom.Enabled = false;
                 timerShutdown.Enabled = false;
+                toolStripStatus.Text = "Room is now occupied";
                 if (labelCurrentActivity.Text == "PowerOff")
                 {
                     toolStripStatus.Text = "Turning on pot lights";
@@ -693,7 +728,7 @@ namespace BrodieTheatre
             }
             else if (labelRoomStatus.Text == "Unoccupied")
             {
-                toolStripStatus.Text = "Starting shutdown timer";
+                toolStripStatus.Text = "Room is now vacated";
                 timerUnoccupiedRoom.Enabled = true;
             }
         }
@@ -701,6 +736,7 @@ namespace BrodieTheatre
         private void button1_Click(object sender, EventArgs e)
         {
             labelRoomStatus.Text = "Occupied";
+
         }
 
         private async void timerUnoccupiedRoom_Tick(object sender, EventArgs e)
@@ -781,6 +817,25 @@ namespace BrodieTheatre
                 powerlineModem.Dispose();
             }
             UnhookWindowsHookEx(hookID);
+            if (kinect != null)
+            {
+                kinect.Dispose();
+            }
+        }
+
+        private void timerSensorStatus_Tick(object sender, EventArgs e)
+        {
+            if (kinect != null)
+            {
+                if (kinect.IsRunning)
+                {
+                    labelSensorStatus.Text = "Started";
+                }
+                else
+                {
+                    labelSensorStatus.Text = "Stopped";
+                }
+            }
         }
     }
 }

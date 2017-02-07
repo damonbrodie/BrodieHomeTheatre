@@ -53,7 +53,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.labelPLMstatus = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.labelKodiStatus = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -73,12 +75,13 @@
             this.toolStripStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerClearStatus = new System.Windows.Forms.Timer(this.components);
             this.timerCheckKinect = new System.Windows.Forms.Timer(this.components);
-            this.timerSkeletonTracker = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             this.timerUnoccupiedRoom = new System.Windows.Forms.Timer(this.components);
             this.timerShutdown = new System.Windows.Forms.Timer(this.components);
-            this.button2 = new System.Windows.Forms.Button();
             this.timerStartLights = new System.Windows.Forms.Timer(this.components);
+            this.timerSkeletonTracker = new System.Windows.Forms.Timer(this.components);
+            this.labelSensorStatus = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.timerSensorStatus = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -99,7 +102,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(697, 24);
+            this.menuStrip.Size = new System.Drawing.Size(691, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -320,14 +323,26 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button2);
             this.groupBox3.Controls.Add(this.labelKodiStatus);
+            this.groupBox3.Controls.Add(this.button1);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.pictureBox3);
-            this.groupBox3.Location = new System.Drawing.Point(435, 42);
+            this.groupBox3.Location = new System.Drawing.Point(426, 42);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(253, 112);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(148, 77);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 18;
+            this.button2.Text = "Exit";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // labelKodiStatus
             // 
@@ -338,6 +353,16 @@
             this.labelKodiStatus.TabIndex = 12;
             this.labelKodiStatus.Text = "Stopped";
             this.labelKodiStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(67, 77);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "Enter";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label6
             // 
@@ -359,6 +384,8 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.labelSensorStatus);
+            this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.labelLastVoiceCommand);
             this.groupBox4.Controls.Add(this.label14);
             this.groupBox4.Controls.Add(this.labelRoomStatus);
@@ -366,7 +393,7 @@
             this.groupBox4.Controls.Add(this.label10);
             this.groupBox4.Controls.Add(this.labelKinectStatus);
             this.groupBox4.Controls.Add(this.pictureBox4);
-            this.groupBox4.Location = new System.Drawing.Point(436, 170);
+            this.groupBox4.Location = new System.Drawing.Point(427, 170);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(251, 160);
             this.groupBox4.TabIndex = 10;
@@ -375,7 +402,7 @@
             // labelLastVoiceCommand
             // 
             this.labelLastVoiceCommand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelLastVoiceCommand.Location = new System.Drawing.Point(102, 120);
+            this.labelLastVoiceCommand.Location = new System.Drawing.Point(102, 129);
             this.labelLastVoiceCommand.Name = "labelLastVoiceCommand";
             this.labelLastVoiceCommand.Size = new System.Drawing.Size(120, 19);
             this.labelLastVoiceCommand.TabIndex = 16;
@@ -385,7 +412,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(19, 123);
+            this.label14.Location = new System.Drawing.Point(19, 132);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(77, 13);
             this.label14.TabIndex = 15;
@@ -394,7 +421,7 @@
             // labelRoomStatus
             // 
             this.labelRoomStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelRoomStatus.Location = new System.Drawing.Point(102, 80);
+            this.labelRoomStatus.Location = new System.Drawing.Point(102, 98);
             this.labelRoomStatus.Name = "labelRoomStatus";
             this.labelRoomStatus.Size = new System.Drawing.Size(120, 19);
             this.labelRoomStatus.TabIndex = 8;
@@ -405,7 +432,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(28, 83);
+            this.label12.Location = new System.Drawing.Point(28, 101);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(68, 13);
             this.label12.TabIndex = 14;
@@ -469,7 +496,7 @@
             this.toolStripStatus});
             this.statusStrip.Location = new System.Drawing.Point(0, 353);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(697, 22);
+            this.statusStrip.Size = new System.Drawing.Size(691, 22);
             this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 11;
             this.statusStrip.Text = "statusStrip1";
@@ -491,21 +518,6 @@
             this.timerCheckKinect.Interval = 1000;
             this.timerCheckKinect.Tick += new System.EventHandler(this.timercheckKinect_Tick);
             // 
-            // timerSkeletonTracker
-            // 
-            this.timerSkeletonTracker.Interval = 1000;
-            this.timerSkeletonTracker.Tick += new System.EventHandler(this.timerSkeletonTracker_Tick);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(395, 327);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 17;
-            this.button1.Text = "Enter";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // timerUnoccupiedRoom
             // 
             this.timerUnoccupiedRoom.Interval = 1000;
@@ -515,29 +527,47 @@
             // 
             this.timerShutdown.Tick += new System.EventHandler(this.timerShutdown_Tick);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(476, 327);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 18;
-            this.button2.Text = "Exit";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // timerStartLights
             // 
             this.timerStartLights.Interval = 15000;
             this.timerStartLights.Tick += new System.EventHandler(this.timerStartLights_Tick);
+            // 
+            // timerSkeletonTracker
+            // 
+            this.timerSkeletonTracker.Interval = 1000;
+            this.timerSkeletonTracker.Tick += new System.EventHandler(this.timerSkeletonTracker_Tick);
+            // 
+            // labelSensorStatus
+            // 
+            this.labelSensorStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelSensorStatus.Location = new System.Drawing.Point(102, 68);
+            this.labelSensorStatus.Name = "labelSensorStatus";
+            this.labelSensorStatus.Size = new System.Drawing.Size(120, 19);
+            this.labelSensorStatus.TabIndex = 17;
+            this.labelSensorStatus.Text = "Stopped";
+            this.labelSensorStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(23, 71);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(73, 13);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "Sensor Status";
+            // 
+            // timerSensorStatus
+            // 
+            this.timerSensorStatus.Enabled = true;
+            this.timerSensorStatus.Interval = 1000;
+            this.timerSensorStatus.Tick += new System.EventHandler(this.timerSensorStatus_Tick);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(697, 375);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(691, 375);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -620,11 +650,14 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
         private System.Windows.Forms.Timer timerClearStatus;
         private System.Windows.Forms.Timer timerCheckKinect;
-        private System.Windows.Forms.Timer timerSkeletonTracker;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timerUnoccupiedRoom;
         private System.Windows.Forms.Timer timerShutdown;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Timer timerStartLights;
+        private System.Windows.Forms.Timer timerSkeletonTracker;
+        private System.Windows.Forms.Label labelSensorStatus;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Timer timerSensorStatus;
     }
 }
