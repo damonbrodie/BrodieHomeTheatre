@@ -10,7 +10,7 @@ The project incorporates the following technologies:
 
 This project forms an automation application that runs on the HTPC in the theatre that listens to the events and uses them as decision points to signal events.
 
- # Use Cases
+## Use Cases
  
 This project aims to provide very specific automation to both enhance the *cool* factor of the room as well as make the experience of use the theatre.  The following high level use cases are supported by this application:
 - Upon entering the room, bring up the room lights
