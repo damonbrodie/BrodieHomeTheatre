@@ -59,6 +59,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.labelSensorStatus = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.labelLastVoiceCommand = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.labelRoomStatus = new System.Windows.Forms.Label();
@@ -79,9 +81,12 @@
             this.timerShutdown = new System.Windows.Forms.Timer(this.components);
             this.timerStartLights = new System.Windows.Forms.Timer(this.components);
             this.timerSkeletonTracker = new System.Windows.Forms.Timer(this.components);
-            this.labelSensorStatus = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.timerSensorStatus = new System.Windows.Forms.Timer(this.components);
+            this.labelWather = new System.Windows.Forms.Label();
+            this.timerWatcher = new System.Windows.Forms.Timer(this.components);
+            this.timerGlobal = new System.Windows.Forms.Timer(this.components);
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -118,14 +123,14 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -399,6 +404,25 @@
             this.groupBox4.TabIndex = 10;
             this.groupBox4.TabStop = false;
             // 
+            // labelSensorStatus
+            // 
+            this.labelSensorStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelSensorStatus.Location = new System.Drawing.Point(102, 68);
+            this.labelSensorStatus.Name = "labelSensorStatus";
+            this.labelSensorStatus.Size = new System.Drawing.Size(120, 19);
+            this.labelSensorStatus.TabIndex = 17;
+            this.labelSensorStatus.Text = "Stopped";
+            this.labelSensorStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(23, 71);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(73, 13);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "Sensor Status";
+            // 
             // labelLastVoiceCommand
             // 
             this.labelLastVoiceCommand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -493,7 +517,9 @@
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatus});
+            this.toolStripStatus,
+            this.toolStripStatusLabel1,
+            this.toolStripProgressBar1});
             this.statusStrip.Location = new System.Drawing.Point(0, 353);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(691, 22);
@@ -534,27 +560,8 @@
             // 
             // timerSkeletonTracker
             // 
-            this.timerSkeletonTracker.Interval = 1000;
+            this.timerSkeletonTracker.Interval = 10000;
             this.timerSkeletonTracker.Tick += new System.EventHandler(this.timerSkeletonTracker_Tick);
-            // 
-            // labelSensorStatus
-            // 
-            this.labelSensorStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelSensorStatus.Location = new System.Drawing.Point(102, 68);
-            this.labelSensorStatus.Name = "labelSensorStatus";
-            this.labelSensorStatus.Size = new System.Drawing.Size(120, 19);
-            this.labelSensorStatus.TabIndex = 17;
-            this.labelSensorStatus.Text = "Stopped";
-            this.labelSensorStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(23, 71);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(73, 13);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "Sensor Status";
             // 
             // timerSensorStatus
             // 
@@ -562,12 +569,45 @@
             this.timerSensorStatus.Interval = 1000;
             this.timerSensorStatus.Tick += new System.EventHandler(this.timerSensorStatus_Tick);
             // 
+            // labelWather
+            // 
+            this.labelWather.AutoSize = true;
+            this.labelWather.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelWather.Location = new System.Drawing.Point(556, 18);
+            this.labelWather.Name = "labelWather";
+            this.labelWather.Size = new System.Drawing.Size(37, 15);
+            this.labelWather.TabIndex = 12;
+            this.labelWather.Text = "label7";
+            // 
+            // timerWatcher
+            // 
+            this.timerWatcher.Enabled = true;
+            this.timerWatcher.Interval = 1000;
+            this.timerWatcher.Tick += new System.EventHandler(this.timerWatcher_Tick);
+            // 
+            // timerGlobal
+            // 
+            this.timerGlobal.Interval = 1000;
+            this.timerGlobal.Tick += new System.EventHandler(this.timerGlobal_Tick);
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(135, 17);
+            this.toolStripStatusLabel1.Text = "Global Shutdown Timer:";
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 16);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(691, 375);
+            this.Controls.Add(this.labelWather);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
@@ -659,5 +699,10 @@
         private System.Windows.Forms.Label labelSensorStatus;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Timer timerSensorStatus;
+        private System.Windows.Forms.Label labelWather;
+        private System.Windows.Forms.Timer timerWatcher;
+        private System.Windows.Forms.Timer timerGlobal;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }

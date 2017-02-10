@@ -63,6 +63,9 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.labelKinectElevation = new System.Windows.Forms.Label();
+            this.trackBarKinectElevation = new System.Windows.Forms.TrackBar();
+            this.label15 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.labelPotsEntering = new System.Windows.Forms.Label();
             this.labelTrayEntering = new System.Windows.Forms.Label();
@@ -76,6 +79,11 @@
             this.trackBarShutdownTimer = new System.Windows.Forms.TrackBar();
             this.label14 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.label16 = new System.Windows.Forms.Label();
+            this.labelGlobalShutdownHours = new System.Windows.Forms.Label();
+            this.labelGlobalShutdown = new System.Windows.Forms.Label();
+            this.trackBarGlobalShutdown = new System.Windows.Forms.TrackBar();
+            this.label23 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -87,9 +95,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsPlayback)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayPlayback)).BeginInit();
             this.tabPage4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarKinectElevation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarShutdownTimer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -432,6 +442,14 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label16);
+            this.tabPage4.Controls.Add(this.labelGlobalShutdownHours);
+            this.tabPage4.Controls.Add(this.labelGlobalShutdown);
+            this.tabPage4.Controls.Add(this.trackBarGlobalShutdown);
+            this.tabPage4.Controls.Add(this.label23);
+            this.tabPage4.Controls.Add(this.labelKinectElevation);
+            this.tabPage4.Controls.Add(this.trackBarKinectElevation);
+            this.tabPage4.Controls.Add(this.label15);
             this.tabPage4.Controls.Add(this.label20);
             this.tabPage4.Controls.Add(this.labelPotsEntering);
             this.tabPage4.Controls.Add(this.labelTrayEntering);
@@ -448,8 +466,40 @@
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(345, 371);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Occupancy Lighting";
+            this.tabPage4.Text = "Occupancy";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // labelKinectElevation
+            // 
+            this.labelKinectElevation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelKinectElevation.Location = new System.Drawing.Point(290, 314);
+            this.labelKinectElevation.Name = "labelKinectElevation";
+            this.labelKinectElevation.Size = new System.Drawing.Size(35, 23);
+            this.labelKinectElevation.TabIndex = 31;
+            this.labelKinectElevation.Text = "0";
+            this.labelKinectElevation.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // trackBarKinectElevation
+            // 
+            this.trackBarKinectElevation.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarKinectElevation.LargeChange = 1;
+            this.trackBarKinectElevation.Location = new System.Drawing.Point(14, 314);
+            this.trackBarKinectElevation.Maximum = 27;
+            this.trackBarKinectElevation.Minimum = -27;
+            this.trackBarKinectElevation.Name = "trackBarKinectElevation";
+            this.trackBarKinectElevation.Size = new System.Drawing.Size(270, 45);
+            this.trackBarKinectElevation.TabIndex = 14;
+            this.trackBarKinectElevation.ValueChanged += new System.EventHandler(this.trackBarKinectElevation_ValueChanged);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(16, 294);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(100, 13);
+            this.label15.TabIndex = 29;
+            this.label15.Text = "Kinect Elevation";
             // 
             // label20
             // 
@@ -577,6 +627,55 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(11, 218);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(142, 13);
+            this.label16.TabIndex = 36;
+            this.label16.Text = "Global Shutdown Timer:";
+            // 
+            // labelGlobalShutdownHours
+            // 
+            this.labelGlobalShutdownHours.AutoSize = true;
+            this.labelGlobalShutdownHours.Location = new System.Drawing.Point(282, 250);
+            this.labelGlobalShutdownHours.Name = "labelGlobalShutdownHours";
+            this.labelGlobalShutdownHours.Size = new System.Drawing.Size(33, 13);
+            this.labelGlobalShutdownHours.TabIndex = 35;
+            this.labelGlobalShutdownHours.Text = "hours";
+            // 
+            // labelGlobalShutdown
+            // 
+            this.labelGlobalShutdown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelGlobalShutdown.Location = new System.Drawing.Point(241, 245);
+            this.labelGlobalShutdown.Name = "labelGlobalShutdown";
+            this.labelGlobalShutdown.Size = new System.Drawing.Size(35, 23);
+            this.labelGlobalShutdown.TabIndex = 34;
+            this.labelGlobalShutdown.Text = "0";
+            this.labelGlobalShutdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // trackBarGlobalShutdown
+            // 
+            this.trackBarGlobalShutdown.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarGlobalShutdown.LargeChange = 1;
+            this.trackBarGlobalShutdown.Location = new System.Drawing.Point(64, 243);
+            this.trackBarGlobalShutdown.Maximum = 5;
+            this.trackBarGlobalShutdown.Name = "trackBarGlobalShutdown";
+            this.trackBarGlobalShutdown.Size = new System.Drawing.Size(177, 45);
+            this.trackBarGlobalShutdown.TabIndex = 33;
+            this.trackBarGlobalShutdown.ValueChanged += new System.EventHandler(this.trackBarGlobalShutdown_ValueChanged);
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(27, 250);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(36, 13);
+            this.label23.TabIndex = 32;
+            this.label23.Text = "Timer:";
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -606,9 +705,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayPlayback)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarKinectElevation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarShutdownTimer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -662,5 +763,13 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label labelKinectElevation;
+        private System.Windows.Forms.TrackBar trackBarKinectElevation;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label labelGlobalShutdownHours;
+        private System.Windows.Forms.Label labelGlobalShutdown;
+        private System.Windows.Forms.TrackBar trackBarGlobalShutdown;
+        private System.Windows.Forms.Label label23;
     }
 }

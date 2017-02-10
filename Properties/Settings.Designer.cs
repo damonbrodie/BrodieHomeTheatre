@@ -178,5 +178,29 @@ namespace BrodieTheatre.Properties {
                 this["potsEnteringLevel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int kinectElevation {
+            get {
+                return ((int)(this["kinectElevation"]));
+            }
+            set {
+                this["kinectElevation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int globalShutdown {
+            get {
+                return ((int)(this["globalShutdown"]));
+            }
+            set {
+                this["globalShutdown"] = value;
+            }
+        }
     }
 }

@@ -61,6 +61,9 @@ namespace BrodieTheatre
         public bool kinectIsAvailable;
         public int CurrentSkelentonID = 0;
 
+        public DateTime GlobalShutdown;
+
+
         public SpeechRecognitionEngine recognitionEngine = new SpeechRecognitionEngine();
 
         public static IntPtr SetHook(LowLevelKeyboardProc proc)
@@ -150,6 +153,12 @@ namespace BrodieTheatre
         {
             Form formSettings = new FormSettings();
             formSettings.ShowDialog();
+
+            if (kinect != null)
+            {
+                kinect.ElevationAngle = Properties.Settings.Default.kinectElevation;
+            }
+            
             if (currentPLMport != Properties.Settings.Default.plmPort)
             {
                 currentPLMport = Properties.Settings.Default.plmPort;
@@ -161,7 +170,6 @@ namespace BrodieTheatre
                 currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
                 await ConnectAsync();
             }
-
         }
 
         public int processReceivedMessage(string message, string address)
@@ -197,9 +205,8 @@ namespace BrodieTheatre
             currentPLMport = Properties.Settings.Default.plmPort;
             connectPLM();
 
+
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
-
-
             recognitionEngine.SetInputToDefaultAudioDevice();
             //recognitionEngine.InitialSilenceTimeout = TimeSpan.FromSeconds(2);
             //recognitionEngine.EndSilenceTimeout = TimeSpan.FromSeconds(1.5);
@@ -272,7 +279,6 @@ namespace BrodieTheatre
                 formMain.labelHarmonyStatus.Text = "Disconnected";
                 formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
             }
-
         }
 
         private async Task ConnectAsync()
@@ -347,6 +353,17 @@ namespace BrodieTheatre
                     if (activity.Id == currentActivityID)
                     {
                         formMain.labelCurrentActivity.Text = activity.Label;
+                        if (Convert.ToInt32(activity.Id) < 0)
+                        {
+
+                            formMain.timerGlobal.Enabled = false;
+                        }
+                        else
+                        {
+                            
+                            formMain.timerGlobal.Enabled = true;
+
+                        }
                     }
                     else
                     {
@@ -365,6 +382,7 @@ namespace BrodieTheatre
             startActivity(activity);
         }
 
+        // Start Harmony Activity
         private async void startActivity(Activities activity)
         {
             bool keep_looping = true;
@@ -380,6 +398,7 @@ namespace BrodieTheatre
                         {
                             //An activity is starting
                             formMain.timerStartLights.Enabled = true;
+
                         }
                         else
                         {
@@ -389,7 +408,7 @@ namespace BrodieTheatre
                             formMain.trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
                             formMain.toolStripStatus.Text = "Turning on tray lights";
                             formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
-                            formMain.trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;                    
+                            formMain.trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;                 
                         }
                     }
                     ));
@@ -580,6 +599,11 @@ namespace BrodieTheatre
             {
                 string kodiPlayback = File.ReadAllText("kodi_status.txt").Trim().ToLower();
                 File.Delete("kodi_status.txt");
+
+                // Reset the global shutdown timer
+
+                timerGlobal.Enabled = false;
+                timerGlobal.Enabled = true;
                 switch (kodiPlayback)
                 {
                     case "playing":
@@ -589,7 +613,7 @@ namespace BrodieTheatre
                         trackBarPots.Value = Properties.Settings.Default.potsPlaybackLevel;
                         setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
                         trackBarTray.Value = Properties.Settings.Default.trayPlaybackLevel;
-                        if (kinect != null && kinect.IsRunning)
+                        if (kinect != null  && kinect.IsRunning)
                         {
                             kinect.Stop();
                         }
@@ -601,7 +625,7 @@ namespace BrodieTheatre
                         trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
                         setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
                         trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
-                        if (kinect != null && ! kinect.IsRunning)
+                        if (kinect != null  && !kinect.IsRunning)
                         {
                             kinect.Start();
                         }
@@ -613,7 +637,7 @@ namespace BrodieTheatre
                         trackBarPots.Value = Properties.Settings.Default.potsPausedLevel;
                         setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPausedLevel * 10));
                         trackBarTray.Value = Properties.Settings.Default.trayPausedLevel;
-                        if (kinect != null && kinect.IsRunning)
+                        if (kinect != null  && kinect.IsRunning)
                         {
                             kinect.Stop();
                         }
@@ -662,7 +686,7 @@ namespace BrodieTheatre
                     kinect.SkeletonFrameReady += Kinect_SkeletonFrameReady;
                 }
                 kinect.Start();
-                kinect.ElevationAngle = 20;
+                kinect.ElevationAngle = -10;
                 kinect.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
             }
             
@@ -675,6 +699,11 @@ namespace BrodieTheatre
                 //kinect.ForceInfraredEmitterOff = true;
                 if (skeletonFrame == null)
                 {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.labelWather.Text = "Dead";
+                    }
+                    ));
                     return;
                 }
                 Skeleton[] totalSkeleton = new Skeleton[skeletonFrame.SkeletonArrayLength];
@@ -686,6 +715,8 @@ namespace BrodieTheatre
                     {
                         formMain.labelRoomStatus.Text = "Occupied";
                         formMain.timerSkeletonTracker.Enabled = false;
+                        formMain.timerUnoccupiedRoom.Enabled = false;
+                        formMain.labelWather.Text = "Y";
                     }
                     ));
                    
@@ -695,6 +726,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.timerSkeletonTracker.Enabled = true;
+                        formMain.labelWather.Text = "N";
                     }
                     ));
                 }
@@ -819,6 +851,11 @@ namespace BrodieTheatre
             UnhookWindowsHookEx(hookID);
             if (kinect != null)
             {
+                if (kinect.SkeletonStream.IsEnabled)
+                {
+                    kinect.SkeletonStream.Disable();
+                }
+                kinect.Stop();
                 kinect.Dispose();
             }
         }
@@ -836,6 +873,17 @@ namespace BrodieTheatre
                     labelSensorStatus.Text = "Stopped";
                 }
             }
+        }
+
+        private void timerWatcher_Tick(object sender, EventArgs e)
+        {
+
+            labelWather.Text = "";
+        }
+
+        private void timerGlobal_Tick(object sender, EventArgs e)
+        {
+
         }
     }
 }

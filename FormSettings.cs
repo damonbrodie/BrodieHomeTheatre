@@ -29,6 +29,8 @@ namespace BrodieTheatre
             Properties.Settings.Default.trayEnteringLevel = trackBarTrayEntering.Value;
             Properties.Settings.Default.potsEnteringLevel = trackBarPotsEntering.Value;
             Properties.Settings.Default.shutdownTimer = trackBarShutdownTimer.Value;
+            Properties.Settings.Default.kinectElevation = trackBarKinectElevation.Value;
+            Properties.Settings.Default.globalShutdown = trackBarGlobalShutdown.Value;
 
             Properties.Settings.Default.Save();
             this.Close();
@@ -38,7 +40,6 @@ namespace BrodieTheatre
         private void FormSettings_Load(object sender, EventArgs e)
         {
             textBoxHarmonyHubIP.Text = Properties.Settings.Default.harmonyHubIP;
-
             try
             {
                 trackBarTrayPlayback.Value = Properties.Settings.Default.trayPlaybackLevel;
@@ -147,6 +148,30 @@ namespace BrodieTheatre
                 }
             }
 
+            try
+            {
+                trackBarKinectElevation.Value = Properties.Settings.Default.kinectElevation;
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    trackBarKinectElevation.Value = 0;
+                }
+            }
+
+            try
+            {
+                trackBarGlobalShutdown.Value = Properties.Settings.Default.globalShutdown;
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    trackBarGlobalShutdown.Value = 0;
+                }
+            }
+
             textBoxPotsAddress.Text = Properties.Settings.Default.potsAddress;
             textBoxTrayAddress.Text = Properties.Settings.Default.trayAddress;
 
@@ -213,6 +238,24 @@ namespace BrodieTheatre
         private void trackBarPotsEntering_ValueChanged(object sender, EventArgs e)
         {
             labelPotsEntering.Text = (trackBarPotsEntering.Value * 10).ToString() + "%";
+        }
+
+        private void trackBarKinectElevation_ValueChanged(object sender, EventArgs e)
+        {
+            labelKinectElevation.Text = trackBarKinectElevation.Value.ToString();
+        }
+
+        private void trackBarGlobalShutdown_ValueChanged(object sender, EventArgs e)
+        {
+            if (trackBarGlobalShutdown.Value == 1)
+            {
+                labelGlobalShutdownHours.Text = "hour";
+            }
+            else
+            {
+                labelGlobalShutdownHours.Text = "hours";
+            }
+            labelGlobalShutdown.Text = trackBarGlobalShutdown.Value.ToString();
         }
     }
 }
