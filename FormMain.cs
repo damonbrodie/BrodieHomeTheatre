@@ -10,6 +10,7 @@ using SoapBox.FluentDwelling;
 using SoapBox.FluentDwelling.Devices;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.Recognition;
 
 
@@ -65,6 +66,8 @@ namespace BrodieTheatre
 
         public DateTime LatchTime;
         public bool latchActive;
+
+        public SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer();
 
         public SpeechRecognitionEngine recognitionEngine = new SpeechRecognitionEngine();
 
@@ -298,6 +301,10 @@ namespace BrodieTheatre
                 formMain.labelHarmonyStatus.Text = "Disconnected";
                 formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
             }
+
+            speechSynthesizer.Volume = 100;
+            speechSynthesizer.Rate = -1;
+            speechSynthesizer.SetOutputToDefaultAudioDevice();     
         }
 
         private async Task ConnectHarmonyAsync()
@@ -1069,6 +1076,11 @@ namespace BrodieTheatre
             {
                 buttonProjectorChangeAspect.Text = "Narrow Aspect";
             }
+        }
+
+        private void speakText(string tts)
+        {
+            speechSynthesizer.SpeakAsync(tts);
         }
     }
 }

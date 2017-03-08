@@ -83,6 +83,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label16 = new System.Windows.Forms.Label();
             this.labelGlobalShutdownHours = new System.Windows.Forms.Label();
             this.labelGlobalShutdown = new System.Windows.Forms.Label();
             this.trackBarGlobalShutdown = new System.Windows.Forms.TrackBar();
@@ -95,7 +96,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.label16 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -668,6 +668,16 @@
             this.tabPage4.Text = "Occupancy";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(11, 130);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(142, 13);
+            this.label16.TabIndex = 36;
+            this.label16.Text = "Global Shutdown Timer:";
+            // 
             // labelGlobalShutdownHours
             // 
             this.labelGlobalShutdownHours.AutoSize = true;
@@ -785,16 +795,6 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(11, 130);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(142, 13);
-            this.label16.TabIndex = 36;
-            this.label16.Text = "Global Shutdown Timer:";
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -807,7 +807,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormSettings";
-            this.Text = "FormSettings";
+            this.Text = "Settings";
             this.Load += new System.EventHandler(this.FormSettings_Load);
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
