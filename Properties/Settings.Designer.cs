@@ -12,7 +12,7 @@ namespace BrodieTheatre.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.0.1.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -146,18 +146,6 @@ namespace BrodieTheatre.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int shutdownTimer {
-            get {
-                return ((int)(this["shutdownTimer"]));
-            }
-            set {
-                this["shutdownTimer"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int trayEnteringLevel {
             get {
                 return ((int)(this["trayEnteringLevel"]));
@@ -182,24 +170,96 @@ namespace BrodieTheatre.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int kinectElevation {
-            get {
-                return ((int)(this["kinectElevation"]));
-            }
-            set {
-                this["kinectElevation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int globalShutdown {
             get {
                 return ((int)(this["globalShutdown"]));
             }
             set {
                 this["globalShutdown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string projectorPort {
+            get {
+                return ((string)(this["projectorPort"]));
+            }
+            set {
+                this["projectorPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string motionSensorAddress {
+            get {
+                return ((string)(this["motionSensorAddress"]));
+            }
+            set {
+                this["motionSensorAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int motionSensorLatch {
+            get {
+                return ((int)(this["motionSensorLatch"]));
+            }
+            set {
+                this["motionSensorLatch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string voiceActivity {
+            get {
+                return ((string)(this["voiceActivity"]));
+            }
+            set {
+                this["voiceActivity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string occupancyDevice {
+            get {
+                return ((string)(this["occupancyDevice"]));
+            }
+            set {
+                this["occupancyDevice"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string occupancyEnterCommand {
+            get {
+                return ((string)(this["occupancyEnterCommand"]));
+            }
+            set {
+                this["occupancyEnterCommand"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string occupancyExitCommand {
+            get {
+                return ((string)(this["occupancyExitCommand"]));
+            }
+            set {
+                this["occupancyExitCommand"] = value;
             }
         }
     }

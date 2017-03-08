@@ -14,8 +14,14 @@ namespace BrodieTheatre
         private void buttonSave_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.harmonyHubIP = textBoxHarmonyHubIP.Text;
+            Properties.Settings.Default.voiceActivity = textBoxVoiceActivity.Text;
+            Properties.Settings.Default.occupancyDevice = textBoxOccupancyDevice.Text;
+            Properties.Settings.Default.occupancyEnterCommand = textBoxOccupancyEnterCommand.Text;
+            Properties.Settings.Default.occupancyExitCommand = textBoxOccupancyExitCommand.Text;
 
-            Properties.Settings.Default.plmPort = comboBoxCOMport.Text;
+            Properties.Settings.Default.plmPort = comboBoxInsteonPort.Text;
+            Properties.Settings.Default.projectorPort = comboBoxProjectorPort.Text;
+
             Properties.Settings.Default.potsAddress = textBoxPotsAddress.Text;
             Properties.Settings.Default.trayAddress = textBoxTrayAddress.Text;
 
@@ -28,9 +34,11 @@ namespace BrodieTheatre
 
             Properties.Settings.Default.trayEnteringLevel = trackBarTrayEntering.Value;
             Properties.Settings.Default.potsEnteringLevel = trackBarPotsEntering.Value;
-            Properties.Settings.Default.shutdownTimer = trackBarShutdownTimer.Value;
-            Properties.Settings.Default.kinectElevation = trackBarKinectElevation.Value;
+
             Properties.Settings.Default.globalShutdown = trackBarGlobalShutdown.Value;
+
+            Properties.Settings.Default.motionSensorLatch = trackBarMotionSensorLatch.Value;
+            Properties.Settings.Default.motionSensorAddress = textBoxMotionSensorAddress.Text;
 
             Properties.Settings.Default.Save();
             this.Close();
@@ -40,6 +48,11 @@ namespace BrodieTheatre
         private void FormSettings_Load(object sender, EventArgs e)
         {
             textBoxHarmonyHubIP.Text = Properties.Settings.Default.harmonyHubIP;
+            textBoxVoiceActivity.Text = Properties.Settings.Default.voiceActivity;
+            textBoxOccupancyDevice.Text = Properties.Settings.Default.occupancyDevice;
+            textBoxOccupancyEnterCommand.Text = Properties.Settings.Default.occupancyEnterCommand;
+            textBoxOccupancyExitCommand.Text = Properties.Settings.Default.occupancyExitCommand;
+
             try
             {
                 trackBarTrayPlayback.Value = Properties.Settings.Default.trayPlaybackLevel;
@@ -138,30 +151,6 @@ namespace BrodieTheatre
 
             try
             {
-                trackBarShutdownTimer.Value = Properties.Settings.Default.shutdownTimer;
-            }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentOutOfRangeException)
-                {
-                    trackBarShutdownTimer.Value = 1;
-                }
-            }
-
-            try
-            {
-                trackBarKinectElevation.Value = Properties.Settings.Default.kinectElevation;
-            }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentOutOfRangeException)
-                {
-                    trackBarKinectElevation.Value = 0;
-                }
-            }
-
-            try
-            {
                 trackBarGlobalShutdown.Value = Properties.Settings.Default.globalShutdown;
             }
             catch (Exception ex)
@@ -172,16 +161,34 @@ namespace BrodieTheatre
                 }
             }
 
+            try
+            {
+                trackBarMotionSensorLatch.Value = Properties.Settings.Default.motionSensorLatch;
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    trackBarMotionSensorLatch.Value = 0;
+                }
+            }
+
             textBoxPotsAddress.Text = Properties.Settings.Default.potsAddress;
             textBoxTrayAddress.Text = Properties.Settings.Default.trayAddress;
+            textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
 
             //show list of valid com ports
             foreach (string s in SerialPort.GetPortNames())
             {
-                comboBoxCOMport.Items.Add(s);
+                comboBoxInsteonPort.Items.Add(s);
+                comboBoxProjectorPort.Items.Add(s);
                 if (s == Properties.Settings.Default.plmPort)
                 {
-                    comboBoxCOMport.SelectedItem = s;
+                    comboBoxInsteonPort.SelectedItem = s;
+                }
+                if (s == Properties.Settings.Default.projectorPort)
+                {
+                    comboBoxProjectorPort.SelectedItem = s;
                 }
             }
         }
@@ -217,19 +224,6 @@ namespace BrodieTheatre
             labelPotsStopped.Text = (trackBarPotsStopped.Value * 10).ToString() + "%";
         }
 
-        private void trackBarShutdownTimer_ValueChanged(object sender, EventArgs e)
-        {
-            if (trackBarShutdownTimer.Value == 1)
-            {
-                labelShutdownMinutes.Text = "minute";
-            }
-            else
-            {
-                labelShutdownMinutes.Text = "minutes";
-            }
-            labelShutdownTimer.Text = trackBarShutdownTimer.Value.ToString();
-        }
-
         private void trackBarTrayEntering_ValueChanged(object sender, EventArgs e)
         {
             labelTrayEntering.Text = (trackBarTrayEntering.Value * 10).ToString() + "%";
@@ -238,11 +232,6 @@ namespace BrodieTheatre
         private void trackBarPotsEntering_ValueChanged(object sender, EventArgs e)
         {
             labelPotsEntering.Text = (trackBarPotsEntering.Value * 10).ToString() + "%";
-        }
-
-        private void trackBarKinectElevation_ValueChanged(object sender, EventArgs e)
-        {
-            labelKinectElevation.Text = trackBarKinectElevation.Value.ToString();
         }
 
         private void trackBarGlobalShutdown_ValueChanged(object sender, EventArgs e)
@@ -256,6 +245,19 @@ namespace BrodieTheatre
                 labelGlobalShutdownHours.Text = "hours";
             }
             labelGlobalShutdown.Text = trackBarGlobalShutdown.Value.ToString();
+        }
+
+        private void trackBarMotionSensorLatch_ValueChanged(object sender, EventArgs e)
+        {
+            if (trackBarMotionSensorLatch.Value == 1)
+            {
+                labelMotionSensorLatchMinutes.Text = "minute";
+            }
+            else
+            {
+                labelMotionSensorLatchMinutes.Text = "minutes";
+            }
+            labelMotionSensorLatch.Text = trackBarMotionSensorLatch.Value.ToString();
         }
     }
 }

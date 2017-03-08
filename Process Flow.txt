@@ -1,0 +1,43 @@
+﻿When the motion detector goes to On:
+	Turn Off the Latch Timer (if it is on)
+	Mark room "Occupied"
+
+When the motion detector goes to "Off":
+	Turn on the Latch timer
+
+When the Latch Timer ticks:
+	Mark the room "Vacant"
+
+When the Room Occupancy is marked "Occupied":
+	Turn On the Global Shutdown timer
+	If the Activity is "Power Off":
+		Turn on Occupancy Lights
+	Send Harmong Command to turn on Amplifier
+
+When the Room Occupancy is marked "Vacant":
+	If Kodi is "Stopped":
+		Turn Off Activity
+		Turn Off Lights
+		Turn Off Global Shutdown timer
+	If Kodi is "Paused" or "Playing":
+		Turn On the Global Shutdown timer
+
+When the Global Shutdown timer ticks:
+	If the Activity is On:
+		Turn Off Activity
+	Turn Off Lights
+	Turn off Global Shutdown timer
+
+
+If the Kodi status changes and Activity is not "Power Off":
+	Restart the Global Shutdown timer
+
+When the Projector is turned on:
+	Wait ~20 seconds
+		Set the lights to the Stopped State
+
+When the Projector is turned Off:
+	Wait 1 minute and then 
+		Turn off Lights
+	
+	

@@ -31,15 +31,35 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.textBoxOccupancyExitCommand = new System.Windows.Forms.TextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.textBoxOccupancyEnterCommand = new System.Windows.Forms.TextBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.textBoxOccupancyDevice = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.textBoxVoiceActivity = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.textBoxHarmonyHubIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.label15 = new System.Windows.Forms.Label();
+            this.labelMotionSensorLatchMinutes = new System.Windows.Forms.Label();
+            this.labelMotionSensorLatch = new System.Windows.Forms.Label();
+            this.trackBarMotionSensorLatch = new System.Windows.Forms.TrackBar();
+            this.label26 = new System.Windows.Forms.Label();
+            this.textBoxMotionSensorAddress = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.textBoxPotsAddress = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBoxTrayAddress = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBoxCOMport = new System.Windows.Forms.ComboBox();
+            this.comboBoxInsteonPort = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.comboBoxProjectorPort = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.labelPotsStopped = new System.Windows.Forms.Label();
             this.labelTrayStopped = new System.Windows.Forms.Label();
@@ -63,10 +83,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.labelKinectElevation = new System.Windows.Forms.Label();
-            this.trackBarKinectElevation = new System.Windows.Forms.TrackBar();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
+            this.labelGlobalShutdownHours = new System.Windows.Forms.Label();
+            this.labelGlobalShutdown = new System.Windows.Forms.Label();
+            this.trackBarGlobalShutdown = new System.Windows.Forms.TrackBar();
+            this.label23 = new System.Windows.Forms.Label();
             this.labelPotsEntering = new System.Windows.Forms.Label();
             this.labelTrayEntering = new System.Windows.Forms.Label();
             this.trackBarPotsEntering = new System.Windows.Forms.TrackBar();
@@ -74,19 +94,13 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.labelShutdownMinutes = new System.Windows.Forms.Label();
-            this.labelShutdownTimer = new System.Windows.Forms.Label();
-            this.trackBarShutdownTimer = new System.Windows.Forms.TrackBar();
-            this.label14 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
-            this.labelGlobalShutdownHours = new System.Windows.Forms.Label();
-            this.labelGlobalShutdown = new System.Windows.Forms.Label();
-            this.trackBarGlobalShutdown = new System.Windows.Forms.TrackBar();
-            this.label23 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarMotionSensorLatch)).BeginInit();
+            this.tabPage5.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsStopped)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayStopped)).BeginInit();
@@ -95,17 +109,16 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsPlayback)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayPlayback)).BeginInit();
             this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarKinectElevation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarShutdownTimer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Controls.Add(this.tabPage5);
             this.tabControl.Controls.Add(this.tabPage3);
             this.tabControl.Controls.Add(this.tabPage4);
             this.tabControl.Location = new System.Drawing.Point(5, 5);
@@ -116,6 +129,16 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.textBoxOccupancyExitCommand);
+            this.tabPage1.Controls.Add(this.label30);
+            this.tabPage1.Controls.Add(this.textBoxOccupancyEnterCommand);
+            this.tabPage1.Controls.Add(this.label29);
+            this.tabPage1.Controls.Add(this.label28);
+            this.tabPage1.Controls.Add(this.label27);
+            this.tabPage1.Controls.Add(this.textBoxOccupancyDevice);
+            this.tabPage1.Controls.Add(this.label25);
+            this.tabPage1.Controls.Add(this.textBoxVoiceActivity);
+            this.tabPage1.Controls.Add(this.label24);
             this.tabPage1.Controls.Add(this.textBoxHarmonyHubIP);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -125,6 +148,90 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Harmony";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // textBoxOccupancyExitCommand
+            // 
+            this.textBoxOccupancyExitCommand.Location = new System.Drawing.Point(101, 231);
+            this.textBoxOccupancyExitCommand.Name = "textBoxOccupancyExitCommand";
+            this.textBoxOccupancyExitCommand.Size = new System.Drawing.Size(124, 20);
+            this.textBoxOccupancyExitCommand.TabIndex = 12;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(12, 234);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(83, 13);
+            this.label30.TabIndex = 11;
+            this.label30.Text = "Command - Exit:";
+            // 
+            // textBoxOccupancyEnterCommand
+            // 
+            this.textBoxOccupancyEnterCommand.Location = new System.Drawing.Point(101, 196);
+            this.textBoxOccupancyEnterCommand.Name = "textBoxOccupancyEnterCommand";
+            this.textBoxOccupancyEnterCommand.Size = new System.Drawing.Size(124, 20);
+            this.textBoxOccupancyEnterCommand.TabIndex = 10;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(4, 199);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(91, 13);
+            this.label29.TabIndex = 9;
+            this.label29.Text = "Command - Enter:";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(6, 127);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(155, 13);
+            this.label28.TabIndex = 8;
+            this.label28.Text = "Room Occupancy Device:";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label27.Location = new System.Drawing.Point(6, 62);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(147, 13);
+            this.label27.TabIndex = 7;
+            this.label27.Text = "Voice Command Activity:";
+            // 
+            // textBoxOccupancyDevice
+            // 
+            this.textBoxOccupancyDevice.Location = new System.Drawing.Point(101, 161);
+            this.textBoxOccupancyDevice.Name = "textBoxOccupancyDevice";
+            this.textBoxOccupancyDevice.Size = new System.Drawing.Size(124, 20);
+            this.textBoxOccupancyDevice.TabIndex = 6;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(51, 164);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(44, 13);
+            this.label25.TabIndex = 5;
+            this.label25.Text = "Device:";
+            // 
+            // textBoxVoiceActivity
+            // 
+            this.textBoxVoiceActivity.Location = new System.Drawing.Point(101, 89);
+            this.textBoxVoiceActivity.Name = "textBoxVoiceActivity";
+            this.textBoxVoiceActivity.Size = new System.Drawing.Size(124, 20);
+            this.textBoxVoiceActivity.TabIndex = 4;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(51, 92);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(44, 13);
+            this.label24.TabIndex = 3;
+            this.label24.Text = "Activity:";
             // 
             // textBoxHarmonyHubIP
             // 
@@ -136,19 +243,26 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 28);
+            this.label1.Location = new System.Drawing.Point(7, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 13);
+            this.label1.Size = new System.Drawing.Size(88, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Harmong Hub IP:";
+            this.label1.Text = "Harmony Hub IP:";
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.label15);
+            this.tabPage2.Controls.Add(this.labelMotionSensorLatchMinutes);
+            this.tabPage2.Controls.Add(this.labelMotionSensorLatch);
+            this.tabPage2.Controls.Add(this.trackBarMotionSensorLatch);
+            this.tabPage2.Controls.Add(this.label26);
+            this.tabPage2.Controls.Add(this.textBoxMotionSensorAddress);
+            this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.textBoxPotsAddress);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.textBoxTrayAddress);
             this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.comboBoxCOMport);
+            this.tabPage2.Controls.Add(this.comboBoxInsteonPort);
             this.tabPage2.Controls.Add(this.label2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -158,9 +272,74 @@
             this.tabPage2.Text = "Insteon";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(15, 165);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(128, 13);
+            this.label15.TabIndex = 33;
+            this.label15.Text = "Motion Sensor Latch:";
+            // 
+            // labelMotionSensorLatchMinutes
+            // 
+            this.labelMotionSensorLatchMinutes.AutoSize = true;
+            this.labelMotionSensorLatchMinutes.Location = new System.Drawing.Point(286, 197);
+            this.labelMotionSensorLatchMinutes.Name = "labelMotionSensorLatchMinutes";
+            this.labelMotionSensorLatchMinutes.Size = new System.Drawing.Size(43, 13);
+            this.labelMotionSensorLatchMinutes.TabIndex = 32;
+            this.labelMotionSensorLatchMinutes.Text = "minutes";
+            // 
+            // labelMotionSensorLatch
+            // 
+            this.labelMotionSensorLatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelMotionSensorLatch.Location = new System.Drawing.Point(245, 192);
+            this.labelMotionSensorLatch.Name = "labelMotionSensorLatch";
+            this.labelMotionSensorLatch.Size = new System.Drawing.Size(35, 23);
+            this.labelMotionSensorLatch.TabIndex = 31;
+            this.labelMotionSensorLatch.Text = "0";
+            this.labelMotionSensorLatch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // trackBarMotionSensorLatch
+            // 
+            this.trackBarMotionSensorLatch.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarMotionSensorLatch.LargeChange = 1;
+            this.trackBarMotionSensorLatch.Location = new System.Drawing.Point(68, 190);
+            this.trackBarMotionSensorLatch.Maximum = 20;
+            this.trackBarMotionSensorLatch.Name = "trackBarMotionSensorLatch";
+            this.trackBarMotionSensorLatch.Size = new System.Drawing.Size(177, 45);
+            this.trackBarMotionSensorLatch.TabIndex = 30;
+            this.trackBarMotionSensorLatch.ValueChanged += new System.EventHandler(this.trackBarMotionSensorLatch_ValueChanged);
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(31, 197);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(36, 13);
+            this.label26.TabIndex = 29;
+            this.label26.Text = "Timer:";
+            // 
+            // textBoxMotionSensorAddress
+            // 
+            this.textBoxMotionSensorAddress.Location = new System.Drawing.Point(141, 131);
+            this.textBoxMotionSensorAddress.Name = "textBoxMotionSensorAddress";
+            this.textBoxMotionSensorAddress.Size = new System.Drawing.Size(100, 20);
+            this.textBoxMotionSensorAddress.TabIndex = 5;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(16, 134);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(119, 13);
+            this.label22.TabIndex = 6;
+            this.label22.Text = "Motion Sensor Address:";
+            // 
             // textBoxPotsAddress
             // 
-            this.textBoxPotsAddress.Location = new System.Drawing.Point(122, 95);
+            this.textBoxPotsAddress.Location = new System.Drawing.Point(141, 95);
             this.textBoxPotsAddress.Name = "textBoxPotsAddress";
             this.textBoxPotsAddress.Size = new System.Drawing.Size(100, 20);
             this.textBoxPotsAddress.TabIndex = 4;
@@ -176,7 +355,7 @@
             // 
             // textBoxTrayAddress
             // 
-            this.textBoxTrayAddress.Location = new System.Drawing.Point(122, 59);
+            this.textBoxTrayAddress.Location = new System.Drawing.Point(141, 59);
             this.textBoxTrayAddress.Name = "textBoxTrayAddress";
             this.textBoxTrayAddress.Size = new System.Drawing.Size(100, 20);
             this.textBoxTrayAddress.TabIndex = 3;
@@ -190,13 +369,13 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Tray Light Address:";
             // 
-            // comboBoxCOMport
+            // comboBoxInsteonPort
             // 
-            this.comboBoxCOMport.FormattingEnabled = true;
-            this.comboBoxCOMport.Location = new System.Drawing.Point(122, 22);
-            this.comboBoxCOMport.Name = "comboBoxCOMport";
-            this.comboBoxCOMport.Size = new System.Drawing.Size(109, 21);
-            this.comboBoxCOMport.TabIndex = 2;
+            this.comboBoxInsteonPort.FormattingEnabled = true;
+            this.comboBoxInsteonPort.Location = new System.Drawing.Point(141, 22);
+            this.comboBoxInsteonPort.Name = "comboBoxInsteonPort";
+            this.comboBoxInsteonPort.Size = new System.Drawing.Size(109, 21);
+            this.comboBoxInsteonPort.TabIndex = 2;
             // 
             // label2
             // 
@@ -206,6 +385,34 @@
             this.label2.Size = new System.Drawing.Size(55, 13);
             this.label2.TabIndex = 0;
             this.label2.Text = "COM port:";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.comboBoxProjectorPort);
+            this.tabPage5.Controls.Add(this.label21);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(345, 371);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Projector";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxProjectorPort
+            // 
+            this.comboBoxProjectorPort.FormattingEnabled = true;
+            this.comboBoxProjectorPort.Location = new System.Drawing.Point(124, 26);
+            this.comboBoxProjectorPort.Name = "comboBoxProjectorPort";
+            this.comboBoxProjectorPort.Size = new System.Drawing.Size(109, 21);
+            this.comboBoxProjectorPort.TabIndex = 4;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(18, 29);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(55, 13);
+            this.label21.TabIndex = 3;
+            this.label21.Text = "COM port:";
             // 
             // tabPage3
             // 
@@ -447,10 +654,6 @@
             this.tabPage4.Controls.Add(this.labelGlobalShutdown);
             this.tabPage4.Controls.Add(this.trackBarGlobalShutdown);
             this.tabPage4.Controls.Add(this.label23);
-            this.tabPage4.Controls.Add(this.labelKinectElevation);
-            this.tabPage4.Controls.Add(this.trackBarKinectElevation);
-            this.tabPage4.Controls.Add(this.label15);
-            this.tabPage4.Controls.Add(this.label20);
             this.tabPage4.Controls.Add(this.labelPotsEntering);
             this.tabPage4.Controls.Add(this.labelTrayEntering);
             this.tabPage4.Controls.Add(this.trackBarPotsEntering);
@@ -458,10 +661,6 @@
             this.tabPage4.Controls.Add(this.label17);
             this.tabPage4.Controls.Add(this.label18);
             this.tabPage4.Controls.Add(this.label19);
-            this.tabPage4.Controls.Add(this.labelShutdownMinutes);
-            this.tabPage4.Controls.Add(this.labelShutdownTimer);
-            this.tabPage4.Controls.Add(this.trackBarShutdownTimer);
-            this.tabPage4.Controls.Add(this.label14);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(345, 371);
@@ -469,47 +668,44 @@
             this.tabPage4.Text = "Occupancy";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // labelKinectElevation
+            // labelGlobalShutdownHours
             // 
-            this.labelKinectElevation.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelKinectElevation.Location = new System.Drawing.Point(290, 314);
-            this.labelKinectElevation.Name = "labelKinectElevation";
-            this.labelKinectElevation.Size = new System.Drawing.Size(35, 23);
-            this.labelKinectElevation.TabIndex = 31;
-            this.labelKinectElevation.Text = "0";
-            this.labelKinectElevation.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelGlobalShutdownHours.AutoSize = true;
+            this.labelGlobalShutdownHours.Location = new System.Drawing.Point(282, 162);
+            this.labelGlobalShutdownHours.Name = "labelGlobalShutdownHours";
+            this.labelGlobalShutdownHours.Size = new System.Drawing.Size(33, 13);
+            this.labelGlobalShutdownHours.TabIndex = 35;
+            this.labelGlobalShutdownHours.Text = "hours";
             // 
-            // trackBarKinectElevation
+            // labelGlobalShutdown
             // 
-            this.trackBarKinectElevation.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarKinectElevation.LargeChange = 1;
-            this.trackBarKinectElevation.Location = new System.Drawing.Point(14, 314);
-            this.trackBarKinectElevation.Maximum = 27;
-            this.trackBarKinectElevation.Minimum = -27;
-            this.trackBarKinectElevation.Name = "trackBarKinectElevation";
-            this.trackBarKinectElevation.Size = new System.Drawing.Size(270, 45);
-            this.trackBarKinectElevation.TabIndex = 14;
-            this.trackBarKinectElevation.ValueChanged += new System.EventHandler(this.trackBarKinectElevation_ValueChanged);
+            this.labelGlobalShutdown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelGlobalShutdown.Location = new System.Drawing.Point(241, 157);
+            this.labelGlobalShutdown.Name = "labelGlobalShutdown";
+            this.labelGlobalShutdown.Size = new System.Drawing.Size(35, 23);
+            this.labelGlobalShutdown.TabIndex = 34;
+            this.labelGlobalShutdown.Text = "0";
+            this.labelGlobalShutdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label15
+            // trackBarGlobalShutdown
             // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(16, 294);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(100, 13);
-            this.label15.TabIndex = 29;
-            this.label15.Text = "Kinect Elevation";
+            this.trackBarGlobalShutdown.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarGlobalShutdown.LargeChange = 1;
+            this.trackBarGlobalShutdown.Location = new System.Drawing.Point(64, 155);
+            this.trackBarGlobalShutdown.Maximum = 5;
+            this.trackBarGlobalShutdown.Name = "trackBarGlobalShutdown";
+            this.trackBarGlobalShutdown.Size = new System.Drawing.Size(177, 45);
+            this.trackBarGlobalShutdown.TabIndex = 33;
+            this.trackBarGlobalShutdown.ValueChanged += new System.EventHandler(this.trackBarGlobalShutdown_ValueChanged);
             // 
-            // label20
+            // label23
             // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(11, 148);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(92, 13);
-            this.label20.TabIndex = 28;
-            this.label20.Text = "Leaving Room:";
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(27, 162);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(36, 13);
+            this.label23.TabIndex = 32;
+            this.label23.Text = "Timer:";
             // 
             // labelPotsEntering
             // 
@@ -579,44 +775,6 @@
             this.label19.TabIndex = 21;
             this.label19.Text = "Entering Room:";
             // 
-            // labelShutdownMinutes
-            // 
-            this.labelShutdownMinutes.AutoSize = true;
-            this.labelShutdownMinutes.Location = new System.Drawing.Point(282, 180);
-            this.labelShutdownMinutes.Name = "labelShutdownMinutes";
-            this.labelShutdownMinutes.Size = new System.Drawing.Size(43, 13);
-            this.labelShutdownMinutes.TabIndex = 17;
-            this.labelShutdownMinutes.Text = "minutes";
-            // 
-            // labelShutdownTimer
-            // 
-            this.labelShutdownTimer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelShutdownTimer.Location = new System.Drawing.Point(241, 175);
-            this.labelShutdownTimer.Name = "labelShutdownTimer";
-            this.labelShutdownTimer.Size = new System.Drawing.Size(35, 23);
-            this.labelShutdownTimer.TabIndex = 16;
-            this.labelShutdownTimer.Text = "0";
-            this.labelShutdownTimer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // trackBarShutdownTimer
-            // 
-            this.trackBarShutdownTimer.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarShutdownTimer.LargeChange = 1;
-            this.trackBarShutdownTimer.Location = new System.Drawing.Point(64, 173);
-            this.trackBarShutdownTimer.Name = "trackBarShutdownTimer";
-            this.trackBarShutdownTimer.Size = new System.Drawing.Size(177, 45);
-            this.trackBarShutdownTimer.TabIndex = 13;
-            this.trackBarShutdownTimer.ValueChanged += new System.EventHandler(this.trackBarShutdownTimer_ValueChanged);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(27, 180);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(36, 13);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Timer:";
-            // 
             // buttonSave
             // 
             this.buttonSave.Location = new System.Drawing.Point(268, 415);
@@ -631,50 +789,11 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(11, 218);
+            this.label16.Location = new System.Drawing.Point(11, 130);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(142, 13);
             this.label16.TabIndex = 36;
             this.label16.Text = "Global Shutdown Timer:";
-            // 
-            // labelGlobalShutdownHours
-            // 
-            this.labelGlobalShutdownHours.AutoSize = true;
-            this.labelGlobalShutdownHours.Location = new System.Drawing.Point(282, 250);
-            this.labelGlobalShutdownHours.Name = "labelGlobalShutdownHours";
-            this.labelGlobalShutdownHours.Size = new System.Drawing.Size(33, 13);
-            this.labelGlobalShutdownHours.TabIndex = 35;
-            this.labelGlobalShutdownHours.Text = "hours";
-            // 
-            // labelGlobalShutdown
-            // 
-            this.labelGlobalShutdown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelGlobalShutdown.Location = new System.Drawing.Point(241, 245);
-            this.labelGlobalShutdown.Name = "labelGlobalShutdown";
-            this.labelGlobalShutdown.Size = new System.Drawing.Size(35, 23);
-            this.labelGlobalShutdown.TabIndex = 34;
-            this.labelGlobalShutdown.Text = "0";
-            this.labelGlobalShutdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // trackBarGlobalShutdown
-            // 
-            this.trackBarGlobalShutdown.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarGlobalShutdown.LargeChange = 1;
-            this.trackBarGlobalShutdown.Location = new System.Drawing.Point(64, 243);
-            this.trackBarGlobalShutdown.Maximum = 5;
-            this.trackBarGlobalShutdown.Name = "trackBarGlobalShutdown";
-            this.trackBarGlobalShutdown.Size = new System.Drawing.Size(177, 45);
-            this.trackBarGlobalShutdown.TabIndex = 33;
-            this.trackBarGlobalShutdown.ValueChanged += new System.EventHandler(this.trackBarGlobalShutdown_ValueChanged);
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(27, 250);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(36, 13);
-            this.label23.TabIndex = 32;
-            this.label23.Text = "Timer:";
             // 
             // FormSettings
             // 
@@ -695,6 +814,9 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarMotionSensorLatch)).EndInit();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsStopped)).EndInit();
@@ -705,11 +827,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayPlayback)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarKinectElevation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarShutdownTimer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -725,7 +845,7 @@
         private System.Windows.Forms.TextBox textBoxHarmonyHubIP;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBoxCOMport;
+        private System.Windows.Forms.ComboBox comboBoxInsteonPort;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox textBoxPotsAddress;
         private System.Windows.Forms.Label label4;
@@ -751,11 +871,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label labelShutdownMinutes;
-        private System.Windows.Forms.Label labelShutdownTimer;
-        private System.Windows.Forms.TrackBar trackBarShutdownTimer;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label labelPotsEntering;
         private System.Windows.Forms.Label labelTrayEntering;
         private System.Windows.Forms.TrackBar trackBarPotsEntering;
@@ -763,13 +878,30 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label labelKinectElevation;
-        private System.Windows.Forms.TrackBar trackBarKinectElevation;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label labelGlobalShutdownHours;
         private System.Windows.Forms.Label labelGlobalShutdown;
         private System.Windows.Forms.TrackBar trackBarGlobalShutdown;
         private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.ComboBox comboBoxProjectorPort;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox textBoxMotionSensorAddress;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label labelMotionSensorLatchMinutes;
+        private System.Windows.Forms.Label labelMotionSensorLatch;
+        private System.Windows.Forms.TrackBar trackBarMotionSensorLatch;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.TextBox textBoxOccupancyEnterCommand;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.TextBox textBoxOccupancyDevice;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox textBoxVoiceActivity;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox textBoxOccupancyExitCommand;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label16;
     }
 }
