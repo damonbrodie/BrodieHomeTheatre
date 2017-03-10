@@ -234,6 +234,28 @@ namespace BrodieTheatre
             //recognitionEngine.EndSilenceTimeout = TimeSpan.FromSeconds(1.5);
             //recognitionEngine.BabbleTimeout = TimeSpan.FromSeconds(5);
 
+            loadVoiceCommands();
+            recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
+
+            recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+            if (Program.Client.Token != "")
+            {
+                formMain.labelHarmonyStatus.Text = "Connected";
+                formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.ForestGreen;
+            }
+            else
+            {
+                formMain.labelHarmonyStatus.Text = "Disconnected";
+                formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
+            }
+
+            speechSynthesizer.Volume = 100;
+            speechSynthesizer.Rate = 2;
+            speechSynthesizer.SetOutputToDefaultAudioDevice();     
+        }
+
+        private void loadVoiceCommands()
+        {
             GrammarBuilder gb = new GrammarBuilder();
             Choices commandChoice = new Choices();
 
@@ -282,35 +304,39 @@ namespace BrodieTheatre
             commandSemantic = new SemanticResultValue("power off theater", "Turn off Theatre");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
+            commandSemantic = new SemanticResultValue("show yourself", "Show Application");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("show application", "Show Application");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("hide yourself", "Hide Application");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("hide application", "Hide Application");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("Are you There", "Greeting");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("Hello Ronda", "Greeting");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("Hello Ronda", "Greeting");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
             gb.Append(commandChoice);
 
             Grammar grammar = new Grammar(gb);
 
             grammar.Name = "commands";
             recognitionEngine.LoadGrammar(grammar);
-            recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
-
-            recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-            if (Program.Client.Token != "")
-            {
-                formMain.labelHarmonyStatus.Text = "Connected";
-                formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.ForestGreen;
-            }
-            else
-            {
-                formMain.labelHarmonyStatus.Text = "Disconnected";
-                formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
-            }
-
-            speechSynthesizer.Volume = 100;
-            speechSynthesizer.Rate = -1;
-            speechSynthesizer.SetOutputToDefaultAudioDevice();     
         }
-
         private async Task ConnectHarmonyAsync()
         {
             Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
             var currentActivityID = await Program.Client.GetCurrentActivityAsync();
+            Thread.Sleep(3000);
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.harmonyUpdateActivities(currentActivityID);
@@ -336,7 +362,6 @@ namespace BrodieTheatre
                 labelProjectorStatus.Text = "Disconnected";
                 labelProjectorStatus.ForeColor = System.Drawing.Color.Maroon;
             }
-
         }
 
         private void checkProjectorPower()
@@ -424,6 +449,34 @@ namespace BrodieTheatre
                         }
                         ));
                         break;
+                    case "Show Application":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            if (formMain.WindowState == FormWindowState.Minimized)
+                            {
+                                formMain.WindowState = FormWindowState.Normal;
+                            }
+                        }
+                        ));
+
+                        break;
+                    case "Hide Application":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            if (formMain.WindowState == FormWindowState.Normal)
+                            {
+                                formMain.WindowState = FormWindowState.Minimized;
+                            }
+                        }
+                        ));
+                        break;
+                    case "Greeting":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            sayGreeting();
+                        }
+                        ));
+                        break;
                 }
             }           
         }
@@ -463,12 +516,11 @@ namespace BrodieTheatre
                             formMain.labelCurrentActivity.Text = activity.Label;
                             if (Convert.ToInt32(activity.Id) < 0)
                             {
-                                formMain.timerGlobal.Enabled = false;
-                                globalShutdownActive = false;
+                                disableGlobalShutdown();
                             }
                             else
                             {
-                                formMain.timerGlobal.Enabled = true;
+                                resetGlobalTimer();
                             }
                         }
                         else
@@ -854,7 +906,11 @@ namespace BrodieTheatre
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Program.Client.Dispose();
+            try
+            {
+                Program.Client.Dispose();
+            }
+            catch { };
             if (powerlineModem != null)
             {
                 powerlineModem.Dispose();
@@ -875,24 +931,32 @@ namespace BrodieTheatre
             DateTime globalShutdownStart = GlobalShutdown.AddHours(Properties.Settings.Default.globalShutdown * -1);
             var totalSeconds = (GlobalShutdown - globalShutdownStart).TotalSeconds;
             var progress = (now - globalShutdownStart).TotalSeconds;
-            if (globalShutdownActive && GlobalShutdown > now && labelCurrentActivity.Text != "PowerOff")
+
+            if ((labelCurrentActivity.Text != "PowerOff" && labelCurrentActivity.Text != "") || trackBarPots.Value > 0 || trackBarTray.Value > 0)
             {
-                int percentage = (100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
-                if (percentage <= 1)
+                if (globalShutdownActive && GlobalShutdown > now)
+
                 {
-                    globalShutdownActive = false;
-                    timerGlobal.Enabled = false;
-                    startActivityByName("PowerOff");
-                    toolStripProgressBarGlobal.Value = 0;
+                    int percentage = (100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
+                    if (percentage <= 1)
+                    {
+                        globalShutdownActive = false;
+                        startActivityByName("PowerOff");
+                        toolStripProgressBarGlobal.Value = 0;
+                    }
+                    else
+                    {
+                        toolStripProgressBarGlobal.Value = percentage;
+                    }
                 }
                 else
                 {
-                    toolStripProgressBarGlobal.Value = percentage;
+                    toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Maximum;
                 }
             }
             else
             {
-                toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Maximum;
+                toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
             }
         }
 
@@ -1081,6 +1145,50 @@ namespace BrodieTheatre
         private void speakText(string tts)
         {
             speechSynthesizer.SpeakAsync(tts);
+        }
+
+        private void labelMotionSensorStatus_TextChanged(object sender, EventArgs e)
+        {
+            if (labelMotionSensorStatus.Text == "Motion Detected")
+            {
+                disableGlobalShutdown();
+            }
+            else
+            {
+                resetGlobalTimer();
+            }
+        }
+
+        private void disableGlobalShutdown()
+        {
+            globalShutdownActive = false;
+        }
+
+        private void sayGreeting()
+        {
+            int currHour = DateTime.Now.Hour;
+            string timeGreeting;
+            if (currHour >= 5 && currHour <= 11)
+            {
+                timeGreeting = "good morning";
+            }
+            else if (currHour >= 12 && currHour <=17)
+            {
+                timeGreeting = "good afternoon";
+            }
+            else
+            {
+                timeGreeting = "good evening";
+            }
+            List <string> greetings = new List<string>(new string[] { timeGreeting, "hello there", "how can I help you" });
+            Random rnd = new Random();
+            int r = rnd.Next(greetings.Count);
+            speakText(greetings[r]);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            labelRoomOccupancy.Text = "Occupied";
         }
     }
 }

@@ -15,11 +15,11 @@ When the Room Occupancy is marked "Occupied":
 	Send Harmong Command to turn on Amplifier
 
 When the Room Occupancy is marked "Vacant":
-	If Kodi is "Stopped":
+	If Kodi is "Stopped" && Harmony Activity active:
 		Turn Off Activity
 		Turn Off Lights
 		Turn Off Global Shutdown timer
-	If Kodi is "Paused" or "Playing":
+	else If Kodi is "Paused" or "Playing" or if the lights are on:
 		Turn On the Global Shutdown timer
 
 When the Global Shutdown timer ticks:
