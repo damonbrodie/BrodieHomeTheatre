@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using SoapBox.FluentDwelling;
 using Microsoft.Speech.Synthesis;
@@ -126,55 +125,6 @@ namespace BrodieTheatre
             speechSynthesizer.SetOutputToDefaultAudioDevice();     
         }
 
-
-
-
-
-
- 
-
-
-
-
-
-        private void trackBarTray_ValueChanged(object sender, EventArgs e)
-        {
-            labelTray.Text = (trackBarTray.Value * 10).ToString() + "%";
-        }
-
-        private void trackBarPots_ValueChanged(object sender, EventArgs e)
-        {
-            labelPots.Text = (trackBarPots.Value * 10).ToString() + "%";
-        }
-
-        private void timerPotTrack_Tick(object sender, EventArgs e)
-        {
-            timerPotTrack.Enabled = false;
-            setLightLevel(Properties.Settings.Default.potsAddress, trackBarPots.Value);
-        }
-
-        private void timerTrayTrack_Tick(object sender, EventArgs e)
-        {
-            timerTrayTrack.Enabled = false;
-            setLightLevel(Properties.Settings.Default.trayAddress, trackBarTray.Value);
-        }
-
-        private void trackBarTray_Scroll(object sender, EventArgs e)
-        {
-            timerTrayTrack.Enabled = false;
-            timerTrayTrack.Enabled = true;
-        }
-
-        private void trackBarPots_Scroll(object sender, EventArgs e)
-        {
-            timerPotTrack.Enabled = false;
-            timerPotTrack.Enabled = true;
-        }
-
-
-
-
-
         private void timerClearStatus_Tick(object sender, EventArgs e)
         {
             toolStripStatus.Text = "";
@@ -197,15 +147,7 @@ namespace BrodieTheatre
             timerClearStatus.Enabled = true;
         }
 
-        private void timerStartLights_Tick(object sender, EventArgs e)
-        {
-            timerStartLights.Enabled = false;
-            toolStripStatus.Text = "Setting lights to Stopped Level";
-            setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsStoppedLevel * 10));
-            trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
-            setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
-            trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
-        }
+
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -345,10 +287,6 @@ namespace BrodieTheatre
             timerGlobal.Enabled = true;
         }
 
-
-
-
-
         private void labelMotionSensorStatus_TextChanged(object sender, EventArgs e)
         {
             if (labelMotionSensorStatus.Text == "Motion Detected")
@@ -366,28 +304,7 @@ namespace BrodieTheatre
             globalShutdownActive = false;
         }
 
-        private void sayGreeting()
-        {
-            int currHour = DateTime.Now.Hour;
-            string timeGreeting;
-            if (currHour >= 5 && currHour <= 11)
-            {
-                timeGreeting = "good morning";
-            }
-            else if (currHour >= 12 && currHour <=17)
-            {
-                timeGreeting = "good afternoon";
-            }
-            else
-            {
-                timeGreeting = "good evening";
-            }
-            List <string> greetings = new List<string>(new string[] { timeGreeting, "hello there", "how can I help you" });
-            Random rnd = new Random();
-            int r = rnd.Next(greetings.Count);
-            speakText(greetings[r]);
-        }
-
+  
         private void button1_Click(object sender, EventArgs e)
         {
             labelRoomOccupancy.Text = "Occupied";

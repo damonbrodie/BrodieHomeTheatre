@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using Microsoft.Speech.Recognition;
+using System.Collections.Generic;
 
 
 namespace BrodieTheatre
@@ -83,12 +84,50 @@ namespace BrodieTheatre
             commandSemantic = new SemanticResultValue("Hello Ronda", "Greeting");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
+            commandSemantic = new SemanticResultValue("Dim the Lights", "Dim Lights");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("Turn Down Lights", "Dim Lights");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("Turn Down the Lights", "Dim Lights");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("Turn on Lights", "Lights On");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("Turn on the Lights", "Lights On");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+
             gb.Append(commandChoice);
 
             Grammar grammar = new Grammar(gb);
 
             grammar.Name = "commands";
             recognitionEngine.LoadGrammar(grammar);
+        }
+
+        private void sayGreeting()
+        {
+            int currHour = DateTime.Now.Hour;
+            string timeGreeting;
+            if (currHour >= 5 && currHour <= 11)
+            {
+                timeGreeting = "good morning";
+            }
+            else if (currHour >= 12 && currHour <= 17)
+            {
+                timeGreeting = "good afternoon";
+            }
+            else
+            {
+                timeGreeting = "good evening";
+            }
+            List<string> greetings = new List<string>(new string[] { timeGreeting, "hello there", "how can I help you" });
+            Random rnd = new Random();
+            int r = rnd.Next(greetings.Count);
+            speakText(greetings[r]);
         }
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
@@ -150,6 +189,21 @@ namespace BrodieTheatre
                         ));
                         break;
                     case "Greeting":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            sayGreeting();
+                        }
+                        ));
+                        break;
+
+                    case "Lights On":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            sayGreeting();
+                        }
+                        ));
+                        break;
+                    case "Dim Lights":
                         formMain.BeginInvoke(new Action(() =>
                         {
                             sayGreeting();
