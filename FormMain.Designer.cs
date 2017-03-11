@@ -43,7 +43,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.progressBarMotionLatch = new System.Windows.Forms.ProgressBar();
             this.labelPots = new System.Windows.Forms.Label();
             this.labelTray = new System.Windows.Forms.Label();
             this.labelMotionSensorStatus = new System.Windows.Forms.Label();
@@ -90,10 +89,10 @@
             this.labelRoomOccupancy = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.timerMotionLatch = new System.Windows.Forms.Timer(this.components);
             this.timerShutdown = new System.Windows.Forms.Timer(this.components);
             this.timerCheckProjector = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.timerProjectorLensControl = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -229,7 +228,6 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.White;
-            this.groupBox2.Controls.Add(this.progressBarMotionLatch);
             this.groupBox2.Controls.Add(this.labelPots);
             this.groupBox2.Controls.Add(this.labelTray);
             this.groupBox2.Controls.Add(this.labelMotionSensorStatus);
@@ -248,13 +246,6 @@
             this.groupBox2.Size = new System.Drawing.Size(392, 204);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
-            // 
-            // progressBarMotionLatch
-            // 
-            this.progressBarMotionLatch.Location = new System.Drawing.Point(226, 176);
-            this.progressBarMotionLatch.Name = "progressBarMotionLatch";
-            this.progressBarMotionLatch.Size = new System.Drawing.Size(103, 19);
-            this.progressBarMotionLatch.TabIndex = 23;
             // 
             // labelPots
             // 
@@ -440,6 +431,7 @@
             this.labelProjectorPower.TabIndex = 22;
             this.labelProjectorPower.Text = "Unknown";
             this.labelProjectorPower.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelProjectorPower.TextChanged += new System.EventHandler(this.labelProjectorPower_TextChanged);
             // 
             // label11
             // 
@@ -599,7 +591,7 @@
             // 
             // timerStartLights
             // 
-            this.timerStartLights.Interval = 15000;
+            this.timerStartLights.Interval = 22000;
             this.timerStartLights.Tick += new System.EventHandler(this.timerStartLights_Tick);
             // 
             // timerSensorStatus
@@ -654,11 +646,6 @@
             this.pictureBox5.TabIndex = 18;
             this.pictureBox5.TabStop = false;
             // 
-            // timerMotionLatch
-            // 
-            this.timerMotionLatch.Interval = 1000;
-            this.timerMotionLatch.Tick += new System.EventHandler(this.timerMotionLatch_Tick);
-            // 
             // timerShutdown
             // 
             this.timerShutdown.Tick += new System.EventHandler(this.timerShutdown_Tick);
@@ -678,6 +665,11 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // timerProjectorLensControl
+            // 
+            this.timerProjectorLensControl.Interval = 10000;
+            this.timerProjectorLensControl.Tick += new System.EventHandler(this.timerProjectorLensControl_Tick);
             // 
             // FormMain
             // 
@@ -776,7 +768,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.IO.Ports.SerialPort serialPortProjector;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.ProgressBar progressBarMotionLatch;
         private System.Windows.Forms.Label labelLensAspect;
         private System.Windows.Forms.Label labelProjectorStatus;
         private System.Windows.Forms.Label label8;
@@ -785,7 +776,6 @@
         private System.Windows.Forms.Label labelRoomOccupancy;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.Timer timerMotionLatch;
         private System.Windows.Forms.Timer timerShutdown;
         private System.Windows.Forms.Button buttonProjectorChangeAspect;
         private System.Windows.Forms.Button buttonProjectorPower;
@@ -793,5 +783,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Timer timerCheckProjector;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer timerProjectorLensControl;
     }
 }

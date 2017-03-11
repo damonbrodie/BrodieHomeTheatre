@@ -64,8 +64,7 @@ namespace BrodieTheatre
         public bool projectorConnected;
         public string projectorLastCommand;
 
-        public DateTime LatchTime;
-        public bool latchActive;
+        public float projectorNewAspect = 0;
 
         public SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer();
 
@@ -148,8 +147,6 @@ namespace BrodieTheatre
             formMain = this;
             InitializeComponent();
             resetGlobalTimer();
-            LatchTime = DateTime.Now;
-            latchActive = false;
             projectorConnected = false;
 
         }
@@ -654,11 +651,6 @@ namespace BrodieTheatre
                 labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
 
                 powerlineModem = new Plm(Properties.Settings.Default.plmPort);
-                //powerlineModem.OnError += PowerlineModem_OnError;
-
-                //MessageBox.Show("Received Command: " + eventReceive.Description
-                //+ ", from " + eventReceive.PeerId.ToString());
-
                 powerlineModem.Network.StandardMessageReceived
                     += new StandardMessageReceivedHandler((s, eventReceive) =>
                 {
@@ -673,6 +665,7 @@ namespace BrodieTheatre
                         if (level >= 0)
                         {
                             trackBarTray.Value = level;
+                            resetGlobalTimer();
                         }
                     }
 
@@ -682,32 +675,25 @@ namespace BrodieTheatre
                         if (level >= 0)
                         {
                             trackBarPots.Value = level;
+                            resetGlobalTimer();
                         }
                     }
                     else if (address == Properties.Settings.Default.motionSensorAddress)
                     {
                         if (processMotionSensorMessage(desc, address))
                         { //Motion Detected
-                            timerMotionLatch.Enabled = false;
-                            latchActive = false;
+                     
+                       
                             labelMotionSensorStatus.Text = "Motion Detected";
                             labelRoomOccupancy.Text = "Occupied";
-                            progressBarMotionLatch.Value = progressBarMotionLatch.Maximum;
+                        
                         }
                         else
                         { //No Motion Detected
-                            if (labelRoomOccupancy.Text == "Occupied")
-                            {
-                                labelMotionSensorStatus.Text = "No Motion";
-                                LatchTime = DateTime.Now.AddMinutes(Properties.Settings.Default.motionSensorLatch);
-                                latchActive = true;
-                                timerMotionLatch.Enabled = false;
-                                timerMotionLatch.Enabled = true;
-                            }
-                            else
-                            {
+         
                                 labelRoomOccupancy.Text = "Vacant";
-                            }
+                            labelMotionSensorStatus.Text = "No Motion";
+       
                         }
 
                     }
@@ -742,10 +728,14 @@ namespace BrodieTheatre
             if (powerlineModem != null && powerlineModem.Network.TryConnectToDevice(address, out device))
             {
                 var lightingControl = device as DimmableLightingControl;
-                float theVal = level * 254 / 10;               
+                float theVal = level * 254 / 10;
                 int toInt = (int)theVal;
                 Boolean retVal = lightingControl.RampOn((byte)toInt);
-                Thread.Sleep (500);
+                Thread.Sleep(500);
+                if (toInt > 0)
+                { 
+                    resetGlobalTimer();
+                }
             }
             else
             {
@@ -816,7 +806,7 @@ namespace BrodieTheatre
             {
                 string kodiAspectRatio = File.ReadAllText("kodi_ar.txt").Trim().ToLower();
                 File.Delete("kodi_ar.txt");
-                projectorChangeAspect(float.Parse(kodiAspectRatio));
+                projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
             }
             if (File.Exists("kodi_status.txt"))
             {
@@ -960,31 +950,7 @@ namespace BrodieTheatre
             }
         }
 
-        private void timerMotionLatch_Tick(object sender, EventArgs e)
-        {
-            DateTime now = DateTime.Now;
-            DateTime latchStart = LatchTime.AddMinutes(Properties.Settings.Default.motionSensorLatch * -1);
-            var totalSeconds = (LatchTime - latchStart).TotalSeconds;
-            var progress = (now - latchStart).TotalSeconds;
-
-            if (latchActive && LatchTime > now)
-            {
-                int percentage = 100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1);
-                if (percentage <= 1)
-                {
-                    labelRoomOccupancy.Text = "Vacant";
-                    latchActive = false;
-                }
-                else
-                {
-                    progressBarMotionLatch.Value = percentage;
-                }
-            }
-            else
-            {
-                progressBarMotionLatch.Value = 0;
-            }
-        }
+  
 
         private async void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
         {
@@ -1082,11 +1048,11 @@ namespace BrodieTheatre
         {
             if (buttonProjectorChangeAspect.Text == "Narrow Aspect")
             {
-                projectorChangeAspect((float)1.0); //Narrow
+                projectorQueueChangeAspect((float)1.0); //Narrow
             }
             else
             {
-                projectorChangeAspect((float)2.0); //Wide
+                projectorQueueChangeAspect((float)2.0); //Wide
             }
 
         }
@@ -1098,6 +1064,8 @@ namespace BrodieTheatre
 
         private void projectorChangeAspect(float aspect)
         {
+            timerProjectorLensControl.Enabled = true;
+            buttonProjectorChangeAspect.Enabled = false;
             List<string> pj_codes = new List<string> {
                 "VXX:LMLI0=+00000" ,
                 "VXX:LMLI0=+00001",
@@ -1106,7 +1074,7 @@ namespace BrodieTheatre
                 "VXX:LMLI0=+00004",
                 "VXX:LMLI0=+00005" };
             projectorLastCommand = "Lens";
-            if (aspect < 1.8)
+            if (aspect < 1.9)
             {
                 ProjectorSendCommand(pj_codes[0]);
                 labelLensAspect.Text = "Narrow";
@@ -1116,8 +1084,37 @@ namespace BrodieTheatre
                 ProjectorSendCommand(pj_codes[1]);
                 labelLensAspect.Text = "Wide";
             }
+        }
+
+        private void projectorQueueChangeAspect(float aspect)
+        {
+            if (timerProjectorLensControl.Enabled == true)
+            {
+                // Wait for the last Aspect change to finish
+                projectorNewAspect = aspect;
+            }
+            else
+            {
+                projectorChangeAspect(aspect);
+            }
 
         }
+
+        private void timerProjectorLensControl_Tick(object sender, EventArgs e)
+        {
+            timerProjectorLensControl.Enabled = false;
+            if (projectorNewAspect > 0)
+            {
+                // A queued Aspect change is waiting
+                projectorQueueChangeAspect(projectorNewAspect);
+                projectorNewAspect = 0;
+            }
+            else
+            {
+                buttonProjectorChangeAspect.Enabled = true;
+            }
+        }
+
         private void projectorPowerOn()
         {
             ProjectorSendCommand("PON");
@@ -1129,6 +1126,7 @@ namespace BrodieTheatre
             ProjectorSendCommand("POF");
             labelProjectorPower.Text = "Powering Off";
         }
+
 
         private void labelLensAspect_TextChanged(object sender, EventArgs e)
         {
@@ -1189,6 +1187,18 @@ namespace BrodieTheatre
         private void button1_Click(object sender, EventArgs e)
         {
             labelRoomOccupancy.Text = "Occupied";
+        }
+
+        private void labelProjectorPower_TextChanged(object sender, EventArgs e)
+        {
+            if (labelProjectorPower.Text == "On")
+            {
+                buttonProjectorChangeAspect.Enabled = true;
+            }
+            else
+            {
+                buttonProjectorChangeAspect.Enabled = false;
+            }
         }
     }
 }

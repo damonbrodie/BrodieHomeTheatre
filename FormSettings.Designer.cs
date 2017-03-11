@@ -44,11 +44,6 @@
             this.textBoxHarmonyHubIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label15 = new System.Windows.Forms.Label();
-            this.labelMotionSensorLatchMinutes = new System.Windows.Forms.Label();
-            this.labelMotionSensorLatch = new System.Windows.Forms.Label();
-            this.trackBarMotionSensorLatch = new System.Windows.Forms.TrackBar();
-            this.label26 = new System.Windows.Forms.Label();
             this.textBoxMotionSensorAddress = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.textBoxPotsAddress = new System.Windows.Forms.TextBox();
@@ -99,7 +94,6 @@
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarMotionSensorLatch)).BeginInit();
             this.tabPage5.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsStopped)).BeginInit();
@@ -251,11 +245,6 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.label15);
-            this.tabPage2.Controls.Add(this.labelMotionSensorLatchMinutes);
-            this.tabPage2.Controls.Add(this.labelMotionSensorLatch);
-            this.tabPage2.Controls.Add(this.trackBarMotionSensorLatch);
-            this.tabPage2.Controls.Add(this.label26);
             this.tabPage2.Controls.Add(this.textBoxMotionSensorAddress);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.textBoxPotsAddress);
@@ -271,55 +260,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Insteon";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(15, 165);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(128, 13);
-            this.label15.TabIndex = 33;
-            this.label15.Text = "Motion Sensor Latch:";
-            // 
-            // labelMotionSensorLatchMinutes
-            // 
-            this.labelMotionSensorLatchMinutes.AutoSize = true;
-            this.labelMotionSensorLatchMinutes.Location = new System.Drawing.Point(286, 197);
-            this.labelMotionSensorLatchMinutes.Name = "labelMotionSensorLatchMinutes";
-            this.labelMotionSensorLatchMinutes.Size = new System.Drawing.Size(43, 13);
-            this.labelMotionSensorLatchMinutes.TabIndex = 32;
-            this.labelMotionSensorLatchMinutes.Text = "minutes";
-            // 
-            // labelMotionSensorLatch
-            // 
-            this.labelMotionSensorLatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelMotionSensorLatch.Location = new System.Drawing.Point(245, 192);
-            this.labelMotionSensorLatch.Name = "labelMotionSensorLatch";
-            this.labelMotionSensorLatch.Size = new System.Drawing.Size(35, 23);
-            this.labelMotionSensorLatch.TabIndex = 31;
-            this.labelMotionSensorLatch.Text = "0";
-            this.labelMotionSensorLatch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // trackBarMotionSensorLatch
-            // 
-            this.trackBarMotionSensorLatch.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarMotionSensorLatch.LargeChange = 1;
-            this.trackBarMotionSensorLatch.Location = new System.Drawing.Point(68, 190);
-            this.trackBarMotionSensorLatch.Maximum = 20;
-            this.trackBarMotionSensorLatch.Name = "trackBarMotionSensorLatch";
-            this.trackBarMotionSensorLatch.Size = new System.Drawing.Size(177, 45);
-            this.trackBarMotionSensorLatch.TabIndex = 30;
-            this.trackBarMotionSensorLatch.ValueChanged += new System.EventHandler(this.trackBarMotionSensorLatch_ValueChanged);
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(31, 197);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(36, 13);
-            this.label26.TabIndex = 29;
-            this.label26.Text = "Timer:";
             // 
             // textBoxMotionSensorAddress
             // 
@@ -814,7 +754,6 @@
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarMotionSensorLatch)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -887,11 +826,6 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox textBoxMotionSensorAddress;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label labelMotionSensorLatchMinutes;
-        private System.Windows.Forms.Label labelMotionSensorLatch;
-        private System.Windows.Forms.TrackBar trackBarMotionSensorLatch;
-        private System.Windows.Forms.Label label26;
         private System.Windows.Forms.TextBox textBoxOccupancyEnterCommand;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label28;

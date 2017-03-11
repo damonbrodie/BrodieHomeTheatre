@@ -47,9 +47,6 @@
     <Setting Name="motionSensorAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="motionSensorLatch" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
     <Setting Name="voiceActivity" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

@@ -37,7 +37,6 @@ namespace BrodieTheatre
 
             Properties.Settings.Default.globalShutdown = trackBarGlobalShutdown.Value;
 
-            Properties.Settings.Default.motionSensorLatch = trackBarMotionSensorLatch.Value;
             Properties.Settings.Default.motionSensorAddress = textBoxMotionSensorAddress.Text;
 
             Properties.Settings.Default.Save();
@@ -161,18 +160,6 @@ namespace BrodieTheatre
                 }
             }
 
-            try
-            {
-                trackBarMotionSensorLatch.Value = Properties.Settings.Default.motionSensorLatch;
-            }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentOutOfRangeException)
-                {
-                    trackBarMotionSensorLatch.Value = 0;
-                }
-            }
-
             textBoxPotsAddress.Text = Properties.Settings.Default.potsAddress;
             textBoxTrayAddress.Text = Properties.Settings.Default.trayAddress;
             textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
@@ -245,19 +232,6 @@ namespace BrodieTheatre
                 labelGlobalShutdownHours.Text = "hours";
             }
             labelGlobalShutdown.Text = trackBarGlobalShutdown.Value.ToString();
-        }
-
-        private void trackBarMotionSensorLatch_ValueChanged(object sender, EventArgs e)
-        {
-            if (trackBarMotionSensorLatch.Value == 1)
-            {
-                labelMotionSensorLatchMinutes.Text = "minute";
-            }
-            else
-            {
-                labelMotionSensorLatchMinutes.Text = "minutes";
-            }
-            labelMotionSensorLatch.Text = trackBarMotionSensorLatch.Value.ToString();
         }
     }
 }
