@@ -158,12 +158,7 @@ namespace BrodieTheatre
                             labelLastVoiceCommand.Text = phrase.Semantics.Value.ToString();
                             toolStripStatus.Text = "Stopping Home Theatre";
                             startActivityByName("PowerOff");
-                            formMain.toolStripStatus.Text = "Turning on pot lights";
-                            formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
-                            formMain.trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
-                            formMain.toolStripStatus.Text = "Turning on tray lights";
-                            formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
-                            formMain.trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
+                            lightsToEnteringLevel();
                         }
                         ));
                         break;

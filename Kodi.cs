@@ -23,44 +23,28 @@ namespace BrodieTheatre
                 {
                     case "playing":
                         labelKodiStatus.Text = "Playing";
-                        toolStripStatus.Text = "Setting lights to Playback Level";
-                        setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPlaybackLevel * 10));
-                        trackBarPots.Value = Properties.Settings.Default.potsPlaybackLevel;
-                        setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
-                        trackBarTray.Value = Properties.Settings.Default.trayPlaybackLevel;
+                        lightsToPlaybackLevel();
 
                         resetGlobalTimer();
 
                         break;
                     case "stopped":
                         labelKodiStatus.Text = "Stopped";
-                        toolStripStatus.Text = "Setting lights to Stopped Level";
-                        setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsStoppedLevel * 10));
-                        trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
-                        setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
-                        trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
+                        lightsToStoppedLevel();
 
                         resetGlobalTimer();
 
                         break;
                     case "paused":
                         labelKodiStatus.Text = "Paused";
-                        toolStripStatus.Text = "Setting lights to Paused Level";
-                        setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPausedLevel * 10));
-                        trackBarPots.Value = Properties.Settings.Default.potsPausedLevel;
-                        setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPausedLevel * 10));
-                        trackBarTray.Value = Properties.Settings.Default.trayPausedLevel;
+                        lightsToPausedLevel();
 
                         resetGlobalTimer();
 
                         break;
                     default:
                         labelKodiStatus.Text = "Stopped";
-                        toolStripStatus.Text = "Setting lights to Stopped Level";
-                        setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsStoppedLevel * 10));
-                        trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
-                        setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
-                        trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
+                        lightsToStoppedLevel();
 
                         resetGlobalTimer();
 

@@ -134,11 +134,7 @@ namespace BrodieTheatre
         private void timerShutdown_Tick(object sender, EventArgs e)
         {
             timerShutdown.Enabled = false;
-            toolStripStatus.Text = "Turning off lights";
-            setLightLevel(Properties.Settings.Default.potsAddress, 0);
-            trackBarPots.Value = 0;
-            setLightLevel(Properties.Settings.Default.trayAddress, 0);
-            trackBarTray.Value = 0;
+            lightsOff();
         }
 
         private void toolStripStatus_TextChanged(object sender, EventArgs e)
@@ -227,12 +223,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        toolStripStatus.Text = "Turning on lights";
-                        setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
-                        trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
-
-                        setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
-                        trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
+                        lightsToEnteringLevel();
                     }
                     ));
                 }
@@ -259,11 +250,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         toolStripStatus.Text = "Room is now vacated";
-                        toolStripStatus.Text = "Turning off lights";
-                        setLightLevel(Properties.Settings.Default.potsAddress, 0);
-                        trackBarPots.Value = 0;
-                        setLightLevel(Properties.Settings.Default.trayAddress, 0);
-                        trackBarTray.Value = 0;
+                        lightsOff();
                     }
                     ));
                 }

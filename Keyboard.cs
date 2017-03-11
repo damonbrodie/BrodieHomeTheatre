@@ -45,44 +45,28 @@ namespace BrodieTheatre
                     case "F12":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.toolStripStatus.Text = "Keypress F12 captured - Turning on lights";
-                            formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
-                            formMain.trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
-                            formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
-                            formMain.trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
+                            formMain.lightsToEnteringLevel();
                         }
                         ));
                         break;
                     case "F11":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.toolStripStatus.Text = "Keypress F11 captured - Turning off lights";
-                            formMain.setLightLevel(Properties.Settings.Default.potsAddress, 0);
-                            formMain.trackBarPots.Value = 0;
-                            formMain.setLightLevel(Properties.Settings.Default.trayAddress, 0);
-                            formMain.trackBarTray.Value = 0;
+                            formMain.lightsOff();
                         }
                         ));
                         break;
                     case "F9":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.toolStripStatus.Text = "Keypress F9 captured - Dimming lights - Stopped Level";
-                            formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsStoppedLevel * 10));
-                            formMain.trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
-                            formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
-                            formMain.trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
+                            formMain.lightsToStoppedLevel();
                         }
                         ));
                         break;
                     case "F7":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.toolStripStatus.Text = "Keypress F7 captured - Dimming lights - Playback Level";
-                            formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPlaybackLevel * 10));
-                            formMain.trackBarPots.Value = Properties.Settings.Default.potsPlaybackLevel;
-                            formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
-                            formMain.trackBarTray.Value = Properties.Settings.Default.trayPlaybackLevel;
+                            formMain.lightsToPlaybackLevel();
                         }
                         ));
                         break;
