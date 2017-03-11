@@ -591,7 +591,7 @@
             // 
             // timerStartLights
             // 
-            this.timerStartLights.Interval = 22000;
+            this.timerStartLights.Interval = 25000;
             this.timerStartLights.Tick += new System.EventHandler(this.timerStartLights_Tick);
             // 
             // timerSensorStatus

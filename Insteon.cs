@@ -1,23 +1,50 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using HarmonyHub;
-using HarmonyHub.Entities.Response;
-using System.IO;
 using SoapBox.FluentDwelling;
 using SoapBox.FluentDwelling.Devices;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using Microsoft.Speech.Synthesis;
-using Microsoft.Speech.Recognition;
 
 
 namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        public int processDimmerMessage(string message, string address)
+        {
+            int level = -1;
+            switch (message)
+            {
+                case "Turn On":
+                    level = 10;
+                    break;
+                case "Turn Off":
+                    level = 0;
+                    break;
+                case "Begin Manual Brightening":
+                    level = -1;
+                    break;
+                case "End Manual Brightening/Dimming":
+                    level = getLightLevel(address);
+                    break;
+                default:
+                    level = getLightLevel(address);
+                    break;
+            }
+            return level;
+        }
+
+        public bool processMotionSensorMessage(string message, string address)
+        {
+            bool state = false;
+            switch (message)
+            {
+                case "Turn On":
+                    state = true;
+                    break;
+            }
+            return state;
+        }
+
         private void timerPLMreceive_Tick(object sender, EventArgs e)
         {
             powerlineModem.Receive();

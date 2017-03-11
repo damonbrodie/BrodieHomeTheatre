@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using HarmonyHub;
-using HarmonyHub.Entities.Response;
-using System.IO;
-using SoapBox.FluentDwelling;
-using SoapBox.FluentDwelling.Devices;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.Recognition;
 
 
@@ -18,6 +7,11 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        private void speakText(string tts)
+        {
+            speechSynthesizer.SpeakAsync(tts);
+        }
+
         private void loadVoiceCommands()
         {
             GrammarBuilder gb = new GrammarBuilder();

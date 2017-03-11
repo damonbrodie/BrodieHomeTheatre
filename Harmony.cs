@@ -1,23 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HarmonyHub;
 using HarmonyHub.Entities.Response;
-using System.IO;
-using SoapBox.FluentDwelling;
-using SoapBox.FluentDwelling.Devices;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
-using Microsoft.Speech.Synthesis;
-using Microsoft.Speech.Recognition;
 
 
 namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        private async Task ConnectHarmonyAsync()
+        {
+            Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
+            var currentActivityID = await Program.Client.GetCurrentActivityAsync();
+            Thread.Sleep(3000);
+            formMain.BeginInvoke(new Action(() =>
+            {
+                formMain.harmonyUpdateActivities(currentActivityID);
+            }
+            ));
+        }
+
         private async void harmonyClient_OnActivityChanged(object sender, string e)
         {
             var activity = await Program.Client.GetCurrentActivityAsync();

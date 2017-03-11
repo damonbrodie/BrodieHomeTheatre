@@ -123,6 +123,9 @@
     <Compile Include="Insteon.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Keyboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Kodi.cs">
       <SubType>Form</SubType>
     </Compile>

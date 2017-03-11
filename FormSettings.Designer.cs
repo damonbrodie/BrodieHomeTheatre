@@ -391,7 +391,7 @@
             this.labelPotsStopped.Name = "labelPotsStopped";
             this.labelPotsStopped.Size = new System.Drawing.Size(35, 23);
             this.labelPotsStopped.TabIndex = 20;
-            this.labelPotsStopped.Text = "100%";
+            this.labelPotsStopped.Text = "0%";
             this.labelPotsStopped.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelTrayStopped
@@ -401,7 +401,7 @@
             this.labelTrayStopped.Name = "labelTrayStopped";
             this.labelTrayStopped.Size = new System.Drawing.Size(35, 23);
             this.labelTrayStopped.TabIndex = 19;
-            this.labelTrayStopped.Text = "100%";
+            this.labelTrayStopped.Text = "0%";
             this.labelTrayStopped.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelPotsPaused
@@ -411,7 +411,7 @@
             this.labelPotsPaused.Name = "labelPotsPaused";
             this.labelPotsPaused.Size = new System.Drawing.Size(35, 23);
             this.labelPotsPaused.TabIndex = 18;
-            this.labelPotsPaused.Text = "100%";
+            this.labelPotsPaused.Text = "0%";
             this.labelPotsPaused.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelTrayPaused
@@ -421,7 +421,7 @@
             this.labelTrayPaused.Name = "labelTrayPaused";
             this.labelTrayPaused.Size = new System.Drawing.Size(35, 23);
             this.labelTrayPaused.TabIndex = 17;
-            this.labelTrayPaused.Text = "100%";
+            this.labelTrayPaused.Text = "0%";
             this.labelTrayPaused.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelPotsPlayback
@@ -431,7 +431,7 @@
             this.labelPotsPlayback.Name = "labelPotsPlayback";
             this.labelPotsPlayback.Size = new System.Drawing.Size(35, 23);
             this.labelPotsPlayback.TabIndex = 16;
-            this.labelPotsPlayback.Text = "100%";
+            this.labelPotsPlayback.Text = "0%";
             this.labelPotsPlayback.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelTrayPlayback
@@ -441,7 +441,7 @@
             this.labelTrayPlayback.Name = "labelTrayPlayback";
             this.labelTrayPlayback.Size = new System.Drawing.Size(35, 23);
             this.labelTrayPlayback.TabIndex = 15;
-            this.labelTrayPlayback.Text = "100%";
+            this.labelTrayPlayback.Text = "0%";
             this.labelTrayPlayback.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // trackBarPotsStopped
@@ -664,7 +664,7 @@
             this.labelPotsEntering.Name = "labelPotsEntering";
             this.labelPotsEntering.Size = new System.Drawing.Size(35, 23);
             this.labelPotsEntering.TabIndex = 27;
-            this.labelPotsEntering.Text = "100%";
+            this.labelPotsEntering.Text = "0%";
             this.labelPotsEntering.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelTrayEntering
@@ -674,7 +674,7 @@
             this.labelTrayEntering.Name = "labelTrayEntering";
             this.labelTrayEntering.Size = new System.Drawing.Size(35, 23);
             this.labelTrayEntering.TabIndex = 26;
-            this.labelTrayEntering.Text = "100%";
+            this.labelTrayEntering.Text = "0%";
             this.labelTrayEntering.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // trackBarPotsEntering
