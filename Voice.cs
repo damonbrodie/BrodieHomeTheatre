@@ -194,14 +194,14 @@ namespace BrodieTheatre
                     case "Lights On":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            sayGreeting();
+                            lightsToEnteringLevel();
                         }
                         ));
                         break;
                     case "Dim Lights":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            sayGreeting();
+                            lightsToStoppedLevel();
                         }
                         ));
                         break;
