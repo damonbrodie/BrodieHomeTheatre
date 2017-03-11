@@ -291,12 +291,6 @@ namespace BrodieTheatre
             globalShutdownActive = false;
         }
 
-  
-        private void button1_Click(object sender, EventArgs e)
-        {
-            labelRoomOccupancy.Text = "Occupied";
-        }
-
         private void labelProjectorPower_TextChanged(object sender, EventArgs e)
         {
             if (labelProjectorPower.Text == "On")

@@ -91,7 +91,6 @@
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.timerShutdown = new System.Windows.Forms.Timer(this.components);
             this.timerCheckProjector = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             this.timerProjectorLensControl = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -656,16 +655,6 @@
             this.timerCheckProjector.Interval = 5000;
             this.timerCheckProjector.Tick += new System.EventHandler(this.timerCheckProjector_Tick);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(384, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 24;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // timerProjectorLensControl
             // 
             this.timerProjectorLensControl.Interval = 10000;
@@ -677,7 +666,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(675, 443);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox4);
@@ -782,7 +770,6 @@
         private System.Windows.Forms.Label labelProjectorPower;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Timer timerCheckProjector;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer timerProjectorLensControl;
     }
 }
