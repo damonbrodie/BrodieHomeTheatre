@@ -57,11 +57,11 @@ namespace BrodieTheatre
                             formMain.labelCurrentActivity.Text = activity.Label;
                             if (Convert.ToInt32(activity.Id) < 0)
                             {
-                                disableGlobalShutdown();
+                                formMain.disableGlobalShutdown();
                             }
                             else
                             {
-                                resetGlobalTimer();
+                                formMain.resetGlobalTimer();
                             }
                         }
                         else

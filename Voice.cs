@@ -145,9 +145,9 @@ namespace BrodieTheatre
 
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            labelLastVoiceCommand.Text = topPhrase;
-                            toolStripStatus.Text = "Starting Home Theatre";
-                            startActivityByName(Properties.Settings.Default.voiceActivity);
+                            formMain.labelLastVoiceCommand.Text = topPhrase;
+                            formMain.toolStripStatus.Text = "Starting Home Theatre";
+                            formMain.startActivityByName(Properties.Settings.Default.voiceActivity);
                             formMain.timerStartLights.Enabled = true;
                         }
                         ));
@@ -155,10 +155,10 @@ namespace BrodieTheatre
                     case "Turn off Theatre":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            labelLastVoiceCommand.Text = phrase.Semantics.Value.ToString();
-                            toolStripStatus.Text = "Stopping Home Theatre";
-                            startActivityByName("PowerOff");
-                            lightsToEnteringLevel();
+                            formMain.labelLastVoiceCommand.Text = phrase.Semantics.Value.ToString();
+                            formMain.toolStripStatus.Text = "Stopping Home Theatre";
+                            formMain.startActivityByName("PowerOff");
+                            formMain.lightsToEnteringLevel();
                         }
                         ));
                         break;
@@ -186,7 +186,7 @@ namespace BrodieTheatre
                     case "Greeting":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            sayGreeting();
+                            formMain.sayGreeting();
                         }
                         ));
                         break;
@@ -194,14 +194,14 @@ namespace BrodieTheatre
                     case "Lights On":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            lightsToEnteringLevel();
+                            formMain.lightsToEnteringLevel();
                         }
                         ));
                         break;
                     case "Dim Lights":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            lightsToStoppedLevel();
+                            formMain.lightsToStoppedLevel();
                         }
                         ));
                         break;

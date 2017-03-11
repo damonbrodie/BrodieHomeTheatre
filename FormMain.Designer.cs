@@ -291,11 +291,11 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 179);
+            this.label12.Location = new System.Drawing.Point(14, 179);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(83, 13);
+            this.label12.Size = new System.Drawing.Size(75, 13);
             this.label12.TabIndex = 14;
-            this.label12.Text = "Motion Detector";
+            this.label12.Text = "Motion Sensor";
             // 
             // trackBarTray
             // 

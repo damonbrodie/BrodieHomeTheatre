@@ -209,12 +209,12 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    resetGlobalTimer();
-                    timerShutdown.Enabled = false;
-                    toolStripStatus.Text = "Room is now occupied";
+                    formMain.resetGlobalTimer();
+                    formMain.timerShutdown.Enabled = false;
+                    formMain.toolStripStatus.Text = "Room is now occupied";
 
                     // Power on the Amplifier
-                    harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
+                    formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
                 }
                 ));
 
@@ -223,7 +223,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        lightsToEnteringLevel();
+                        formMain.lightsToEnteringLevel();
                     }
                     ));
                 }
@@ -242,15 +242,15 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             // Power off the Amplifier
-                            harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyExitCommand);
+                            formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyExitCommand);
                         }
                         ));
                     }
 
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        toolStripStatus.Text = "Room is now vacated";
-                        lightsOff();
+                        formMain.toolStripStatus.Text = "Room is now vacated";
+                        formMain.lightsOff();
                     }
                     ));
                 }
@@ -258,7 +258,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        resetGlobalTimer();
+                        formMain.resetGlobalTimer();
                     }
                     ));
                 }
