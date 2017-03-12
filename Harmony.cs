@@ -12,14 +12,26 @@ namespace BrodieTheatre
     {
         private async Task ConnectHarmonyAsync()
         {
-            Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
-            var currentActivityID = await Program.Client.GetCurrentActivityAsync();
-            Thread.Sleep(3000);
-            formMain.BeginInvoke(new Action(() =>
+            bool error = false;
+            var currentActivityID = "";
+            try
             {
-                formMain.harmonyUpdateActivities(currentActivityID);
+                Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
+                currentActivityID = await Program.Client.GetCurrentActivityAsync();
             }
-            ));
+            catch
+            {
+                error = true;
+            }
+            if (!error)
+            { 
+                Thread.Sleep(1000);
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    formMain.harmonyUpdateActivities(currentActivityID);
+                }
+                ));
+            }
         }
 
         private async void harmonyClient_OnActivityChanged(object sender, string e)
@@ -135,10 +147,10 @@ namespace BrodieTheatre
                         {
                             // Powering off
                             formMain.toolStripStatus.Text = "Turning on pot lights";
-                            formMain.setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
+                            formMain.queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
                             formMain.trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
                             formMain.toolStripStatus.Text = "Turning on tray lights";
-                            formMain.setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
+                            formMain.queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
                             formMain.trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
                         }
                     }

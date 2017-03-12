@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 
 namespace BrodieTheatre
@@ -19,13 +20,13 @@ namespace BrodieTheatre
         private void timerPotTrack_Tick(object sender, EventArgs e)
         {
             timerPotTrack.Enabled = false;
-            setLightLevel(Properties.Settings.Default.potsAddress, trackBarPots.Value);
+            queueLightLevel(Properties.Settings.Default.potsAddress, trackBarPots.Value);
         }
 
         private void timerTrayTrack_Tick(object sender, EventArgs e)
         {
             timerTrayTrack.Enabled = false;
-            setLightLevel(Properties.Settings.Default.trayAddress, trackBarTray.Value);
+            queueLightLevel(Properties.Settings.Default.trayAddress, trackBarTray.Value);
         }
 
         private void trackBarTray_Scroll(object sender, EventArgs e)
@@ -48,57 +49,80 @@ namespace BrodieTheatre
 
         private void lightsToStoppedLevel()
         {
+            writeLog("Setting lights to Stopped Level");
             toolStripStatus.Text = "Setting lights to Stopped Level";
-            setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsStoppedLevel * 10));
+            queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsStoppedLevel * 10));
             trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
-            setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
-            trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
+            //setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
+            //trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
         }
 
         private void lightsOn()
         {
+            writeLog("Setting lights to On");
             toolStripStatus.Text = "Turning On Lights";
-            setLightLevel(Properties.Settings.Default.potsAddress, (100));
+            queueLightLevel(Properties.Settings.Default.potsAddress, (100));
             trackBarPots.Value = 100;
-            setLightLevel(Properties.Settings.Default.trayAddress, (100));
-            trackBarTray.Value = 100;
+            //setLightLevel(Properties.Settings.Default.trayAddress, (100));
+            //trackBarTray.Value = 100;
         }
 
         private void lightsToEnteringLevel()
         {
-            toolStripStatus.Text = "Turning on lights";
-            setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
+            writeLog("Setting lights to Occupancy Level");
+            toolStripStatus.Text = "Turning on lights to Occupancy Level";
+            queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
             trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
-
-            setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
-            trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
+            //setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
+            //trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
         }
 
         private void lightsOff()
         {
+            writeLog("Setting lights Off");
             toolStripStatus.Text = "Turning off lights";
-            setLightLevel(Properties.Settings.Default.potsAddress, 0);
+            queueLightLevel(Properties.Settings.Default.potsAddress, 0);
             trackBarPots.Value = 0;
-            setLightLevel(Properties.Settings.Default.trayAddress, 0);
-            trackBarTray.Value = 0;
+            //setLightLevel(Properties.Settings.Default.trayAddress, 0);
+            //trackBarTray.Value = 0;
         }
 
         private void lightsToPlaybackLevel()
         {
+            writeLog("Setting lights to Playback Level");
             toolStripStatus.Text = "Dimming lights to Playback Level";
-            setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPlaybackLevel * 10));
+            queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPlaybackLevel * 10));
             trackBarPots.Value = Properties.Settings.Default.potsPlaybackLevel;
-            setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
-            trackBarTray.Value = Properties.Settings.Default.trayPlaybackLevel;
+            //setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
+           // trackBarTray.Value = Properties.Settings.Default.trayPlaybackLevel;
         }
 
         private void lightsToPausedLevel()
         {
+            writeLog("Setting lights to Paused Level");
             toolStripStatus.Text = "Setting lights to Paused Level";
-            setLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPausedLevel * 10));
+            queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPausedLevel * 10));
             trackBarPots.Value = Properties.Settings.Default.potsPausedLevel;
-            setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPausedLevel * 10));
-            trackBarTray.Value = Properties.Settings.Default.trayPausedLevel;
+            //setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPausedLevel * 10));
+            //trackBarTray.Value = Properties.Settings.Default.trayPausedLevel;
+        }
+
+        private void timerSetLights_Tick(object sender, EventArgs e)
+        {
+            if (lights[Properties.Settings.Default.potsAddress] != -1)
+            {
+                setLightLevel(Properties.Settings.Default.potsAddress, lights[Properties.Settings.Default.potsAddress]);
+            }
+            else if (lights[Properties.Settings.Default.trayAddress] != -1)
+            {
+                setLightLevel(Properties.Settings.Default.trayAddress, lights[Properties.Settings.Default.trayAddress]);
+            }
+        }
+
+        public void queueLightLevel(string address, int level)
+        {
+            writeLog("Queuing light " + address + " to level " + level.ToString());
+            lights[address] = level;
         }
     }
 }

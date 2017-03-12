@@ -132,6 +132,9 @@
     <Compile Include="Lights.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Logging.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Projector.cs">
       <SubType>Form</SubType>

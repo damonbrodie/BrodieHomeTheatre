@@ -92,6 +92,7 @@
             this.timerShutdown = new System.Windows.Forms.Timer(this.components);
             this.timerCheckProjector = new System.Windows.Forms.Timer(this.components);
             this.timerProjectorLensControl = new System.Windows.Forms.Timer(this.components);
+            this.timerSetLights = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -275,7 +276,6 @@
             this.labelMotionSensorStatus.TabIndex = 8;
             this.labelMotionSensorStatus.Text = "No Motion";
             this.labelMotionSensorStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelMotionSensorStatus.TextChanged += new System.EventHandler(this.labelMotionSensorStatus_TextChanged);
             // 
             // trackBarPots
             // 
@@ -660,6 +660,11 @@
             this.timerProjectorLensControl.Interval = 10000;
             this.timerProjectorLensControl.Tick += new System.EventHandler(this.timerProjectorLensControl_Tick);
             // 
+            // timerSetLights
+            // 
+            this.timerSetLights.Interval = 500;
+            this.timerSetLights.Tick += new System.EventHandler(this.timerSetLights_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -771,5 +776,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Timer timerCheckProjector;
         private System.Windows.Forms.Timer timerProjectorLensControl;
+        private System.Windows.Forms.Timer timerSetLights;
     }
 }

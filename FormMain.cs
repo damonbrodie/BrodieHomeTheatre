@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using SoapBox.FluentDwelling;
 using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.Recognition;
+using System.Collections.Generic;
 
 
 namespace BrodieTheatre
@@ -48,7 +49,7 @@ namespace BrodieTheatre
 
         public SpeechRecognitionEngine recognitionEngine = new SpeechRecognitionEngine();
 
-
+        Dictionary<string, int> lights = new Dictionary<string, int>();      
 
         public FormMain()
         {
@@ -86,6 +87,7 @@ namespace BrodieTheatre
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
+            writeLog("------ Starting Up ------");
             await ConnectHarmonyAsync();
             Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
 
@@ -98,6 +100,17 @@ namespace BrodieTheatre
             {
                 checkProjectorPower();
             }
+
+            if (Properties.Settings.Default.potsAddress != "")
+            {
+                lights[Properties.Settings.Default.potsAddress] = -1;
+            }
+
+            if (Properties.Settings.Default.trayAddress != "")
+            {
+                lights[Properties.Settings.Default.trayAddress] = -1;
+            }
+            timerSetLights.Enabled = true;
 
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
             recognitionEngine.SetInputToDefaultAudioDevice();
@@ -157,7 +170,7 @@ namespace BrodieTheatre
                 powerlineModem.Dispose();
             }
             UnhookWindowsHookEx(hookID);
-
+            writeLog("------ Shutting Down ------");
         }
 
         /*
@@ -209,12 +222,13 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
+                    writeLog("Occupancy Changed: Room Occupied");
                     formMain.resetGlobalTimer();
                     formMain.timerShutdown.Enabled = false;
                     formMain.toolStripStatus.Text = "Room is now occupied";
 
                     // Power on the Amplifier
-                    formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
+                    //formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
                 }
                 ));
 
@@ -230,6 +244,11 @@ namespace BrodieTheatre
             }
             else if (labelRoomOccupancy.Text == "Vacant")
             {
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    writeLog("Occupancy Changed: Room Occupied");
+                }
+                ));
                 if (labelKodiStatus.Text == "Stopped")
                 {
                     if (labelCurrentActivity.Text != "PowerOff")
@@ -242,14 +261,14 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             // Power off the Amplifier
-                            formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyExitCommand);
+                           // formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyExitCommand);
                         }
                         ));
                     }
 
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.toolStripStatus.Text = "Room is now vacated";
+                        formMain.toolStripStatus.Text = "Room is now vacant";
                         formMain.lightsOff();
                     }
                     ));
@@ -274,18 +293,6 @@ namespace BrodieTheatre
             timerGlobal.Enabled = true;
         }
 
-        private void labelMotionSensorStatus_TextChanged(object sender, EventArgs e)
-        {
-            if (labelMotionSensorStatus.Text == "Motion Detected")
-            {
-                disableGlobalShutdown();
-            }
-            else
-            {
-                resetGlobalTimer();
-            }
-        }
-
         private void disableGlobalShutdown()
         {
             globalShutdownActive = false;
@@ -302,5 +309,7 @@ namespace BrodieTheatre
                 buttonProjectorChangeAspect.Enabled = false;
             }
         }
+
+
     }
 }

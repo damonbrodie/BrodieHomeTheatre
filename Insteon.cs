@@ -72,8 +72,12 @@ namespace BrodieTheatre
                             level = processDimmerMessage(desc, address);
                             if (level >= 0)
                             {
-                                trackBarTray.Value = level;
-                                resetGlobalTimer();
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.trackBarTray.Value = level;
+                                    formMain.resetGlobalTimer();
+                                }
+                                ));
                             }
                         }
 
@@ -82,28 +86,48 @@ namespace BrodieTheatre
                             level = processDimmerMessage(desc, address);
                             if (level >= 0)
                             {
-                                trackBarPots.Value = level;
-                                resetGlobalTimer();
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.trackBarPots.Value = level;
+                                    formMain.resetGlobalTimer();
+                                }
+                                ));
                             }
                         }
                         else if (address == Properties.Settings.Default.motionSensorAddress)
                         {
                             if (processMotionSensorMessage(desc, address))
                             { //Motion Detected
-                                labelMotionSensorStatus.Text = "Motion Detected";
-                                labelRoomOccupancy.Text = "Occupied";
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    if (labelMotionSensorStatus.Text != "Motion Detected")
+                                    {
+                                        writeLog("Insteon: Motion Detected");
+                                        formMain.labelMotionSensorStatus.Text = "Motion Detected";
+                                        formMain.labelRoomOccupancy.Text = "Occupied";
+                                    }
+                                }
+                                ));
                             }
                             else
                             { //No Motion Detected
-                                labelRoomOccupancy.Text = "Vacant";
-                                labelMotionSensorStatus.Text = "No Motion";
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    if (labelMotionSensorStatus.Text != "No Motion")
+                                    {
+                                        writeLog("Insteon: No Motion Detected");
+                                        formMain.labelRoomOccupancy.Text = "Vacant";
+                                        formMain.labelMotionSensorStatus.Text = "No Motion";
+                                    }
+                                }
+                                ));
                             }
 
                         }
                     });
                 timerPLMreceive.Enabled = true;
-                setLightLevel(Properties.Settings.Default.potsAddress, 0);
-                setLightLevel(Properties.Settings.Default.trayAddress, 0);
+                queueLightLevel(Properties.Settings.Default.potsAddress, 0);
+                queueLightLevel(Properties.Settings.Default.trayAddress, 0);
                 timerCheckPLM.Enabled = true;
             }
         }
@@ -120,7 +144,9 @@ namespace BrodieTheatre
                 lightingControl.TryGetOnLevel(out onLevel);
                 int integerLevel = Convert.ToInt32(onLevel);
                 float decLevel = (float)integerLevel / 254 * 10;
+                
                 level = (int)decLevel;
+                writeLog("Insteon:  Get Level Light " + address + " at level " + level.ToString());
             }
             return level;
         }
@@ -131,10 +157,11 @@ namespace BrodieTheatre
             if (powerlineModem != null && powerlineModem.Network.TryConnectToDevice(address, out device))
             {
                 var lightingControl = device as DimmableLightingControl;
-                float theVal = level * 254 / 10;
+                float theVal = (level * 254 / 10) + 1;
                 int toInt = (int)theVal;
                 Boolean retVal = lightingControl.RampOn((byte)toInt);
-                Thread.Sleep(500);
+                lights[address] = -1;
+                writeLog("Insteon:  Set Light " + address + " Level " + level.ToString());
                 if (toInt > 0)
                 {
                     resetGlobalTimer();
@@ -143,6 +170,7 @@ namespace BrodieTheatre
             else
             {
                 toolStripStatus.Text = "Could not connect to light - " + address;
+                writeLog("Insteon:  Error Setting Light " + address + " Level " + level.ToString());
             }
         }
 
