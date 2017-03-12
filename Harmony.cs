@@ -14,20 +14,26 @@ namespace BrodieTheatre
         {
             bool error = false;
             var currentActivityID = "";
+            writeLog("Connecting to Harmony");
             try
             {
                 Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
+                Thread.Sleep(4000);
                 currentActivityID = await Program.Client.GetCurrentActivityAsync();
+                writeLog("Harmony Connected");
             }
             catch
             {
+                writeLog("Error:  Cannot connect to Harmony");
                 error = true;
             }
             if (!error)
-            { 
-                Thread.Sleep(1000);
+            {
+
                 formMain.BeginInvoke(new Action(() =>
                 {
+                    Thread.Sleep(3000);
+                    writeLog("Harmony:  Update Activities");
                     formMain.harmonyUpdateActivities(currentActivityID);
                 }
                 ));
@@ -54,6 +60,9 @@ namespace BrodieTheatre
 
         private async void harmonyUpdateActivities(string currentActivityID)
         {
+            bool notLoaded = true;
+            int count = 0;
+            while (notLoaded && count < 3)
             try
             {
                 var harmonyConfig = await Program.Client.GetConfigAsync();
@@ -84,10 +93,16 @@ namespace BrodieTheatre
                             formMain.listBoxActivities.Items.Add(item);
                         }
                     }
+                    writeLog("Harmony Activities updated");
+                    notLoaded = false;
+                    Thread.Sleep(3000);
                 }));
             }
-            catch
+            catch(Exception ex)
             {
+                writeLog("Error:  Cannot update Activities");
+                writeLog("Error:  " + ex.ToString());
+                count++;
             }
         }
 

@@ -144,9 +144,9 @@ namespace BrodieTheatre
                 lightingControl.TryGetOnLevel(out onLevel);
                 int integerLevel = Convert.ToInt32(onLevel);
                 float decLevel = (float)integerLevel / 254 * 10;
-                
+
                 level = (int)decLevel;
-                writeLog("Insteon:  Get Level Light " + address + " at level " + level.ToString());
+                writeLog("Insteon: Get Level Light " + address + " at level " + level.ToString());
             }
             return level;
         }
@@ -156,21 +156,28 @@ namespace BrodieTheatre
             DeviceBase device;
             if (powerlineModem != null && powerlineModem.Network.TryConnectToDevice(address, out device))
             {
-                var lightingControl = device as DimmableLightingControl;
-                float theVal = (level * 254 / 10) + 1;
-                int toInt = (int)theVal;
-                Boolean retVal = lightingControl.RampOn((byte)toInt);
-                lights[address] = -1;
-                writeLog("Insteon:  Set Light " + address + " Level " + level.ToString());
-                if (toInt > 0)
-                {
-                    resetGlobalTimer();
+                bool finished = false;
+                int counter = 0;
+
+                while (!finished && counter < 2)
+                { 
+                    var lightingControl = device as DimmableLightingControl;
+                    float theVal = (level * 254 / 10) + 1;
+                    int toInt = (int)theVal;
+                    finished = lightingControl.RampOn((byte)toInt);
+                    lights[address] = -1;
+                    writeLog("Insteon: Set Light " + address + " Level " + level.ToString());
+                    if (toInt > 0)
+                    {
+                        resetGlobalTimer();
+                    }
+                    counter++;
                 }
             }
             else
             {
                 toolStripStatus.Text = "Could not connect to light - " + address;
-                writeLog("Insteon:  Error Setting Light " + address + " Level " + level.ToString());
+                writeLog("Insteon: Error Setting Light " + address + " Level " + level.ToString());
             }
         }
 

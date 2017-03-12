@@ -309,7 +309,5 @@ namespace BrodieTheatre
                 buttonProjectorChangeAspect.Enabled = false;
             }
         }
-
-
     }
 }
