@@ -309,5 +309,10 @@ namespace BrodieTheatre
                 buttonProjectorChangeAspect.Enabled = false;
             }
         }
+
+        private void timerSetLights_Tick(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -53,7 +53,7 @@ namespace BrodieTheatre
             toolStripStatus.Text = "Setting lights to Stopped Level";
             queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsStoppedLevel * 10));
             trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
-            setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
+            queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
             trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
         }
 
@@ -63,7 +63,7 @@ namespace BrodieTheatre
             toolStripStatus.Text = "Turning On Lights";
             queueLightLevel(Properties.Settings.Default.potsAddress, (100));
             trackBarPots.Value = 100;
-            setLightLevel(Properties.Settings.Default.trayAddress, (100));
+            queueLightLevel(Properties.Settings.Default.trayAddress, (100));
             trackBarTray.Value = 100;
         }
 
@@ -73,7 +73,7 @@ namespace BrodieTheatre
             toolStripStatus.Text = "Turning on lights to Occupancy Level";
             queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
             trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
-            setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
+            queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
             trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
         }
 
@@ -83,7 +83,7 @@ namespace BrodieTheatre
             toolStripStatus.Text = "Turning off lights";
             queueLightLevel(Properties.Settings.Default.potsAddress, 0);
             trackBarPots.Value = 0;
-            setLightLevel(Properties.Settings.Default.trayAddress, 0);
+            queueLightLevel(Properties.Settings.Default.trayAddress, 0);
             trackBarTray.Value = 0;
         }
 
@@ -93,7 +93,7 @@ namespace BrodieTheatre
             toolStripStatus.Text = "Dimming lights to Playback Level";
             queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPlaybackLevel * 10));
             trackBarPots.Value = Properties.Settings.Default.potsPlaybackLevel;
-            setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
+            queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
             trackBarTray.Value = Properties.Settings.Default.trayPlaybackLevel;
         }
 
@@ -103,7 +103,7 @@ namespace BrodieTheatre
             toolStripStatus.Text = "Setting lights to Paused Level";
             queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPausedLevel * 10));
             trackBarPots.Value = Properties.Settings.Default.potsPausedLevel;
-            setLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPausedLevel * 10));
+            queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPausedLevel * 10));
             trackBarTray.Value = Properties.Settings.Default.trayPausedLevel;
         }
 
