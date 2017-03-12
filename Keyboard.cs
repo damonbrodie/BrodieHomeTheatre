@@ -70,6 +70,20 @@ namespace BrodieTheatre
                         }
                         ));
                         break;
+                    case "F4":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.projectorQueueChangeAspect((float)2.0);
+                        }
+                        ));
+                        break;
+                    case "F5":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.projectorQueueChangeAspect((float)1.85);
+                        }
+                        ));
+                        break;
                 }
             }
 
