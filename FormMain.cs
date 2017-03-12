@@ -10,6 +10,10 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        //42.22.B8 Pot
+        //42.20.F8 Tray
+        //41.66.88 Motion Sensor
+
         static FormMain formMain;
         public class Activities
         {
@@ -23,10 +27,6 @@ namespace BrodieTheatre
         }
 
         Plm powerlineModem;
-
-        //42.22.B8 Pot
-        //42.20.F8 Tray
-        //41.66.88 Motion Sensor
 
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
@@ -46,7 +46,6 @@ namespace BrodieTheatre
         public float projectorNewAspect = 0;
 
         public SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer();
-
         public SpeechRecognitionEngine recognitionEngine = new SpeechRecognitionEngine();
 
         Dictionary<string, int> lights = new Dictionary<string, int>();      
@@ -58,7 +57,6 @@ namespace BrodieTheatre
             InitializeComponent();
             resetGlobalTimer();
             projectorConnected = false;
-
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -83,7 +81,6 @@ namespace BrodieTheatre
                 await ConnectHarmonyAsync();
             }
         }
-
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
@@ -114,9 +111,6 @@ namespace BrodieTheatre
 
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
             recognitionEngine.SetInputToDefaultAudioDevice();
-            //recognitionEngine.InitialSilenceTimeout = TimeSpan.FromSeconds(2);
-            //recognitionEngine.EndSilenceTimeout = TimeSpan.FromSeconds(1.5);
-            //recognitionEngine.BabbleTimeout = TimeSpan.FromSeconds(5);
 
             loadVoiceCommands();
             recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
@@ -156,8 +150,6 @@ namespace BrodieTheatre
             timerClearStatus.Enabled = true;
         }
 
-
-
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
@@ -172,12 +164,6 @@ namespace BrodieTheatre
             UnhookWindowsHookEx(hookID);
             writeLog("------ Shutting Down ------");
         }
-
-        /*
-         * This timer runs when ever:
-         *   - The lights get turned on
-         *   - A Harmony Activity is enabled
-         */
 
         private void timerGlobal_Tick(object sender, EventArgs e)
         {
@@ -213,8 +199,6 @@ namespace BrodieTheatre
                 toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
             }
         }
-
-  
 
         private async void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
         {
