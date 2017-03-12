@@ -293,5 +293,17 @@ namespace BrodieTheatre
                 buttonProjectorChangeAspect.Enabled = false;
             }
         }
+
+        private void labelRoomOccupancy_Click(object sender, EventArgs e)
+        {
+            if (labelRoomOccupancy.Text == "Occupied")
+            {
+                labelRoomOccupancy.Text = "Vacant";
+            }
+            else
+            {
+                labelRoomOccupancy.Text = "Occupied";
+            }
+        }
     }
 }

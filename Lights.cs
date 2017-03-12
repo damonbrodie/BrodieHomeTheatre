@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Collections.Generic;
 
 
 namespace BrodieTheatre
@@ -109,11 +108,11 @@ namespace BrodieTheatre
 
         private void timerSetLights_Tick(object sender, EventArgs e)
         {
-            if (lights[Properties.Settings.Default.potsAddress] != -1)
+            if (Properties.Settings.Default.potsAddress != "" && lights[Properties.Settings.Default.potsAddress] != -1)
             {
                 setLightLevel(Properties.Settings.Default.potsAddress, lights[Properties.Settings.Default.potsAddress]);
             }
-            else if (lights[Properties.Settings.Default.trayAddress] != -1)
+            else if (Properties.Settings.Default.trayAddress != "" && lights[Properties.Settings.Default.trayAddress] != -1)
             {
                 setLightLevel(Properties.Settings.Default.trayAddress, lights[Properties.Settings.Default.trayAddress]);
             }

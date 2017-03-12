@@ -626,6 +626,7 @@
             this.labelRoomOccupancy.Text = "Unknown";
             this.labelRoomOccupancy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelRoomOccupancy.TextChanged += new System.EventHandler(this.labelRoomOccupancy_TextChanged);
+            this.labelRoomOccupancy.Click += new System.EventHandler(this.labelRoomOccupancy_Click);
             // 
             // label10
             // 

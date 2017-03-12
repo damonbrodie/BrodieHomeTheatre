@@ -177,15 +177,13 @@ namespace BrodieTheatre
                         {
                             resetGlobalTimer();
                         }
+                        return;
                     }
                     counter++;
                 }
             }
-            else
-            {
-                toolStripStatus.Text = "Could not connect to light - " + address;
-                writeLog("Insteon: Error Setting Light " + address + " Level " + level.ToString());
-            }
+            toolStripStatus.Text = "Could not connect to light - " + address;
+            writeLog("Insteon: Error Setting Light " + address + " Level " + level.ToString());
         }
 
         private void PowerlineModem_OnError(object sender, EventArgs e)
