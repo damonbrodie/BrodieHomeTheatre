@@ -132,9 +132,13 @@ namespace BrodieTheatre
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            if (e.Result.Alternates != null && labelRoomOccupancy.Text == "Occupied" && labelKodiStatus.Text != "Playing")
+            if (e.Result.Alternates != null && labelKodiStatus.Text != "Playing")
             {
-                toolStripStatus.Text = e.Result.Text;
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    toolStripStatus.Text = e.Result.Text;
+                }
+                ));
                 RecognizedPhrase phrase = e.Result.Alternates[0];
 
                 string topPhrase = phrase.Semantics.Value.ToString();
@@ -146,7 +150,6 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.toolStripStatus.Text = "Starting Home Theatre";
                             formMain.startActivityByName(Properties.Settings.Default.voiceActivity);
                             formMain.timerStartLights.Enabled = true;
                         }
@@ -155,8 +158,7 @@ namespace BrodieTheatre
                     case "Turn off Theatre":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.labelLastVoiceCommand.Text = phrase.Semantics.Value.ToString();
-                            formMain.toolStripStatus.Text = "Stopping Home Theatre";
+                            formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.startActivityByName("PowerOff");
                             formMain.lightsToEnteringLevel();
                         }
@@ -167,6 +169,7 @@ namespace BrodieTheatre
                         {
                             if (formMain.WindowState == FormWindowState.Minimized)
                             {
+                                formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Normal;
                             }
                         }
@@ -178,6 +181,7 @@ namespace BrodieTheatre
                         {
                             if (formMain.WindowState == FormWindowState.Normal)
                             {
+                                formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Minimized;
                             }
                         }
@@ -186,6 +190,7 @@ namespace BrodieTheatre
                     case "Greeting":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.sayGreeting();
                         }
                         ));
@@ -194,6 +199,7 @@ namespace BrodieTheatre
                     case "Lights On":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToEnteringLevel();
                         }
                         ));
@@ -201,6 +207,7 @@ namespace BrodieTheatre
                     case "Dim Lights":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToStoppedLevel();
                         }
                         ));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 using SoapBox.FluentDwelling;
 using Microsoft.Speech.Synthesis;
@@ -46,7 +47,7 @@ namespace BrodieTheatre
         public float projectorNewAspect = 0;
 
         public SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer();
-        public SpeechRecognitionEngine recognitionEngine = new SpeechRecognitionEngine();
+        public SpeechRecognitionEngine recognitionEngine;
 
         Dictionary<string, int> lights = new Dictionary<string, int>();      
 
@@ -110,12 +111,6 @@ namespace BrodieTheatre
             timerSetLights.Enabled = true;
 
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
-            recognitionEngine.SetInputToDefaultAudioDevice();
-
-            loadVoiceCommands();
-            recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
-
-            recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
             if (Program.Client.Token != "")
             {
                 formMain.labelHarmonyStatus.Text = "Connected";
@@ -135,7 +130,6 @@ namespace BrodieTheatre
         private void timerClearStatus_Tick(object sender, EventArgs e)
         {
             toolStripStatus.Text = "";
-            //timerClearStatus.Enabled = false;
         }
 
         private void timerShutdown_Tick(object sender, EventArgs e)
@@ -206,13 +200,21 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
+                    // Power on the Amplifier
+                    formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
+
+                    Thread.Sleep(2000);
+
+                    formMain.recognitionEngine = new SpeechRecognitionEngine();
+                    formMain.recognitionEngine.SetInputToDefaultAudioDevice();
+                    formMain.loadVoiceCommands();
+                    formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
+                    formMain.recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+
                     writeLog("Occupancy Changed: Room Occupied");
                     formMain.resetGlobalTimer();
                     formMain.timerShutdown.Enabled = false;
                     formMain.toolStripStatus.Text = "Room is now occupied";
-
-                    // Power on the Amplifier
-                    formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
                 }
                 ));
 
@@ -230,6 +232,7 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
+                    formMain.recognitionEngine.Dispose();
                     writeLog("Occupancy Changed: Room Occupied");
                 }
                 ));
