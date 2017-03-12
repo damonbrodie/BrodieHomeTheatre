@@ -212,7 +212,7 @@ namespace BrodieTheatre
                     formMain.toolStripStatus.Text = "Room is now occupied";
 
                     // Power on the Amplifier
-                    //formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
+                    formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
                 }
                 ));
 
@@ -245,7 +245,7 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             // Power off the Amplifier
-                           // formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyExitCommand);
+                            formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyExitCommand);
                         }
                         ));
                     }
