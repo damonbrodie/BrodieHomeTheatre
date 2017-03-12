@@ -159,17 +159,25 @@ namespace BrodieTheatre
                 bool finished = false;
                 int counter = 0;
 
-                while (!finished && counter < 2)
+                while (!finished && counter < 3)
                 { 
                     var lightingControl = device as DimmableLightingControl;
                     float theVal = (level * 254 / 10) + 1;
                     int toInt = (int)theVal;
                     finished = lightingControl.RampOn((byte)toInt);
-                    lights[address] = -1;
-                    writeLog("Insteon: Set Light " + address + " Level " + level.ToString());
-                    if (toInt > 0)
+                    if (!finished)
                     {
-                        resetGlobalTimer();
+                        writeLog("Error: Could not set Light " + address + " Level " + level.ToString());
+                    }
+                    else
+                    {
+                        lights[address] = -1;
+                        writeLog("Insteon: Set Light " + address + " Level " + level.ToString());
+
+                        if (toInt > 0)
+                        {
+                            resetGlobalTimer();
+                        }
                     }
                     counter++;
                 }

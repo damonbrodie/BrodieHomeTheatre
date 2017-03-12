@@ -10,10 +10,9 @@ namespace BrodieTheatre
         public void writeLog(string Message)
         {
             DateTime now = DateTime.Now;
-            using (StreamWriter file =
-                File.AppendText("logging.txt"))
+            using (StreamWriter file = File.AppendText("logging.txt"))
             {
-                        file.WriteLine(now.ToString("yyyy-MM-dd HH:mm:ss") + " " + Message);
+                file.WriteLine(now.ToString("yyyy-MM-dd HH:mm:ss") + " " + Message);
             }
         }
     }
