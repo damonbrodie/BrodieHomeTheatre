@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Media;
 using System.Windows.Forms;
 using Microsoft.Speech.Recognition;
 using System.Collections.Generic;
+using SlimDX.DirectSound;
+using SlimDX.Multimedia;
 
 
 namespace BrodieTheatre
@@ -11,7 +14,10 @@ namespace BrodieTheatre
         private void speakText(string tts)
         {
             speechSynthesizer.SpeakAsync(tts);
+            writeLog("Speech:  Speaking '" + tts + "'");
         }
+
+
 
         private void loadVoiceCommands()
         {
@@ -99,7 +105,6 @@ namespace BrodieTheatre
             commandSemantic = new SemanticResultValue("Turn on the Lights", "Lights On");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-
             gb.Append(commandChoice);
 
             Grammar grammar = new Grammar(gb);
@@ -127,7 +132,25 @@ namespace BrodieTheatre
             List<string> greetings = new List<string>(new string[] { timeGreeting, "hello there", "how can I help you" });
             Random rnd = new Random();
             int r = rnd.Next(greetings.Count);
-            speakText(greetings[r]);
+            //speakText(greetings[r]);
+            directSound = new DirectSound();
+            directSound.SetCooperativeLevel(this.Handle, CooperativeLevel.Priority);
+            directSound.IsDefaultPool = false;
+            using (WaveStream waveFile = new WaveStream(BrodieTheatre.Properties.Resources.I_m_here))
+            {
+                soundBufferDescription = new SoundBufferDescription();
+                soundBufferDescription.SizeInBytes = (int)waveFile.Length;
+                soundBufferDescription.Flags = BufferFlags.None;
+                soundBufferDescription.Format = waveFile.Format;
+
+                secondarySoundBuffer = new SecondarySoundBuffer(directSound, soundBufferDescription);
+                byte[] data = new byte[soundBufferDescription.SizeInBytes];
+                waveFile.Read(data, 0, (int)waveFile.Length);
+
+                secondarySoundBuffer.Write(data, 0, LockFlags.None);
+                secondarySoundBuffer.Play(0, PlayFlags.None);
+
+            }
         }
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
@@ -152,6 +175,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.startActivityByName(Properties.Settings.Default.voiceActivity);
                             formMain.timerStartLights.Enabled = true;
+                            writeLog("Recognized: " + topPhrase);
                         }
                         ));
                         break;
@@ -161,6 +185,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.startActivityByName("PowerOff");
                             formMain.lightsToEnteringLevel();
+                            writeLog("Recognized: " + topPhrase);
                         }
                         ));
                         break;
@@ -171,6 +196,7 @@ namespace BrodieTheatre
                             {
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Normal;
+                                writeLog("Recognized: " + topPhrase);
                             }
                         }
                         ));
@@ -183,6 +209,7 @@ namespace BrodieTheatre
                             {
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Minimized;
+                                writeLog("Recognized: " + topPhrase);
                             }
                         }
                         ));
@@ -192,6 +219,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.sayGreeting();
+                            writeLog("Recognized: " + topPhrase);
                         }
                         ));
                         break;
@@ -201,6 +229,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToEnteringLevel();
+                            writeLog("Recognized: " + topPhrase);
                         }
                         ));
                         break;
@@ -209,6 +238,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToStoppedLevel();
+                            writeLog("Recognized: " + topPhrase);
                         }
                         ));
                         break;

@@ -61,11 +61,11 @@ namespace BrodieTheatre.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        internal static string HarmonyHubIP {
+        internal static System.IO.UnmanagedMemoryStream I_m_here {
             get {
-                return ResourceManager.GetString("HarmonyHubIP", resourceCulture);
+                return ResourceManager.GetStream("I_m_here", resourceCulture);
             }
         }
     }

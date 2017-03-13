@@ -14,17 +14,17 @@ namespace BrodieTheatre
         {
             bool error = false;
             var currentActivityID = "";
-            writeLog("Connecting to Harmony");
+            writeLog("Harmony:  Connecting to Hub");
             try
             {
                 Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
                 Thread.Sleep(4000);
                 currentActivityID = await Program.Client.GetCurrentActivityAsync();
-                writeLog("Harmony Connected");
+                writeLog("Harmony:  Connected");
             }
             catch
             {
-                writeLog("Error:  Cannot connect to Harmony");
+                writeLog("Error:  Cannot connect to Harmony Hub");
                 error = true;
             }
             if (!error)
@@ -63,46 +63,48 @@ namespace BrodieTheatre
             bool notLoaded = true;
             int count = 0;
             while (notLoaded && count < 3)
-            try
-            {
-                var harmonyConfig = await Program.Client.GetConfigAsync();
-
-                formMain.BeginInvoke(new Action(() =>
+            { 
+                try
                 {
-                    formMain.toolStripStatus.Text = "Updating Activities";
-                    formMain.listBoxActivities.Items.Clear();
-                    foreach (var activity in harmonyConfig.Activities)
+                    var harmonyConfig = await Program.Client.GetConfigAsync();
+
+                    formMain.BeginInvoke(new Action(() =>
                     {
-                        if (activity.Id == currentActivityID)
+                        formMain.toolStripStatus.Text = "Updating Activities";
+                        formMain.listBoxActivities.Items.Clear();
+                        foreach (var activity in harmonyConfig.Activities)
                         {
-                            formMain.labelCurrentActivity.Text = activity.Label;
-                            if (Convert.ToInt32(activity.Id) < 0)
+                            if (activity.Id == currentActivityID)
                             {
-                                formMain.disableGlobalShutdown();
+                                formMain.labelCurrentActivity.Text = activity.Label;
+                                if (Convert.ToInt32(activity.Id) < 0)
+                                {
+                                    formMain.disableGlobalShutdown();
+                                }
+                                else
+                                {
+                                    formMain.resetGlobalTimer();
+                                }
                             }
                             else
                             {
-                                formMain.resetGlobalTimer();
+                                Activities item = new Activities();
+                                item.Id = activity.Id;
+                                item.Text = activity.Label;
+                                formMain.listBoxActivities.Items.Add(item);
                             }
                         }
-                        else
-                        {
-                            Activities item = new Activities();
-                            item.Id = activity.Id;
-                            item.Text = activity.Label;
-                            formMain.listBoxActivities.Items.Add(item);
-                        }
-                    }
-                    writeLog("Harmony Activities updated");
-                    notLoaded = false;
+                        writeLog("Harmony:  Activities updated");
+                        notLoaded = false;                   
+                    }));
+                }
+
+                catch
+                {         
+                    writeLog("Error:  Cannot update Harmony Activities");
                     Thread.Sleep(3000);
-                }));
-            }
-            catch(Exception ex)
-            {
-                writeLog("Error:  Cannot update Activities");
-                writeLog("Error:  " + ex.ToString());
-                count++;
+                    count++;
+                }
             }
         }
 
@@ -130,7 +132,7 @@ namespace BrodieTheatre
             }
             catch
             {
-
+                writeLog("Error:  Failed to send Harmony Command");
             }
         }
 
@@ -156,7 +158,6 @@ namespace BrodieTheatre
                         {
                             //An activity is starting
                             formMain.timerStartLights.Enabled = true;
-
                         }
                         else
                         {
@@ -195,6 +196,7 @@ namespace BrodieTheatre
                     try
                     {
                         await Program.Client.StartActivityAsync(currItem.Id);
+                        writeLog("Harmony:  Starting Activity " + activityName);
                     }
                     catch
                     {

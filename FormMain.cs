@@ -5,6 +5,8 @@ using SoapBox.FluentDwelling;
 using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.Recognition;
 using System.Collections.Generic;
+using SlimDX.DirectSound;
+using SlimDX.Multimedia;
 
 
 namespace BrodieTheatre
@@ -46,8 +48,12 @@ namespace BrodieTheatre
 
         public float projectorNewAspect = 0;
 
-        public SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer();
+        public SpeechSynthesizer speechSynthesizer;
         public SpeechRecognitionEngine recognitionEngine;
+
+        DirectSound directSound;
+        SoundBufferDescription soundBufferDescription;
+        SecondarySoundBuffer secondarySoundBuffer;
 
         Dictionary<string, int> lights = new Dictionary<string, int>();      
 
@@ -120,11 +126,7 @@ namespace BrodieTheatre
             {
                 formMain.labelHarmonyStatus.Text = "Disconnected";
                 formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
-            }
-
-            speechSynthesizer.Volume = 100;
-            speechSynthesizer.Rate = 2;
-            speechSynthesizer.SetOutputToDefaultAudioDevice();     
+            }   
         }
 
         private void timerClearStatus_Tick(object sender, EventArgs e)
@@ -211,6 +213,12 @@ namespace BrodieTheatre
                     formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
                     formMain.recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
 
+                    speechSynthesizer = new SpeechSynthesizer();
+                    speechSynthesizer.Volume = 100;
+                    speechSynthesizer.Rate = 2;
+                    speechSynthesizer.SetOutputToDefaultAudioDevice();
+                    speechSynthesizer.SpeakCompleted += SpeechSynthesizer_SpeakCompleted;
+
                     writeLog("Occupancy Changed: Room Occupied");
                     formMain.resetGlobalTimer();
                     formMain.timerShutdown.Enabled = false;
@@ -232,6 +240,7 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
+                    formMain.speechSynthesizer.Dispose();
                     formMain.recognitionEngine.Dispose();
                     writeLog("Occupancy Changed: Room Occupied");
                 }
@@ -241,7 +250,15 @@ namespace BrodieTheatre
                     if (labelCurrentActivity.Text != "PowerOff")
                     {
                         // Turn off active Harmony Activity
-                        await Program.Client.StartActivityAsync("-1");
+                        try
+                        {
+                            await Program.Client.StartActivityAsync("-1");
+                            writeLog("Harmony:  Sending Poweroff command");
+                        }
+                        catch
+                        {
+                            writeLog("Error:  Could not send Harmony PowerOff");
+                        }
                     }
                     else
                     {
@@ -269,6 +286,11 @@ namespace BrodieTheatre
                     ));
                 }
             }
+        }
+
+        private void SpeechSynthesizer_SpeakCompleted(object sender, SpeakCompletedEventArgs e)
+        {
+            writeLog("Speech:  Spoke Words");
         }
 
         private void resetGlobalTimer()
