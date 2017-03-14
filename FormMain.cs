@@ -48,12 +48,15 @@ namespace BrodieTheatre
 
         public float projectorNewAspect = 0;
 
-        public SpeechSynthesizer speechSynthesizer;
         public SpeechRecognitionEngine recognitionEngine;
 
-        DirectSound directSound;
-        SoundBufferDescription soundBufferDescription;
-        SecondarySoundBuffer secondarySoundBuffer;
+        DirectSound directSound = new DirectSound();
+        List<SecondarySoundBuffer> greetingsMorning = new List<SecondarySoundBuffer>();
+        List<SecondarySoundBuffer> greetingsEvening = new List<SecondarySoundBuffer>();
+        List<SecondarySoundBuffer> greetingsAfternoon = new List<SecondarySoundBuffer>();
+        List<SecondarySoundBuffer> presense = new List<SecondarySoundBuffer>();
+
+        SecondarySoundBuffer soundPoweringUp;
 
         Dictionary<string, int> lights = new Dictionary<string, int>();      
 
@@ -93,6 +96,9 @@ namespace BrodieTheatre
         {
             writeLog("------ Starting Up ------");
             await ConnectHarmonyAsync();
+            directSound.SetCooperativeLevel(this.Handle, CooperativeLevel.Priority);
+            directSound.IsDefaultPool = false;
+
             Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
 
             currentPLMport = Properties.Settings.Default.plmPort;
@@ -205,19 +211,11 @@ namespace BrodieTheatre
                     // Power on the Amplifier
                     formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
 
-                    Thread.Sleep(2000);
-
                     formMain.recognitionEngine = new SpeechRecognitionEngine();
                     formMain.recognitionEngine.SetInputToDefaultAudioDevice();
                     formMain.loadVoiceCommands();
                     formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
                     formMain.recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-
-                    speechSynthesizer = new SpeechSynthesizer();
-                    speechSynthesizer.Volume = 100;
-                    speechSynthesizer.Rate = 2;
-                    speechSynthesizer.SetOutputToDefaultAudioDevice();
-                    speechSynthesizer.SpeakCompleted += SpeechSynthesizer_SpeakCompleted;
 
                     writeLog("Occupancy Changed: Room Occupied");
                     formMain.resetGlobalTimer();
@@ -232,6 +230,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.lightsToEnteringLevel();
+                        formMain.timerStartupSound.Enabled = true;
                     }
                     ));
                 }
@@ -240,8 +239,6 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.speechSynthesizer.Dispose();
-                    formMain.recognitionEngine.Dispose();
                     writeLog("Occupancy Changed: Room Occupied");
                 }
                 ));
@@ -329,6 +326,12 @@ namespace BrodieTheatre
             {
                 labelRoomOccupancy.Text = "Occupied";
             }
+        }
+
+        private void timerStartupSound_Tick(object sender, EventArgs e)
+        {
+            timerStartupSound.Enabled = false;
+            soundPoweringUp.Play(0, PlayFlags.None);
         }
     }
 }

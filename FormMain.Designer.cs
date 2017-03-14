@@ -93,6 +93,7 @@
             this.timerCheckProjector = new System.Windows.Forms.Timer(this.components);
             this.timerProjectorLensControl = new System.Windows.Forms.Timer(this.components);
             this.timerSetLights = new System.Windows.Forms.Timer(this.components);
+            this.timerStartupSound = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -666,6 +667,11 @@
             this.timerSetLights.Interval = 500;
             this.timerSetLights.Tick += new System.EventHandler(this.timerSetLights_Tick);
             // 
+            // timerStartupSound
+            // 
+            this.timerStartupSound.Interval = 4000;
+            this.timerStartupSound.Tick += new System.EventHandler(this.timerStartupSound_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -778,5 +784,6 @@
         private System.Windows.Forms.Timer timerCheckProjector;
         private System.Windows.Forms.Timer timerProjectorLensControl;
         private System.Windows.Forms.Timer timerSetLights;
+        private System.Windows.Forms.Timer timerStartupSound;
     }
 }

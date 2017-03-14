@@ -35,7 +35,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\debug\</OutputPath>
+    <OutputPath>R:\damon\Documents\Shared\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -143,6 +143,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Voice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,15 +158,10 @@
       <DependentUpon>FormSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="BrodieTheatre_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -181,19 +181,22 @@
     <Content Include="Brodie-HomeTheatre - 48.ico" />
     <Content Include="Brodie-HomeTheatre.ico" />
     <Content Include="Process Flow.txt" />
-    <Content Include="Resources\Good evening.wav" />
-    <Content Include="Resources\Good morning.wav" />
-    <Content Include="Resources\Greetings.wav" />
-    <Content Include="Resources\Hello.wav" />
-    <Content Include="Resources\I am around.wav" />
-    <Content Include="Resources\I%27m here 2.wav" />
-    <Content Include="Resources\Loud and clear.wav" />
-    <Content Include="Resources\Standing by.wav" />
-    <Content Include="Resources\welcome back.wav" />
-    <Content Include="Resources\Welcome.wav" />
-    <Content Include="Resources\Yes 2.wav" />
-    <Content Include="Resources\Yes.wav" />
+    <None Include="Resources\long Powering Up.wav" />
+    <None Include="Resources\Silence-1sec.wav" />
+    <None Include="Resources\Powering Up.wav" />
+    <None Include="Resources\Yes.wav" />
+    <None Include="Resources\Yes 2.wav" />
+    <None Include="Resources\Welcome.wav" />
+    <None Include="Resources\welcome back.wav" />
+    <None Include="Resources\Standing by.wav" />
+    <None Include="Resources\Loud and clear.wav" />
     <None Include="Resources\I%27m here.wav" />
+    <None Include="Resources\I%27m here 2.wav" />
+    <None Include="Resources\I am around.wav" />
+    <None Include="Resources\Hello.wav" />
+    <None Include="Resources\Greetings.wav" />
+    <None Include="Resources\Good morning.wav" />
+    <None Include="Resources\Good evening.wav" />
     <None Include="Resources\Icon2.ico" />
     <None Include="Resources\Icon1.ico" />
   </ItemGroup>

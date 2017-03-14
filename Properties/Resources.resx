@@ -118,7 +118,52 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Good_evening" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Good evening.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Good_morning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Good morning.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Greetings" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Greetings.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Hello" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Hello.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="I_am_around" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\I am around.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="I_m_here" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\I'm here.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="I_m_here_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\I'm here 2.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Loud_and_clear" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Loud and clear.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Standing_by" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Standing by.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Welcome" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Welcome.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="welcome_back" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\welcome back.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Yes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Yes.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Yes_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Yes 2.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Powering_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Powering Up.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Silence_1sec" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Silence-1sec.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="long_Powering_Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\long Powering Up.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

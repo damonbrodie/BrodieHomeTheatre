@@ -159,15 +159,10 @@ namespace BrodieTheatre
                             //An activity is starting
                             formMain.timerStartLights.Enabled = true;
                         }
-                        else
+                        else //Power Off
                         {
-                            // Powering off
-                            formMain.toolStripStatus.Text = "Turning on pot lights";
-                            formMain.queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
-                            formMain.trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
-                            formMain.toolStripStatus.Text = "Turning on tray lights";
-                            formMain.queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
-                            formMain.trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
+                            //Turn up the ligths so occupants can find their way out
+                            lightsToEnteringLevel();
                         }
                     }
                     ));

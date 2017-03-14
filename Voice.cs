@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Media;
 using System.Windows.Forms;
 using Microsoft.Speech.Recognition;
-using System.Collections.Generic;
 using SlimDX.DirectSound;
 using SlimDX.Multimedia;
 
@@ -11,14 +9,6 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        private void speakText(string tts)
-        {
-            speechSynthesizer.SpeakAsync(tts);
-            writeLog("Speech:  Speaking '" + tts + "'");
-        }
-
-
-
         private void loadVoiceCommands()
         {
             GrammarBuilder gb = new GrammarBuilder();
@@ -81,13 +71,16 @@ namespace BrodieTheatre
             commandSemantic = new SemanticResultValue("hide application", "Hide Application");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Are you There", "Greeting");
+            commandSemantic = new SemanticResultValue("Are you There", "Presense");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            commandSemantic = new SemanticResultValue("Are you Listening", "Presense");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
             commandSemantic = new SemanticResultValue("Hello Ronda", "Greeting");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Hello Ronda", "Greeting");
+            commandSemantic = new SemanticResultValue("OK Ronda", "Greeting");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
             commandSemantic = new SemanticResultValue("Dim the Lights", "Dim Lights");
@@ -105,57 +98,95 @@ namespace BrodieTheatre
             commandSemantic = new SemanticResultValue("Turn on the Lights", "Lights On");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
+            commandSemantic = new SemanticResultValue("Raise the Lights", "Lights On");
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
             gb.Append(commandChoice);
 
             Grammar grammar = new Grammar(gb);
 
             grammar.Name = "commands";
             recognitionEngine.LoadGrammar(grammar);
+
+            loadWaves();
+        }
+
+        private void loadWaves()
+        {
+            greetingsEvening.Add(waveToBuffer(Properties.Resources.Good_evening));
+            greetingsEvening.Add(waveToBuffer(Properties.Resources.Greetings));
+            greetingsEvening.Add(waveToBuffer(Properties.Resources.Hello));
+            greetingsEvening.Add(waveToBuffer(Properties.Resources.Welcome));
+            greetingsEvening.Add(waveToBuffer(Properties.Resources.welcome_back));
+
+            greetingsMorning.Add(waveToBuffer(Properties.Resources.Good_morning));
+            greetingsMorning.Add(waveToBuffer(Properties.Resources.Greetings));
+            greetingsMorning.Add(waveToBuffer(Properties.Resources.Hello));
+            greetingsMorning.Add(waveToBuffer(Properties.Resources.Welcome));
+            greetingsMorning.Add(waveToBuffer(Properties.Resources.welcome_back));
+
+            greetingsAfternoon.Add(waveToBuffer(Properties.Resources.Greetings));
+            greetingsAfternoon.Add(waveToBuffer(Properties.Resources.Hello));
+            greetingsAfternoon.Add(waveToBuffer(Properties.Resources.Welcome));
+            greetingsAfternoon.Add(waveToBuffer(Properties.Resources.welcome_back));
+
+            presense.Add(waveToBuffer(Properties.Resources.I_m_here));
+            presense.Add(waveToBuffer(Properties.Resources.I_m_here_2));
+            presense.Add(waveToBuffer(Properties.Resources.Standing_by));
+            presense.Add(waveToBuffer(Properties.Resources.Yes));
+            presense.Add(waveToBuffer(Properties.Resources.Yes_2));
+            presense.Add(waveToBuffer(Properties.Resources.I_am_around));
+
+            soundPoweringUp = waveToBuffer(Properties.Resources.long_Powering_Up);
+        }
+
+        private SecondarySoundBuffer waveToBuffer(System.IO.UnmanagedMemoryStream wave)
+        {
+            WaveStream waveFile = new WaveStream(wave);
+            SoundBufferDescription soundBufferDescription = new SoundBufferDescription();
+            soundBufferDescription.SizeInBytes = (int)waveFile.Length;
+            soundBufferDescription.Flags = BufferFlags.None;
+            soundBufferDescription.Format = waveFile.Format;
+            SecondarySoundBuffer buffer = new SecondarySoundBuffer(directSound, soundBufferDescription);
+            byte[] data = new byte[soundBufferDescription.SizeInBytes];
+            waveFile.Read(data, 0, (int)waveFile.Length);
+            buffer.Write(data, 0, LockFlags.None);
+            return buffer;
         }
 
         private void sayGreeting()
         {
-            int currHour = DateTime.Now.Hour;
-            string timeGreeting;
-            if (currHour >= 5 && currHour <= 11)
+            Random rnd = new Random();
+            int hour = DateTime.Now.Hour;
+            if (hour <= 4 || hour >= 17)
             {
-                timeGreeting = "good morning";
+                SecondarySoundBuffer currBuffer = greetingsEvening[rnd.Next(greetingsEvening.Count)];
+                currBuffer.Play(0, PlayFlags.None);
             }
-            else if (currHour >= 12 && currHour <= 17)
+            else if (hour < 12)
             {
-                timeGreeting = "good afternoon";
+                SecondarySoundBuffer currBuffer = greetingsMorning[rnd.Next(greetingsMorning.Count)];
+                currBuffer.Play(0, PlayFlags.None);
             }
             else
             {
-                timeGreeting = "good evening";
+                SecondarySoundBuffer currBuffer = greetingsAfternoon[rnd.Next(greetingsAfternoon.Count)];
+                currBuffer.Play(0, PlayFlags.None);
             }
-            List<string> greetings = new List<string>(new string[] { timeGreeting, "hello there", "how can I help you" });
+
+        }
+
+        private void sayPresense()
+        {
             Random rnd = new Random();
-            int r = rnd.Next(greetings.Count);
-            //speakText(greetings[r]);
-            directSound = new DirectSound();
-            directSound.SetCooperativeLevel(this.Handle, CooperativeLevel.Priority);
-            directSound.IsDefaultPool = false;
-            using (WaveStream waveFile = new WaveStream(BrodieTheatre.Properties.Resources.I_m_here))
-            {
-                soundBufferDescription = new SoundBufferDescription();
-                soundBufferDescription.SizeInBytes = (int)waveFile.Length;
-                soundBufferDescription.Flags = BufferFlags.None;
-                soundBufferDescription.Format = waveFile.Format;
-
-                secondarySoundBuffer = new SecondarySoundBuffer(directSound, soundBufferDescription);
-                byte[] data = new byte[soundBufferDescription.SizeInBytes];
-                waveFile.Read(data, 0, (int)waveFile.Length);
-
-                secondarySoundBuffer.Write(data, 0, LockFlags.None);
-                secondarySoundBuffer.Play(0, PlayFlags.None);
-
-            }
+            SecondarySoundBuffer currBuffer = presense[rnd.Next(presense.Count)];
+            currBuffer.Play(0, PlayFlags.None);
         }
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            if (e.Result.Alternates != null && labelKodiStatus.Text != "Playing")
+            writeLog("Voice:  Recognized Speech '" + e.Result.Text + "' Confidence " + e.Result.Confidence.ToString());
+            if (e.Result.Alternates != null && e.Result.Confidence > (float)0.90 && labelKodiStatus.Text != "Playing")
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
@@ -200,7 +231,6 @@ namespace BrodieTheatre
                             }
                         }
                         ));
-
                         break;
                     case "Hide Application":
                         formMain.BeginInvoke(new Action(() =>
@@ -223,7 +253,15 @@ namespace BrodieTheatre
                         }
                         ));
                         break;
-
+                    case "Presense":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.labelLastVoiceCommand.Text = topPhrase;
+                            formMain.sayPresense();
+                            writeLog("Recognized: " + topPhrase);
+                        }
+                        ));
+                        break;
                     case "Lights On":
                         formMain.BeginInvoke(new Action(() =>
                         {
