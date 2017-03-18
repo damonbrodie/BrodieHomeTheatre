@@ -136,14 +136,13 @@ namespace BrodieTheatre
             if (timerProjectorLensControl.Enabled == true)
             {
                 // Wait for the last Aspect change to finish
-                writeLog("Projector:  Queueing Aspect Ratio change");
+                writeLog("Projector:  Queueing Aspect Ratio change - " + aspect.ToString());
                 projectorNewAspect = aspect;
             }
             else
             {
                 projectorChangeAspect(aspect);
             }
-
         }
 
         private void timerProjectorLensControl_Tick(object sender, EventArgs e)

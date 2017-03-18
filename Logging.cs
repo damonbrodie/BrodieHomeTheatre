@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using System.Windows.Forms;
 
 
@@ -10,9 +11,24 @@ namespace BrodieTheatre
         public void writeLog(string Message)
         {
             DateTime now = DateTime.Now;
-            using (StreamWriter file = File.AppendText("logging.txt"))
+            int counter = 0;
+            bool success = false;
+            while (!success && counter < 3)
             {
-                file.WriteLine(now.ToString("yyyy-MM-dd HH:mm:ss") + " " + Message);
+
+                try
+                {
+                    using (StreamWriter file = File.AppendText("logging.txt"))
+                    {
+                        file.WriteLine(now.ToString("yyyy-MM-dd HH:mm:ss") + " " + Message);
+                        success = true;
+                    }
+                }
+                catch
+                {
+                    counter += 1;
+                    Thread.Sleep(50);
+                }
             }
         }
     }

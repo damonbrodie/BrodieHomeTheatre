@@ -9,12 +9,6 @@ namespace BrodieTheatre
     {
         private void timerKodiPoller_Tick(object sender, EventArgs e)
         {
-            if (File.Exists("kodi_ar.txt"))
-            {
-                string kodiAspectRatio = File.ReadAllText("kodi_ar.txt").Trim().ToLower();
-                File.Delete("kodi_ar.txt");
-                projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
-            }
             if (File.Exists("kodi_status.txt"))
             {
                 string kodiPlayback = File.ReadAllText("kodi_status.txt").Trim().ToLower();
@@ -22,36 +16,40 @@ namespace BrodieTheatre
                 switch (kodiPlayback)
                 {
                     case "playing":
-                        labelKodiStatus.Text = "Playing";
-                        lightsToPlaybackLevel();
                         writeLog("Kodi:  Kodi status changed to 'Playing'");
+                        labelKodiStatus.Text = "Playing";
+                        lightsToPlaybackLevel(); 
                         resetGlobalTimer();
 
                         break;
                     case "stopped":
+                        writeLog("Kodi:  Kodi status changed to 'Stopped'");
                         labelKodiStatus.Text = "Stopped";
                         lightsToStoppedLevel();
-                        writeLog("Kodi:  Kodi status changed to 'Stopped'");
                         resetGlobalTimer();
 
                         break;
                     case "paused":
-                        labelKodiStatus.Text = "Paused";
                         writeLog("Kodi:  Kodi status changed to 'Paused'");
+                        labelKodiStatus.Text = "Paused";
                         lightsToPausedLevel();
-
                         resetGlobalTimer();
 
                         break;
                     default:
-                        labelKodiStatus.Text = "Stopped";
                         writeLog("Kodi:  Unknown Kodi status - assuming 'Stopped'");
+                        labelKodiStatus.Text = "Stopped";
                         lightsToStoppedLevel();
-
                         resetGlobalTimer();
 
                         break;
                 }
+            }
+            if (File.Exists("kodi_ar.txt"))
+            {
+                string kodiAspectRatio = File.ReadAllText("kodi_ar.txt").Trim().ToLower();
+                File.Delete("kodi_ar.txt");
+                projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
             }
         }
     }

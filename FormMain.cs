@@ -5,8 +5,6 @@ using SoapBox.FluentDwelling;
 using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.Recognition;
 using System.Collections.Generic;
-using SlimDX.DirectSound;
-using SlimDX.Multimedia;
 
 
 namespace BrodieTheatre
@@ -48,15 +46,12 @@ namespace BrodieTheatre
 
         public float projectorNewAspect = 0;
 
+        public List<string> greetingsEvening = new List<string>();
+        public List<string> greetingsMorning = new List<string>();
+        public List<string> greetingsAfternoon = new List<string>();
+        public List<string> greetingsPresense = new List<string>();
+
         public SpeechRecognitionEngine recognitionEngine;
-
-        DirectSound directSound = new DirectSound();
-        List<SecondarySoundBuffer> greetingsMorning = new List<SecondarySoundBuffer>();
-        List<SecondarySoundBuffer> greetingsEvening = new List<SecondarySoundBuffer>();
-        List<SecondarySoundBuffer> greetingsAfternoon = new List<SecondarySoundBuffer>();
-        List<SecondarySoundBuffer> presense = new List<SecondarySoundBuffer>();
-
-        SecondarySoundBuffer soundPoweringUp;
 
         Dictionary<string, int> lights = new Dictionary<string, int>();      
 
@@ -96,10 +91,12 @@ namespace BrodieTheatre
         {
             writeLog("------ Starting Up ------");
             await ConnectHarmonyAsync();
-            directSound.SetCooperativeLevel(this.Handle, CooperativeLevel.Priority);
-            directSound.IsDefaultPool = false;
-
             Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
+
+            // XXX Play startup sound
+
+
+            
 
             currentPLMport = Properties.Settings.Default.plmPort;
             connectPLM();
@@ -208,43 +205,37 @@ namespace BrodieTheatre
                     formMain.writeLog("Occupancy:  Room Occupied");
                     formMain.disableGlobalShutdown();
 
-                    if (labelKodiStatus.Text != "Playing" && labelKodiStatus.Text != "Paused")
+                    if (labelCurrentActivity.Text == "PowerOff" && labelKodiStatus.Text == "Stopped")
                     {
-                        formMain.writeLog("Occupancy:  Powering On AV Amplifier");
-                        // Power on the Amplifier
-                        formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.lightsToEnteringLevel();
+                            formMain.timerStartupSound.Enabled = true;
+                            formMain.writeLog("Occupancy:  Powering On AV Amplifier");
+                            formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
+                        }
+                        ));
                     }
-                    
 
-                    formMain.recognitionEngine = new SpeechRecognitionEngine();
-                    formMain.recognitionEngine.SetInputToDefaultAudioDevice();
-                    formMain.loadVoiceCommands();
-                    formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
-                    formMain.recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-
+                    if (labelKodiStatus.Text != "Playing")
+                    {
+                        formMain.recognitionEngine = new SpeechRecognitionEngine();
+                        formMain.recognitionEngine.SetInputToDefaultAudioDevice();
+                        formMain.loadVoiceCommands();
+                        formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
+                        formMain.recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+                    }
                     
 
                     formMain.toolStripStatus.Text = "Room is now occupied";
                 }
                 ));
-
-
-                if (labelCurrentActivity.Text == "PowerOff" && labelKodiStatus.Text != "Playing" && labelKodiStatus.Text != "Paused")
-                {
-                    formMain.BeginInvoke(new Action(() =>
-                    {
-                        formMain.lightsToEnteringLevel();
-                        formMain.timerStartupSound.Enabled = true;
-                        formMain.writeLog("Occupancy:  Powering Off AV Amplifier");
-                    }
-                    ));
-                }
             }
             else if (labelRoomOccupancy.Text == "Vacant")
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Occupancy:  Room Occupied");
+                    formMain.writeLog("Occupancy:  Room Vacant");
                 }
                 ));
                 if (labelKodiStatus.Text == "Stopped")

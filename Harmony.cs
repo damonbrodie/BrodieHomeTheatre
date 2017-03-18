@@ -49,6 +49,7 @@ namespace BrodieTheatre
                 if (activity == "-1")
                 {
                     formMain.projectorPowerOff();
+                    formMain.lightsOn();
                 }
                 else
                 {
@@ -110,29 +111,36 @@ namespace BrodieTheatre
 
         private async void harmonySendCommand(string device, string button)
         {
-            try
+            bool success = false;
+            int counter = 0;
+            while (!success && counter < 3)
             {
-                var harmonyConfig = await Program.Client.GetConfigAsync();
-                foreach (Device currDevice in harmonyConfig.Devices)
+                try
                 {
-                    if (currDevice.Label == device)
+                    var harmonyConfig = await Program.Client.GetConfigAsync();
+                    foreach (Device currDevice in harmonyConfig.Devices)
                     {
-                        foreach (ControlGroup controlGroup in currDevice.ControlGroups)
+                        if (currDevice.Label == device)
                         {
-                            foreach (Function function in controlGroup.Functions)
+                            foreach (ControlGroup controlGroup in currDevice.ControlGroups)
                             {
-                                if (function.Name == button)
+                                foreach (Function function in controlGroup.Functions)
                                 {
-                                    await Program.Client.SendCommandAsync(currDevice.Id, function.Name);
+                                    if (function.Name == button)
+                                    {
+                                        await Program.Client.SendCommandAsync(currDevice.Id, function.Name);
+                                        success = true;
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            catch
-            {
-                writeLog("Error:  Failed to send Harmony Command");
+                catch
+                {
+                    writeLog("Error:  Failed to send Harmony Command");
+                    counter += 1;
+                }
             }
         }
 

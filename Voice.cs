@@ -113,45 +113,29 @@ namespace BrodieTheatre
 
         private void loadWaves()
         {
-            greetingsEvening.Add(waveToBuffer(Properties.Resources.Good_evening));
-            greetingsEvening.Add(waveToBuffer(Properties.Resources.Greetings));
-            greetingsEvening.Add(waveToBuffer(Properties.Resources.Hello));
-            greetingsEvening.Add(waveToBuffer(Properties.Resources.Welcome));
-            greetingsEvening.Add(waveToBuffer(Properties.Resources.welcome_back));
+            greetingsEvening.Add("Good evening.wav");
+            greetingsEvening.Add("Greetings.wav");
+            greetingsEvening.Add("Hello.wav");
+            greetingsEvening.Add("Welcome.wav");
+            greetingsEvening.Add("welcome back.wav");
 
-            greetingsMorning.Add(waveToBuffer(Properties.Resources.Good_morning));
-            greetingsMorning.Add(waveToBuffer(Properties.Resources.Greetings));
-            greetingsMorning.Add(waveToBuffer(Properties.Resources.Hello));
-            greetingsMorning.Add(waveToBuffer(Properties.Resources.Welcome));
-            greetingsMorning.Add(waveToBuffer(Properties.Resources.welcome_back));
+            greetingsMorning.Add("Good morning.wav");
+            greetingsMorning.Add("Greetings.wav");
+            greetingsMorning.Add("Hello.wav");
+            greetingsMorning.Add("Welcome.wav");
+            greetingsMorning.Add("welcome back.wav");
 
-            greetingsAfternoon.Add(waveToBuffer(Properties.Resources.Greetings));
-            greetingsAfternoon.Add(waveToBuffer(Properties.Resources.Hello));
-            greetingsAfternoon.Add(waveToBuffer(Properties.Resources.Welcome));
-            greetingsAfternoon.Add(waveToBuffer(Properties.Resources.welcome_back));
+            greetingsAfternoon.Add("Greetings.wav");
+            greetingsAfternoon.Add("Hello.wav");
+            greetingsAfternoon.Add("Welcome.wav");
+            greetingsAfternoon.Add("welcome back.wav");
 
-            presense.Add(waveToBuffer(Properties.Resources.I_m_here));
-            presense.Add(waveToBuffer(Properties.Resources.I_m_here_2));
-            presense.Add(waveToBuffer(Properties.Resources.Standing_by));
-            presense.Add(waveToBuffer(Properties.Resources.Yes));
-            presense.Add(waveToBuffer(Properties.Resources.Yes_2));
-            presense.Add(waveToBuffer(Properties.Resources.I_am_around));
-
-            soundPoweringUp = waveToBuffer(Properties.Resources.long_Powering_Up);
-        }
-
-        private SecondarySoundBuffer waveToBuffer(System.IO.UnmanagedMemoryStream wave)
-        {
-            WaveStream waveFile = new WaveStream(wave);
-            SoundBufferDescription soundBufferDescription = new SoundBufferDescription();
-            soundBufferDescription.SizeInBytes = (int)waveFile.Length;
-            soundBufferDescription.Flags = BufferFlags.None;
-            soundBufferDescription.Format = waveFile.Format;
-            SecondarySoundBuffer buffer = new SecondarySoundBuffer(directSound, soundBufferDescription);
-            byte[] data = new byte[soundBufferDescription.SizeInBytes];
-            waveFile.Read(data, 0, (int)waveFile.Length);
-            buffer.Write(data, 0, LockFlags.None);
-            return buffer;
+            greetingsPresense.Add("I'm here.wav");
+            greetingsPresense.Add("I'm here 2.wav");
+            greetingsPresense.Add("Standing_by.wav");
+            greetingsPresense.Add("Yes.wav");
+            greetingsPresense.Add("Yes 2.wav");
+            greetingsPresense.Add("I am around.wav");  
         }
 
         private void sayGreeting()
@@ -161,19 +145,19 @@ namespace BrodieTheatre
             if (hour <= 4 || hour >= 17)
             {
                 writeLog("Voice:  Saying evening greeting");
-                SecondarySoundBuffer currBuffer = greetingsEvening[rnd.Next(greetingsEvening.Count)];
+                //SecondarySoundBuffer currBuffer = greetingsEvening[rnd.Next(greetingsEvening.Count)];
                 //currBuffer.Play(0, PlayFlags.None);
             }
             else if (hour < 12)
             {
                 writeLog("Voice:  Saying morning greeting");
-                SecondarySoundBuffer currBuffer = greetingsMorning[rnd.Next(greetingsMorning.Count)];
+                //SecondarySoundBuffer currBuffer = greetingsMorning[rnd.Next(greetingsMorning.Count)];
                 //currBuffer.Play(0, PlayFlags.None);
             }
             else
             {
                 writeLog("Voice:  Saying afternoon reeting");
-                SecondarySoundBuffer currBuffer = greetingsAfternoon[rnd.Next(greetingsAfternoon.Count)];
+               // SecondarySoundBuffer currBuffer = greetingsAfternoon[rnd.Next(greetingsAfternoon.Count)];
                 //currBuffer.Play(0, PlayFlags.None);
             }
 
@@ -183,7 +167,7 @@ namespace BrodieTheatre
         {
             Random rnd = new Random();
             writeLog("Voice:  Saying acknowledgement");
-            SecondarySoundBuffer currBuffer = presense[rnd.Next(presense.Count)];
+            //SecondarySoundBuffer currBuffer = presense[rnd.Next(presense.Count)];
             //currBuffer.Play(0, PlayFlags.None);
         }
 

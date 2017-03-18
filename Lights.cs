@@ -61,9 +61,9 @@ namespace BrodieTheatre
             writeLog("Setting lights to On");
             toolStripStatus.Text = "Turning On Lights";
             queueLightLevel(Properties.Settings.Default.potsAddress, (100));
-            trackBarPots.Value = 100;
+            trackBarPots.Value = trackBarPots.Maximum;
             queueLightLevel(Properties.Settings.Default.trayAddress, (100));
-            trackBarTray.Value = 100;
+            trackBarTray.Value = trackBarTray.Maximum;
         }
 
         private void lightsToEnteringLevel()
@@ -78,12 +78,12 @@ namespace BrodieTheatre
 
         private void lightsOff()
         {
-            writeLog("Setting lights Off");
-            toolStripStatus.Text = "Turning off lights";
+            writeLog("Setting lights to Off");
+            toolStripStatus.Text = "Turning Off Lights";
             queueLightLevel(Properties.Settings.Default.potsAddress, 0);
-            trackBarPots.Value = 0;
+            trackBarPots.Value = trackBarPots.Minimum;
             queueLightLevel(Properties.Settings.Default.trayAddress, 0);
-            trackBarTray.Value = 0;
+            trackBarTray.Value = trackBarTray.Minimum;
         }
 
         private void lightsToPlaybackLevel()
