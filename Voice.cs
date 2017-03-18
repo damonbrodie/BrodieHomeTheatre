@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using Microsoft.Speech.Recognition;
 
@@ -12,7 +13,7 @@ namespace BrodieTheatre
             GrammarBuilder gb = new GrammarBuilder();
             Choices commandChoice = new Choices();
 
-            SemanticResultValue commandSemantic = new SemanticResultValue("Turn on Projector", "Turn on Theatre");
+            SemanticResultValue commandSemantic = new SemanticResultValue("turn on projector", "Turn on Theatre");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
             commandSemantic = new SemanticResultValue("projector on", "Turn on Theatre");
@@ -69,10 +70,10 @@ namespace BrodieTheatre
             commandSemantic = new SemanticResultValue("hide application", "Hide Application");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Are you There", "Presense");
+            commandSemantic = new SemanticResultValue("are you there", "Presense");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Are you Listening", "Presense");
+            commandSemantic = new SemanticResultValue("are you listening", "Presense");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
             commandSemantic = new SemanticResultValue("Hello Ronda", "Greeting");
@@ -81,22 +82,22 @@ namespace BrodieTheatre
             commandSemantic = new SemanticResultValue("OK Ronda", "Greeting");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Dim the Lights", "Dim Lights");
+            commandSemantic = new SemanticResultValue("dim the lights", "Dim Lights");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Turn Down Lights", "Dim Lights");
+            commandSemantic = new SemanticResultValue("turn down lights", "Dim Lights");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Turn Down the Lights", "Dim Lights");
+            commandSemantic = new SemanticResultValue("turn down the lights", "Dim Lights");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Turn on Lights", "Lights On");
+            commandSemantic = new SemanticResultValue("turn on lights", "Lights On");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Turn on the Lights", "Lights On");
+            commandSemantic = new SemanticResultValue("turn on the lights", "Lights On");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("Raise the Lights", "Lights On");
+            commandSemantic = new SemanticResultValue("raise the lights", "Lights On");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
             gb.Append(commandChoice);
@@ -136,6 +137,13 @@ namespace BrodieTheatre
             greetingsPresense.Add("I am around.wav");  
         }
 
+        private void kodiPlayWave(string file)
+        {
+            StreamWriter fileHandle = new StreamWriter(waveFile);
+            fileHandle.WriteLine(Path.Combine(wavePath,file));
+            fileHandle.Close();
+        }
+
         private void sayGreeting()
         {
             Random rnd = new Random();
@@ -143,41 +151,37 @@ namespace BrodieTheatre
             if (hour <= 4 || hour >= 17)
             {
                 writeLog("Voice:  Saying evening greeting");
-                //SecondarySoundBuffer currBuffer = greetingsEvening[rnd.Next(greetingsEvening.Count)];
-                //currBuffer.Play(0, PlayFlags.None);
+                kodiPlayWave (greetingsEvening[rnd.Next(greetingsEvening.Count)]);
             }
             else if (hour < 12)
             {
                 writeLog("Voice:  Saying morning greeting");
-                //SecondarySoundBuffer currBuffer = greetingsMorning[rnd.Next(greetingsMorning.Count)];
-                //currBuffer.Play(0, PlayFlags.None);
+                kodiPlayWave(greetingsMorning[rnd.Next(greetingsMorning.Count)]);
             }
             else
             {
                 writeLog("Voice:  Saying afternoon greeting");
-               // SecondarySoundBuffer currBuffer = greetingsAfternoon[rnd.Next(greetingsAfternoon.Count)];
-                //currBuffer.Play(0, PlayFlags.None);
+                kodiPlayWave(greetingsAfternoon[rnd.Next(greetingsAfternoon.Count)]);
             }
-
         }
 
         private void sayPresense()
         {
             Random rnd = new Random();
             writeLog("Voice:  Saying acknowledgement");
-            //SecondarySoundBuffer currBuffer = presense[rnd.Next(presense.Count)];
-            //currBuffer.Play(0, PlayFlags.None);
+            kodiPlayWave("Yes.wav");
         }
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             string confidence = Math.Round((e.Result.Confidence * 100), 2).ToString();
-            if (e.Result.Alternates != null && e.Result.Confidence > (float)0.90 && labelKodiStatus.Text != "Playing")
+            float minConfidence = Properties.Settings.Default.voiceConfidence / 100;
+            if (e.Result.Alternates != null && e.Result.Confidence > minConfidence && labelKodiStatus.Text != "Playing")
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Voice:  Recognized Speech '" + e.Result.Text + "' Confidence (" + confidence+"%)");
-                    formMain.toolStripStatus.Text = "Heard: " + e.Result.Text + " (" + confidence + "%)";
+                    formMain.writeLog("Voice:  Recognized Speech '" + e.Result.Text + "' Confidence " + confidence+"%");
+                    formMain.toolStripStatus.Text = "Heard: '" + e.Result.Text + "' (" + confidence + "%)";
                 }
                 ));
                 RecognizedPhrase phrase = e.Result.Alternates[0];
@@ -193,7 +197,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.startActivityByName(Properties.Settings.Default.voiceActivity);
                             formMain.timerStartLights.Enabled = true;
-                            writeLog("Recognized: " + topPhrase);
+                            writeLog("Voice: Processed " + topPhrase);
                         }
                         ));
                         break;
@@ -203,7 +207,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.startActivityByName("PowerOff");
                             formMain.lightsToEnteringLevel();
-                            writeLog("Recognized: " + topPhrase);
+                            writeLog("Voice: Processed " + topPhrase);
                         }
                         ));
                         break;
@@ -214,7 +218,7 @@ namespace BrodieTheatre
                             {
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Normal;
-                                writeLog("Recognized: " + topPhrase);
+                                writeLog("Voice: Processed '" + topPhrase + "'");
                             }
                         }
                         ));
@@ -226,7 +230,7 @@ namespace BrodieTheatre
                             {
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Minimized;
-                                writeLog("Recognized: " + topPhrase);
+                                writeLog("Voice: Processed '" + topPhrase + "'");
                             }
                         }
                         ));
@@ -236,7 +240,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.sayGreeting();
-                            writeLog("Recognized: " + topPhrase);
+                            writeLog("Voice: Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -245,7 +249,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.sayPresense();
-                            writeLog("Recognized: " + topPhrase);
+                            writeLog("Voice: Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -254,7 +258,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToEnteringLevel();
-                            writeLog("Recognized: " + topPhrase);
+                            writeLog("Voice: Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -263,7 +267,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToStoppedLevel();
-                            formMain.writeLog("Recognized: " + topPhrase);
+                            formMain.writeLog("Voice: Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -273,8 +277,8 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Voice:  (Not Processed) Recognized Speech '" + e.Result.Text + "' Confidence (" + confidence + "%)");
-                    formMain.toolStripStatus.Text = "Heard: (Not Processed)" + e.Result.Text + " (" + confidence + "%)";
+                    formMain.writeLog("Voice:  (Not Processed) Recognized Speech '" + e.Result.Text + "' Confidence " + confidence + "%");
+                    formMain.toolStripStatus.Text = "Heard: (Not Processed) '" + e.Result.Text + "' (" + confidence + "%)";
                 }
                 ));
             }

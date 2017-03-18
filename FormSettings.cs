@@ -39,6 +39,8 @@ namespace BrodieTheatre
 
             Properties.Settings.Default.motionSensorAddress = textBoxMotionSensorAddress.Text;
 
+            Properties.Settings.Default.voiceConfidence = trackBarVoiceConfidence.Value;
+
             Properties.Settings.Default.Save();
             this.Close();
         }
@@ -156,7 +158,19 @@ namespace BrodieTheatre
             {
                 if (ex is ArgumentOutOfRangeException)
                 {
-                    trackBarGlobalShutdown.Value = 0;
+                    trackBarGlobalShutdown.Value = trackBarGlobalShutdown.Minimum;
+                }
+            }
+
+            try
+            {
+                trackBarVoiceConfidence.Value = Properties.Settings.Default.voiceConfidence;
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    trackBarVoiceConfidence.Value = trackBarVoiceConfidence.Minimum;
                 }
             }
 
@@ -232,6 +246,11 @@ namespace BrodieTheatre
                 labelGlobalShutdownHours.Text = "hours";
             }
             labelGlobalShutdown.Text = trackBarGlobalShutdown.Value.ToString();
+        }
+
+        private void trackBarVoiceConfidence_ValueChanged(object sender, EventArgs e)
+        {
+            labelVoiceConfidence.Text = (trackBarVoiceConfidence.Value * 10).ToString() + "%";
         }
     }
 }

@@ -50,6 +50,9 @@ namespace BrodieTheatre
         public List<string> greetingsAfternoon = new List<string>();
         public List<string> greetingsPresense = new List<string>();
 
+        public string wavePath = @"c:\Users\damon\Documents\Shared\Wavs";
+        public string waveFile = @"c:\Users\damon\Documents\Shared\wavefile.txt";
+
         public SpeechRecognitionEngine recognitionEngine;
 
         Dictionary<string, int> lights = new Dictionary<string, int>();      
