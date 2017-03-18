@@ -70,6 +70,7 @@ namespace BrodieTheatre
                     break;
                 case "Lens":
                     toolStripStatus.Text = "Lens Change - received: " + response;
+                    writeLog("Projector:  Received Lens change response '" + response + "'");
                     break;
             }
         }
@@ -120,11 +121,13 @@ namespace BrodieTheatre
             {
                 ProjectorSendCommand(pj_codes[0]);
                 labelLensAspect.Text = "Narrow";
+                writeLog("Projector:  Changing to Lens Aspect Ratio to Narrow");
             }
             else
             {
                 ProjectorSendCommand(pj_codes[1]);
                 labelLensAspect.Text = "Wide";
+                writeLog("Projector:  Changing to Lens Aspect Ratio to Wide");
             }
         }
 
@@ -133,6 +136,7 @@ namespace BrodieTheatre
             if (timerProjectorLensControl.Enabled == true)
             {
                 // Wait for the last Aspect change to finish
+                writeLog("Projector:  Queueing Aspect Ratio change");
                 projectorNewAspect = aspect;
             }
             else
@@ -161,12 +165,14 @@ namespace BrodieTheatre
         {
             ProjectorSendCommand("PON");
             labelProjectorPower.Text = "Powering On";
+            writeLog("Projector:  Powering On");
         }
 
         private void projectorPowerOff()
         {
             ProjectorSendCommand("POF");
             labelProjectorPower.Text = "Powering Off";
+            writeLog("Projector:  Powering Off");
         }
 
 

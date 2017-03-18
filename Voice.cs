@@ -160,18 +160,21 @@ namespace BrodieTheatre
             int hour = DateTime.Now.Hour;
             if (hour <= 4 || hour >= 17)
             {
+                writeLog("Voice:  Saying evening greeting");
                 SecondarySoundBuffer currBuffer = greetingsEvening[rnd.Next(greetingsEvening.Count)];
-                currBuffer.Play(0, PlayFlags.None);
+                //currBuffer.Play(0, PlayFlags.None);
             }
             else if (hour < 12)
             {
+                writeLog("Voice:  Saying morning greeting");
                 SecondarySoundBuffer currBuffer = greetingsMorning[rnd.Next(greetingsMorning.Count)];
-                currBuffer.Play(0, PlayFlags.None);
+                //currBuffer.Play(0, PlayFlags.None);
             }
             else
             {
+                writeLog("Voice:  Saying afternoon reeting");
                 SecondarySoundBuffer currBuffer = greetingsAfternoon[rnd.Next(greetingsAfternoon.Count)];
-                currBuffer.Play(0, PlayFlags.None);
+                //currBuffer.Play(0, PlayFlags.None);
             }
 
         }
@@ -179,8 +182,9 @@ namespace BrodieTheatre
         private void sayPresense()
         {
             Random rnd = new Random();
+            writeLog("Voice:  Saying acknowledgement");
             SecondarySoundBuffer currBuffer = presense[rnd.Next(presense.Count)];
-            currBuffer.Play(0, PlayFlags.None);
+            //currBuffer.Play(0, PlayFlags.None);
         }
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)

@@ -45,6 +45,7 @@ namespace BrodieTheatre
                     case "F12":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.writeLog("Keyboard:  Caught keypress 'F12'");
                             formMain.lightsToEnteringLevel();
                         }
                         ));
@@ -52,6 +53,7 @@ namespace BrodieTheatre
                     case "F11":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.writeLog("Keyboard:  Caught keypress 'F11'");
                             formMain.lightsOff();
                         }
                         ));
@@ -59,6 +61,7 @@ namespace BrodieTheatre
                     case "F9":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.writeLog("Keyboard:  Caught keypress 'F9'");
                             formMain.lightsToStoppedLevel();
                         }
                         ));
@@ -66,6 +69,7 @@ namespace BrodieTheatre
                     case "F7":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.writeLog("Keyboard:  Caught keypress 'F7'");
                             formMain.lightsToPlaybackLevel();
                         }
                         ));
@@ -73,6 +77,7 @@ namespace BrodieTheatre
                     case "F4":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.writeLog("Keyboard:  Caught keypress 'F4'");
                             formMain.projectorQueueChangeAspect((float)2.0);
                         }
                         ));
@@ -80,6 +85,7 @@ namespace BrodieTheatre
                     case "F5":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.writeLog("Keyboard:  Caught keypress 'F5'");
                             formMain.projectorQueueChangeAspect((float)1.85);
                         }
                         ));

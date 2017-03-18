@@ -89,7 +89,6 @@
             this.labelRoomOccupancy = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.timerShutdown = new System.Windows.Forms.Timer(this.components);
             this.timerCheckProjector = new System.Windows.Forms.Timer(this.components);
             this.timerProjectorLensControl = new System.Windows.Forms.Timer(this.components);
             this.timerSetLights = new System.Windows.Forms.Timer(this.components);
@@ -647,10 +646,6 @@
             this.pictureBox5.TabIndex = 18;
             this.pictureBox5.TabStop = false;
             // 
-            // timerShutdown
-            // 
-            this.timerShutdown.Tick += new System.EventHandler(this.timerShutdown_Tick);
-            // 
             // timerCheckProjector
             // 
             this.timerCheckProjector.Enabled = true;
@@ -776,7 +771,6 @@
         private System.Windows.Forms.Label labelRoomOccupancy;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.Timer timerShutdown;
         private System.Windows.Forms.Button buttonProjectorChangeAspect;
         private System.Windows.Forms.Button buttonProjectorPower;
         private System.Windows.Forms.Label labelProjectorPower;

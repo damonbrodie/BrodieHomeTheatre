@@ -74,6 +74,7 @@ namespace BrodieTheatre
                             {
                                 formMain.BeginInvoke(new Action(() =>
                                 {
+                                    formMain.writeLog("Insteon:  Received Tray dimmer update from PLM");
                                     formMain.trackBarTray.Value = level;
                                     formMain.resetGlobalTimer();
                                 }
@@ -88,6 +89,7 @@ namespace BrodieTheatre
                             {
                                 formMain.BeginInvoke(new Action(() =>
                                 {
+                                    formMain.writeLog("Insteon:  Received Pots dimmer update from PLM");
                                     formMain.trackBarPots.Value = level;
                                     formMain.resetGlobalTimer();
                                 }
@@ -102,7 +104,7 @@ namespace BrodieTheatre
                                 {
                                     if (labelMotionSensorStatus.Text != "Motion Detected")
                                     {
-                                        writeLog("Insteon: Motion Detected");
+                                        writeLog("Insteon:  Motion Detected");
                                         formMain.labelMotionSensorStatus.Text = "Motion Detected";
                                         formMain.labelRoomOccupancy.Text = "Occupied";
                                     }
@@ -115,7 +117,7 @@ namespace BrodieTheatre
                                 {
                                     if (labelMotionSensorStatus.Text != "No Motion")
                                     {
-                                        writeLog("Insteon: No Motion Detected");
+                                        writeLog("Insteon:  No Motion Detected");
                                         formMain.labelRoomOccupancy.Text = "Vacant";
                                         formMain.labelMotionSensorStatus.Text = "No Motion";
                                     }

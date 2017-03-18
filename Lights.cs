@@ -19,13 +19,13 @@ namespace BrodieTheatre
         private void timerPotTrack_Tick(object sender, EventArgs e)
         {
             timerPotTrack.Enabled = false;
-            queueLightLevel(Properties.Settings.Default.potsAddress, trackBarPots.Value);
+            queueLightLevel(Properties.Settings.Default.potsAddress, trackBarPots.Value * 10);
         }
 
         private void timerTrayTrack_Tick(object sender, EventArgs e)
         {
             timerTrayTrack.Enabled = false;
-            queueLightLevel(Properties.Settings.Default.trayAddress, trackBarTray.Value);
+            queueLightLevel(Properties.Settings.Default.trayAddress, trackBarTray.Value * 10);
         }
 
         private void trackBarTray_Scroll(object sender, EventArgs e)
@@ -50,9 +50,9 @@ namespace BrodieTheatre
         {
             writeLog("Setting lights to Stopped Level");
             toolStripStatus.Text = "Setting lights to Stopped Level";
-            queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsStoppedLevel * 10));
+            queueLightLevel(Properties.Settings.Default.potsAddress, Properties.Settings.Default.potsStoppedLevel);
             trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
-            queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayStoppedLevel * 10));
+            queueLightLevel(Properties.Settings.Default.trayAddress, Properties.Settings.Default.trayStoppedLevel);
             trackBarTray.Value = Properties.Settings.Default.trayStoppedLevel;
         }
 
@@ -70,9 +70,9 @@ namespace BrodieTheatre
         {
             writeLog("Setting lights to Occupancy Level");
             toolStripStatus.Text = "Turning on lights to Occupancy Level";
-            queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsEnteringLevel * 10));
+            queueLightLevel(Properties.Settings.Default.potsAddress, Properties.Settings.Default.potsEnteringLevel);
             trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
-            queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayEnteringLevel * 10));
+            queueLightLevel(Properties.Settings.Default.trayAddress, Properties.Settings.Default.trayEnteringLevel);
             trackBarTray.Value = Properties.Settings.Default.trayEnteringLevel;
         }
 
@@ -90,9 +90,9 @@ namespace BrodieTheatre
         {
             writeLog("Setting lights to Playback Level");
             toolStripStatus.Text = "Dimming lights to Playback Level";
-            queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPlaybackLevel * 10));
+            queueLightLevel(Properties.Settings.Default.potsAddress, Properties.Settings.Default.potsPlaybackLevel);
             trackBarPots.Value = Properties.Settings.Default.potsPlaybackLevel;
-            queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPlaybackLevel * 10));
+            queueLightLevel(Properties.Settings.Default.trayAddress, Properties.Settings.Default.trayPlaybackLevel);
             trackBarTray.Value = Properties.Settings.Default.trayPlaybackLevel;
         }
 
@@ -100,9 +100,9 @@ namespace BrodieTheatre
         {
             writeLog("Setting lights to Paused Level");
             toolStripStatus.Text = "Setting lights to Paused Level";
-            queueLightLevel(Properties.Settings.Default.potsAddress, (Properties.Settings.Default.potsPausedLevel * 10));
+            queueLightLevel(Properties.Settings.Default.potsAddress, Properties.Settings.Default.potsPausedLevel);
             trackBarPots.Value = Properties.Settings.Default.potsPausedLevel;
-            queueLightLevel(Properties.Settings.Default.trayAddress, (Properties.Settings.Default.trayPausedLevel * 10));
+            queueLightLevel(Properties.Settings.Default.trayAddress, Properties.Settings.Default.trayPausedLevel);
             trackBarTray.Value = Properties.Settings.Default.trayPausedLevel;
         }
 

@@ -140,12 +140,6 @@ namespace BrodieTheatre
             toolStripStatus.Text = "";
         }
 
-        private void timerShutdown_Tick(object sender, EventArgs e)
-        {
-            timerShutdown.Enabled = false;
-            lightsOff();
-        }
-
         private void toolStripStatus_TextChanged(object sender, EventArgs e)
         {
             timerClearStatus.Enabled = false;
@@ -173,6 +167,7 @@ namespace BrodieTheatre
             DateTime globalShutdownStart = GlobalShutdown.AddHours(Properties.Settings.Default.globalShutdown * -1);
             var totalSeconds = (GlobalShutdown - globalShutdownStart).TotalSeconds;
             var progress = (now - globalShutdownStart).TotalSeconds;
+        
 
             if ((labelCurrentActivity.Text != "PowerOff" && labelCurrentActivity.Text != "") || trackBarPots.Value > 0 || trackBarTray.Value > 0)
             {
@@ -182,6 +177,7 @@ namespace BrodieTheatre
                     int percentage = (100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
                     if (percentage <= 1)
                     {
+                        writeLog("Global Timer:  Sending Harmony 'PowerOff'");
                         globalShutdownActive = false;
                         startActivityByName("PowerOff");
                         toolStripProgressBarGlobal.Value = 0;
@@ -208,8 +204,17 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    // Power on the Amplifier
-                    formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
+                    
+                    formMain.writeLog("Occupancy:  Room Occupied");
+                    formMain.disableGlobalShutdown();
+
+                    if (labelKodiStatus.Text != "Playing" && labelKodiStatus.Text != "Paused")
+                    {
+                        formMain.writeLog("Occupancy:  Powering On AV Amplifier");
+                        // Power on the Amplifier
+                        formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
+                    }
+                    
 
                     formMain.recognitionEngine = new SpeechRecognitionEngine();
                     formMain.recognitionEngine.SetInputToDefaultAudioDevice();
@@ -217,20 +222,20 @@ namespace BrodieTheatre
                     formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
                     formMain.recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
 
-                    writeLog("Occupancy Changed: Room Occupied");
-                    formMain.resetGlobalTimer();
-                    formMain.timerShutdown.Enabled = false;
+                    
+
                     formMain.toolStripStatus.Text = "Room is now occupied";
                 }
                 ));
 
 
-                if (labelCurrentActivity.Text == "PowerOff")
+                if (labelCurrentActivity.Text == "PowerOff" && labelKodiStatus.Text != "Playing" && labelKodiStatus.Text != "Paused")
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.lightsToEnteringLevel();
                         formMain.timerStartupSound.Enabled = true;
+                        formMain.writeLog("Occupancy:  Powering Off AV Amplifier");
                     }
                     ));
                 }
@@ -239,7 +244,7 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    writeLog("Occupancy Changed: Room Occupied");
+                    formMain.writeLog("Occupancy:  Room Occupied");
                 }
                 ));
                 if (labelKodiStatus.Text == "Stopped")
@@ -274,7 +279,7 @@ namespace BrodieTheatre
                     }
                     ));
                 }
-                else // There is playback or it is paused.  Start the timer to shut this off after 2 hours
+                else // There is playback or it is paused.  Start the timer to shut this off after configured time
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
@@ -297,11 +302,13 @@ namespace BrodieTheatre
             timerGlobal.Enabled = false;
             timerGlobal.Interval = 1000;
             timerGlobal.Enabled = true;
+            writeLog("Global Timer:  Resetting and enabling");
         }
 
         private void disableGlobalShutdown()
         {
             globalShutdownActive = false;
+            writeLog("Global Timer:  Disabling");
         }
 
         private void labelProjectorPower_TextChanged(object sender, EventArgs e)
@@ -331,7 +338,6 @@ namespace BrodieTheatre
         private void timerStartupSound_Tick(object sender, EventArgs e)
         {
             timerStartupSound.Enabled = false;
-            soundPoweringUp.Play(0, PlayFlags.None);
         }
     }
 }
