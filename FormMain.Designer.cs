@@ -600,6 +600,7 @@
             // 
             // timerGlobal
             // 
+            this.timerGlobal.Enabled = true;
             this.timerGlobal.Interval = 1000;
             this.timerGlobal.Tick += new System.EventHandler(this.timerGlobal_Tick);
             // 

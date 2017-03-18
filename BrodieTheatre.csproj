@@ -73,9 +73,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files\Microsoft SDKs\Speech\v11.0\Assembly\Microsoft.Speech.dll</HintPath>
     </Reference>
-    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
-      <HintPath>..\packages\SlimDX.4.0.13.44\lib\NET40\SlimDX.dll</HintPath>
-    </Reference>
     <Reference Include="SoapBox.FluentDwelling, Version=2013.7.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SoapBox.FluentDwelling.2013.7.9\lib\net40\SoapBox.FluentDwelling.dll</HintPath>
       <Private>True</Private>
@@ -181,22 +178,6 @@
     <Content Include="Brodie-HomeTheatre - 48.ico" />
     <Content Include="Brodie-HomeTheatre.ico" />
     <Content Include="Process Flow.txt" />
-    <None Include="Resources\long Powering Up.wav" />
-    <None Include="Resources\Silence-1sec.wav" />
-    <None Include="Resources\Powering Up.wav" />
-    <None Include="Resources\Yes.wav" />
-    <None Include="Resources\Yes 2.wav" />
-    <None Include="Resources\Welcome.wav" />
-    <None Include="Resources\welcome back.wav" />
-    <None Include="Resources\Standing by.wav" />
-    <None Include="Resources\Loud and clear.wav" />
-    <None Include="Resources\I%27m here.wav" />
-    <None Include="Resources\I%27m here 2.wav" />
-    <None Include="Resources\I am around.wav" />
-    <None Include="Resources\Hello.wav" />
-    <None Include="Resources\Greetings.wav" />
-    <None Include="Resources\Good morning.wav" />
-    <None Include="Resources\Good evening.wav" />
     <None Include="Resources\Icon2.ico" />
     <None Include="Resources\Icon1.ico" />
   </ItemGroup>

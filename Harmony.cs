@@ -78,11 +78,7 @@ namespace BrodieTheatre
                             if (activity.Id == currentActivityID)
                             {
                                 formMain.labelCurrentActivity.Text = activity.Label;
-                                if (Convert.ToInt32(activity.Id) < 0)
-                                {
-                                    formMain.disableGlobalShutdown();
-                                }
-                                else
+                                if (Convert.ToInt32(activity.Id) >= 0)
                                 {
                                     formMain.resetGlobalTimer();
                                 }

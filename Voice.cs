@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 using Microsoft.Speech.Recognition;
-using SlimDX.DirectSound;
-using SlimDX.Multimedia;
 
 
 namespace BrodieTheatre
@@ -156,7 +154,7 @@ namespace BrodieTheatre
             }
             else
             {
-                writeLog("Voice:  Saying afternoon reeting");
+                writeLog("Voice:  Saying afternoon greeting");
                // SecondarySoundBuffer currBuffer = greetingsAfternoon[rnd.Next(greetingsAfternoon.Count)];
                 //currBuffer.Play(0, PlayFlags.None);
             }
@@ -173,18 +171,19 @@ namespace BrodieTheatre
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-            writeLog("Voice:  Recognized Speech '" + e.Result.Text + "' Confidence " + e.Result.Confidence.ToString());
+            string confidence = Math.Round((e.Result.Confidence * 100), 2).ToString();
             if (e.Result.Alternates != null && e.Result.Confidence > (float)0.90 && labelKodiStatus.Text != "Playing")
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    toolStripStatus.Text = e.Result.Text;
+                    formMain.writeLog("Voice:  Recognized Speech '" + e.Result.Text + "' Confidence (" + confidence+"%)");
+                    formMain.toolStripStatus.Text = "Heard: " + e.Result.Text + " (" + confidence + "%)";
                 }
                 ));
                 RecognizedPhrase phrase = e.Result.Alternates[0];
 
                 string topPhrase = phrase.Semantics.Value.ToString();
-
+     
                 switch (topPhrase)
                 {
                     case "Turn on Theatre":
@@ -264,11 +263,20 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToStoppedLevel();
-                            writeLog("Recognized: " + topPhrase);
+                            formMain.writeLog("Recognized: " + topPhrase);
                         }
                         ));
                         break;
                 }
+            }
+            else
+            {
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    formMain.writeLog("Voice:  (Not Processed) Recognized Speech '" + e.Result.Text + "' Confidence (" + confidence + "%)");
+                    formMain.toolStripStatus.Text = "Heard: (Not Processed)" + e.Result.Text + " (" + confidence + "%)";
+                }
+                ));
             }
         }
     }

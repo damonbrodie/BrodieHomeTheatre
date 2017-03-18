@@ -39,7 +39,6 @@ namespace BrodieTheatre
         public bool plmConnected;
 
         public DateTime GlobalShutdown;
-        public bool globalShutdownActive;
 
         public bool projectorConnected;
         public string projectorLastCommand;
@@ -160,37 +159,42 @@ namespace BrodieTheatre
 
         private void timerGlobal_Tick(object sender, EventArgs e)
         {
+            // Evaluate the conditions to determine if we should be counting down or not
+            // for shutting down the theatre
             DateTime now = DateTime.Now;
+
+            // Calculate when the shutdown timer was initiated based on when it will end.
+
             DateTime globalShutdownStart = GlobalShutdown.AddHours(Properties.Settings.Default.globalShutdown * -1);
             var totalSeconds = (GlobalShutdown - globalShutdownStart).TotalSeconds;
             var progress = (now - globalShutdownStart).TotalSeconds;
-        
 
-            if ((labelCurrentActivity.Text != "PowerOff" && labelCurrentActivity.Text != "") || trackBarPots.Value > 0 || trackBarTray.Value > 0)
+            // Reasons the timer should be ticking down if either of these is TRUE
+            // - A light is on
+            // - A Harmony Activity is active
+
+            // The timer should not be active if the following are all TRUE:
+            // - The lights are Off
+            // - The Harmony Activity is Off
+            // - The Room is vacant
+
+
+            if (((labelCurrentActivity.Text != "PowerOff" && labelCurrentActivity.Text != "") || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text == "Vacant")
             {
-                if (globalShutdownActive && GlobalShutdown > now)
-
+                if (GlobalShutdown > now)
                 {
                     int percentage = (100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
-                    if (percentage <= 1)
-                    {
-                        writeLog("Global Timer:  Sending Harmony 'PowerOff'");
-                        globalShutdownActive = false;
-                        startActivityByName("PowerOff");
-                        toolStripProgressBarGlobal.Value = 0;
-                    }
-                    else
-                    {
-                        toolStripProgressBarGlobal.Value = percentage;
-                    }
+         
+                    toolStripProgressBarGlobal.Value = percentage;
+                    return;            
                 }
                 else
-                {
-                    toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Maximum;
+                {    
+                    writeLog("Global Timer:  Sending Harmony 'PowerOff', turning off lights");
+                    startActivityByName("PowerOff");
+                    toolStripProgressBarGlobal.Value = 0;
+                    lightsOff();               
                 }
-            }
-            else
-            {
                 toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
             }
         }
@@ -203,7 +207,7 @@ namespace BrodieTheatre
                 {
                     
                     formMain.writeLog("Occupancy:  Room Occupied");
-                    formMain.disableGlobalShutdown();
+                    formMain.resetGlobalTimer();
 
                     if (labelCurrentActivity.Text == "PowerOff" && labelKodiStatus.Text == "Stopped")
                     {
@@ -236,6 +240,14 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.writeLog("Occupancy:  Room Vacant");
+                    try
+                    {
+                        formMain.recognitionEngine.Dispose();
+                    }
+                    catch
+                    {
+                        writeLog("Error:  Failed to Dispose of Recognition Engine");
+                    }
                 }
                 ));
                 if (labelKodiStatus.Text == "Stopped")
@@ -289,17 +301,8 @@ namespace BrodieTheatre
         private void resetGlobalTimer()
         {
             GlobalShutdown = DateTime.Now.AddHours(Properties.Settings.Default.globalShutdown);
-            globalShutdownActive = true;
-            timerGlobal.Enabled = false;
-            timerGlobal.Interval = 1000;
-            timerGlobal.Enabled = true;
-            writeLog("Global Timer:  Resetting and enabling");
-        }
 
-        private void disableGlobalShutdown()
-        {
-            globalShutdownActive = false;
-            writeLog("Global Timer:  Disabling");
+            writeLog("Global Timer:  Resetting Shutdown timer");
         }
 
         private void labelProjectorPower_TextChanged(object sender, EventArgs e)

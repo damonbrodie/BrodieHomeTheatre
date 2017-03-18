@@ -70,31 +70,39 @@ namespace BrodieTheatre
                         if (address == Properties.Settings.Default.trayAddress)
                         {
                             level = processDimmerMessage(desc, address);
-                            if (level >= 0)
+                            formMain.BeginInvoke(new Action(() =>
                             {
-                                formMain.BeginInvoke(new Action(() =>
+                                if (level >= 0)
                                 {
-                                    formMain.writeLog("Insteon:  Received Tray dimmer update from PLM");
+                                    formMain.writeLog("Insteon:  Received Tray dimmer update from PLM - level " + level.ToString());
                                     formMain.trackBarTray.Value = level;
-                                    formMain.resetGlobalTimer();
+                                    if (level > 0)
+                                    {
+                                        //Only need to reset the timer if it is on
+                                        formMain.resetGlobalTimer();
+                                    }
                                 }
-                                ));
                             }
+                            ));
                         }
 
                         else if (address == Properties.Settings.Default.potsAddress)
                         {
                             level = processDimmerMessage(desc, address);
-                            if (level >= 0)
-                            {
-                                formMain.BeginInvoke(new Action(() =>
+                            formMain.BeginInvoke(new Action(() =>
+                            {        
+                                if (level >= 0)
                                 {
-                                    formMain.writeLog("Insteon:  Received Pots dimmer update from PLM");
+                                    formMain.writeLog("Insteon:  Received Pots dimmer update from PLM - level " + level.ToString());
                                     formMain.trackBarPots.Value = level;
-                                    formMain.resetGlobalTimer();
+                                    if (level > 0)
+                                    {
+                                        //Only need to reset the timer if it is on
+                                        formMain.resetGlobalTimer();
+                                    }
                                 }
-                                ));
                             }
+                            ));
                         }
                         else if (address == Properties.Settings.Default.motionSensorAddress)
                         {
@@ -107,6 +115,7 @@ namespace BrodieTheatre
                                         writeLog("Insteon:  Motion Detected");
                                         formMain.labelMotionSensorStatus.Text = "Motion Detected";
                                         formMain.labelRoomOccupancy.Text = "Occupied";
+                                        formMain.resetGlobalTimer();
                                     }
                                 }
                                 ));
