@@ -10,30 +10,41 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        private async Task ConnectHarmonyAsync()
+        private async Task harmonyConnectAsync(bool shouldUpdate = true)
         {
             bool error = false;
             var currentActivityID = "";
-            writeLog("Harmony:  Connecting to Hub");
+            formMain.BeginInvoke(new Action(() =>
+            {
+                formMain.writeLog("Harmony:  Connecting to Hub");
+            }
+            ));
             try
             {
                 Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
                 Thread.Sleep(4000);
                 currentActivityID = await Program.Client.GetCurrentActivityAsync();
-                writeLog("Harmony:  Connected");
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    formMain.writeLog("Harmony:  Connected");
+                }
+                ));
             }
             catch
             {
-                writeLog("Error:  Cannot connect to Harmony Hub");
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    formMain.writeLog("Error:  Cannot connect to Harmony Hub");
+                }
+                ));
                 error = true;
             }
-            if (!error)
+            if (!error && shouldUpdate)
             {
 
                 formMain.BeginInvoke(new Action(() =>
                 {
                     Thread.Sleep(3000);
-                    writeLog("Harmony:  Update Activities");
                     formMain.harmonyUpdateActivities(currentActivityID);
                 }
                 ));
@@ -45,6 +56,7 @@ namespace BrodieTheatre
             var activity = await Program.Client.GetCurrentActivityAsync();
             formMain.BeginInvoke(new Action(() =>
             {
+                formMain.writeLog("Harmony:  Hub message received");
                 formMain.harmonyUpdateActivities(activity);
                 if (activity == "-1")
                 {
@@ -61,9 +73,9 @@ namespace BrodieTheatre
 
         private async void harmonyUpdateActivities(string currentActivityID)
         {
-            bool notLoaded = true;
-            int count = 0;
-            while (notLoaded && count < 3)
+            bool success = false;
+            int counter = 0;
+            while (! success && counter < 3)
             { 
                 try
                 {
@@ -72,6 +84,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.toolStripStatus.Text = "Updating Activities";
+                        formMain.writeLog("Harmony:  Updating Activities");
                         formMain.listBoxActivities.Items.Clear();
                         foreach (var activity in harmonyConfig.Activities)
                         {
@@ -91,25 +104,29 @@ namespace BrodieTheatre
                                 formMain.listBoxActivities.Items.Add(item);
                             }
                         }
-                        writeLog("Harmony:  Activities updated");
-                        notLoaded = false;                   
+                        formMain.writeLog("Harmony:  Activities updated");
+                        success = true;                   
                     }));
                 }
 
                 catch
-                {         
-                    writeLog("Error:  Cannot update Harmony Activities");
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.writeLog("Harmony:  Cannot update Harmony Activities");
+                    }
+                    ));
                     Thread.Sleep(3000);
-                    count++;
+                    counter++;
                 }
             }
         }
 
-        private async void harmonySendCommand(string device, string button)
+        private async void harmonySendCommand(string device, string deviceFunction)
         {
             bool success = false;
             int counter = 0;
-            while (!success && counter < 3)
+            while (! success && counter < 3)
             {
                 try
                 {
@@ -122,9 +139,14 @@ namespace BrodieTheatre
                             {
                                 foreach (Function function in controlGroup.Functions)
                                 {
-                                    if (function.Name == button)
+                                    if (function.Name == deviceFunction)
                                     {
                                         await Program.Client.SendCommandAsync(currDevice.Id, function.Name);
+                                        formMain.BeginInvoke(new Action(() =>
+                                        {
+                                            formMain.writeLog("Harmony:  Sent Command '" + function.Name + "' to Id '" + currDevice.Id + "'");
+                                        }
+                                        ));
                                         success = true;
                                     }
                                 }
@@ -134,7 +156,13 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    writeLog("Error:  Failed to send Harmony Command");
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.writeLog("Error:  Failed to send Harmony Command");
+                    }
+                    ));
+                    Program.Client.Dispose();
+                    await harmonyConnectAsync(false);
                     counter += 1;
                 }
             }
@@ -143,70 +171,69 @@ namespace BrodieTheatre
         private void listBoxActivities_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Activities activity = (Activities)listBoxActivities.SelectedItem;
-            startActivity(activity);
+            harmonyStartActivity(activity.Text, activity.Id);
         }
 
         // Start Harmony Activity
-        private async void startActivity(Activities activity)
+        private async void harmonyStartActivity(string activityName, string activityId)
         {
-            bool keep_looping = true;
-            while (keep_looping)
+            bool success = false;
+            int counter = 0;
+            while (! success && counter < 3)
             {
                 try
                 {
-                    await Program.Client.StartActivityAsync(activity.Id);
+                    await Program.Client.StartActivityAsync(activityId);
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.toolStripStatus.Text = "Starting Harmony activity - " + activity.Text;
-                        if (Convert.ToInt32(activity.Id) >= 0)
+                        formMain.writeLog("Harmony:  Starting Activity '" + activityName + "' Id '" + activityId + "'");
+                        formMain.toolStripStatus.Text = "Starting Harmony activity - " + activityName;
+                        if (Convert.ToInt32(activityId) >= 0)
                         {
-                            //An activity is starting
+                            //An activity is starting wait for Projector to power up then dim the lights
                             formMain.timerStartLights.Enabled = true;
                         }
                         else //Power Off
                         {
                             //Turn up the ligths so occupants can find their way out
-                            lightsToEnteringLevel();
+                            formMain.lightsToEnteringLevel();
                         }
                     }
                     ));
-                    keep_looping = false;
+                    success = true;
                 }
                 catch
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.toolStripStatus.Text = "Harmony Timeout - reconnecting";
+                        formMain.writeLog("Harmony:  Error starting activity");
                     }
                     ));
                     Program.Client.Dispose();
-                    await ConnectHarmonyAsync();
+                    await harmonyConnectAsync(false);
+                    counter += 1;
                 }
             }
         }
 
-        private async void startActivityByName(string activityName)
+        private void harmonyStartActivityByName(string activityName)
         {
+            if (activityName == "PowerOff")
+            {
+                harmonyStartActivity("PowerOff", "-1");
+                return;
+            }
             for (int i = 0; i < listBoxActivities.Items.Count; i++)
             {
                 Activities currItem = (Activities)listBoxActivities.Items[i];
                 if (currItem.Text == activityName)
-                {
-                    try
-                    {
-                        await Program.Client.StartActivityAsync(currItem.Id);
-                        writeLog("Harmony:  Starting Activity " + activityName);
-                    }
-                    catch
-                    {
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.toolStripStatus.Text = "Failed to start Harmony activity - " + activityName;
-                        }
-                        ));
-                    }
+                {      
+                    harmonyStartActivity(activityName, currItem.Id);
+                    return;
                 }
             }
+            writeLog("Harmony:  Unknown Activity - cound not start by Name");
         }
     }
 }

@@ -7,7 +7,7 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        private void ConnectProjector()
+        private void projectorConnect()
         {
             try
             {
@@ -20,23 +20,23 @@ namespace BrodieTheatre
             }
             catch
             {
-                toolStripStatus.Text = "Could not open Project Serial Port";
+                toolStripStatus.Text = "Could not open Projector Serial Port";
                 projectorConnected = false;
                 labelProjectorStatus.Text = "Disconnected";
                 labelProjectorStatus.ForeColor = System.Drawing.Color.Maroon;
             }
         }
 
-        private void checkProjectorPower()
+        private void projectorCheckPower()
         {
             if (projectorConnected)
             {
                 projectorLastCommand = "Power";
-                ProjectorSendCommand("QPW");
+                projectorSendCommand("QPW");
             }
         }
 
-        private void ProjectorSendCommand(string command)
+        private void projectorSendCommand(string command)
         {
             int startByte = 2;
             int endByte = 3;
@@ -102,7 +102,7 @@ namespace BrodieTheatre
 
         private void timerCheckProjector_Tick(object sender, EventArgs e)
         {
-            checkProjectorPower();
+            projectorCheckPower();
         }
 
         private void projectorChangeAspect(float aspect)
@@ -119,13 +119,13 @@ namespace BrodieTheatre
             projectorLastCommand = "Lens";
             if (aspect < 1.9)
             {
-                ProjectorSendCommand(pj_codes[0]);
+                projectorSendCommand(pj_codes[0]);
                 labelLensAspect.Text = "Narrow";
                 writeLog("Projector:  Changing to Lens Aspect Ratio to Narrow");
             }
             else
             {
-                ProjectorSendCommand(pj_codes[1]);
+                projectorSendCommand(pj_codes[1]);
                 labelLensAspect.Text = "Wide";
                 writeLog("Projector:  Changing to Lens Aspect Ratio to Wide");
             }
@@ -162,14 +162,14 @@ namespace BrodieTheatre
 
         private void projectorPowerOn()
         {
-            ProjectorSendCommand("PON");
+            projectorSendCommand("PON");
             labelProjectorPower.Text = "Powering On";
             writeLog("Projector:  Powering On");
         }
 
         private void projectorPowerOff()
         {
-            ProjectorSendCommand("POF");
+            projectorSendCommand("POF");
             labelProjectorPower.Text = "Powering Off";
             writeLog("Projector:  Powering Off");
         }

@@ -194,7 +194,7 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.startActivityByName(Properties.Settings.Default.voiceActivity);
+                            formMain.harmonyStartActivityByName(Properties.Settings.Default.voiceActivity);
                             formMain.timerStartLights.Enabled = true;
                             formMain.writeLog("Voice:  Processed " + topPhrase);
                         }
@@ -204,7 +204,7 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.startActivityByName("PowerOff");
+                            formMain.harmonyStartActivityByName("PowerOff");
                             formMain.lightsToEnteringLevel();
                             formMain.writeLog("Voice:  Processed " + topPhrase);
                         }

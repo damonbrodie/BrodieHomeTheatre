@@ -90,24 +90,27 @@ namespace BrodieTheatre
             if (currentHarmonyIP != Properties.Settings.Default.harmonyHubIP)
             {
                 currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
-                await ConnectHarmonyAsync();
+                await harmonyConnectAsync();
             }
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
             writeLog("------ Starting Up ------");
-            await ConnectHarmonyAsync();
-            Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
+            await harmonyConnectAsync(true);
+            if (Program.Client != null)
+            {
+                Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
+            }
 
             currentPLMport = Properties.Settings.Default.plmPort;
             connectPLM();
 
-            ConnectProjector();
+            projectorConnect();
 
             if (projectorConnected)
             {
-                checkProjectorPower();
+                projectorCheckPower();
             }
 
             if (Properties.Settings.Default.potsAddress != "")
@@ -204,7 +207,7 @@ namespace BrodieTheatre
                 else
                 {    
                     writeLog("Global Timer:  Sending Harmony 'PowerOff', turning off lights");
-                    startActivityByName("PowerOff");
+                    harmonyStartActivityByName("PowerOff");
                     toolStripProgressBarGlobal.Value = 0;
                     lightsOff();
                     return;
@@ -213,91 +216,67 @@ namespace BrodieTheatre
             toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
         }
 
-        private async void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
+        private void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
         {
             if (labelRoomOccupancy.Text == "Occupied")
             {
-                formMain.BeginInvoke(new Action(() =>
-                {                 
-                    formMain.writeLog("Occupancy:  Room Occupied");
-                    formMain.resetGlobalTimer();
+                              
+                writeLog("Occupancy:  Room Occupied");
+                resetGlobalTimer();
 
-                    if (labelCurrentActivity.Text == "PowerOff" && labelKodiStatus.Text == "Stopped")
-                    {
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.lightsToEnteringLevel();
-                            formMain.timerStartupSound.Enabled = true;
-                            formMain.writeLog("Occupancy:  Powering On AV Amplifier");
-                            formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
-                        }
-                        ));
-                    }
-                    formMain.recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-                    if (formMain.labelLastVoiceCommand.Text == "Not Listening")
-                    {
-                        formMain.labelLastVoiceCommand.Text = "Listening";
-                    }
-                    
-                    formMain.toolStripStatus.Text = "Room is now occupied";
-                }
-                ));
-            }
-            else if (labelRoomOccupancy.Text == "Vacant" && trackBarPots.Value == 0 && trackBarTray.Value == 0)
-            {
-                formMain.BeginInvoke(new Action(() =>
+                if (labelCurrentActivity.Text == "PowerOff" && labelKodiStatus.Text == "Stopped")
                 {
-                    formMain.writeLog("Occupancy:  Room Vacant");
-                    try
+                    BeginInvoke(new Action(() =>
                     {
-                        formMain.recognitionEngine.RecognizeAsyncStop();
-                        formMain.labelLastVoiceCommand.Text = "Not Listening";
+                        lightsToEnteringLevel();
+                        timerStartupSound.Enabled = true;
+                        writeLog("Occupancy:  Powering On AV Amplifier");
+                        harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
                     }
-                    catch
-                    {
-                        writeLog("Error:  Failed to pause Recognition Engine");
-                    }
+                    ));
                 }
-                ));
+                recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+                labelLastVoiceCommand.Text = "Listening";
+                    
+                toolStripStatus.Text = "Room is now occupied";
+               
+            }
+            else if (labelRoomOccupancy.Text == "Vacant")
+            {     
+                try
+                {
+                    // XXX move this to a timer that runs separately
+                    recognitionEngine.RecognizeAsyncStop();
+                    labelLastVoiceCommand.Text = "Not Listening";
+                }
+                catch
+                {
+                    writeLog("Error:  Failed to pause Recognition Engine");
+                }
+
                 if (labelKodiStatus.Text == "Stopped")
                 {
                     if (labelCurrentActivity.Text != "PowerOff")
                     {
                         // Turn off active Harmony Activity
-                        try
-                        {
-                            await Program.Client.StartActivityAsync("-1");
-                            writeLog("Harmony:  Sending Poweroff command");
-                        }
-                        catch
-                        {
-                            writeLog("Error:  Could not send Harmony PowerOff");
-                        }
+                        harmonyStartActivityByName("PowerOff");
                     }
                     else
                     {
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            // Power off the Amplifier
-                            formMain.harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyExitCommand);
-                        }
-                        ));
+                        // Power off the Amplifier
+                        harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyExitCommand);
                     }
 
-                    formMain.BeginInvoke(new Action(() =>
-                    {
-                        formMain.toolStripStatus.Text = "Room is now vacant";
-                        formMain.lightsOff();
-                    }
-                    ));
+                    writeLog("Occupancy:  Room Vacant");
+                    toolStripStatus.Text = "Room is now vacant";
+                    lightsOff();
+           
                 }
                 else // There is playback or it is paused.  Start the timer to shut this off after configured time
                 {
-                    formMain.BeginInvoke(new Action(() =>
-                    {
-                        formMain.resetGlobalTimer();
-                    }
-                    ));
+ 
+                    resetGlobalTimer();
+
                 }
             }
         }
