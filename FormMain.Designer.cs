@@ -585,6 +585,7 @@
             // 
             // timerClearStatus
             // 
+            this.timerClearStatus.Enabled = true;
             this.timerClearStatus.Interval = 5000;
             this.timerClearStatus.Tick += new System.EventHandler(this.timerClearStatus_Tick);
             // 

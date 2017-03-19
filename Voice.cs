@@ -131,10 +131,10 @@ namespace BrodieTheatre
 
             greetingsPresense.Add("I'm here.wav");
             greetingsPresense.Add("I'm here 2.wav");
-            greetingsPresense.Add("Standing_by.wav");
+            greetingsPresense.Add("Standing by.wav");
             greetingsPresense.Add("Yes.wav");
             greetingsPresense.Add("Yes 2.wav");
-            greetingsPresense.Add("I am around.wav");  
+            greetingsPresense.Add("I am around.wav"); 
         }
 
         private void kodiPlayWave(string file)
@@ -146,30 +146,29 @@ namespace BrodieTheatre
 
         private void sayGreeting()
         {
-            Random rnd = new Random();
             int hour = DateTime.Now.Hour;
             if (hour <= 4 || hour >= 17)
             {
                 writeLog("Voice:  Saying evening greeting");
-                kodiPlayWave (greetingsEvening[rnd.Next(greetingsEvening.Count)]);
+                kodiPlayWave (greetingsEvening[random.Next(greetingsEvening.Count)]);
             }
             else if (hour < 12)
             {
                 writeLog("Voice:  Saying morning greeting");
-                kodiPlayWave(greetingsMorning[rnd.Next(greetingsMorning.Count)]);
+                kodiPlayWave(greetingsMorning[random.Next(greetingsMorning.Count)]);
             }
             else
             {
                 writeLog("Voice:  Saying afternoon greeting");
-                kodiPlayWave(greetingsAfternoon[rnd.Next(greetingsAfternoon.Count)]);
+                kodiPlayWave(greetingsAfternoon[random.Next(greetingsAfternoon.Count)]);
             }
         }
 
         private void sayPresense()
         {
-            Random rnd = new Random();
+            
             writeLog("Voice:  Saying acknowledgement");
-            kodiPlayWave("Yes.wav");
+            kodiPlayWave(greetingsPresense[random.Next(greetingsPresense.Count)]);
         }
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
@@ -181,7 +180,7 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.writeLog("Voice:  Recognized Speech '" + e.Result.Text + "' Confidence " + confidence+"%");
-                    formMain.toolStripStatus.Text = "Heard: '" + e.Result.Text + "' (" + confidence + "%)";
+                    formMain.toolStripStatus.Text = "Heard:  '" + e.Result.Text + "' (" + confidence + "%)";
                 }
                 ));
                 RecognizedPhrase phrase = e.Result.Alternates[0];
@@ -197,7 +196,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.startActivityByName(Properties.Settings.Default.voiceActivity);
                             formMain.timerStartLights.Enabled = true;
-                            writeLog("Voice: Processed " + topPhrase);
+                            writeLog("Voice:  Processed " + topPhrase);
                         }
                         ));
                         break;
@@ -207,7 +206,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.startActivityByName("PowerOff");
                             formMain.lightsToEnteringLevel();
-                            writeLog("Voice: Processed " + topPhrase);
+                            writeLog("Voice:  Processed " + topPhrase);
                         }
                         ));
                         break;
@@ -218,7 +217,7 @@ namespace BrodieTheatre
                             {
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Normal;
-                                writeLog("Voice: Processed '" + topPhrase + "'");
+                                writeLog("Voice:  Processed '" + topPhrase + "'");
                             }
                         }
                         ));
@@ -230,7 +229,7 @@ namespace BrodieTheatre
                             {
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Minimized;
-                                writeLog("Voice: Processed '" + topPhrase + "'");
+                                writeLog("Voice:  Processed '" + topPhrase + "'");
                             }
                         }
                         ));
@@ -240,7 +239,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.sayGreeting();
-                            writeLog("Voice: Processed '" + topPhrase + "'");
+                            writeLog("Voice:  Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -249,7 +248,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.sayPresense();
-                            writeLog("Voice: Processed '" + topPhrase + "'");
+                            writeLog("Voice:  Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -258,7 +257,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToEnteringLevel();
-                            writeLog("Voice: Processed '" + topPhrase + "'");
+                            writeLog("Voice:  Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -267,7 +266,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToStoppedLevel();
-                            formMain.writeLog("Voice: Processed '" + topPhrase + "'");
+                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -278,7 +277,7 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.writeLog("Voice:  (Not Processed) Recognized Speech '" + e.Result.Text + "' Confidence " + confidence + "%");
-                    formMain.toolStripStatus.Text = "Heard: (Not Processed) '" + e.Result.Text + "' (" + confidence + "%)";
+                    formMain.toolStripStatus.Text = "Heard:  (Not Processed) '" + e.Result.Text + "' (" + confidence + "%)";
                 }
                 ));
             }

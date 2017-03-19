@@ -45,6 +45,10 @@ namespace BrodieTheatre
 
         public float projectorNewAspect = 0;
 
+        public int statusTickCounter = 0;
+
+        public Random random = new Random();
+
         public List<string> greetingsEvening = new List<string>();
         public List<string> greetingsMorning = new List<string>();
         public List<string> greetingsAfternoon = new List<string>();
@@ -52,6 +56,7 @@ namespace BrodieTheatre
 
         public string wavePath = @"c:\Users\damon\Documents\Shared\Wavs";
         public string waveFile = @"c:\Users\damon\Documents\Shared\wavefile.txt";
+        public string startupWave = @"c:\Users\damon\Documents\Shared\Wavs\Powering up.wav";
 
         public SpeechRecognitionEngine recognitionEngine;
 
@@ -95,11 +100,6 @@ namespace BrodieTheatre
             await ConnectHarmonyAsync();
             Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
 
-            // XXX Play startup sound
-
-
-            
-
             currentPLMport = Properties.Settings.Default.plmPort;
             connectPLM();
 
@@ -131,18 +131,31 @@ namespace BrodieTheatre
             {
                 formMain.labelHarmonyStatus.Text = "Disconnected";
                 formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
-            }   
+            }
+
+            formMain.recognitionEngine = new SpeechRecognitionEngine();
+            formMain.recognitionEngine.SetInputToDefaultAudioDevice();
+            formMain.loadVoiceCommands();
+            formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
         }
 
         private void timerClearStatus_Tick(object sender, EventArgs e)
         {
-            toolStripStatus.Text = "";
+            if (statusTickCounter > 0)
+            {
+                statusTickCounter -= 1;
+            }
+            else
+            {
+                toolStripStatus.Text = "";
+            }
+            
         }
 
         private void toolStripStatus_TextChanged(object sender, EventArgs e)
         {
-            timerClearStatus.Enabled = false;
-            timerClearStatus.Enabled = true;
+            statusTickCounter = 2;
+            
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -181,7 +194,6 @@ namespace BrodieTheatre
             // - The Harmony Activity is Off
             // - The Room is vacant
 
-
             if (((labelCurrentActivity.Text != "PowerOff" && labelCurrentActivity.Text != "") || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text == "Vacant")
             {
                 if (GlobalShutdown > now)
@@ -196,10 +208,11 @@ namespace BrodieTheatre
                     writeLog("Global Timer:  Sending Harmony 'PowerOff', turning off lights");
                     startActivityByName("PowerOff");
                     toolStripProgressBarGlobal.Value = 0;
-                    lightsOff();               
+                    lightsOff();
+                    return;
                 }
-                toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
             }
+            toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
         }
 
         private async void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
@@ -207,8 +220,7 @@ namespace BrodieTheatre
             if (labelRoomOccupancy.Text == "Occupied")
             {
                 formMain.BeginInvoke(new Action(() =>
-                {
-                    
+                {                 
                     formMain.writeLog("Occupancy:  Room Occupied");
                     formMain.resetGlobalTimer();
 
@@ -223,33 +235,29 @@ namespace BrodieTheatre
                         }
                         ));
                     }
-
-                    if (labelKodiStatus.Text != "Playing")
+                    formMain.recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+                    if (formMain.labelLastVoiceCommand.Text == "Not Listening")
                     {
-                        formMain.recognitionEngine = new SpeechRecognitionEngine();
-                        formMain.recognitionEngine.SetInputToDefaultAudioDevice();
-                        formMain.loadVoiceCommands();
-                        formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
-                        formMain.recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+                        formMain.labelLastVoiceCommand.Text = "Listening";
                     }
                     
-
                     formMain.toolStripStatus.Text = "Room is now occupied";
                 }
                 ));
             }
-            else if (labelRoomOccupancy.Text == "Vacant")
+            else if (labelRoomOccupancy.Text == "Vacant" && trackBarPots.Value == 0 && trackBarTray.Value == 0)
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.writeLog("Occupancy:  Room Vacant");
                     try
                     {
-                        formMain.recognitionEngine.Dispose();
+                        formMain.recognitionEngine.RecognizeAsyncStop();
+                        formMain.labelLastVoiceCommand.Text = "Not Listening";
                     }
                     catch
                     {
-                        writeLog("Error:  Failed to Dispose of Recognition Engine");
+                        writeLog("Error:  Failed to pause Recognition Engine");
                     }
                 }
                 ));
@@ -335,6 +343,8 @@ namespace BrodieTheatre
         private void timerStartupSound_Tick(object sender, EventArgs e)
         {
             timerStartupSound.Enabled = false;
+            writeLog("Voice:  Playing startup sound");
+            kodiPlayWave(startupWave);
         }
     }
 }
