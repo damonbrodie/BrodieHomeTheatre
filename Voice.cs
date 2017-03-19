@@ -196,7 +196,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.startActivityByName(Properties.Settings.Default.voiceActivity);
                             formMain.timerStartLights.Enabled = true;
-                            writeLog("Voice:  Processed " + topPhrase);
+                            formMain.writeLog("Voice:  Processed " + topPhrase);
                         }
                         ));
                         break;
@@ -206,7 +206,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.startActivityByName("PowerOff");
                             formMain.lightsToEnteringLevel();
-                            writeLog("Voice:  Processed " + topPhrase);
+                            formMain.writeLog("Voice:  Processed " + topPhrase);
                         }
                         ));
                         break;
@@ -217,7 +217,7 @@ namespace BrodieTheatre
                             {
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Normal;
-                                writeLog("Voice:  Processed '" + topPhrase + "'");
+                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                             }
                         }
                         ));
@@ -229,7 +229,7 @@ namespace BrodieTheatre
                             {
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Minimized;
-                                writeLog("Voice:  Processed '" + topPhrase + "'");
+                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                             }
                         }
                         ));
@@ -239,7 +239,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.sayGreeting();
-                            writeLog("Voice:  Processed '" + topPhrase + "'");
+                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -248,7 +248,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.sayPresense();
-                            writeLog("Voice:  Processed '" + topPhrase + "'");
+                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                         }
                         ));
                         break;
@@ -257,7 +257,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToEnteringLevel();
-                            writeLog("Voice:  Processed '" + topPhrase + "'");
+                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                         }
                         ));
                         break;

@@ -15,7 +15,6 @@ namespace BrodieTheatre
             bool success = false;
             while (!success && counter < 3)
             {
-
                 try
                 {
                     using (StreamWriter file = File.AppendText("logging.txt"))

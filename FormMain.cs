@@ -148,14 +148,12 @@ namespace BrodieTheatre
             else
             {
                 toolStripStatus.Text = "";
-            }
-            
+            }     
         }
 
         private void toolStripStatus_TextChanged(object sender, EventArgs e)
         {
-            statusTickCounter = 2;
-            
+            statusTickCounter = 2;       
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -312,7 +310,6 @@ namespace BrodieTheatre
         private void resetGlobalTimer()
         {
             GlobalShutdown = DateTime.Now.AddHours(Properties.Settings.Default.globalShutdown);
-
             writeLog("Global Timer:  Resetting Shutdown timer");
         }
 
