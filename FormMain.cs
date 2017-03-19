@@ -274,16 +274,9 @@ namespace BrodieTheatre
                 }
                 else // There is playback or it is paused.  Start the timer to shut this off after configured time
                 {
- 
                     resetGlobalTimer();
-
                 }
             }
-        }
-
-        private void SpeechSynthesizer_SpeakCompleted(object sender, SpeakCompletedEventArgs e)
-        {
-            writeLog("Speech:  Spoke Words");
         }
 
         private void resetGlobalTimer()
