@@ -12,16 +12,17 @@ namespace BrodieTheatre
             try
             {
                 serialPortProjector.PortName = Properties.Settings.Default.projectorPort;
-                if (!serialPortProjector.IsOpen) serialPortProjector.Open();
+                if (!serialPortProjector.IsOpen)
+                {
+                    serialPortProjector.Open();
+                }
                 serialPortProjector.DataReceived += SerialPortProjector_DataReceived;
-                projectorConnected = true;
                 labelProjectorStatus.Text = "Connected";
                 labelProjectorStatus.ForeColor = System.Drawing.Color.ForestGreen;
             }
             catch
             {
                 toolStripStatus.Text = "Could not open Projector Serial Port";
-                projectorConnected = false;
                 labelProjectorStatus.Text = "Disconnected";
                 labelProjectorStatus.ForeColor = System.Drawing.Color.Maroon;
             }
@@ -29,7 +30,7 @@ namespace BrodieTheatre
 
         private void projectorCheckPower()
         {
-            if (projectorConnected)
+            if (labelProjectorStatus.Text == "Connected")
             {
                 projectorLastCommand = "Power";
                 projectorSendCommand("QPW");

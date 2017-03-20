@@ -38,7 +38,6 @@ namespace BrodieTheatre
 
         public DateTime GlobalShutdown;
 
-        public bool projectorConnected;
         public string projectorLastCommand;
 
         public float projectorNewAspect = 0;
@@ -67,7 +66,6 @@ namespace BrodieTheatre
             formMain = this;
             InitializeComponent();
             resetGlobalTimer();
-            projectorConnected = false;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -107,7 +105,7 @@ namespace BrodieTheatre
 
             projectorConnect();
 
-            if (projectorConnected)
+            if (labelProjectorStatus.Text == "Connected")
             {
                 projectorCheckPower();
             }
