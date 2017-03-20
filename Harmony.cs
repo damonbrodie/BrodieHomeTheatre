@@ -22,7 +22,7 @@ namespace BrodieTheatre
             try
             {
                 Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
-                Thread.Sleep(4000);
+                Thread.Sleep(1000);
                 currentActivityID = await Program.Client.GetCurrentActivityAsync();
                 formMain.BeginInvoke(new Action(() =>
                 {
@@ -34,7 +34,7 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Error:  Cannot connect to Harmony Hub");
+                    formMain.writeLog("Harmony:  Cannot connect to Harmony Hub");
                 }
                 ));
                 error = true;
@@ -45,6 +45,7 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 {
                     Thread.Sleep(3000);
+                    formMain.writeLog("Harmony:  harmonyConnectAsyc - call to update activities");
                     formMain.harmonyUpdateActivities(currentActivityID);
                 }
                 ));
@@ -73,52 +74,45 @@ namespace BrodieTheatre
 
         private async void harmonyUpdateActivities(string currentActivityID)
         {
-            bool success = false;
-            int counter = 0;
-            while (! success && counter < 3)
-            { 
-                try
-                {
-                    var harmonyConfig = await Program.Client.GetConfigAsync();
+            try
+            {
+                var harmonyConfig = await Program.Client.GetConfigAsync();
 
-                    formMain.BeginInvoke(new Action(() =>
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    formMain.toolStripStatus.Text = "Updating Activities";
+                    formMain.writeLog("Harmony:  Updating Activities");
+                    formMain.listBoxActivities.Items.Clear();
+                    foreach (var activity in harmonyConfig.Activities)
                     {
-                        formMain.toolStripStatus.Text = "Updating Activities";
-                        formMain.writeLog("Harmony:  Updating Activities");
-                        formMain.listBoxActivities.Items.Clear();
-                        foreach (var activity in harmonyConfig.Activities)
+                        if (activity.Id == currentActivityID)
                         {
-                            if (activity.Id == currentActivityID)
+                            formMain.labelCurrentActivity.Text = activity.Label;
+                            if (Convert.ToInt32(activity.Id) >= 0)
                             {
-                                formMain.labelCurrentActivity.Text = activity.Label;
-                                if (Convert.ToInt32(activity.Id) >= 0)
-                                {
-                                    formMain.resetGlobalTimer();
-                                }
-                            }
-                            else
-                            {
-                                Activities item = new Activities();
-                                item.Id = activity.Id;
-                                item.Text = activity.Label;
-                                formMain.listBoxActivities.Items.Add(item);
+                                formMain.resetGlobalTimer();
                             }
                         }
-                        formMain.writeLog("Harmony:  Activities updated");
-                        success = true;                   
-                    }));
-                }
-
-                catch
-                {
-                    formMain.BeginInvoke(new Action(() =>
-                    {
-                        formMain.writeLog("Harmony:  Cannot update Harmony Activities");
+                        else
+                        {
+                            Activities item = new Activities();
+                            item.Id = activity.Id;
+                            item.Text = activity.Label;
+                            formMain.listBoxActivities.Items.Add(item);
+                        }
                     }
-                    ));
-                    Thread.Sleep(3000);
-                    counter++;
+                    formMain.writeLog("Harmony:  Activities updated");            
                 }
+                ));
+            }
+
+            catch (Exception ex)
+            {
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    formMain.writeLog("Harmony:  Cannot update Harmony Activities " + ex.ToString());
+                }
+                ));
             }
         }
 

@@ -173,8 +173,10 @@ namespace BrodieTheatre
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
+
             string confidence = Math.Round((e.Result.Confidence * 100), 2).ToString();
-            float minConfidence = Properties.Settings.Default.voiceConfidence / 100;
+            float minConfidence = (float)Properties.Settings.Default.voiceConfidence / (float)10.0;
+
             if (e.Result.Alternates != null && e.Result.Confidence > minConfidence && labelKodiStatus.Text != "Playing")
             {
                 formMain.BeginInvoke(new Action(() =>
@@ -193,6 +195,7 @@ namespace BrodieTheatre
 
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.kodiPlayWave(ackWave);
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.harmonyStartActivityByName(Properties.Settings.Default.voiceActivity);
                             formMain.timerStartLights.Enabled = true;
@@ -203,6 +206,7 @@ namespace BrodieTheatre
                     case "Turn off Theatre":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.kodiPlayWave(ackWave);
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.harmonyStartActivityByName("PowerOff");
                             formMain.lightsToEnteringLevel();
@@ -215,6 +219,7 @@ namespace BrodieTheatre
                         {
                             if (formMain.WindowState == FormWindowState.Minimized)
                             {
+                                formMain.kodiPlayWave(ackWave);
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Normal;
                                 formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
@@ -227,6 +232,7 @@ namespace BrodieTheatre
                         {
                             if (formMain.WindowState == FormWindowState.Normal)
                             {
+                                formMain.kodiPlayWave(ackWave);
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.WindowState = FormWindowState.Minimized;
                                 formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
@@ -255,6 +261,7 @@ namespace BrodieTheatre
                     case "Lights On":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.kodiPlayWave(ackWave);
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToEnteringLevel();
                             formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
@@ -264,6 +271,7 @@ namespace BrodieTheatre
                     case "Dim Lights":
                         formMain.BeginInvoke(new Action(() =>
                         {
+                            formMain.kodiPlayWave(ackWave);
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToStoppedLevel();
                             formMain.writeLog("Voice:  Processed '" + topPhrase + "'");

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Threading;
 using System.Windows.Forms;
 using SoapBox.FluentDwelling;
-using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.Recognition;
 using System.Collections.Generic;
 
@@ -57,6 +55,7 @@ namespace BrodieTheatre
         public string wavePath = @"c:\Users\damon\Documents\Shared\Wavs";
         public string waveFile = @"c:\Users\damon\Documents\Shared\wavefile.txt";
         public string startupWave = @"c:\Users\damon\Documents\Shared\Wavs\Powering up.wav";
+        public string ackWave = @"c:\Users\damon\Documents\Shared\Wavs\Ack sound.wav";
 
         public SpeechRecognitionEngine recognitionEngine;
 
@@ -122,24 +121,38 @@ namespace BrodieTheatre
             {
                 lights[Properties.Settings.Default.trayAddress] = -1;
             }
-            timerSetLights.Enabled = true;
-
+            BeginInvoke(new Action(() =>
+            {
+                formMain.timerSetLights.Enabled = true;
+            }
+            ));
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
             if (Program.Client.Token != "")
             {
-                formMain.labelHarmonyStatus.Text = "Connected";
-                formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.ForestGreen;
+                BeginInvoke(new Action(() =>
+                {
+                    formMain.labelHarmonyStatus.Text = "Connected";
+                    formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.ForestGreen;
+                }
+                ));
             }
             else
             {
-                formMain.labelHarmonyStatus.Text = "Disconnected";
-                formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
+                BeginInvoke(new Action(() =>
+                {
+                    formMain.labelHarmonyStatus.Text = "Disconnected";
+                    formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
+                }
+                ));
             }
-
-            formMain.recognitionEngine = new SpeechRecognitionEngine();
-            formMain.recognitionEngine.SetInputToDefaultAudioDevice();
-            formMain.loadVoiceCommands();
-            formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
+            BeginInvoke(new Action(() =>
+            {
+                formMain.recognitionEngine = new SpeechRecognitionEngine();
+                formMain.recognitionEngine.SetInputToDefaultAudioDevice();
+                formMain.loadVoiceCommands();
+                formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
+            }
+            ));
         }
 
         private void timerClearStatus_Tick(object sender, EventArgs e)
@@ -163,7 +176,10 @@ namespace BrodieTheatre
         {
             try
             {
-                Program.Client.Dispose();
+                if (Program.Client != null)
+                {
+                    Program.Client.Dispose();
+                }
             }
             catch { };
             if (powerlineModem != null)

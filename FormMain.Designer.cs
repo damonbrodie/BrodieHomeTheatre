@@ -666,7 +666,7 @@
             // 
             // timerStartupSound
             // 
-            this.timerStartupSound.Interval = 4000;
+            this.timerStartupSound.Interval = 6000;
             this.timerStartupSound.Tick += new System.EventHandler(this.timerStartupSound_Tick);
             // 
             // FormMain
