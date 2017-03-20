@@ -56,6 +56,7 @@ namespace BrodieTheatre
             {
                 plmConnected = false;
                 labelPLMstatus.Text = "Connecting";
+                writeLog("Insteon:  Connecting to PLM");
                 labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
 
                 powerlineModem = new Plm(Properties.Settings.Default.plmPort);
@@ -177,12 +178,12 @@ namespace BrodieTheatre
                     finished = lightingControl.RampOn((byte)toInt);
                     if (!finished)
                     {
-                        writeLog("Error: Could not set Light " + address + " Level " + level.ToString());
+                        writeLog("Insteon:  Could not set Light " + address + " Level " + level.ToString());
                     }
                     else
                     {
                         lights[address] = -1;
-                        writeLog("Insteon: Set Light " + address + " Level " + level.ToString());
+                        writeLog("Insteon:  Set Light " + address + " Level " + level.ToString());
 
                         if (toInt > 0)
                         {
@@ -194,7 +195,7 @@ namespace BrodieTheatre
                 }
             }
             toolStripStatus.Text = "Could not connect to light - " + address;
-            writeLog("Insteon: Error Setting Light " + address + " Level " + level.ToString());
+            writeLog("Insteon:  Error Setting Light " + address + " Level " + level.ToString());
         }
 
         private void PowerlineModem_OnError(object sender, EventArgs e)
@@ -203,6 +204,7 @@ namespace BrodieTheatre
             {
                 plmConnected = false;
                 labelPLMstatus.Text = "Disconnected";
+                writeLog("Insteon:  Error connecting to PLM");
                 labelPLMstatus.ForeColor = System.Drawing.Color.Maroon;
                 timerPLMreceive.Enabled = false;
                 timerCheckPLM.Enabled = true;
@@ -214,6 +216,7 @@ namespace BrodieTheatre
             timerCheckPLM.Enabled = false;
             plmConnected = true;
             labelPLMstatus.Text = "Connected";
+            writeLog("Insteon:  Connected to PLM");
             labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
             trackBarTray.Value = getLightLevel(Properties.Settings.Default.trayAddress);
             Thread.Sleep(200);

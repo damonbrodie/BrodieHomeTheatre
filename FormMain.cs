@@ -265,7 +265,7 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    writeLog("Error:  Failed to pause Recognition Engine");
+                    writeLog("Speech Recognition:  Failed to pause Recognition Engine");
                 }
 
                 if (labelKodiStatus.Text == "Stopped")

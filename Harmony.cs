@@ -152,7 +152,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Error:  Failed to send Harmony Command");
+                        formMain.writeLog("Harmong:  Failed to send Harmony Command");
                     }
                     ));
                     Program.Client.Dispose();
