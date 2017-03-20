@@ -173,7 +173,6 @@ namespace BrodieTheatre
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
-
             string confidence = Math.Round((e.Result.Confidence * 100), 2).ToString();
             float minConfidence = (float)Properties.Settings.Default.voiceConfidence / (float)10.0;
 
@@ -187,8 +186,7 @@ namespace BrodieTheatre
                 ));
                 RecognizedPhrase phrase = e.Result.Alternates[0];
 
-                string topPhrase = phrase.Semantics.Value.ToString();
-     
+                string topPhrase = phrase.Semantics.Value.ToString(); 
                 switch (topPhrase)
                 {
                     case "Turn on Theatre":

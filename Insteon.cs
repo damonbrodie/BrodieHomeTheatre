@@ -157,7 +157,7 @@ namespace BrodieTheatre
                 float decLevel = (float)integerLevel / 254 * 10;
 
                 level = (int)decLevel;
-                writeLog("Insteon: Get Level Light " + address + " at level " + level.ToString());
+                writeLog("Insteon:  Get Level Light " + address + " at level " + level.ToString());
             }
             return level;
         }

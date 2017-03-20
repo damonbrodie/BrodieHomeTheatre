@@ -14,16 +14,6 @@ namespace BrodieTheatre
         //41.66.88 Motion Sensor
 
         static FormMain formMain;
-        public class Activities
-        {
-            public string Text;
-            public string Id;
-
-            public override string ToString()
-            {
-                return Text;
-            }
-        }
 
         Plm powerlineModem;
 
@@ -213,8 +203,7 @@ namespace BrodieTheatre
             {
                 if (GlobalShutdown > now)
                 {
-                    int percentage = (100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
-         
+                    int percentage = (100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));    
                     toolStripProgressBarGlobal.Value = percentage;
                     return;            
                 }
@@ -233,8 +222,7 @@ namespace BrodieTheatre
         private void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
         {
             if (labelRoomOccupancy.Text == "Occupied")
-            {
-                              
+            {                
                 writeLog("Occupancy:  Room Occupied");
                 resetGlobalTimer();
 
@@ -265,7 +253,7 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    writeLog("Speech Recognition:  Failed to pause Recognition Engine");
+                    writeLog("Voice:  Failed to pause Recognition Engine");
                 }
 
                 if (labelKodiStatus.Text == "Stopped")
