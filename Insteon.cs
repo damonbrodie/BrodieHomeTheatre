@@ -9,6 +9,10 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        Plm powerlineModem;
+        public string currentPLMport;
+        public bool plmConnected;
+
         public int processDimmerMessage(string message, string address)
         {
             int level = -1;

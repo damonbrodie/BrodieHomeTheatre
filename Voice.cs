@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using Microsoft.Speech.Recognition;
 
 
@@ -8,6 +9,17 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        public SpeechRecognitionEngine recognitionEngine;
+
+        public List<string> greetingsEvening = new List<string>();
+        public List<string> greetingsMorning = new List<string>();
+        public List<string> greetingsAfternoon = new List<string>();
+        public List<string> greetingsPresense = new List<string>();
+
+        public string wavePath = @"c:\Users\damon\Documents\Shared\Wavs";
+        public string waveFile = @"c:\Users\damon\Documents\Shared\wavefile.txt";
+        public string startupWave = @"c:\Users\damon\Documents\Shared\Wavs\Powering up.wav";
+        public string ackWave = @"c:\Users\damon\Documents\Shared\Wavs\Ack sound.wav";
         private void loadVoiceCommands()
         {
             GrammarBuilder gb = new GrammarBuilder();

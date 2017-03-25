@@ -10,6 +10,18 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        public class Activities
+        {
+            public string Text;
+            public string Id;
+
+            public override string ToString()
+            {
+                return Text;
+            }
+        }
+        public string currentHarmonyIP;
+
         private async Task harmonyConnectAsync(bool shouldUpdate = true)
         {
             bool error = false;

@@ -8,6 +8,10 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        private const int WH_KEYBOARD_LL = 13;
+        private const int WM_KEYDOWN = 0x0100;
+        public static LowLevelKeyboardProc proc = HookCallback;
+        public static IntPtr hookID = IntPtr.Zero;
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
 

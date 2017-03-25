@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using SoapBox.FluentDwelling;
 using Microsoft.Speech.Recognition;
-using System.Collections.Generic;
 
 
 namespace BrodieTheatre
@@ -15,40 +13,12 @@ namespace BrodieTheatre
 
         static FormMain formMain;
 
-        Plm powerlineModem;
-
-        private const int WH_KEYBOARD_LL = 13;
-        private const int WM_KEYDOWN = 0x0100;
-        public static LowLevelKeyboardProc proc = HookCallback;
-        public static IntPtr hookID = IntPtr.Zero;
-
-        public string currentHarmonyIP;
-        public string currentPLMport;
-        public bool plmConnected;
-
         public DateTime GlobalShutdown;
-
-        public string projectorLastCommand;
-
-        public float projectorNewAspect = 0;
 
         public int statusTickCounter = 0;
 
         public Random random = new Random();
 
-        public List<string> greetingsEvening = new List<string>();
-        public List<string> greetingsMorning = new List<string>();
-        public List<string> greetingsAfternoon = new List<string>();
-        public List<string> greetingsPresense = new List<string>();
-
-        public string wavePath = @"c:\Users\damon\Documents\Shared\Wavs";
-        public string waveFile = @"c:\Users\damon\Documents\Shared\wavefile.txt";
-        public string startupWave = @"c:\Users\damon\Documents\Shared\Wavs\Powering up.wav";
-        public string ackWave = @"c:\Users\damon\Documents\Shared\Wavs\Ack sound.wav";
-
-        public SpeechRecognitionEngine recognitionEngine;
-
-        Dictionary<string, int> lights = new Dictionary<string, int>();      
 
         public FormMain()
         {

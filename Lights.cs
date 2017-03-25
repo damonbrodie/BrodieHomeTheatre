@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
-
+using System.Collections.Generic;
 
 namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        Dictionary<string, int> lights = new Dictionary<string, int>();
+
+
         private void trackBarTray_ValueChanged(object sender, EventArgs e)
         {
             labelTray.Text = (trackBarTray.Value * 10).ToString() + "%";

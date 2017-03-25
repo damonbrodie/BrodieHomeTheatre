@@ -7,6 +7,9 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        public string projectorLastCommand;
+        public float projectorNewAspect = 0;
+
         private void projectorConnect()
         {
             try
