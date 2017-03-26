@@ -73,7 +73,6 @@ namespace BrodieTheatre
 
         private void expandCommands(ref Choices commandChoice, string spoken, string command, bool bePolite=false, bool useName=false)
         {
-        
             SemanticResultValue commandSemantic = new SemanticResultValue(spoken, command);
             commandChoice.Add(new GrammarBuilder(commandSemantic));
 
@@ -99,6 +98,7 @@ namespace BrodieTheatre
                 commandChoice.Add(new GrammarBuilder(commandSemantic));
             }
         }
+
         private void loadWaves()
         {
             greetingsEvening.Add("Good evening.wav");
@@ -154,8 +154,7 @@ namespace BrodieTheatre
         }
 
         private void sayPresense()
-        {
-            
+        {     
             writeLog("Voice:  Saying acknowledgement");
             kodiPlayWave(greetingsPresense[random.Next(greetingsPresense.Count)]);
         }

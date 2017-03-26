@@ -20,28 +20,24 @@ namespace BrodieTheatre
                         labelKodiStatus.Text = "Playing";
                         lightsToPlaybackLevel(); 
                         resetGlobalTimer();
-
                         break;
                     case "stopped":
                         writeLog("Kodi:  Kodi status changed to 'Stopped'");
                         labelKodiStatus.Text = "Stopped";
                         lightsToStoppedLevel();
                         resetGlobalTimer();
-
                         break;
                     case "paused":
                         writeLog("Kodi:  Kodi status changed to 'Paused'");
                         labelKodiStatus.Text = "Paused";
                         lightsToPausedLevel();
                         resetGlobalTimer();
-
                         break;
                     default:
                         writeLog("Kodi:  Unknown Kodi status - assuming 'Stopped'");
                         labelKodiStatus.Text = "Stopped";
                         lightsToStoppedLevel();
                         resetGlobalTimer();
-
                         break;
                 }
             }

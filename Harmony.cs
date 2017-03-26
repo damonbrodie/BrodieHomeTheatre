@@ -53,7 +53,6 @@ namespace BrodieTheatre
             }
             if (!error && shouldUpdate)
             {
-
                 formMain.BeginInvoke(new Action(() =>
                 {
                     Thread.Sleep(3000);

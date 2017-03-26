@@ -8,7 +8,6 @@ namespace BrodieTheatre
     {
         Dictionary<string, int> lights = new Dictionary<string, int>();
 
-
         private void trackBarTray_ValueChanged(object sender, EventArgs e)
         {
             labelTray.Text = (trackBarTray.Value * 10).ToString() + "%";
