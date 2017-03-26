@@ -39,7 +39,7 @@ namespace BrodieTheatre
             if (currentPLMport != Properties.Settings.Default.plmPort)
             {
                 currentPLMport = Properties.Settings.Default.plmPort;
-                connectPLM();
+                insteonConnectPLM();
             }
 
             if (currentHarmonyIP != Properties.Settings.Default.harmonyHubIP)
@@ -59,7 +59,7 @@ namespace BrodieTheatre
             }
 
             currentPLMport = Properties.Settings.Default.plmPort;
-            connectPLM();
+            insteonConnectPLM();
 
             projectorConnect();
 
@@ -77,7 +77,7 @@ namespace BrodieTheatre
             {
                 lights[Properties.Settings.Default.trayAddress] = -1;
             }
-            BeginInvoke(new Action(() =>
+            formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerSetLights.Enabled = true;
             }
@@ -85,7 +85,7 @@ namespace BrodieTheatre
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
             if (Program.Client.Token != "")
             {
-                BeginInvoke(new Action(() =>
+                formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.labelHarmonyStatus.Text = "Connected";
                     formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.ForestGreen;
@@ -94,14 +94,14 @@ namespace BrodieTheatre
             }
             else
             {
-                BeginInvoke(new Action(() =>
+                formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.labelHarmonyStatus.Text = "Disconnected";
                     formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
                 }
                 ));
             }
-            BeginInvoke(new Action(() =>
+            formMain.BeginInvoke(new Action(() =>
             {
                 formMain.recognitionEngine = new SpeechRecognitionEngine();
                 formMain.recognitionEngine.SetInputToDefaultAudioDevice();
@@ -196,20 +196,14 @@ namespace BrodieTheatre
 
                 if (labelCurrentActivity.Text == "PowerOff" && labelKodiStatus.Text == "Stopped")
                 {
-                    BeginInvoke(new Action(() =>
-                    {
-                        lightsToEnteringLevel();
-                        timerStartupSound.Enabled = true;
-                        writeLog("Occupancy:  Powering On AV Amplifier");
-                        harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
-                    }
-                    ));
+                    lightsToEnteringLevel();              
+                    writeLog("Occupancy:  Powering On AV Amplifier");
+                    harmonySendCommand(Properties.Settings.Default.occupancyDevice, Properties.Settings.Default.occupancyEnterCommand);
+                    timerStartupSound.Enabled = true;
                 }
                 recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-                labelLastVoiceCommand.Text = "Listening";
-                    
+                labelLastVoiceCommand.Text = "Listening";                   
                 toolStripStatus.Text = "Room is now occupied";
-               
             }
             else if (labelRoomOccupancy.Text == "Vacant")
             {     

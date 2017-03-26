@@ -13,7 +13,7 @@ namespace BrodieTheatre
         public string currentPLMport;
         public bool plmConnected;
 
-        public int processDimmerMessage(string message, string address)
+        public int insteonProcessDimmerMessage(string message, string address)
         {
             int level = -1;
             switch (message)
@@ -28,16 +28,16 @@ namespace BrodieTheatre
                     level = -1;
                     break;
                 case "End Manual Brightening/Dimming":
-                    level = getLightLevel(address);
+                    level = insteonGetLightLevel(address);
                     break;
                 default:
-                    level = getLightLevel(address);
+                    level = insteonGetLightLevel(address);
                     break;
             }
             return level;
         }
 
-        public bool processMotionSensorMessage(string message, string address)
+        public bool insteonProcessMotionSensorMessage(string message, string address)
         {
             bool state = false;
             switch (message)
@@ -54,7 +54,7 @@ namespace BrodieTheatre
             powerlineModem.Receive();
         }
 
-        private void connectPLM()
+        private void insteonConnectPLM()
         {
             if (Properties.Settings.Default.plmPort != "")
             {
@@ -74,7 +74,7 @@ namespace BrodieTheatre
 
                         if (address == Properties.Settings.Default.trayAddress)
                         {
-                            level = processDimmerMessage(desc, address);
+                            level = insteonProcessDimmerMessage(desc, address);
                             formMain.BeginInvoke(new Action(() =>
                             {
                                 if (level >= 0)
@@ -93,7 +93,7 @@ namespace BrodieTheatre
 
                         else if (address == Properties.Settings.Default.potsAddress)
                         {
-                            level = processDimmerMessage(desc, address);
+                            level = insteonProcessDimmerMessage(desc, address);
                             formMain.BeginInvoke(new Action(() =>
                             {        
                                 if (level >= 0)
@@ -111,13 +111,13 @@ namespace BrodieTheatre
                         }
                         else if (address == Properties.Settings.Default.motionSensorAddress)
                         {
-                            if (processMotionSensorMessage(desc, address))
+                            if (insteonProcessMotionSensorMessage(desc, address))
                             { //Motion Detected
                                 formMain.BeginInvoke(new Action(() =>
                                 {
                                     if (labelMotionSensorStatus.Text != "Motion Detected")
                                     {
-                                        writeLog("Insteon:  Motion Detected");
+                                        formMain.writeLog("Insteon:  Motion Detected");
                                         formMain.labelMotionSensorStatus.Text = "Motion Detected";
                                         formMain.labelRoomOccupancy.Text = "Occupied";
                                         formMain.resetGlobalTimer();
@@ -131,7 +131,7 @@ namespace BrodieTheatre
                                 {
                                     if (labelMotionSensorStatus.Text != "No Motion")
                                     {
-                                        writeLog("Insteon:  No Motion Detected");
+                                        formMain.writeLog("Insteon:  No Motion Detected");
                                         formMain.labelRoomOccupancy.Text = "Vacant";
                                         formMain.labelMotionSensorStatus.Text = "No Motion";
                                     }
@@ -147,7 +147,7 @@ namespace BrodieTheatre
             }
         }
 
-        public int getLightLevel(string address)
+        public int insteonGetLightLevel(string address)
         {
             int level = 0;
             DeviceBase device;
@@ -166,7 +166,7 @@ namespace BrodieTheatre
             return level;
         }
 
-        public void setLightLevel(string address, int level)
+        public void insteonSetLightLevel(string address, int level)
         {
             DeviceBase device;
             if (powerlineModem != null && powerlineModem.Network.TryConnectToDevice(address, out device))
@@ -222,9 +222,9 @@ namespace BrodieTheatre
             labelPLMstatus.Text = "Connected";
             writeLog("Insteon:  Connected to PLM");
             labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
-            trackBarTray.Value = getLightLevel(Properties.Settings.Default.trayAddress);
+            trackBarTray.Value = insteonGetLightLevel(Properties.Settings.Default.trayAddress);
             Thread.Sleep(200);
-            trackBarPots.Value = getLightLevel(Properties.Settings.Default.potsAddress);
+            trackBarPots.Value = insteonGetLightLevel(Properties.Settings.Default.potsAddress);
         }
     }
 }

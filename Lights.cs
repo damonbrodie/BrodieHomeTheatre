@@ -118,11 +118,11 @@ namespace BrodieTheatre
         {
             if (Properties.Settings.Default.potsAddress != "" && lights[Properties.Settings.Default.potsAddress] != -1)
             {
-                setLightLevel(Properties.Settings.Default.potsAddress, lights[Properties.Settings.Default.potsAddress]);
+                insteonSetLightLevel(Properties.Settings.Default.potsAddress, lights[Properties.Settings.Default.potsAddress]);
             }
             else if (Properties.Settings.Default.trayAddress != "" && lights[Properties.Settings.Default.trayAddress] != -1)
             {
-                setLightLevel(Properties.Settings.Default.trayAddress, lights[Properties.Settings.Default.trayAddress]);
+                insteonSetLightLevel(Properties.Settings.Default.trayAddress, lights[Properties.Settings.Default.trayAddress]);
             }
         }
 
