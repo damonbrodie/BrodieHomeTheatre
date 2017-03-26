@@ -666,7 +666,7 @@
             // 
             // timerStartupSound
             // 
-            this.timerStartupSound.Interval = 6000;
+            this.timerStartupSound.Interval = 8000;
             this.timerStartupSound.Tick += new System.EventHandler(this.timerStartupSound_Tick);
             // 
             // FormMain
@@ -688,6 +688,7 @@
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Text = "Brodie Home Theatre";
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.menuStrip.ResumeLayout(false);

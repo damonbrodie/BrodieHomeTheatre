@@ -25,92 +25,41 @@ namespace BrodieTheatre
             GrammarBuilder gb = new GrammarBuilder();
             Choices commandChoice = new Choices();
 
-            SemanticResultValue commandSemantic = new SemanticResultValue("turn on projector", "Turn on Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
+            expandCommands(ref commandChoice, "turn on projector", "Turn on Theatre", true, true);
+            expandCommands(ref commandChoice, "projector on", "Turn on Theatre", true, true);
+            expandCommands(ref commandChoice, "home theater on", "Turn on Theatre", true, true);
+            expandCommands(ref commandChoice, "let's watch a movie", "Turn on Theatre", true, true);
+            expandCommands(ref commandChoice, "start theater", "Turn on Theatre", true, true);
+            expandCommands(ref commandChoice, "power on projector", "Turn on Theatre", true, true);
 
-            commandSemantic = new SemanticResultValue("projector on", "Turn on Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
+            expandCommands(ref commandChoice, "turn off projector", "Turn off Theatre", true, true);
+            expandCommands(ref commandChoice, "projector off", "Turn off Theatre", true, true);
+            expandCommands(ref commandChoice, "home theater off", "Turn off Theatre", true, true);
+            expandCommands(ref commandChoice, "shutdown theater", "Turn off Theatre", true, true);
+            expandCommands(ref commandChoice, "turn off theater", "Turn off Theatre", true, true);
+            expandCommands(ref commandChoice, "power down theater", "Turn off Theatre", true, true);
+            expandCommands(ref commandChoice, "power off theater", "Turn off Theatre", true, true);
 
-            commandSemantic = new SemanticResultValue("home theater on", "Turn on Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
+            expandCommands(ref commandChoice, "show yourself", "Show Application", true, true);
+            expandCommands(ref commandChoice, "show application", "Show Application", true, true);
 
-            commandSemantic = new SemanticResultValue("let's watch a movie", "Turn on Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
+            expandCommands(ref commandChoice, "hide yourself", "Hide Application", true, true);
+            expandCommands(ref commandChoice, "hide application", "Hide Application", true, true);
 
-            commandSemantic = new SemanticResultValue("start theater", "Turn on Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
+            expandCommands(ref commandChoice, "are you there", "Presense", false, true);
+            expandCommands(ref commandChoice, "are you listening", "Presense", false, true);
 
-            commandSemantic = new SemanticResultValue("power on", "Turn on Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-            commandSemantic = new SemanticResultValue("power on projector", "Turn on Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
+            expandCommands(ref commandChoice, "Hello " + computerName, "Greeting", false, false);
+            expandCommands(ref commandChoice, "OK " + computerName, "Greeting", false, false);
 
-            commandSemantic = new SemanticResultValue("power on theater", "Turn on Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
+            expandCommands(ref commandChoice, "dim the lights", "Dim Lights", true, true);
+            expandCommands(ref commandChoice, "turn down lights", "Dim Lights", true, true);
+            expandCommands(ref commandChoice, "turn down the lights", "Dim Lights", true, true);
 
-            commandSemantic = new SemanticResultValue("turn off projector", "Turn off Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("projector off", "Turn off Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("home theater off", "Turn off Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("shutdown theater", "Turn off Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("turn off theater", "Turn off Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("power down theater", "Turn off Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("power off theater", "Turn off Theatre");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("show yourself", "Show Application");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("show application", "Show Application");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("hide yourself", "Hide Application");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("hide application", "Hide Application");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("are you there", "Presense");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("are you listening", "Presense");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("Hello Ronda", "Greeting");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("OK Ronda", "Greeting");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("dim the lights", "Dim Lights");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("turn down lights", "Dim Lights");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("turn down the lights", "Dim Lights");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("turn on lights", "Lights On");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("turn on the lights", "Lights On");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-            commandSemantic = new SemanticResultValue("raise the lights", "Lights On");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
+            expandCommands(ref commandChoice, "turn on lights", "Lights On", true, true);
+            expandCommands(ref commandChoice, "turn on the lights", "Lights On", true, true);
+            expandCommands(ref commandChoice, "raise the lights", "Lights On", true, true);
 
             gb.Append(commandChoice);
 
@@ -122,6 +71,34 @@ namespace BrodieTheatre
             loadWaves();
         }
 
+        private void expandCommands(ref Choices commandChoice, string spoken, string command, bool bePolite=false, bool useName=false)
+        {
+        
+            SemanticResultValue commandSemantic = new SemanticResultValue(spoken, command);
+            commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+            if (bePolite)
+            {
+                commandSemantic = new SemanticResultValue("please " + spoken, command);
+                commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+                commandSemantic = new SemanticResultValue(spoken + " please", command);
+                commandChoice.Add(new GrammarBuilder(commandSemantic));
+            }
+            if (useName)
+            {
+                commandSemantic = new SemanticResultValue(computerName + " " + spoken, command);
+                commandChoice.Add(new GrammarBuilder(commandSemantic));
+            }
+            if (useName && bePolite)
+            {
+                commandSemantic = new SemanticResultValue(computerName + " please "  + spoken, command);
+                commandChoice.Add(new GrammarBuilder(commandSemantic));
+
+                commandSemantic = new SemanticResultValue(computerName + " " + spoken + " please", command);
+                commandChoice.Add(new GrammarBuilder(commandSemantic));
+            }
+        }
         private void loadWaves()
         {
             greetingsEvening.Add("Good evening.wav");

@@ -12,12 +12,10 @@ namespace BrodieTheatre
         //41.66.88 Motion Sensor
 
         static FormMain formMain;
-
         public DateTime GlobalShutdown;
-
         public int statusTickCounter = 0;
-
         public Random random = new Random();
+        public string computerName = "Ronda";
 
 
         public FormMain()
