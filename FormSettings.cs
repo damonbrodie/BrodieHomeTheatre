@@ -2,6 +2,7 @@
 using System.IO.Ports;
 using System.Windows.Forms;
 
+
 namespace BrodieTheatre
 {
     public partial class FormSettings : Form
@@ -13,41 +14,41 @@ namespace BrodieTheatre
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.harmonyHubIP = textBoxHarmonyHubIP.Text;
-            Properties.Settings.Default.voiceActivity = textBoxVoiceActivity.Text;
-            Properties.Settings.Default.occupancyDevice = textBoxOccupancyDevice.Text;
-            Properties.Settings.Default.occupancyEnterCommand = textBoxOccupancyEnterCommand.Text;
-            Properties.Settings.Default.occupancyExitCommand = textBoxOccupancyExitCommand.Text;
-            Properties.Settings.Default.plmPort = comboBoxInsteonPort.Text;
-            Properties.Settings.Default.projectorPort = comboBoxProjectorPort.Text;
-            Properties.Settings.Default.potsAddress = textBoxPotsAddress.Text;
-            Properties.Settings.Default.trayAddress = textBoxTrayAddress.Text;
-            Properties.Settings.Default.trayPlaybackLevel = trackBarTrayPlayback.Value;
-            Properties.Settings.Default.potsPlaybackLevel = trackBarPotsPlayback.Value;
-            Properties.Settings.Default.trayPausedLevel = trackBarTrayPaused.Value;
-            Properties.Settings.Default.potsPausedLevel = trackBarPotsPaused.Value;
-            Properties.Settings.Default.trayStoppedLevel = trackBarTrayStopped.Value;
-            Properties.Settings.Default.potsStoppedLevel = trackBarPotsStopped.Value;
-            Properties.Settings.Default.trayEnteringLevel = trackBarTrayEntering.Value;
-            Properties.Settings.Default.potsEnteringLevel = trackBarPotsEntering.Value;
-            Properties.Settings.Default.globalShutdown = trackBarGlobalShutdown.Value;
-            Properties.Settings.Default.motionSensorAddress = textBoxMotionSensorAddress.Text;
-            Properties.Settings.Default.voiceConfidence = trackBarVoiceConfidence.Value;
-            Properties.Settings.Default.startMinimized = checkBoxStartMinimized.Checked;
-            Properties.Settings.Default.computerName = textBoxComputerName.Text;
+            Properties.Settings.Default.harmonyHubIP            = textBoxHarmonyHubIP.Text;
+            Properties.Settings.Default.voiceActivity           = textBoxVoiceActivity.Text;
+            Properties.Settings.Default.occupancyDevice         = textBoxOccupancyDevice.Text;
+            Properties.Settings.Default.occupancyEnterCommand   = textBoxOccupancyEnterCommand.Text;
+            Properties.Settings.Default.occupancyExitCommand    = textBoxOccupancyExitCommand.Text;
+            Properties.Settings.Default.plmPort                 = comboBoxInsteonPort.Text;
+            Properties.Settings.Default.projectorPort           = comboBoxProjectorPort.Text;
+            Properties.Settings.Default.potsAddress             = textBoxPotsAddress.Text;
+            Properties.Settings.Default.trayAddress             = textBoxTrayAddress.Text;
+            Properties.Settings.Default.trayPlaybackLevel       = trackBarTrayPlayback.Value;
+            Properties.Settings.Default.potsPlaybackLevel       = trackBarPotsPlayback.Value;
+            Properties.Settings.Default.trayPausedLevel         = trackBarTrayPaused.Value;
+            Properties.Settings.Default.potsPausedLevel         = trackBarPotsPaused.Value;
+            Properties.Settings.Default.trayStoppedLevel        = trackBarTrayStopped.Value;
+            Properties.Settings.Default.potsStoppedLevel        = trackBarPotsStopped.Value;
+            Properties.Settings.Default.trayEnteringLevel       = trackBarTrayEntering.Value;
+            Properties.Settings.Default.potsEnteringLevel       = trackBarPotsEntering.Value;
+            Properties.Settings.Default.globalShutdown          = trackBarGlobalShutdown.Value;
+            Properties.Settings.Default.motionSensorAddress     = textBoxMotionSensorAddress.Text;
+            Properties.Settings.Default.voiceConfidence         = trackBarVoiceConfidence.Value;
+            Properties.Settings.Default.startMinimized          = checkBoxStartMinimized.Checked;
+            Properties.Settings.Default.computerName            = textBoxComputerName.Text;
             Properties.Settings.Default.Save();
             this.Close();
         }
 
         private void FormSettings_Load(object sender, EventArgs e)
         {
-            checkBoxStartMinimized.Checked = Properties.Settings.Default.startMinimized;
-            textBoxComputerName.Text = Properties.Settings.Default.computerName;
-            textBoxHarmonyHubIP.Text = Properties.Settings.Default.harmonyHubIP;
-            textBoxVoiceActivity.Text = Properties.Settings.Default.voiceActivity;
-            textBoxOccupancyDevice.Text = Properties.Settings.Default.occupancyDevice;
-            textBoxOccupancyEnterCommand.Text = Properties.Settings.Default.occupancyEnterCommand;
-            textBoxOccupancyExitCommand.Text = Properties.Settings.Default.occupancyExitCommand;
+            checkBoxStartMinimized.Checked      = Properties.Settings.Default.startMinimized;
+            textBoxComputerName.Text            = Properties.Settings.Default.computerName;
+            textBoxHarmonyHubIP.Text            = Properties.Settings.Default.harmonyHubIP;
+            textBoxVoiceActivity.Text           = Properties.Settings.Default.voiceActivity;
+            textBoxOccupancyDevice.Text         = Properties.Settings.Default.occupancyDevice;
+            textBoxOccupancyEnterCommand.Text   = Properties.Settings.Default.occupancyEnterCommand;
+            textBoxOccupancyExitCommand.Text    = Properties.Settings.Default.occupancyExitCommand;
 
             try
             {

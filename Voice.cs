@@ -49,7 +49,6 @@ namespace BrodieTheatre
             expandCommands(ref commandChoice, "are you there", "Presense", false, true);
             expandCommands(ref commandChoice, "are you listening", "Presense", false, true);
 
-
             expandCommands(ref commandChoice, "Hello " + Properties.Settings.Default.computerName, "Greeting", false, false);
             expandCommands(ref commandChoice, "OK " + Properties.Settings.Default.computerName, "Greeting", false, false);
 
