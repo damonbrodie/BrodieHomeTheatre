@@ -15,9 +15,7 @@ namespace BrodieTheatre
         public DateTime GlobalShutdown;
         public int statusTickCounter = 0;
         public Random random = new Random();
-        public string computerName = "Ronda";
-
-
+        
         public FormMain()
         {
             hookID = SetHook(proc);
@@ -79,6 +77,14 @@ namespace BrodieTheatre
             }
             formMain.BeginInvoke(new Action(() =>
             {
+                if (Properties.Settings.Default.startMinimized)
+                {
+                    formMain.WindowState = FormWindowState.Minimized;
+                }
+                else
+                {
+                    formMain.WindowState = FormWindowState.Normal;
+                }
                 formMain.timerSetLights.Enabled = true;
             }
             ));

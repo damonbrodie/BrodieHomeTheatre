@@ -50,8 +50,8 @@ namespace BrodieTheatre
             expandCommands(ref commandChoice, "are you listening", "Presense", false, true);
 
 
-            expandCommands(ref commandChoice, "Hello " + computerName, "Greeting", false, false);
-            expandCommands(ref commandChoice, "OK " + computerName, "Greeting", false, false);
+            expandCommands(ref commandChoice, "Hello " + Properties.Settings.Default.computerName, "Greeting", false, false);
+            expandCommands(ref commandChoice, "OK " + Properties.Settings.Default.computerName, "Greeting", false, false);
 
             expandCommands(ref commandChoice, "dim the lights", "Dim Lights", true, true);
             expandCommands(ref commandChoice, "turn down lights", "Dim Lights", true, true);
@@ -86,15 +86,15 @@ namespace BrodieTheatre
             }
             if (useName)
             {
-                commandSemantic = new SemanticResultValue(computerName + " " + spoken, command);
+                commandSemantic = new SemanticResultValue(Properties.Settings.Default.computerName + " " + spoken, command);
                 commandChoice.Add(new GrammarBuilder(commandSemantic));
             }
             if (useName && bePolite)
             {
-                commandSemantic = new SemanticResultValue(computerName + " please "  + spoken, command);
+                commandSemantic = new SemanticResultValue(Properties.Settings.Default.computerName + " please "  + spoken, command);
                 commandChoice.Add(new GrammarBuilder(commandSemantic));
 
-                commandSemantic = new SemanticResultValue(computerName + " " + spoken + " please", command);
+                commandSemantic = new SemanticResultValue(Properties.Settings.Default.computerName + " " + spoken + " please", command);
                 commandChoice.Add(new GrammarBuilder(commandSemantic));
             }
         }

@@ -262,5 +262,29 @@ namespace BrodieTheatre.Properties {
                 this["voiceConfidence"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Ronda")]
+        public string computerName {
+            get {
+                return ((string)(this["computerName"]));
+            }
+            set {
+                this["computerName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool startMinimized {
+            get {
+                return ((bool)(this["startMinimized"]));
+            }
+            set {
+                this["startMinimized"] = value;
+            }
+        }
     }
 }
