@@ -38,7 +38,7 @@ namespace BrodieTheatre
                 currentActivityID = await Program.Client.GetCurrentActivityAsync();
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Harmony:  Connected");
+                    formMain.writeLog("Harmony:  Connected to Hub");
                 }
                 ));
             }
@@ -56,7 +56,6 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 {
                     Thread.Sleep(3000);
-                    formMain.writeLog("Harmony:  harmonyConnectAsyc - call to update activities");
                     formMain.harmonyUpdateActivities(currentActivityID);
                 }
                 ));
@@ -163,7 +162,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Harmong:  Failed to send Harmony Command");
+                        formMain.writeLog("Harmony:  Failed to send Harmony Command");
                     }
                     ));
                     Program.Client.Dispose();

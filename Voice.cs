@@ -100,23 +100,27 @@ namespace BrodieTheatre
 
         private void loadWaves()
         {
+            greetingsEvening.Clear();
             greetingsEvening.Add("Good evening.wav");
             greetingsEvening.Add("Greetings.wav");
             greetingsEvening.Add("Hello.wav");
             greetingsEvening.Add("Welcome.wav");
             greetingsEvening.Add("welcome back.wav");
 
+            greetingsMorning.Clear();
             greetingsMorning.Add("Good morning.wav");
             greetingsMorning.Add("Greetings.wav");
             greetingsMorning.Add("Hello.wav");
             greetingsMorning.Add("Welcome.wav");
             greetingsMorning.Add("welcome back.wav");
 
+            greetingsAfternoon.Clear();
             greetingsAfternoon.Add("Greetings.wav");
             greetingsAfternoon.Add("Hello.wav");
             greetingsAfternoon.Add("Welcome.wav");
             greetingsAfternoon.Add("welcome back.wav");
 
+            greetingsPresense.Clear();
             greetingsPresense.Add("I'm here.wav");
             greetingsPresense.Add("I'm here 2.wav");
             greetingsPresense.Add("Standing by.wav");

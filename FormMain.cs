@@ -49,7 +49,11 @@ namespace BrodieTheatre
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
-            writeLog("------ Starting Up ------");
+            formMain.BeginInvoke(new Action(() =>
+            {
+                formMain.writeLog("------ Starting Up ------");
+            }
+            ));
             await harmonyConnectAsync(true);
             if (Program.Client != null)
             {
