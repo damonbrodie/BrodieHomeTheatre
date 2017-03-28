@@ -171,7 +171,7 @@
             // labelVoiceConfidence
             // 
             this.labelVoiceConfidence.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelVoiceConfidence.Location = new System.Drawing.Point(259, 124);
+            this.labelVoiceConfidence.Location = new System.Drawing.Point(277, 124);
             this.labelVoiceConfidence.Name = "labelVoiceConfidence";
             this.labelVoiceConfidence.Size = new System.Drawing.Size(35, 23);
             this.labelVoiceConfidence.TabIndex = 44;
@@ -182,7 +182,7 @@
             // 
             this.trackBarVoiceConfidence.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarVoiceConfidence.LargeChange = 1;
-            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(82, 126);
+            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(100, 126);
             this.trackBarVoiceConfidence.Name = "trackBarVoiceConfidence";
             this.trackBarVoiceConfidence.Size = new System.Drawing.Size(177, 45);
             this.trackBarVoiceConfidence.TabIndex = 2;
@@ -190,7 +190,7 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(12, 129);
+            this.label20.Location = new System.Drawing.Point(34, 129);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(64, 13);
             this.label20.TabIndex = 43;
@@ -388,7 +388,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(37, 98);
+            this.label4.Location = new System.Drawing.Point(42, 98);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(93, 13);
             this.label4.TabIndex = 4;

@@ -172,12 +172,6 @@ namespace BrodieTheatre
             }
         }
 
-        private void listBoxActivities_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            Activities activity = (Activities)listBoxActivities.SelectedItem;
-            harmonyStartActivity(activity.Text, activity.Id);
-        }
-
         // Start Harmony Activity
         private async void harmonyStartActivity(string activityName, string activityId)
         {

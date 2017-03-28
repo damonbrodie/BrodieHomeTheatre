@@ -197,6 +197,12 @@ namespace BrodieTheatre
             toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
         }
 
+        private void listBoxActivities_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Activities activity = (Activities)listBoxActivities.SelectedItem;
+            harmonyStartActivity(activity.Text, activity.Id);
+        }
+
         private void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
         {
             if (labelRoomOccupancy.Text == "Occupied")
