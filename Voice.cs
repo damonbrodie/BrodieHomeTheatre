@@ -31,6 +31,7 @@ namespace BrodieTheatre
             expandCommands(ref commandChoice, "let's watch a movie", "Turn on Theatre", true, true);
             expandCommands(ref commandChoice, "start theater", "Turn on Theatre", true, true);
             expandCommands(ref commandChoice, "power on projector", "Turn on Theatre", true, true);
+            expandCommands(ref commandChoice, "power on theater", "Turn on Theatre", true, true);
 
             expandCommands(ref commandChoice, "turn off projector", "Turn off Theatre", true, true);
             expandCommands(ref commandChoice, "projector off", "Turn off Theatre", true, true);

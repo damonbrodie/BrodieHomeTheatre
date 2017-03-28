@@ -30,6 +30,15 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.checkBoxStartMinimized = new System.Windows.Forms.CheckBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.labelVoiceConfidence = new System.Windows.Forms.Label();
+            this.trackBarVoiceConfidence = new System.Windows.Forms.TrackBar();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBoxComputerName = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.textBoxOccupancyExitCommand = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
@@ -91,16 +100,9 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.textBoxComputerName = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.labelVoiceConfidence = new System.Windows.Forms.Label();
-            this.trackBarVoiceConfidence = new System.Windows.Forms.TrackBar();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.checkBoxStartMinimized = new System.Windows.Forms.CheckBox();
             this.tabControl.SuspendLayout();
+            this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage5.SuspendLayout();
@@ -115,8 +117,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).BeginInit();
-            this.tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -132,6 +132,95 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(353, 397);
             this.tabControl.TabIndex = 0;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.checkBoxStartMinimized);
+            this.tabPage6.Controls.Add(this.label26);
+            this.tabPage6.Controls.Add(this.labelVoiceConfidence);
+            this.tabPage6.Controls.Add(this.trackBarVoiceConfidence);
+            this.tabPage6.Controls.Add(this.label20);
+            this.tabPage6.Controls.Add(this.label14);
+            this.tabPage6.Controls.Add(this.textBoxComputerName);
+            this.tabPage6.Controls.Add(this.label15);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(345, 371);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Global";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxStartMinimized
+            // 
+            this.checkBoxStartMinimized.AutoSize = true;
+            this.checkBoxStartMinimized.Location = new System.Drawing.Point(107, 55);
+            this.checkBoxStartMinimized.Name = "checkBoxStartMinimized";
+            this.checkBoxStartMinimized.Size = new System.Drawing.Size(15, 14);
+            this.checkBoxStartMinimized.TabIndex = 1;
+            this.checkBoxStartMinimized.UseVisualStyleBackColor = true;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(18, 55);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(81, 13);
+            this.label26.TabIndex = 45;
+            this.label26.Text = "Start Minimized:";
+            // 
+            // labelVoiceConfidence
+            // 
+            this.labelVoiceConfidence.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelVoiceConfidence.Location = new System.Drawing.Point(259, 124);
+            this.labelVoiceConfidence.Name = "labelVoiceConfidence";
+            this.labelVoiceConfidence.Size = new System.Drawing.Size(35, 23);
+            this.labelVoiceConfidence.TabIndex = 44;
+            this.labelVoiceConfidence.Text = "0%";
+            this.labelVoiceConfidence.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // trackBarVoiceConfidence
+            // 
+            this.trackBarVoiceConfidence.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarVoiceConfidence.LargeChange = 1;
+            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(82, 126);
+            this.trackBarVoiceConfidence.Name = "trackBarVoiceConfidence";
+            this.trackBarVoiceConfidence.Size = new System.Drawing.Size(177, 45);
+            this.trackBarVoiceConfidence.TabIndex = 2;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(12, 129);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(64, 13);
+            this.label20.TabIndex = 43;
+            this.label20.Text = "Confidence:";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(11, 101);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(163, 13);
+            this.label14.TabIndex = 41;
+            this.label14.Text = "Minimum Voice Confidence:";
+            // 
+            // textBoxComputerName
+            // 
+            this.textBoxComputerName.Location = new System.Drawing.Point(107, 17);
+            this.textBoxComputerName.Name = "textBoxComputerName";
+            this.textBoxComputerName.Size = new System.Drawing.Size(124, 20);
+            this.textBoxComputerName.TabIndex = 0;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(13, 20);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(86, 13);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "Computer Name:";
             // 
             // tabPage1
             // 
@@ -747,95 +836,6 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.checkBoxStartMinimized);
-            this.tabPage6.Controls.Add(this.label26);
-            this.tabPage6.Controls.Add(this.labelVoiceConfidence);
-            this.tabPage6.Controls.Add(this.trackBarVoiceConfidence);
-            this.tabPage6.Controls.Add(this.label20);
-            this.tabPage6.Controls.Add(this.label14);
-            this.tabPage6.Controls.Add(this.textBoxComputerName);
-            this.tabPage6.Controls.Add(this.label15);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(345, 371);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "Global";
-            this.tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // textBoxComputerName
-            // 
-            this.textBoxComputerName.Location = new System.Drawing.Point(107, 17);
-            this.textBoxComputerName.Name = "textBoxComputerName";
-            this.textBoxComputerName.Size = new System.Drawing.Size(124, 20);
-            this.textBoxComputerName.TabIndex = 0;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(13, 20);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(86, 13);
-            this.label15.TabIndex = 4;
-            this.label15.Text = "Computer Name:";
-            // 
-            // labelVoiceConfidence
-            // 
-            this.labelVoiceConfidence.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelVoiceConfidence.Location = new System.Drawing.Point(259, 124);
-            this.labelVoiceConfidence.Name = "labelVoiceConfidence";
-            this.labelVoiceConfidence.Size = new System.Drawing.Size(35, 23);
-            this.labelVoiceConfidence.TabIndex = 44;
-            this.labelVoiceConfidence.Text = "0%";
-            this.labelVoiceConfidence.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // trackBarVoiceConfidence
-            // 
-            this.trackBarVoiceConfidence.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarVoiceConfidence.LargeChange = 1;
-            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(82, 126);
-            this.trackBarVoiceConfidence.Name = "trackBarVoiceConfidence";
-            this.trackBarVoiceConfidence.Size = new System.Drawing.Size(177, 45);
-            this.trackBarVoiceConfidence.TabIndex = 2;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(12, 129);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(64, 13);
-            this.label20.TabIndex = 43;
-            this.label20.Text = "Confidence:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(11, 101);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(111, 13);
-            this.label14.TabIndex = 41;
-            this.label14.Text = "Voice Confidence:";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(18, 55);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(81, 13);
-            this.label26.TabIndex = 45;
-            this.label26.Text = "Start Minimized:";
-            // 
-            // checkBoxStartMinimized
-            // 
-            this.checkBoxStartMinimized.AutoSize = true;
-            this.checkBoxStartMinimized.Location = new System.Drawing.Point(107, 55);
-            this.checkBoxStartMinimized.Name = "checkBoxStartMinimized";
-            this.checkBoxStartMinimized.Size = new System.Drawing.Size(15, 14);
-            this.checkBoxStartMinimized.TabIndex = 1;
-            this.checkBoxStartMinimized.UseVisualStyleBackColor = true;
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -851,6 +851,9 @@
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.FormSettings_Load);
             this.tabControl.ResumeLayout(false);
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -870,9 +873,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).EndInit();
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).EndInit();
             this.ResumeLayout(false);
 
         }

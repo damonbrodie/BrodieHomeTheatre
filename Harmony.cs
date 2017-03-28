@@ -72,7 +72,7 @@ namespace BrodieTheatre
                 if (activity == "-1")
                 {
                     formMain.projectorPowerOff();
-                    formMain.lightsOn();
+                    formMain.lightsToEnteringLevel();
                 }
                 else
                 {
@@ -194,6 +194,7 @@ namespace BrodieTheatre
                         formMain.toolStripStatus.Text = "Starting Harmony activity - " + activityName;
                         if (Convert.ToInt32(activityId) >= 0)
                         {
+                            formMain.projectorPowerOn();
                             //An activity is starting wait for Projector to power up then dim the lights
                             formMain.timerStartLights.Enabled = true;
                         }
@@ -201,6 +202,8 @@ namespace BrodieTheatre
                         {
                             //Turn up the ligths so occupants can find their way out
                             formMain.lightsToEnteringLevel();
+                            formMain.projectorPowerOff();
+                            
                         }
                     }
                     ));
