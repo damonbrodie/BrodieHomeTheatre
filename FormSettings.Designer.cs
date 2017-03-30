@@ -102,6 +102,8 @@
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.numericUpDownKodiPort = new System.Windows.Forms.NumericUpDown();
+            this.textBoxKodiIP = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).BeginInit();
@@ -138,6 +140,8 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.textBoxKodiIP);
+            this.tabPage6.Controls.Add(this.label32);
             this.tabPage6.Controls.Add(this.numericUpDownKodiPort);
             this.tabPage6.Controls.Add(this.label31);
             this.tabPage6.Controls.Add(this.checkBoxStartMinimized);
@@ -158,7 +162,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(17, 89);
+            this.label31.Location = new System.Drawing.Point(17, 123);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(84, 13);
             this.label31.TabIndex = 47;
@@ -176,7 +180,7 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(18, 55);
+            this.label26.Location = new System.Drawing.Point(20, 55);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(81, 13);
             this.label26.TabIndex = 45;
@@ -185,7 +189,7 @@
             // labelVoiceConfidence
             // 
             this.labelVoiceConfidence.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelVoiceConfidence.Location = new System.Drawing.Point(277, 152);
+            this.labelVoiceConfidence.Location = new System.Drawing.Point(277, 188);
             this.labelVoiceConfidence.Name = "labelVoiceConfidence";
             this.labelVoiceConfidence.Size = new System.Drawing.Size(35, 23);
             this.labelVoiceConfidence.TabIndex = 44;
@@ -196,16 +200,16 @@
             // 
             this.trackBarVoiceConfidence.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarVoiceConfidence.LargeChange = 1;
-            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(100, 154);
+            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(100, 190);
             this.trackBarVoiceConfidence.Name = "trackBarVoiceConfidence";
             this.trackBarVoiceConfidence.Size = new System.Drawing.Size(177, 45);
-            this.trackBarVoiceConfidence.TabIndex = 3;
+            this.trackBarVoiceConfidence.TabIndex = 4;
             this.trackBarVoiceConfidence.ValueChanged += new System.EventHandler(this.trackBarVoiceConfidence_ValueChanged_1);
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(34, 157);
+            this.label20.Location = new System.Drawing.Point(34, 193);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(64, 13);
             this.label20.TabIndex = 43;
@@ -215,7 +219,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(11, 129);
+            this.label14.Location = new System.Drawing.Point(11, 165);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(163, 13);
             this.label14.TabIndex = 41;
@@ -231,7 +235,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(13, 20);
+            this.label15.Location = new System.Drawing.Point(15, 20);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(86, 13);
             this.label15.TabIndex = 4;
@@ -853,7 +857,7 @@
             // 
             // numericUpDownKodiPort
             // 
-            this.numericUpDownKodiPort.Location = new System.Drawing.Point(109, 83);
+            this.numericUpDownKodiPort.Location = new System.Drawing.Point(107, 121);
             this.numericUpDownKodiPort.Maximum = new decimal(new int[] {
             99999,
             0,
@@ -861,7 +865,23 @@
             0});
             this.numericUpDownKodiPort.Name = "numericUpDownKodiPort";
             this.numericUpDownKodiPort.Size = new System.Drawing.Size(76, 20);
-            this.numericUpDownKodiPort.TabIndex = 2;
+            this.numericUpDownKodiPort.TabIndex = 3;
+            // 
+            // textBoxKodiIP
+            // 
+            this.textBoxKodiIP.Location = new System.Drawing.Point(107, 85);
+            this.textBoxKodiIP.Name = "textBoxKodiIP";
+            this.textBoxKodiIP.Size = new System.Drawing.Size(124, 20);
+            this.textBoxKodiIP.TabIndex = 2;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(57, 88);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(44, 13);
+            this.label32.TabIndex = 49;
+            this.label32.Text = "Kodi IP:";
             // 
             // FormSettings
             // 
@@ -980,5 +1000,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.NumericUpDown numericUpDownKodiPort;
+        private System.Windows.Forms.TextBox textBoxKodiIP;
+        private System.Windows.Forms.Label label32;
     }
 }

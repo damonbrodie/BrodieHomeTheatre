@@ -37,6 +37,7 @@ namespace BrodieTheatre
             Properties.Settings.Default.startMinimized          = checkBoxStartMinimized.Checked;
             Properties.Settings.Default.computerName            = textBoxComputerName.Text;
             Properties.Settings.Default.kodiJSONPort            = (int)numericUpDownKodiPort.Value;
+            Properties.Settings.Default.kodiIP                  = textBoxKodiIP.Text;
             Properties.Settings.Default.Save();
             this.Close();
         }
@@ -51,6 +52,7 @@ namespace BrodieTheatre
             textBoxOccupancyEnterCommand.Text   = Properties.Settings.Default.occupancyEnterCommand;
             textBoxOccupancyExitCommand.Text    = Properties.Settings.Default.occupancyExitCommand;
             numericUpDownKodiPort.Value         = (decimal)Properties.Settings.Default.kodiJSONPort;
+            textBoxKodiIP.Text                  = Properties.Settings.Default.kodiIP;
 
             try
             {

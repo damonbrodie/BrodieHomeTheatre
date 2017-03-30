@@ -298,5 +298,17 @@ namespace BrodieTheatre.Properties {
                 this["kodiJSONPort"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string kodiIP {
+            get {
+                return ((string)(this["kodiIP"]));
+            }
+            set {
+                this["kodiIP"] = value;
+            }
+        }
     }
 }

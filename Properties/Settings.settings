@@ -71,5 +71,8 @@
     <Setting Name="kodiJSONPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9090</Value>
     </Setting>
+    <Setting Name="kodiIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
