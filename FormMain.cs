@@ -181,7 +181,7 @@ namespace BrodieTheatre
             {
                 if (GlobalShutdown > now)
                 {
-                    int percentage = (100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));    
+                    int percentage = Math.Abs(100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));    
                     toolStripProgressBarGlobal.Value = percentage;
                     return;            
                 }

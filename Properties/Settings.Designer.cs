@@ -286,5 +286,17 @@ namespace BrodieTheatre.Properties {
                 this["startMinimized"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9090")]
+        public int kodiJSONPort {
+            get {
+                return ((int)(this["kodiJSONPort"]));
+            }
+            set {
+                this["kodiJSONPort"] = value;
+            }
+        }
     }
 }

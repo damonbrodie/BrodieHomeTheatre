@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using Microsoft.Speech.Recognition;
@@ -17,7 +16,6 @@ namespace BrodieTheatre
         public List<string> greetingsPresense = new List<string>();
 
         public string wavePath = @"c:\Users\damon\Documents\Shared\Wavs";
-        public string waveFile = @"c:\Users\damon\Documents\Shared\wavefile.txt";
         public string startupWave = @"c:\Users\damon\Documents\Shared\Wavs\Powering up.wav";
         public string ackWave = @"c:\Users\damon\Documents\Shared\Wavs\Ack sound.wav";
         private void loadVoiceCommands()
@@ -60,6 +58,10 @@ namespace BrodieTheatre
             expandCommands(ref commandChoice, "turn on lights", "Lights On", true, true);
             expandCommands(ref commandChoice, "turn on the lights", "Lights On", true, true);
             expandCommands(ref commandChoice, "raise the lights", "Lights On", true, true);
+
+            expandCommands(ref commandChoice, "pause playback", "Pause Playback", true, true);
+            expandCommands(ref commandChoice, "pause movie", "Pause Playback", true, true);
+            expandCommands(ref commandChoice, "pause the playback", "Pause Playback", true, true);
 
             gb.Append(commandChoice);
 
@@ -128,13 +130,6 @@ namespace BrodieTheatre
             greetingsPresense.Add("Yes.wav");
             greetingsPresense.Add("Yes 2.wav");
             greetingsPresense.Add("I am around.wav"); 
-        }
-
-        private void kodiPlayWave(string file)
-        {
-            StreamWriter fileHandle = new StreamWriter(waveFile);
-            fileHandle.WriteLine(Path.Combine(wavePath,file));
-            fileHandle.Close();
         }
 
         private void sayGreeting()
@@ -254,6 +249,16 @@ namespace BrodieTheatre
                             formMain.kodiPlayWave(ackWave);
                             formMain.labelLastVoiceCommand.Text = topPhrase;
                             formMain.lightsToEnteringLevel();
+                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                        }
+                        ));
+                        break;
+                    case "Pause Playback":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.kodiPlayWave(ackWave);
+                            formMain.labelLastVoiceCommand.Text = topPhrase;
+                            formMain.kodiPlaybackControl("Pause");
                             formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                         }
                         ));

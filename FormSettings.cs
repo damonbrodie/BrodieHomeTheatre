@@ -36,6 +36,7 @@ namespace BrodieTheatre
             Properties.Settings.Default.voiceConfidence         = trackBarVoiceConfidence.Value;
             Properties.Settings.Default.startMinimized          = checkBoxStartMinimized.Checked;
             Properties.Settings.Default.computerName            = textBoxComputerName.Text;
+            Properties.Settings.Default.kodiJSONPort            = Int32.Parse(textBoxKodiPort.Text);
             Properties.Settings.Default.Save();
             this.Close();
         }
@@ -49,6 +50,7 @@ namespace BrodieTheatre
             textBoxOccupancyDevice.Text         = Properties.Settings.Default.occupancyDevice;
             textBoxOccupancyEnterCommand.Text   = Properties.Settings.Default.occupancyEnterCommand;
             textBoxOccupancyExitCommand.Text    = Properties.Settings.Default.occupancyExitCommand;
+            textBoxKodiPort.Text                = Properties.Settings.Default.kodiJSONPort.ToString();
 
             try
             {
@@ -245,6 +247,11 @@ namespace BrodieTheatre
         }
 
         private void trackBarVoiceConfidence_ValueChanged(object sender, EventArgs e)
+        {
+            labelVoiceConfidence.Text = (trackBarVoiceConfidence.Value * 10).ToString() + "%";
+        }
+
+        private void trackBarVoiceConfidence_ValueChanged_1(object sender, EventArgs e)
         {
             labelVoiceConfidence.Text = (trackBarVoiceConfidence.Value * 10).ToString() + "%";
         }

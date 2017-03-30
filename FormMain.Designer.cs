@@ -93,6 +93,8 @@
             this.timerProjectorLensControl = new System.Windows.Forms.Timer(this.components);
             this.timerSetLights = new System.Windows.Forms.Timer(this.components);
             this.timerStartupSound = new System.Windows.Forms.Timer(this.components);
+            this.label13 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -147,7 +149,7 @@
             this.listBoxActivities.FormattingEnabled = true;
             this.listBoxActivities.Location = new System.Drawing.Point(227, 33);
             this.listBoxActivities.Name = "listBoxActivities";
-            this.listBoxActivities.Size = new System.Drawing.Size(149, 95);
+            this.listBoxActivities.Size = new System.Drawing.Size(149, 121);
             this.listBoxActivities.TabIndex = 1;
             this.listBoxActivities.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxActivities_MouseDoubleClick);
             // 
@@ -176,7 +178,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBox1.Location = new System.Drawing.Point(12, 42);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(392, 136);
+            this.groupBox1.Size = new System.Drawing.Size(392, 168);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             // 
@@ -241,7 +243,7 @@
             this.groupBox2.Controls.Add(this.labelPLMstatus);
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox2.Location = new System.Drawing.Point(12, 198);
+            this.groupBox2.Location = new System.Drawing.Point(12, 226);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(392, 204);
             this.groupBox2.TabIndex = 8;
@@ -357,19 +359,21 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.labelKodiStatus);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.pictureBox3);
             this.groupBox3.Location = new System.Drawing.Point(426, 42);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(239, 67);
+            this.groupBox3.Size = new System.Drawing.Size(239, 102);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             // 
             // labelKodiStatus
             // 
             this.labelKodiStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelKodiStatus.Location = new System.Drawing.Point(103, 33);
+            this.labelKodiStatus.Location = new System.Drawing.Point(102, 65);
             this.labelKodiStatus.Name = "labelKodiStatus";
             this.labelKodiStatus.Size = new System.Drawing.Size(120, 19);
             this.labelKodiStatus.TabIndex = 12;
@@ -379,7 +383,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(46, 36);
+            this.label6.Location = new System.Drawing.Point(45, 68);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 11;
@@ -405,7 +409,7 @@
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.pictureBox4);
-            this.groupBox4.Location = new System.Drawing.Point(426, 127);
+            this.groupBox4.Location = new System.Drawing.Point(425, 155);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(238, 174);
             this.groupBox4.TabIndex = 10;
@@ -550,7 +554,7 @@
             this.toolStripProgressBarGlobal,
             this.toolStripStatusLabel2,
             this.toolStripStatus});
-            this.statusStrip.Location = new System.Drawing.Point(0, 419);
+            this.statusStrip.Location = new System.Drawing.Point(0, 447);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(675, 24);
             this.statusStrip.SizingGrip = false;
@@ -612,7 +616,7 @@
             this.groupBox5.Controls.Add(this.pictureBox5);
             this.groupBox5.Controls.Add(this.label14);
             this.groupBox5.Controls.Add(this.labelLastVoiceCommand);
-            this.groupBox5.Location = new System.Drawing.Point(426, 312);
+            this.groupBox5.Location = new System.Drawing.Point(425, 340);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(239, 90);
             this.groupBox5.TabIndex = 17;
@@ -669,12 +673,32 @@
             this.timerStartupSound.Interval = 8000;
             this.timerStartupSound.Tick += new System.EventHandler(this.timerStartupSound_Tick);
             // 
+            // label13
+            // 
+            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label13.ForeColor = System.Drawing.Color.Maroon;
+            this.label13.Location = new System.Drawing.Point(102, 33);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(120, 19);
+            this.label13.TabIndex = 14;
+            this.label13.Text = "Disconnected";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(35, 36);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(61, 13);
+            this.label15.TabIndex = 13;
+            this.label15.Text = "Kodi Status";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(675, 443);
+            this.ClientSize = new System.Drawing.Size(675, 471);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox4);
@@ -782,5 +806,7 @@
         private System.Windows.Forms.Timer timerProjectorLensControl;
         private System.Windows.Forms.Timer timerSetLights;
         private System.Windows.Forms.Timer timerStartupSound;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
     }
 }

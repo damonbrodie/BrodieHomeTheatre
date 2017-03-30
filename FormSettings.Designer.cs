@@ -100,6 +100,8 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.textBoxKodiPort = new System.Windows.Forms.TextBox();
+            this.label31 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).BeginInit();
@@ -135,6 +137,8 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.textBoxKodiPort);
+            this.tabPage6.Controls.Add(this.label31);
             this.tabPage6.Controls.Add(this.checkBoxStartMinimized);
             this.tabPage6.Controls.Add(this.label26);
             this.tabPage6.Controls.Add(this.labelVoiceConfidence);
@@ -171,7 +175,7 @@
             // labelVoiceConfidence
             // 
             this.labelVoiceConfidence.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelVoiceConfidence.Location = new System.Drawing.Point(277, 124);
+            this.labelVoiceConfidence.Location = new System.Drawing.Point(277, 152);
             this.labelVoiceConfidence.Name = "labelVoiceConfidence";
             this.labelVoiceConfidence.Size = new System.Drawing.Size(35, 23);
             this.labelVoiceConfidence.TabIndex = 44;
@@ -182,15 +186,16 @@
             // 
             this.trackBarVoiceConfidence.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarVoiceConfidence.LargeChange = 1;
-            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(100, 126);
+            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(100, 154);
             this.trackBarVoiceConfidence.Name = "trackBarVoiceConfidence";
             this.trackBarVoiceConfidence.Size = new System.Drawing.Size(177, 45);
             this.trackBarVoiceConfidence.TabIndex = 2;
+            this.trackBarVoiceConfidence.ValueChanged += new System.EventHandler(this.trackBarVoiceConfidence_ValueChanged_1);
             // 
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(34, 129);
+            this.label20.Location = new System.Drawing.Point(34, 157);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(64, 13);
             this.label20.TabIndex = 43;
@@ -200,7 +205,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(11, 101);
+            this.label14.Location = new System.Drawing.Point(11, 129);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(163, 13);
             this.label14.TabIndex = 41;
@@ -822,9 +827,9 @@
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.Location = new System.Drawing.Point(11, 21);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(94, 13);
+            this.label19.Size = new System.Drawing.Size(143, 13);
             this.label19.TabIndex = 21;
-            this.label19.Text = "Entering Room:";
+            this.label19.Text = "Lighting Entering Room:";
             // 
             // buttonSave
             // 
@@ -835,6 +840,23 @@
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // textBoxKodiPort
+            // 
+            this.textBoxKodiPort.Location = new System.Drawing.Point(107, 86);
+            this.textBoxKodiPort.MaxLength = 5;
+            this.textBoxKodiPort.Name = "textBoxKodiPort";
+            this.textBoxKodiPort.Size = new System.Drawing.Size(67, 20);
+            this.textBoxKodiPort.TabIndex = 46;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(17, 89);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(84, 13);
+            this.label31.TabIndex = 47;
+            this.label31.Text = "Kodi JSON Port:";
             // 
             // FormSettings
             // 
@@ -950,5 +972,7 @@
         private System.Windows.Forms.TrackBar trackBarVoiceConfidence;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBoxKodiPort;
+        private System.Windows.Forms.Label label31;
     }
 }
