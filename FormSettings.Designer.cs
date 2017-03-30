@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.label31 = new System.Windows.Forms.Label();
             this.checkBoxStartMinimized = new System.Windows.Forms.CheckBox();
             this.label26 = new System.Windows.Forms.Label();
             this.labelVoiceConfidence = new System.Windows.Forms.Label();
@@ -100,8 +101,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.textBoxKodiPort = new System.Windows.Forms.TextBox();
-            this.label31 = new System.Windows.Forms.Label();
+            this.numericUpDownKodiPort = new System.Windows.Forms.NumericUpDown();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).BeginInit();
@@ -119,6 +119,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -137,7 +138,7 @@
             // 
             // tabPage6
             // 
-            this.tabPage6.Controls.Add(this.textBoxKodiPort);
+            this.tabPage6.Controls.Add(this.numericUpDownKodiPort);
             this.tabPage6.Controls.Add(this.label31);
             this.tabPage6.Controls.Add(this.checkBoxStartMinimized);
             this.tabPage6.Controls.Add(this.label26);
@@ -153,6 +154,15 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Global";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(17, 89);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(84, 13);
+            this.label31.TabIndex = 47;
+            this.label31.Text = "Kodi JSON Port:";
             // 
             // checkBoxStartMinimized
             // 
@@ -189,7 +199,7 @@
             this.trackBarVoiceConfidence.Location = new System.Drawing.Point(100, 154);
             this.trackBarVoiceConfidence.Name = "trackBarVoiceConfidence";
             this.trackBarVoiceConfidence.Size = new System.Drawing.Size(177, 45);
-            this.trackBarVoiceConfidence.TabIndex = 2;
+            this.trackBarVoiceConfidence.TabIndex = 3;
             this.trackBarVoiceConfidence.ValueChanged += new System.EventHandler(this.trackBarVoiceConfidence_ValueChanged_1);
             // 
             // label20
@@ -841,22 +851,17 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // textBoxKodiPort
+            // numericUpDownKodiPort
             // 
-            this.textBoxKodiPort.Location = new System.Drawing.Point(107, 86);
-            this.textBoxKodiPort.MaxLength = 5;
-            this.textBoxKodiPort.Name = "textBoxKodiPort";
-            this.textBoxKodiPort.Size = new System.Drawing.Size(67, 20);
-            this.textBoxKodiPort.TabIndex = 46;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(17, 89);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(84, 13);
-            this.label31.TabIndex = 47;
-            this.label31.Text = "Kodi JSON Port:";
+            this.numericUpDownKodiPort.Location = new System.Drawing.Point(109, 83);
+            this.numericUpDownKodiPort.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.numericUpDownKodiPort.Name = "numericUpDownKodiPort";
+            this.numericUpDownKodiPort.Size = new System.Drawing.Size(76, 20);
+            this.numericUpDownKodiPort.TabIndex = 2;
             // 
             // FormSettings
             // 
@@ -895,6 +900,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -972,7 +978,7 @@
         private System.Windows.Forms.TrackBar trackBarVoiceConfidence;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBoxKodiPort;
         private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.NumericUpDown numericUpDownKodiPort;
     }
 }
