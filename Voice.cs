@@ -163,7 +163,7 @@ namespace BrodieTheatre
             string confidence = Math.Round((e.Result.Confidence * 100), 2).ToString();
             float minConfidence = (float)Properties.Settings.Default.voiceConfidence / (float)10.0;
 
-            if (e.Result.Alternates != null && e.Result.Confidence > minConfidence && labelKodiStatus.Text != "Playing")
+            if (e.Result.Alternates != null && e.Result.Confidence > minConfidence && labelKodiPlaybackStatus.Text != "Playing")
             {
                 formMain.BeginInvoke(new Action(() =>
                 {

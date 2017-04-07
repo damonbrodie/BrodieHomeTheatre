@@ -210,7 +210,7 @@ namespace BrodieTheatre
                 writeLog("Occupancy:  Room Occupied");
                 resetGlobalTimer();
 
-                if (labelCurrentActivity.Text == "PowerOff" && labelKodiStatus.Text == "Stopped")
+                if (labelCurrentActivity.Text == "PowerOff" && labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     lightsToEnteringLevel();              
                     writeLog("Occupancy:  Powering On AV Amplifier");
@@ -234,7 +234,7 @@ namespace BrodieTheatre
                     writeLog("Voice:  Failed to pause Recognition Engine");
                 }
 
-                if (labelKodiStatus.Text == "Stopped")
+                if (labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     if (labelCurrentActivity.Text != "PowerOff")
                     {
@@ -294,6 +294,12 @@ namespace BrodieTheatre
             timerStartupSound.Enabled = false;
             writeLog("Voice:  Playing startup sound");
             kodiPlayWave(startupWave);
+        }
+
+        private void timerKodiConnect_Tick(object sender, EventArgs e)
+        {
+            kodiConnect();
+            timerKodiConnect.Enabled = false;
         }
     }
 }

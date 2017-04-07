@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 
 namespace BrodieTheatre
@@ -10,47 +13,12 @@ namespace BrodieTheatre
     {
         public string kodiWaveFile = @"c:\Users\damon\Documents\Shared\wavefile.txt";
         public string kodiPlaybackFile = @"c:\Users\damon\Documents\Shared\kodiplayback.txt";
-        private void timerKodiPoller_Tick(object sender, EventArgs e)
-        {
-            if (File.Exists("kodi_status.txt"))
-            {
-                string kodiPlayback = File.ReadAllText("kodi_status.txt").Trim().ToLower();
-                File.Delete("kodi_status.txt");
-                switch (kodiPlayback)
-                {
-                    case "playing":
-                        writeLog("Kodi:  Kodi status changed to 'Playing'");
-                        labelKodiStatus.Text = "Playing";
-                        lightsToPlaybackLevel(); 
-                        resetGlobalTimer();
-                        break;
-                    case "stopped":
-                        writeLog("Kodi:  Kodi status changed to 'Stopped'");
-                        labelKodiStatus.Text = "Stopped";
-                        lightsToStoppedLevel();
-                        resetGlobalTimer();
-                        break;
-                    case "paused":
-                        writeLog("Kodi:  Kodi status changed to 'Paused'");
-                        labelKodiStatus.Text = "Paused";
-                        lightsToPausedLevel();
-                        resetGlobalTimer();
-                        break;
-                    default:
-                        writeLog("Kodi:  Unknown Kodi status - assuming 'Stopped'");
-                        labelKodiStatus.Text = "Stopped";
-                        lightsToStoppedLevel();
-                        resetGlobalTimer();
-                        break;
-                }
-            }
-            if (File.Exists("kodi_ar.txt"))
-            {
-                string kodiAspectRatio = File.ReadAllText("kodi_ar.txt").Trim().ToLower();
-                File.Delete("kodi_ar.txt");
-                projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
-            }
-        }
+        public TcpClient tcpClient;
+        NetworkStream kodiSocketStream;
+        public StreamReader kodiStreamReader;
+        public StreamWriter kodiStreamWriter;
+        public char[] kodiReadBuffer = new char[1000000];
+        public int kodiReadBufferPos = 0;
 
         private void kodiPlayWave(string file)
         {
@@ -71,6 +39,149 @@ namespace BrodieTheatre
                     counter += 1;
                 }
             }
+        }
+
+        private void kodiConnect()
+        {
+            kodiStatusDisconnect(false);
+            tcpClient = new TcpClient();
+            tcpClient.ReceiveTimeout = 500;
+            var result = tcpClient.BeginConnect(Properties.Settings.Default.kodiIP, Properties.Settings.Default.kodiJSONPort, null, null);
+            var success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+            if (success)
+            {
+                kodiSocketStream = tcpClient.GetStream();
+                kodiStreamReader = new StreamReader(kodiSocketStream);
+                kodiStreamWriter = new StreamWriter(kodiSocketStream);
+                kodiSocketStream.Flush();
+                Thread thread = new Thread(kodiReadStream);
+                thread.Start();
+                labelKodiStatus.Text = "Connected";
+                labelKodiStatus.ForeColor = System.Drawing.Color.ForestGreen;
+            }
+            else
+            {
+                kodiStatusDisconnect();
+            }
+        }
+
+        public async void kodiReadStream()
+        {
+            char[] buffer = new char[1000];
+            //int bytesRead = 0;
+            bool ended = false;
+            while (!ended)
+            {
+                int bytesRead = await kodiStreamReader.ReadAsync(buffer, 0, 1000);
+                Array.Copy(buffer, 0, kodiReadBuffer, kodiReadBufferPos, bytesRead);
+                kodiReadBufferPos += bytesRead;
+
+                //kodiReadBuffer += new string(buffer).Substring(0, bytesRead);
+                kodiFindJson();
+            }
+        }
+
+        public void kodiFindJson()
+        {
+            int braces = 0;
+            bool inQ = false;
+            char lastB = ' ';
+
+            int curPos = 0;
+            int startPos = 0;
+
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            while (curPos < kodiReadBufferPos)
+            {
+                char b = kodiReadBuffer[curPos];
+                curPos += 1;
+                sb.Append(b);
+
+                if (b == '"' && lastB != '\\')
+                {
+                    inQ = !inQ;
+                }
+                else if (b == '{' && !inQ)
+                {
+                    braces += 1;
+                }
+                else if (b == '}' && !inQ)
+                {
+                    braces -= 1;
+                }
+                lastB = (char)b;
+                if (braces == 0)
+                {
+
+                    int newBufferLength = kodiReadBufferPos - curPos;
+                    string currJson = sb.ToString();
+                    sb = new System.Text.StringBuilder();
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        // formMain.textBoxOutput.Text = currJson;
+                        formMain.kodiProcessJson(currJson);
+
+                    }
+                    ));
+
+                    startPos = curPos;
+                }
+            }
+            if (braces > 0)
+            {
+                int newBufferLength = kodiReadBufferPos - startPos;
+                Array.Copy(kodiReadBuffer, startPos, kodiReadBuffer, 0, newBufferLength);
+                kodiReadBufferPos = newBufferLength;
+            }
+            else
+            {
+                kodiReadBufferPos = 0;
+            }
+        }
+
+        public void kodiProcessJson(string jsonText)
+        {
+           // MessageBox.Show(jsonText);
+            Dictionary<string, dynamic > result = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(jsonText);
+            //MessageBox.Show(result["method"]);
+            switch (result["method"])
+            {
+                case "Player.OnPause":
+                    writeLog("Kodi:  Kodi status changed to 'Paused'");
+                    labelKodiPlaybackStatus.Text = "Paused";
+                    lightsToPausedLevel();
+                    resetGlobalTimer();
+                    break;
+                case "Player.OnPlay":
+                    writeLog("Kodi:  Kodi status changed to 'Playing'");
+                    labelKodiPlaybackStatus.Text = "Playing";
+                    lightsToPlaybackLevel();
+                    resetGlobalTimer();
+                    break;
+                case "Player.OnStop":
+                    writeLog("Kodi:  Kodi status changed to 'Stopped'");
+                    labelKodiPlaybackStatus.Text = "Stopped";
+                    lightsToStoppedLevel();
+                    resetGlobalTimer();
+                    break;
+                case "Other.aspectratio":
+                    if (result["params"]["sender"] == "brodietheatre")
+                    {
+                        string kodiAspectRatio = result["params"]["data"];
+                        projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
+                    }
+                    break;
+
+            }
+
+        }
+
+        public void kodiStatusDisconnect(bool enableTimer = true)
+        {
+            labelKodiStatus.Text = "Disconnected";
+            labelKodiStatus.ForeColor = System.Drawing.Color.Maroon;
+            timerKodiConnect.Enabled = enableTimer;
         }
 
         private void kodiPlaybackControl(string command, string media=null)

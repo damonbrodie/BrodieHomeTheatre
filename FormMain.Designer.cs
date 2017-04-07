@@ -56,6 +56,8 @@
             this.labelPLMstatus = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.labelKodiStatus = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.labelKodiPlaybackStatus = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -74,7 +76,6 @@
             this.timerTrayTrack = new System.Windows.Forms.Timer(this.components);
             this.timerPotTrack = new System.Windows.Forms.Timer(this.components);
             this.timerCheckPLM = new System.Windows.Forms.Timer(this.components);
-            this.timerKodiPoller = new System.Windows.Forms.Timer(this.components);
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBarGlobal = new System.Windows.Forms.ToolStripProgressBar();
@@ -93,8 +94,7 @@
             this.timerProjectorLensControl = new System.Windows.Forms.Timer(this.components);
             this.timerSetLights = new System.Windows.Forms.Timer(this.components);
             this.timerStartupSound = new System.Windows.Forms.Timer(this.components);
-            this.label13 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
+            this.timerKodiConnect = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -359,9 +359,9 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.labelKodiStatus);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.labelKodiPlaybackStatus);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.pictureBox3);
             this.groupBox3.Location = new System.Drawing.Point(426, 42);
@@ -373,12 +373,32 @@
             // labelKodiStatus
             // 
             this.labelKodiStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelKodiStatus.Location = new System.Drawing.Point(102, 65);
+            this.labelKodiStatus.ForeColor = System.Drawing.Color.Maroon;
+            this.labelKodiStatus.Location = new System.Drawing.Point(102, 33);
             this.labelKodiStatus.Name = "labelKodiStatus";
             this.labelKodiStatus.Size = new System.Drawing.Size(120, 19);
-            this.labelKodiStatus.TabIndex = 12;
-            this.labelKodiStatus.Text = "Stopped";
+            this.labelKodiStatus.TabIndex = 14;
+            this.labelKodiStatus.Text = "Disconnected";
             this.labelKodiStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(35, 36);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(61, 13);
+            this.label15.TabIndex = 13;
+            this.label15.Text = "Kodi Status";
+            // 
+            // labelKodiPlaybackStatus
+            // 
+            this.labelKodiPlaybackStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelKodiPlaybackStatus.Location = new System.Drawing.Point(102, 65);
+            this.labelKodiPlaybackStatus.Name = "labelKodiPlaybackStatus";
+            this.labelKodiPlaybackStatus.Size = new System.Drawing.Size(120, 19);
+            this.labelKodiPlaybackStatus.TabIndex = 12;
+            this.labelKodiPlaybackStatus.Text = "Stopped";
+            this.labelKodiPlaybackStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label6
             // 
@@ -542,11 +562,6 @@
             this.timerCheckPLM.Interval = 2000;
             this.timerCheckPLM.Tick += new System.EventHandler(this.timerCheckPLM_Tick);
             // 
-            // timerKodiPoller
-            // 
-            this.timerKodiPoller.Enabled = true;
-            this.timerKodiPoller.Tick += new System.EventHandler(this.timerKodiPoller_Tick);
-            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -673,25 +688,11 @@
             this.timerStartupSound.Interval = 8000;
             this.timerStartupSound.Tick += new System.EventHandler(this.timerStartupSound_Tick);
             // 
-            // label13
+            // timerKodiConnect
             // 
-            this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label13.ForeColor = System.Drawing.Color.Maroon;
-            this.label13.Location = new System.Drawing.Point(102, 33);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(120, 19);
-            this.label13.TabIndex = 14;
-            this.label13.Text = "Disconnected";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(35, 36);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(61, 13);
-            this.label15.TabIndex = 13;
-            this.label15.Text = "Kodi Status";
+            this.timerKodiConnect.Enabled = true;
+            this.timerKodiConnect.Interval = 1000;
+            this.timerKodiConnect.Tick += new System.EventHandler(this.timerKodiConnect_Tick);
             // 
             // FormMain
             // 
@@ -766,7 +767,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label labelKodiStatus;
+        private System.Windows.Forms.Label labelKodiPlaybackStatus;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.GroupBox groupBox4;
@@ -778,7 +779,6 @@
         private System.Windows.Forms.Timer timerTrayTrack;
         private System.Windows.Forms.Timer timerPotTrack;
         private System.Windows.Forms.Timer timerCheckPLM;
-        private System.Windows.Forms.Timer timerKodiPoller;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatus;
         private System.Windows.Forms.Timer timerClearStatus;
@@ -806,7 +806,8 @@
         private System.Windows.Forms.Timer timerProjectorLensControl;
         private System.Windows.Forms.Timer timerSetLights;
         private System.Windows.Forms.Timer timerStartupSound;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label labelKodiStatus;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Timer timerKodiConnect;
     }
 }
