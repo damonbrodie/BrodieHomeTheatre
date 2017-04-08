@@ -61,7 +61,27 @@ namespace BrodieTheatre
 
             expandCommands(ref commandChoice, "pause playback", "Pause Playback", true, true);
             expandCommands(ref commandChoice, "pause movie", "Pause Playback", true, true);
+            expandCommands(ref commandChoice, "pause the movie", "Pause Playback", true, true);
             expandCommands(ref commandChoice, "pause the playback", "Pause Playback", true, true);
+            expandCommands(ref commandChoice, "pause the movie playback", "Pause Playback", true, true);
+
+            expandCommands(ref commandChoice, "resume playback", "Resume Playback", true, true);
+            expandCommands(ref commandChoice, "continue playing", "Resume Playback", true, true);
+            expandCommands(ref commandChoice, "unpause playback", "Resume Playback", true, true);
+            expandCommands(ref commandChoice, "unpause movie", "Resume Playback", true, true);
+            expandCommands(ref commandChoice, "unpause movie playback", "Resume Playback", true, true);
+            expandCommands(ref commandChoice, "unpause the movie playback", "Resume Playback", true, true);
+
+            expandCommands(ref commandChoice, "stop playback", "Stop Playback", true, true);
+            expandCommands(ref commandChoice, "stop playback", "Stop Playback", true, true);
+            expandCommands(ref commandChoice, "stop movie", "Stop Playback", true, true);
+            expandCommands(ref commandChoice, "stop movie playback", "Stop Playback", true, true);
+            expandCommands(ref commandChoice, "stop the movie playback", "Stop Playback", true, true);
+
+            foreach (MovieEntry movieEntry in kodiMovies)
+            {
+                expandCommands(ref commandChoice, "play movie|" + movieEntry.name, "play movie " + movieEntry.file, false, false);
+            }
 
             gb.Append(commandChoice);
 
@@ -173,106 +193,134 @@ namespace BrodieTheatre
                 ));
                 RecognizedPhrase phrase = e.Result.Alternates[0];
 
-                string topPhrase = phrase.Semantics.Value.ToString(); 
-                switch (topPhrase)
+                string topPhrase = phrase.Semantics.Value.ToString();
+                if (topPhrase.StartsWith("play movie|"))
                 {
-                    case "Turn on Theatre":
+                    string kodiMovieFile = topPhrase.Split('|')[1];
+                    MessageBox.Show(kodiMovieFile);
+                }
+                else
+                {
+                    switch (topPhrase)
+                    {
+                        case "Turn on Theatre":
 
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.kodiPlayWave(ackWave);
-                            formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.harmonyStartActivityByName(Properties.Settings.Default.voiceActivity);
-                            formMain.timerStartLights.Enabled = true;
-                            formMain.writeLog("Voice:  Processed " + topPhrase);
-                        }
-                        ));
-                        break;
-                    case "Turn off Theatre":
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.kodiPlayWave(ackWave);
-                            formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.harmonyStartActivityByName("PowerOff");
-                            formMain.lightsToEnteringLevel();
-                            formMain.writeLog("Voice:  Processed " + topPhrase);
-                        }
-                        ));
-                        break;
-                    case "Show Application":
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            if (formMain.WindowState == FormWindowState.Minimized)
+                            formMain.BeginInvoke(new Action(() =>
                             {
                                 formMain.kodiPlayWave(ackWave);
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.WindowState = FormWindowState.Normal;
-                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                formMain.harmonyStartActivityByName(Properties.Settings.Default.voiceActivity);
+                                formMain.timerStartLights.Enabled = true;
+                                formMain.writeLog("Voice:  Processed " + topPhrase);
                             }
-                        }
-                        ));
-                        break;
-                    case "Hide Application":
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            if (formMain.WindowState == FormWindowState.Normal)
+                            ));
+                            break;
+                        case "Turn off Theatre":
+                            formMain.BeginInvoke(new Action(() =>
                             {
                                 formMain.kodiPlayWave(ackWave);
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.WindowState = FormWindowState.Minimized;
+                                formMain.harmonyStartActivityByName("PowerOff");
+                                formMain.lightsToEnteringLevel();
+                                formMain.writeLog("Voice:  Processed " + topPhrase);
+                            }
+                            ));
+                            break;
+                        case "Show Application":
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                if (formMain.WindowState == FormWindowState.Minimized)
+                                {
+                                    formMain.kodiPlayWave(ackWave);
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.WindowState = FormWindowState.Normal;
+                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                }
+                            }
+                            ));
+                            break;
+                        case "Hide Application":
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                if (formMain.WindowState == FormWindowState.Normal)
+                                {
+                                    formMain.kodiPlayWave(ackWave);
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.WindowState = FormWindowState.Minimized;
+                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                }
+                            }
+                            ));
+                            break;
+                        case "Greeting":
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                formMain.labelLastVoiceCommand.Text = topPhrase;
+                                formMain.sayGreeting();
                                 formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                             }
-                        }
-                        ));
-                        break;
-                    case "Greeting":
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.sayGreeting();
-                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
-                        }
-                        ));
-                        break;
-                    case "Presense":
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.sayPresense();
-                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
-                        }
-                        ));
-                        break;
-                    case "Lights On":
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.kodiPlayWave(ackWave);
-                            formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.lightsToEnteringLevel();
-                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
-                        }
-                        ));
-                        break;
-                    case "Pause Playback":
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.kodiPlayWave(ackWave);
-                            formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.kodiPlaybackControl("Pause");
-                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
-                        }
-                        ));
-                        break;
-                    case "Dim Lights":
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.kodiPlayWave(ackWave);
-                            formMain.labelLastVoiceCommand.Text = topPhrase;
-                            formMain.lightsToStoppedLevel();
-                            formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
-                        }
-                        ));
-                        break;
+                            ));
+                            break;
+                        case "Presense":
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                formMain.labelLastVoiceCommand.Text = topPhrase;
+                                formMain.sayPresense();
+                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                            }
+                            ));
+                            break;
+                        case "Lights On":
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                formMain.kodiPlayWave(ackWave);
+                                formMain.labelLastVoiceCommand.Text = topPhrase;
+                                formMain.lightsToEnteringLevel();
+                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                            }
+                            ));
+                            break;
+                        case "Pause Playback":
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                formMain.kodiPlayWave(ackWave);
+                                formMain.labelLastVoiceCommand.Text = topPhrase;
+                                formMain.kodiPlaybackControl("Pause");
+                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                            }
+                            ));
+                            break;
+                        case "Resume Playback":
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                formMain.kodiPlayWave(ackWave);
+                                formMain.labelLastVoiceCommand.Text = topPhrase;
+                                formMain.kodiPlaybackControl("Play");
+                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                            }
+                            ));
+                            break;
+                        case "Stop Playback":
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                formMain.kodiPlayWave(ackWave);
+                                formMain.labelLastVoiceCommand.Text = topPhrase;
+                                formMain.kodiPlaybackControl("Stop");
+                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                            }
+                            ));
+                            break;
+                        case "Dim Lights":
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                formMain.kodiPlayWave(ackWave);
+                                formMain.labelLastVoiceCommand.Text = topPhrase;
+                                formMain.lightsToStoppedLevel();
+                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                            }
+                            ));
+                            break;
+                    }
                 }
             }
             else

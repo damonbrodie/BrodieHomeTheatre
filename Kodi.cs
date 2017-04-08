@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 
@@ -12,13 +13,18 @@ namespace BrodieTheatre
     public partial class FormMain : Form
     {
         public string kodiWaveFile = @"c:\Users\damon\Documents\Shared\wavefile.txt";
-        public string kodiPlaybackFile = @"c:\Users\damon\Documents\Shared\kodiplayback.txt";
         public TcpClient tcpClient;
         NetworkStream kodiSocketStream;
         public StreamReader kodiStreamReader;
         public StreamWriter kodiStreamWriter;
         public char[] kodiReadBuffer = new char[1000000];
         public int kodiReadBufferPos = 0;
+        class MovieEntry
+        {
+            public string file { get; set; }
+            public string name { get; set; }
+        }
+        List<MovieEntry> kodiMovies = new List<MovieEntry>();
 
         private void kodiPlayWave(string file)
         {
@@ -75,8 +81,6 @@ namespace BrodieTheatre
                 int bytesRead = await kodiStreamReader.ReadAsync(buffer, 0, 1000);
                 Array.Copy(buffer, 0, kodiReadBuffer, kodiReadBufferPos, bytesRead);
                 kodiReadBufferPos += bytesRead;
-
-                //kodiReadBuffer += new string(buffer).Substring(0, bytesRead);
                 kodiFindJson();
             }
         }
@@ -119,9 +123,7 @@ namespace BrodieTheatre
                     sb = new System.Text.StringBuilder();
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        // formMain.textBoxOutput.Text = currJson;
                         formMain.kodiProcessJson(currJson);
-
                     }
                     ));
 
@@ -142,39 +144,65 @@ namespace BrodieTheatre
 
         public void kodiProcessJson(string jsonText)
         {
-           // MessageBox.Show(jsonText);
             Dictionary<string, dynamic > result = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(jsonText);
-            //MessageBox.Show(result["method"]);
-            switch (result["method"])
+            if (result.ContainsKey("method"))
             {
-                case "Player.OnPause":
-                    writeLog("Kodi:  Kodi status changed to 'Paused'");
-                    labelKodiPlaybackStatus.Text = "Paused";
-                    lightsToPausedLevel();
-                    resetGlobalTimer();
-                    break;
-                case "Player.OnPlay":
-                    writeLog("Kodi:  Kodi status changed to 'Playing'");
-                    labelKodiPlaybackStatus.Text = "Playing";
-                    lightsToPlaybackLevel();
-                    resetGlobalTimer();
-                    break;
-                case "Player.OnStop":
-                    writeLog("Kodi:  Kodi status changed to 'Stopped'");
-                    labelKodiPlaybackStatus.Text = "Stopped";
-                    lightsToStoppedLevel();
-                    resetGlobalTimer();
-                    break;
-                case "Other.aspectratio":
-                    if (result["params"]["sender"] == "brodietheatre")
-                    {
-                        string kodiAspectRatio = result["params"]["data"];
-                        projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
-                    }
-                    break;
-
+                switch (result["method"])
+                {
+                    case "Player.OnPause":
+                        writeLog("Kodi:  Kodi status changed to 'Paused'");
+                        labelKodiPlaybackStatus.Text = "Paused";
+                        lightsToPausedLevel();
+                        resetGlobalTimer();
+                        break;
+                    case "Player.OnPlay":
+                        writeLog("Kodi:  Kodi status changed to 'Playing'");
+                        labelKodiPlaybackStatus.Text = "Playing";
+                        lightsToPlaybackLevel();
+                        resetGlobalTimer();
+                        break;
+                    case "Player.OnStop":
+                        writeLog("Kodi:  Kodi status changed to 'Stopped'");
+                        labelKodiPlaybackStatus.Text = "Stopped";
+                        lightsToStoppedLevel();
+                        resetGlobalTimer();
+                        break;
+                    case "Other.aspectratio":
+                        if (result["params"]["sender"] == "brodietheatre")
+                        {
+                            string kodiAspectRatio = result["params"]["data"];
+                            projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
+                        }
+                        break;
+                }
             }
+            else if(result.ContainsKey("result") && result["result"]["movies"] != null)
+            {
+                writeLog("Kodi:  Received list of movies");
+                kodiMovies.Clear();
+                foreach (JObject movie in result["result"]["movies"])
+                {
+                    MovieEntry movieEntry = new MovieEntry();
+                    movieEntry.file = movie["file"].ToString();
+                    movieEntry.name = movie["label"].ToString();
+                    kodiMovies.Add(movieEntry);              
+                }
+                loadVoiceCommands();
+            }
+        }
 
+        public void kodiSendJson(string command)
+        {
+            try
+            {
+                kodiStreamWriter.WriteLine(command);
+                kodiStreamWriter.Flush();
+            }
+            catch (IOException)
+            {
+                timerKodiConnect.Enabled = true;
+            }
+            catch (NullReferenceException) { }
         }
 
         public void kodiStatusDisconnect(bool enableTimer = true)
@@ -184,24 +212,25 @@ namespace BrodieTheatre
             timerKodiConnect.Enabled = enableTimer;
         }
 
+        public void kodiSendGetMoviesRequest()
+        {
+            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"file\"] }, \"id\": \"1\"}");
+        }
+
         private void kodiPlaybackControl(string command, string media=null)
         {
-            bool success = false;
-            int counter = 0;
-            while (!success && counter < 3)
+            //kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": \"1\"}");
+            switch (command)
             {
-                try
-                {
-                    StreamWriter fileHandle = new StreamWriter(kodiPlaybackFile);
-                    fileHandle.WriteLine(command + "|" + media);
-                    fileHandle.Close();
-                    success = true;
-                }
-                catch
-                {
-                    Thread.Sleep(50);
-                    counter += 1;
-                }
+                case "Pause":
+                    kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\" : 1 }, \"id\": \"1\"}");
+                    break;
+                case "Play":
+                    kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\" : 1 }, \"id\": \"1\"}");
+                    break;
+                case "Stop":
+                    kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Stop\", \"params\": { \"playerid\" : 1 }, \"id\": \"1\"}");
+                    break;
             }
         }
     }

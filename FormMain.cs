@@ -301,5 +301,10 @@ namespace BrodieTheatre
             kodiConnect();
             timerKodiConnect.Enabled = false;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            kodiSendGetMoviesRequest();
+        }
     }
 }
