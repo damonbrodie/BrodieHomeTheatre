@@ -126,6 +126,7 @@ namespace BrodieTheatre
             grammarCount += formMain.expandCommands(ref commandChoice, "stop the movie playback", "Stop Playback", true, true);
 
             grammarCount += formMain.expandCommands(ref commandChoice, "don't play that", "Cancel Playback", true, true);
+            grammarCount += formMain.expandCommands(ref commandChoice, "cancel that", "Cancel Playback", true, true);
             grammarCount += formMain.expandCommands(ref commandChoice, "cancel playback", "Cancel Playback", true, true);
             if (!formMain.kodiLoadingMovies)
             {
@@ -158,7 +159,7 @@ namespace BrodieTheatre
                 {
                     if (!formMain.searchMovieList(formMain.moviesDuplicateNames, entry.name))
                     {
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "play movie - " + entry.name, "play movie|" + entry.file, true, true);
+                        grammarCount += formMain.expandCommands(ref commandChoice, "play movie - " + entry.name, "play movie|" + entry.file, true, true);
                         //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie - " + entry.name, "play movie|" + entry.file, true, true);
 
                         //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie - " + entry.name, "play movie|" + entry.file, true, true);
@@ -227,6 +228,7 @@ namespace BrodieTheatre
 
         public void voiceStartTheatre()
         {
+            writeLog("Voice:  Starting Harmony activity");
             harmonyStartActivityByName(Properties.Settings.Default.voiceActivity);
             timerStartLights.Enabled = true;
         }

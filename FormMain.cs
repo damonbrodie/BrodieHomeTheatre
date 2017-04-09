@@ -219,8 +219,17 @@ namespace BrodieTheatre
                     lightsToEnteringLevel();
                     playSound(startupWave);
                 }
-                recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-                labelLastVoiceCommand.Text = "Listening";                   
+                
+                try
+                {
+                    recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
+                    labelLastVoiceCommand.Text = "Listening";
+                }
+                catch
+                {
+                    labelLastVoiceCommand.Text = "Grammar Not Loaded";
+                }
+                
                 toolStripStatus.Text = "Room is now occupied";
             }
             else if (labelRoomOccupancy.Text == "Vacant")

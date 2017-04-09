@@ -221,6 +221,7 @@ namespace BrodieTheatre
                     MovieEntry movieEntry = new MovieEntry();
                     movieEntry.file = movie["file"].ToString();
                     movieEntry.name = movie["label"].ToString();
+                    //writeLog("Kodi:  Processing '" + movieEntry.name + "'");
                     string cleanName = cleanString(movieEntry.name);
                     movieEntry.cleanName = cleanName;
                     kodiMovies.Add(movieEntry);
@@ -295,25 +296,29 @@ namespace BrodieTheatre
         {
             List<string> nameList = new List<string>();
             bool ended = false;
+            bool firstOne = true;
             int startPos = 0;
             while (! ended)
             {
                 int firstPos = name.IndexOf(" ", startPos);
                 startPos = firstPos + 1;
-                if (firstPos > 0)
+                if (!firstOne)
                 {
-                    string cut = name.Substring(0, firstPos);
-                    nameList.Add(cut);
-                }
-                else
-                {
-                    ended = true;
+                    if (firstPos > 0)
+                    {
+                        string cut = name.Substring(0, firstPos);
+                        nameList.Add(cut);
+                    }
+                    else
+                    {
+                        ended = true;
+                    }
                 }
                 if (startPos >= name.Length)
                 {
                     ended = true;
                 }
-                
+                firstOne = false;
             }
 
             return nameList;
