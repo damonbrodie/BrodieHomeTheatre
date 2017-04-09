@@ -115,9 +115,23 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerSetLights.Enabled = true;
-                speechSynthesizer.SetOutputToDefaultAudioDevice();
+                try
+                {
+                    speechSynthesizer.SetOutputToDefaultAudioDevice();
+                }
+                catch
+                {
+                    formMain.writeLog("Voice:  Unable to attach to default audio output device");
+                }
                 formMain.recognitionEngine = new SpeechRecognitionEngine();
-                formMain.recognitionEngine.SetInputToDefaultAudioDevice();
+                try
+                {
+                    formMain.recognitionEngine.SetInputToDefaultAudioDevice();
+                }
+                catch
+                {
+                    formMain.writeLog("Voice:  Unable to attach to default audio input device");
+                }
                 formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
                 Task task = Task.Run((Action)loadVoiceCommands);
             }
