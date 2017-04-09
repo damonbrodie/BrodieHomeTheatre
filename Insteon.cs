@@ -56,7 +56,7 @@ namespace BrodieTheatre
 
         private void insteonConnectPLM()
         {
-            if (Properties.Settings.Default.plmPort != "")
+            if (Properties.Settings.Default.plmPort != string.Empty)
             {
                 plmConnected = false;
                 labelPLMstatus.Text = "Connecting";

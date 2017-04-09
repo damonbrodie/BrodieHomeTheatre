@@ -45,29 +45,30 @@ namespace BrodieTheatre
 
         private void kodiConnect()
         {
-            writeLog("Kodi:  Connecting");
-            kodiStatusDisconnect(false);
-            tcpClient = new TcpClient();
-            tcpClient.ReceiveTimeout = 500;
-            var result = tcpClient.BeginConnect(Properties.Settings.Default.kodiIP, Properties.Settings.Default.kodiJSONPort, null, null);
-            var success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
-            if (success)
+            if (Properties.Settings.Default.kodiIP != String.Empty && Properties.Settings.Default.kodiJSONPort != 0)
             {
-                kodiSocketStream = tcpClient.GetStream();
-                kodiStreamReader = new StreamReader(kodiSocketStream);
-                kodiStreamWriter = new StreamWriter(kodiSocketStream);
-                kodiSocketStream.Flush();
-                Thread thread = new Thread(kodiReadStream);
-                thread.Start();
-                writeLog("Kodi:  Connected");
-                labelKodiStatus.Text = "Connected";
-                labelKodiStatus.ForeColor = System.Drawing.Color.ForestGreen;
-                kodiSendGetMoviesRequest();
+                writeLog("Kodi:  Connecting");
+                kodiStatusDisconnect(false);
+                tcpClient = new TcpClient();
+                tcpClient.ReceiveTimeout = 500;
+                var result = tcpClient.BeginConnect(Properties.Settings.Default.kodiIP, Properties.Settings.Default.kodiJSONPort, null, null);
+                var success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromSeconds(1));
+                if (success)
+                {
+                    kodiSocketStream = tcpClient.GetStream();
+                    kodiStreamReader = new StreamReader(kodiSocketStream);
+                    kodiStreamWriter = new StreamWriter(kodiSocketStream);
+                    kodiSocketStream.Flush();
+                    Thread thread = new Thread(kodiReadStream);
+                    thread.Start();
+                    writeLog("Kodi:  Connected");
+                    labelKodiStatus.Text = "Connected";
+                    labelKodiStatus.ForeColor = System.Drawing.Color.ForestGreen;
+                    kodiSendGetMoviesRequest();
+                    return;
+                }
             }
-            else
-            {
-                kodiStatusDisconnect();
-            }
+            kodiStatusDisconnect(); 
         }
 
         public async void kodiReadStream()

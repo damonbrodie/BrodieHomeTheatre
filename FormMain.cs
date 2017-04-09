@@ -82,18 +82,18 @@ namespace BrodieTheatre
                 projectorCheckPower();
             }
 
-            if (Properties.Settings.Default.potsAddress != "")
+            if (Properties.Settings.Default.potsAddress != string.Empty)
             {
                 lights[Properties.Settings.Default.potsAddress] = -1;
             }
 
-            if (Properties.Settings.Default.trayAddress != "")
+            if (Properties.Settings.Default.trayAddress != string.Empty)
             {
                 lights[Properties.Settings.Default.trayAddress] = -1;
             }
 
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
-            if (Program.Client.Token != "")
+            if (Program.Client.Token != string.Empty)
             {
                 formMain.BeginInvoke(new Action(() =>
                 {

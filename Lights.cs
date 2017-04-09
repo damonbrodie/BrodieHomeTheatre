@@ -116,11 +116,11 @@ namespace BrodieTheatre
 
         private void timerSetLights_Tick(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.potsAddress != "" && lights[Properties.Settings.Default.potsAddress] != -1)
+            if (Properties.Settings.Default.potsAddress != string.Empty && lights[Properties.Settings.Default.potsAddress] != -1)
             {
                 insteonSetLightLevel(Properties.Settings.Default.potsAddress, lights[Properties.Settings.Default.potsAddress]);
             }
-            else if (Properties.Settings.Default.trayAddress != "" && lights[Properties.Settings.Default.trayAddress] != -1)
+            else if (Properties.Settings.Default.trayAddress != string.Empty && lights[Properties.Settings.Default.trayAddress] != -1)
             {
                 insteonSetLightLevel(Properties.Settings.Default.trayAddress, lights[Properties.Settings.Default.trayAddress]);
             }
