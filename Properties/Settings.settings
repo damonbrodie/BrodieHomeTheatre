@@ -50,15 +50,6 @@
     <Setting Name="voiceActivity" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="occupancyDevice" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="occupancyEnterCommand" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="occupancyExitCommand" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="voiceConfidence" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>

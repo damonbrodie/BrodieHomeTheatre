@@ -16,9 +16,6 @@ namespace BrodieTheatre
         {
             Properties.Settings.Default.harmonyHubIP            = textBoxHarmonyHubIP.Text;
             Properties.Settings.Default.voiceActivity           = textBoxVoiceActivity.Text;
-            Properties.Settings.Default.occupancyDevice         = textBoxOccupancyDevice.Text;
-            Properties.Settings.Default.occupancyEnterCommand   = textBoxOccupancyEnterCommand.Text;
-            Properties.Settings.Default.occupancyExitCommand    = textBoxOccupancyExitCommand.Text;
             Properties.Settings.Default.plmPort                 = comboBoxInsteonPort.Text;
             Properties.Settings.Default.projectorPort           = comboBoxProjectorPort.Text;
             Properties.Settings.Default.potsAddress             = textBoxPotsAddress.Text;
@@ -48,9 +45,6 @@ namespace BrodieTheatre
             textBoxComputerName.Text            = Properties.Settings.Default.computerName;
             textBoxHarmonyHubIP.Text            = Properties.Settings.Default.harmonyHubIP;
             textBoxVoiceActivity.Text           = Properties.Settings.Default.voiceActivity;
-            textBoxOccupancyDevice.Text         = Properties.Settings.Default.occupancyDevice;
-            textBoxOccupancyEnterCommand.Text   = Properties.Settings.Default.occupancyEnterCommand;
-            textBoxOccupancyExitCommand.Text    = Properties.Settings.Default.occupancyExitCommand;
             numericUpDownKodiPort.Value         = (decimal)Properties.Settings.Default.kodiJSONPort;
             textBoxKodiIP.Text                  = Properties.Settings.Default.kodiIP;
 

@@ -93,9 +93,8 @@
             this.timerCheckProjector = new System.Windows.Forms.Timer(this.components);
             this.timerProjectorLensControl = new System.Windows.Forms.Timer(this.components);
             this.timerSetLights = new System.Windows.Forms.Timer(this.components);
-            this.timerStartupSound = new System.Windows.Forms.Timer(this.components);
             this.timerKodiConnect = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
+            this.timerKodiStartPlayback = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -684,26 +683,16 @@
             this.timerSetLights.Interval = 500;
             this.timerSetLights.Tick += new System.EventHandler(this.timerSetLights_Tick);
             // 
-            // timerStartupSound
-            // 
-            this.timerStartupSound.Interval = 8000;
-            this.timerStartupSound.Tick += new System.EventHandler(this.timerStartupSound_Tick);
-            // 
             // timerKodiConnect
             // 
             this.timerKodiConnect.Enabled = true;
             this.timerKodiConnect.Interval = 1000;
             this.timerKodiConnect.Tick += new System.EventHandler(this.timerKodiConnect_Tick);
             // 
-            // button1
+            // timerKodiStartPlayback
             // 
-            this.button1.Location = new System.Drawing.Point(307, 1);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.timerKodiStartPlayback.Interval = 3000;
+            this.timerKodiStartPlayback.Tick += new System.EventHandler(this.timerKodiStartPlayback_Tick);
             // 
             // FormMain
             // 
@@ -711,7 +700,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(675, 471);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox4);
@@ -725,7 +713,6 @@
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.Text = "Brodie Home Theatre";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.menuStrip.ResumeLayout(false);
@@ -817,10 +804,9 @@
         private System.Windows.Forms.Timer timerCheckProjector;
         private System.Windows.Forms.Timer timerProjectorLensControl;
         private System.Windows.Forms.Timer timerSetLights;
-        private System.Windows.Forms.Timer timerStartupSound;
         private System.Windows.Forms.Label labelKodiStatus;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Timer timerKodiConnect;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer timerKodiStartPlayback;
     }
 }

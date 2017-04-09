@@ -126,6 +126,15 @@ namespace BrodieTheatre
             }
         }
 
+        public bool harmonyIsActivityStarted()
+        {
+            if (labelCurrentActivity.Text == "PowerOff" && labelCurrentActivity.Text == "")
+            {
+                return false;
+            }
+            return true;
+        }
+
         private async void harmonySendCommand(string device, string deviceFunction)
         {
             bool success = false;

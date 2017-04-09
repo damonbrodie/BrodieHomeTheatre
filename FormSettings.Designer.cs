@@ -31,6 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.textBoxKodiIP = new System.Windows.Forms.TextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.numericUpDownKodiPort = new System.Windows.Forms.NumericUpDown();
             this.label31 = new System.Windows.Forms.Label();
             this.checkBoxStartMinimized = new System.Windows.Forms.CheckBox();
             this.label26 = new System.Windows.Forms.Label();
@@ -41,14 +44,7 @@
             this.textBoxComputerName = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.textBoxOccupancyExitCommand = new System.Windows.Forms.TextBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.textBoxOccupancyEnterCommand = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.textBoxOccupancyDevice = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
             this.textBoxVoiceActivity = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
             this.textBoxHarmonyHubIP = new System.Windows.Forms.TextBox();
@@ -101,11 +97,9 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.numericUpDownKodiPort = new System.Windows.Forms.NumericUpDown();
-            this.textBoxKodiIP = new System.Windows.Forms.TextBox();
-            this.label32 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -121,7 +115,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -158,6 +151,34 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Global";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // textBoxKodiIP
+            // 
+            this.textBoxKodiIP.Location = new System.Drawing.Point(107, 85);
+            this.textBoxKodiIP.Name = "textBoxKodiIP";
+            this.textBoxKodiIP.Size = new System.Drawing.Size(124, 20);
+            this.textBoxKodiIP.TabIndex = 2;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(57, 88);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(44, 13);
+            this.label32.TabIndex = 49;
+            this.label32.Text = "Kodi IP:";
+            // 
+            // numericUpDownKodiPort
+            // 
+            this.numericUpDownKodiPort.Location = new System.Drawing.Point(107, 121);
+            this.numericUpDownKodiPort.Maximum = new decimal(new int[] {
+            99999,
+            0,
+            0,
+            0});
+            this.numericUpDownKodiPort.Name = "numericUpDownKodiPort";
+            this.numericUpDownKodiPort.Size = new System.Drawing.Size(76, 20);
+            this.numericUpDownKodiPort.TabIndex = 3;
             // 
             // label31
             // 
@@ -243,14 +264,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.textBoxOccupancyExitCommand);
-            this.tabPage1.Controls.Add(this.label30);
-            this.tabPage1.Controls.Add(this.textBoxOccupancyEnterCommand);
-            this.tabPage1.Controls.Add(this.label29);
-            this.tabPage1.Controls.Add(this.label28);
             this.tabPage1.Controls.Add(this.label27);
-            this.tabPage1.Controls.Add(this.textBoxOccupancyDevice);
-            this.tabPage1.Controls.Add(this.label25);
             this.tabPage1.Controls.Add(this.textBoxVoiceActivity);
             this.tabPage1.Controls.Add(this.label24);
             this.tabPage1.Controls.Add(this.textBoxHarmonyHubIP);
@@ -263,48 +277,6 @@
             this.tabPage1.Text = "Harmony";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // textBoxOccupancyExitCommand
-            // 
-            this.textBoxOccupancyExitCommand.Location = new System.Drawing.Point(101, 231);
-            this.textBoxOccupancyExitCommand.Name = "textBoxOccupancyExitCommand";
-            this.textBoxOccupancyExitCommand.Size = new System.Drawing.Size(124, 20);
-            this.textBoxOccupancyExitCommand.TabIndex = 12;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(12, 234);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(83, 13);
-            this.label30.TabIndex = 11;
-            this.label30.Text = "Command - Exit:";
-            // 
-            // textBoxOccupancyEnterCommand
-            // 
-            this.textBoxOccupancyEnterCommand.Location = new System.Drawing.Point(101, 196);
-            this.textBoxOccupancyEnterCommand.Name = "textBoxOccupancyEnterCommand";
-            this.textBoxOccupancyEnterCommand.Size = new System.Drawing.Size(124, 20);
-            this.textBoxOccupancyEnterCommand.TabIndex = 10;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(4, 199);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(91, 13);
-            this.label29.TabIndex = 9;
-            this.label29.Text = "Command - Enter:";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(6, 127);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(155, 13);
-            this.label28.TabIndex = 8;
-            this.label28.Text = "Room Occupancy Device:";
-            // 
             // label27
             // 
             this.label27.AutoSize = true;
@@ -314,22 +286,6 @@
             this.label27.Size = new System.Drawing.Size(147, 13);
             this.label27.TabIndex = 7;
             this.label27.Text = "Voice Command Activity:";
-            // 
-            // textBoxOccupancyDevice
-            // 
-            this.textBoxOccupancyDevice.Location = new System.Drawing.Point(101, 161);
-            this.textBoxOccupancyDevice.Name = "textBoxOccupancyDevice";
-            this.textBoxOccupancyDevice.Size = new System.Drawing.Size(124, 20);
-            this.textBoxOccupancyDevice.TabIndex = 6;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(51, 164);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(44, 13);
-            this.label25.TabIndex = 5;
-            this.label25.Text = "Device:";
             // 
             // textBoxVoiceActivity
             // 
@@ -855,34 +811,6 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // numericUpDownKodiPort
-            // 
-            this.numericUpDownKodiPort.Location = new System.Drawing.Point(107, 121);
-            this.numericUpDownKodiPort.Maximum = new decimal(new int[] {
-            99999,
-            0,
-            0,
-            0});
-            this.numericUpDownKodiPort.Name = "numericUpDownKodiPort";
-            this.numericUpDownKodiPort.Size = new System.Drawing.Size(76, 20);
-            this.numericUpDownKodiPort.TabIndex = 3;
-            // 
-            // textBoxKodiIP
-            // 
-            this.textBoxKodiIP.Location = new System.Drawing.Point(107, 85);
-            this.textBoxKodiIP.Name = "textBoxKodiIP";
-            this.textBoxKodiIP.Size = new System.Drawing.Size(124, 20);
-            this.textBoxKodiIP.TabIndex = 2;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(57, 88);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(44, 13);
-            this.label32.TabIndex = 49;
-            this.label32.Text = "Kodi IP:";
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -900,6 +828,7 @@
             this.tabControl.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -920,7 +849,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -978,16 +906,9 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox textBoxMotionSensorAddress;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox textBoxOccupancyEnterCommand;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox textBoxOccupancyDevice;
-        private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox textBoxVoiceActivity;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox textBoxOccupancyExitCommand;
-        private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.TextBox textBoxComputerName;
