@@ -128,7 +128,7 @@ namespace BrodieTheatre
 
         public bool harmonyIsActivityStarted()
         {
-            if (labelCurrentActivity.Text == "PowerOff" && labelCurrentActivity.Text == "")
+            if (labelCurrentActivity.Text == "PowerOff" || labelCurrentActivity.Text == "")
             {
                 return false;
             }

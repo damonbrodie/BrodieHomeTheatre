@@ -272,7 +272,6 @@ namespace BrodieTheatre
                 }
                 toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
                 kodiLoadingMovies = false;
-                //loadVoiceCommands();
                 Task task = Task.Run((Action)loadVoiceCommands);
             }
             else

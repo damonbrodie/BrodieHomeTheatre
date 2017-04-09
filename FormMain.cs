@@ -294,9 +294,12 @@ namespace BrodieTheatre
         private void timerKodiStartPlayback_Tick(object sender, EventArgs e)
         {
             timerKodiStartPlayback.Enabled = false;
-            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiPlayNext.file + "\" }}, \"id\": \"1\"}");
-            writeLog("Kodi:  Starting movie: " + kodiPlayNext.name + " " + kodiPlayNext.file);
-            kodiPlayNext = null;
+            if (kodiPlayNext != null)
+            {
+                kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiPlayNext.file + "\" }}, \"id\": \"1\"}");
+                writeLog("Kodi:  Starting movie: " + kodiPlayNext.name + " " + kodiPlayNext.file);
+                kodiPlayNext = null;
+            }
         }
     }
 }

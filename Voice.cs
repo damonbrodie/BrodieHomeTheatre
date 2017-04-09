@@ -21,8 +21,11 @@ namespace BrodieTheatre
         private void playSound(string soundFile)
         {
             string fullPath = Path.Combine(wavePath, soundFile);
-            SoundPlayer simpleSound = new SoundPlayer(fullPath);
-            simpleSound.Play();
+            if (File.Exists(fullPath))
+            {
+                SoundPlayer simpleSound = new SoundPlayer(fullPath);
+                simpleSound.Play();
+            }
         }
 
         private void speakText(string tts)
@@ -245,28 +248,24 @@ namespace BrodieTheatre
                 
                 string topPhrase = phrase.Semantics.Value.ToString();
                 if (topPhrase.StartsWith("play movie|"))
-                {                    
-                    if (!harmonyIsActivityStarted())
+                {
+                    formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.BeginInvoke(new Action(() =>
+                        if (!formMain.harmonyIsActivityStarted())
                         {
                             formMain.writeLog("Voice: Starting delay timer for movie to 30 seconds");
-                            
+
                             // Wait for the projector to warm up.
                             formMain.timerKodiStartPlayback.Interval = 30000;
-                            //formMain.voiceStartTheatre();
+                            formMain.voiceStartTheatre();
                         }
-                        ));
-                    }
-                    else
-                    {
-                        formMain.BeginInvoke(new Action(() =>
+                        else
                         {
                             formMain.writeLog("Voice: Starting delay timer for movie to 5 seconds");
                             formMain.timerKodiStartPlayback.Interval = 5000;
                         }
-                        ));
                     }
+                    ));
                     string kodiMovieFile = topPhrase.Split('|')[1];
                     kodiPlayNext = null;
                     foreach (MovieEntry movieEntry in kodiMovies)
