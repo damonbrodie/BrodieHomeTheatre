@@ -58,7 +58,8 @@ namespace BrodieTheatre
         private void sayPresense()
         {
             writeLog("Voice:  Saying acknowledgement");
-            List<string> presense = new List<string>(new string[] { "I'm here", "Standing by", "Yes", "I am around"});
+            List<string> presense = new List<string>(new string[] { "I'm here", "Standing by", "Yes", "At your service", "Ready"
+            });
             int r = random.Next(presense.Count);
             speakText(presense[r]);
         }
@@ -249,7 +250,7 @@ namespace BrodieTheatre
                 RecognizedPhrase phrase = e.Result.Alternates[0];
                 
                 string topPhrase = phrase.Semantics.Value.ToString();
-                if (topPhrase.StartsWith("play movie|"))
+                if (topPhrase.StartsWith("play movie|") && labelKodiPlaybackStatus.Text != "Playing")
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
