@@ -132,41 +132,41 @@ namespace BrodieTheatre
             {
                 foreach (MovieEntry movieEntry in formMain.kodiMovies)
                 {
-                    grammarCount += formMain.expandCommands(ref commandChoice, "play movie - " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
-                    //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie - " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    grammarCount += formMain.expandCommands(ref commandChoice, "play movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
 
-                    //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie - " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
-                    //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch the movie - " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
 
-                    //grammarCount += formMain.expandCommands(ref commandChoice, "watch movie - " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
-                    //grammarCount += formMain.expandCommands(ref commandChoice, "watch the movie - " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    grammarCount += formMain.expandCommands(ref commandChoice, "watch movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    //grammarCount += formMain.expandCommands(ref commandChoice, "watch the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
                 }
                 foreach (PartialMovieEntry entry in formMain.moviesAfterColonNames)
                 {
                     if (!formMain.searchMovieList(formMain.moviesDuplicateNames, entry.name))
                     {
-                        grammarCount += formMain.expandCommands(ref commandChoice, "play movie - " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie - " + entry.name, "play movie|" + entry.file, true, true);
+                        grammarCount += formMain.expandCommands(ref commandChoice, "play movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie " + entry.name, "play movie|" + entry.file, true, true);
 
-                       // grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie - " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch the movie - " + entry.name, "play movie|" + entry.file, true, true);
+                       // grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch the movie " + entry.name, "play movie|" + entry.file, true, true);
 
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "watch movie - " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "watch the movie - " + entry.name, "play movie|" + entry.file, true, true);
+                        grammarCount += formMain.expandCommands(ref commandChoice, "watch movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += formMain.expandCommands(ref commandChoice, "watch the movie " + entry.name, "play movie|" + entry.file, true, true);
                     }
                 }
                 foreach (PartialMovieEntry entry in formMain.moviesPartialNames)
                 {
                     if (!formMain.searchMovieList(formMain.moviesDuplicateNames, entry.name))
                     {
-                        grammarCount += formMain.expandCommands(ref commandChoice, "play movie - " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie - " + entry.name, "play movie|" + entry.file, true, true);
+                        grammarCount += formMain.expandCommands(ref commandChoice, "play movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie " + entry.name, "play movie|" + entry.file, true, true);
 
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie - " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch the movie - " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch the movie " + entry.name, "play movie|" + entry.file, true, true);
 
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "watch movie - " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "watch the movie - " + entry.name, "play movie|" + entry.file, true, true);
+                        grammarCount += formMain.expandCommands(ref commandChoice, "watch movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += formMain.expandCommands(ref commandChoice, "watch the movie " + entry.name, "play movie|" + entry.file, true, true);
                     }
                 }
                 formMain.writeLog("Voice:  " + grammarCount.ToString() + " grammar entries loaded");
@@ -238,7 +238,7 @@ namespace BrodieTheatre
             string confidence = Math.Round((e.Result.Confidence * 100), 2).ToString();
             float minConfidence = (float)Properties.Settings.Default.voiceConfidence / (float)10.0;
 
-            if (e.Result.Alternates != null && e.Result.Confidence > minConfidence && labelKodiPlaybackStatus.Text != "Playing")
+            if (e.Result.Alternates != null && e.Result.Confidence > minConfidence)
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
@@ -290,80 +290,101 @@ namespace BrodieTheatre
                     switch (topPhrase)
                     {
                         case "Turn on Theatre":
-
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                formMain.playSound(ackWave);
-                                formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.voiceStartTheatre();
-                                formMain.writeLog("Voice:  Processed " + topPhrase);
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.playSound(ackWave);
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.voiceStartTheatre();
+                                    formMain.writeLog("Voice:  Processed " + topPhrase);
+                                }
+                                ));
                             }
-                            ));
                             break;
                         case "Turn off Theatre":
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                formMain.playSound(ackWave);
-                                formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.harmonyStartActivityByName("PowerOff");
-                                formMain.lightsToEnteringLevel();
-                                formMain.writeLog("Voice:  Processed " + topPhrase);
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.playSound(ackWave);
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.harmonyStartActivityByName("PowerOff");
+                                    formMain.lightsToEnteringLevel();
+                                    formMain.writeLog("Voice:  Processed " + topPhrase);
+                                }
+                                ));
                             }
-                            ));
                             break;
                         case "Show Application":
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                if (formMain.WindowState == FormWindowState.Minimized)
+                                formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.playSound(ackWave);
-                                    formMain.labelLastVoiceCommand.Text = topPhrase;
-                                    formMain.WindowState = FormWindowState.Normal;
-                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                    if (formMain.WindowState == FormWindowState.Minimized)
+                                    {
+                                        formMain.playSound(ackWave);
+                                        formMain.labelLastVoiceCommand.Text = topPhrase;
+                                        formMain.WindowState = FormWindowState.Normal;
+                                        formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                    }
                                 }
+                                ));
                             }
-                            ));
                             break;
+
                         case "Hide Application":
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                if (formMain.WindowState == FormWindowState.Normal)
+                                formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.playSound(ackWave);
-                                    formMain.labelLastVoiceCommand.Text = topPhrase;
-                                    formMain.WindowState = FormWindowState.Minimized;
-                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                    if (formMain.WindowState == FormWindowState.Normal)
+                                    {
+                                        formMain.playSound(ackWave);
+                                        formMain.labelLastVoiceCommand.Text = topPhrase;
+                                        formMain.WindowState = FormWindowState.Minimized;
+                                        formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                    }
                                 }
+                                ));
                             }
-                            ));
                             break;
                         case "Greeting":
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.sayGreeting();
-                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.sayGreeting();
+                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                }
+                                ));
                             }
-                            ));
                             break;
                         case "Presense":
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.sayPresense();
-                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.sayPresense();
+                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                }
+                                ));
                             }
-                            ));
                             break;
                         case "Lights On":
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                formMain.playSound(ackWave);
-                                formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.lightsToEnteringLevel();
-                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.playSound(ackWave);
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.lightsToEnteringLevel();
+                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                }
+                                ));
                             }
-                            ));
                             break;
                         case "Pause Playback":
                             formMain.BeginInvoke(new Action(() =>
@@ -375,15 +396,19 @@ namespace BrodieTheatre
                             }
                             ));
                             break;
+                            
                         case "Resume Playback":
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                formMain.playSound(ackWave);
-                                formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.kodiPlaybackControl("Play");
-                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.playSound(ackWave);
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.kodiPlaybackControl("Play");
+                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                }
+                                ));
                             }
-                            ));
                             break;
                         case "Stop Playback":
                             formMain.BeginInvoke(new Action(() =>
@@ -394,32 +419,38 @@ namespace BrodieTheatre
                                 formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                             }
                             ));
-                            break;
+                            break;  
                         case "Cancel Playback":
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                if (kodiPlayNext != null)
+                                formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.kodiPlayNext = null;
-                                    List<string> cancel = new List<string>(new string[] { "Cancelling Playback", "Playback Aborted", "Ok"});
-                                    int r = random.Next(cancel.Count);
-                                    speakText(cancel[r]);
+                                    if (kodiPlayNext != null)
+                                    {
+                                        formMain.kodiPlayNext = null;
+                                        List<string> cancel = new List<string>(new string[] { "Cancelling Playback", "Playback Aborted", "Ok" });
+                                        int r = random.Next(cancel.Count);
+                                        speakText(cancel[r]);
 
+                                    }
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                                 }
-                                formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                ));
                             }
-                            ));
                             break;
                         case "Dim Lights":
-                            formMain.BeginInvoke(new Action(() =>
+                            if (labelKodiPlaybackStatus.Text != "Playing")
                             {
-                                formMain.playSound(ackWave);
-                                formMain.labelLastVoiceCommand.Text = topPhrase;
-                                formMain.lightsToStoppedLevel();
-                                formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.playSound(ackWave);
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.lightsToStoppedLevel();
+                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                }
+                                ));
                             }
-                            ));
                             break;
                     }
                 }
