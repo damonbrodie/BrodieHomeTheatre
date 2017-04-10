@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
@@ -29,6 +30,10 @@ namespace BrodieTheatre
                     Thread.Sleep(50);
                 }
             }
+        }
+        async Task doDelay(int seconds)
+        {
+            await Task.Delay(seconds * 1000);
         }
     }
 }

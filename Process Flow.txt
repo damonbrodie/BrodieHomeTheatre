@@ -12,7 +12,6 @@ When the Room Occupancy is marked "Occupied":
 	Turn On the Global Shutdown timer
 	If the Activity is "Power Off":
 		Turn on Occupancy Lights
-	Send Harmony Command to turn on Amplifier
 
 When the Room Occupancy is marked "Vacant":
 	If Kodi is "Stopped" && Harmony Activity active:

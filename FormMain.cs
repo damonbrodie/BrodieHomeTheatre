@@ -31,7 +31,6 @@ namespace BrodieTheatre
             {
                 this.WindowState = FormWindowState.Normal;
             }
-                
 
             resetGlobalTimer();
         }
@@ -81,7 +80,6 @@ namespace BrodieTheatre
 
             currentPLMport = Properties.Settings.Default.plmPort;
             insteonConnectPLM();
-
             projectorConnect();
 
             if (labelProjectorStatus.Text == "Connected")
@@ -134,8 +132,7 @@ namespace BrodieTheatre
                 formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
                 Task task = Task.Run((Action)loadVoiceCommands);
             }
-            ));
-           
+            ));        
         }
 
         private void timerClearStatus_Tick(object sender, EventArgs e)
@@ -230,8 +227,7 @@ namespace BrodieTheatre
                 if (! harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     lightsToEnteringLevel();
-                }
-                
+                } 
                 try
                 {
                     recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
@@ -267,8 +263,7 @@ namespace BrodieTheatre
 
                     writeLog("Occupancy:  Room vacant");
                     toolStripStatus.Text = "Room is now vacant";
-                    lightsOff();
-           
+                    lightsOff();      
                 }
                 else // There is playback or it is paused.  Start the timer to shut this off after configured time
                 {
