@@ -132,6 +132,7 @@ namespace BrodieTheatre
             {
                 foreach (MovieEntry movieEntry in formMain.kodiMovies)
                 {
+                    grammarCount += formMain.expandCommands(ref commandChoice, "do we have the movie " + movieEntry.cleanName, "check movie|" + movieEntry.file, false, true);
                     grammarCount += formMain.expandCommands(ref commandChoice, "play movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
                     //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
 
@@ -145,6 +146,7 @@ namespace BrodieTheatre
                 {
                     if (!formMain.searchMovieList(formMain.moviesDuplicateNames, entry.name))
                     {
+                        grammarCount += formMain.expandCommands(ref commandChoice, "do we have the movie " + entry.name, "check movie|" + entry.file, false, true);
                         grammarCount += formMain.expandCommands(ref commandChoice, "play movie " + entry.name, "play movie|" + entry.file, true, true);
                         //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie " + entry.name, "play movie|" + entry.file, true, true);
 
@@ -159,6 +161,7 @@ namespace BrodieTheatre
                 {
                     if (!formMain.searchMovieList(formMain.moviesDuplicateNames, entry.name))
                     {
+                        grammarCount += formMain.expandCommands(ref commandChoice, "do we have the movie " + entry.name, "check movie|" + entry.file, false, true);
                         grammarCount += formMain.expandCommands(ref commandChoice, "play movie " + entry.name, "play movie|" + entry.file, true, true);
                         //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie " + entry.name, "play movie|" + entry.file, true, true);
 
@@ -249,7 +252,25 @@ namespace BrodieTheatre
                 RecognizedPhrase phrase = e.Result.Alternates[0];
                 
                 string topPhrase = phrase.Semantics.Value.ToString();
-                if (topPhrase.StartsWith("play movie|") && labelKodiPlaybackStatus.Text != "Playing")
+                if (topPhrase.StartsWith("check movie|") && labelKodiPlaybackStatus.Text != "Playing")
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        string kodiMovieFile = topPhrase.Split('|')[1];
+                        foreach (MovieEntry movieEntry in kodiMovies)
+                        {
+                            if (movieEntry.file == kodiMovieFile)
+                            {
+                                formMain.writeLog("Voice: Checking for movie '" + movieEntry.name + "'");
+                                List<string> foundMovie = new List<string>(new string[] { "I found ", "We have " });
+                                int r = random.Next(foundMovie.Count);
+                                speakText(foundMovie[r] + movieEntry.name);
+                            }
+                        }
+                    }
+                    ));
+                }
+                else if (topPhrase.StartsWith("play movie|") && labelKodiPlaybackStatus.Text != "Playing")
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
@@ -290,7 +311,7 @@ namespace BrodieTheatre
                     switch (topPhrase)
                     {
                         case "Turn on Theatre":
-                            if (labelKodiPlaybackStatus.Text != "Playing"  && ! harmonyIsActivityStarted())
+                            if (labelKodiPlaybackStatus.Text != "Playing" && !harmonyIsActivityStarted())
                             {
                                 formMain.BeginInvoke(new Action(() =>
                                 {
@@ -380,7 +401,7 @@ namespace BrodieTheatre
                             }
                             ));
                             break;
-                            
+
                         case "Resume Playback":
                             if (labelKodiPlaybackStatus.Text != "Playing")
                             {
@@ -401,7 +422,7 @@ namespace BrodieTheatre
                                 formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                             }
                             ));
-                            break;  
+                            break;
                         case "Cancel Playback":
                             if (labelKodiPlaybackStatus.Text != "Playing")
                             {
