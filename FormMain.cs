@@ -57,6 +57,12 @@ namespace BrodieTheatre
                 currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
                 await harmonyConnectAsync();
             }
+
+            if (currentKodiIP != Properties.Settings.Default.kodiIP)
+            {
+                currentKodiIP = Properties.Settings.Default.kodiIP;
+                kodiStatusDisconnect();
+            }
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
@@ -115,14 +121,6 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerSetLights.Enabled = true;
-                try
-                {
-                    speechSynthesizer.SetOutputToDefaultAudioDevice();
-                }
-                catch
-                {
-                    formMain.writeLog("Voice:  Unable to attach to default audio output device");
-                }
                 formMain.recognitionEngine = new SpeechRecognitionEngine();
                 try
                 {
@@ -310,8 +308,7 @@ namespace BrodieTheatre
 
         private void timerKodiConnect_Tick(object sender, EventArgs e)
         {
-            kodiConnect();
-            timerKodiConnect.Enabled = false;
+            kodiConnect();       
         }
 
         private void timerKodiStartPlayback_Tick(object sender, EventArgs e)

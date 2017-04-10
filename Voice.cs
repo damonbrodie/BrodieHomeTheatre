@@ -30,6 +30,14 @@ namespace BrodieTheatre
 
         private void speakText(string tts)
         {
+            try
+            {
+                speechSynthesizer.SetOutputToDefaultAudioDevice();
+            }
+            catch
+            {
+                writeLog("Voice:  Unable to attach to default audio output device");
+            }
             speechSynthesizer.SpeakAsync(tts);
         }
 

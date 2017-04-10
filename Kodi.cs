@@ -14,6 +14,7 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        public string currentKodiIP = "";
         public MovieEntry kodiPlayNext = null;
         public TcpClient tcpClient;
         public NetworkStream kodiSocketStream;
