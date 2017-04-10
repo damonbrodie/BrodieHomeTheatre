@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Collections.Generic;
 
+
 namespace BrodieTheatre
 {
     public partial class FormMain : Form
@@ -62,7 +63,7 @@ namespace BrodieTheatre
         private void lightsOn()
         {
             writeLog("Lighting:  Setting lights to On");
-            toolStripStatus.Text = "Turning On Lights";
+            toolStripStatus.Text = "Turning lights on";
             queueLightLevel(Properties.Settings.Default.potsAddress, 100);
             trackBarPots.Value = trackBarPots.Maximum;
             queueLightLevel(Properties.Settings.Default.trayAddress, 100);
@@ -84,7 +85,7 @@ namespace BrodieTheatre
         private void lightsOff()
         {
             writeLog("Lighting:  Setting lights to Off");
-            toolStripStatus.Text = "Turning Off Lights";
+            toolStripStatus.Text = "Turning lights off";
             queueLightLevel(Properties.Settings.Default.potsAddress, 0);
             trackBarPots.Value = trackBarPots.Minimum;
             queueLightLevel(Properties.Settings.Default.trayAddress, 0);

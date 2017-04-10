@@ -31,6 +31,7 @@ namespace BrodieTheatre
                 }
             }
         }
+
         async Task doDelay(int seconds)
         {
             await Task.Delay(seconds * 1000);

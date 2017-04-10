@@ -14,6 +14,7 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        public int kodiConnectAttempts = 0;
         public string currentKodiIP = "";
         public int currentKodiPort = 0;
         public MovieEntry kodiPlayNext = null;
@@ -51,7 +52,7 @@ namespace BrodieTheatre
             {
                 try
                 {
-                    writeLog("Kodi:  Connecting");
+                    writeLog("Kodi:  Connecting to Kodi JSON port");
                     kodiStatusDisconnect(false);
                     tcpClient = new TcpClient();
                     tcpClient.ReceiveTimeout = 500;
@@ -65,14 +66,25 @@ namespace BrodieTheatre
                         kodiSocketStream.Flush();
                         Thread thread = new Thread(kodiReadStream);
                         thread.Start();
-                        writeLog("Kodi:  Connected");
+                        writeLog("Kodi:  Connected to Kodi JSON port");
                         labelKodiStatus.Text = "Connected";
                         labelKodiStatus.ForeColor = System.Drawing.Color.ForestGreen;
                         kodiSendGetMoviesRequest();
+                        kodiConnectAttempts = 0;
+                        timerKodiConnect.Interval = 1000;
                         return;
                     }
                 }
                 catch { }
+            }
+            kodiConnectAttempts += 1;
+            if (kodiConnectAttempts > 15)
+            {
+                timerKodiConnect.Interval = 15000;
+            }
+            else if (kodiConnectAttempts > 30)
+            {
+                timerKodiConnect.Interval = 60000;
             }
             kodiStatusDisconnect(); 
         }
@@ -355,6 +367,7 @@ namespace BrodieTheatre
 
         public void kodiStatusDisconnect(bool enableTimer = true)
         {
+            writeLog("Kodi:  Connection closed to Kodi JSON port");
             labelKodiStatus.Text = "Disconnected";
             labelKodiStatus.ForeColor = System.Drawing.Color.Maroon;
             timerKodiConnect.Enabled = enableTimer;
