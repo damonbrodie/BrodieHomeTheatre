@@ -189,8 +189,7 @@ namespace BrodieTheatre
         }
 
         private void trackBarTrayPlayback_ValueChanged(object sender, EventArgs e)
-        {
-            
+        {           
             labelTrayPlayback.Text = (trackBarTrayPlayback.Value * 10).ToString() + "%";
         }
 

@@ -239,7 +239,8 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    labelLastVoiceCommand.Text = "Grammar Not Loaded";
+                    labelLastVoiceCommand.Text = "Grammar not loaded";
+                    writeLog("Voice:  Can't start Speech Recognizer");
                 }
                 
                 toolStripStatus.Text = "Room is now occupied";
@@ -249,7 +250,7 @@ namespace BrodieTheatre
                 try
                 {
                     recognitionEngine.RecognizeAsyncStop();
-                    labelLastVoiceCommand.Text = "Not Listening";
+                    labelLastVoiceCommand.Text = "Stopped listening";
                 }
                 catch
                 {
@@ -264,7 +265,7 @@ namespace BrodieTheatre
                         harmonyStartActivityByName("PowerOff");
                     }
 
-                    writeLog("Occupancy:  Room Vacant");
+                    writeLog("Occupancy:  Room vacant");
                     toolStripStatus.Text = "Room is now vacant";
                     lightsOff();
            
@@ -279,7 +280,7 @@ namespace BrodieTheatre
         private void resetGlobalTimer()
         {
             GlobalShutdown = DateTime.Now.AddHours(Properties.Settings.Default.globalShutdown);
-            writeLog("Global Timer:  Resetting Shutdown timer");
+            writeLog("Global Timer:  Resetting shutdown timer");
         }
 
         private void labelProjectorPower_TextChanged(object sender, EventArgs e)

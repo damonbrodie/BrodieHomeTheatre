@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Media;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using Microsoft.Speech.Synthesis;
@@ -230,7 +228,7 @@ namespace BrodieTheatre
 
         public void voiceStartTheatre()
         {
-            writeLog("Voice:  Starting Harmony activity");
+            writeLog("Voice:  Starting 'Watch Movie' Harmony Activity");
             harmonyStartActivityByName(Properties.Settings.Default.voiceActivity);
             timerStartLights.Enabled = true;
         }

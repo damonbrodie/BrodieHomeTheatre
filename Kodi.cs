@@ -222,7 +222,6 @@ namespace BrodieTheatre
                 moviesDuplicateNames.Clear();
                 moviesPartialNames.Clear();
                 
-
                 foreach (JObject movie in result["result"]["movies"])
                 {            
                     MovieEntry movieEntry = new MovieEntry();
