@@ -70,7 +70,7 @@ namespace BrodieTheatre
         {
             formMain.BeginInvoke(new Action(() =>
             {
-                formMain.writeLog("------ Starting Up ------");
+                formMain.writeLog("------ Brodie Theatre Starting Up ------");
             }
             ));
             await harmonyConnectAsync(true);
@@ -170,7 +170,7 @@ namespace BrodieTheatre
                 powerlineModem.Dispose();
             }
             UnhookWindowsHookEx(hookID);
-            writeLog("------ Shutting Down ------");
+            writeLog("------ Brodie Theatre Shutting Down ------");
         }
 
         private void timerGlobal_Tick(object sender, EventArgs e)
@@ -230,7 +230,6 @@ namespace BrodieTheatre
                 if (! harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     lightsToEnteringLevel();
-                    playSound(startupWave);
                 }
                 
                 try

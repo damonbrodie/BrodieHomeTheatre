@@ -161,7 +161,7 @@
             this.labelHarmonyStatus.Name = "labelHarmonyStatus";
             this.labelHarmonyStatus.Size = new System.Drawing.Size(120, 19);
             this.labelHarmonyStatus.TabIndex = 3;
-            this.labelHarmonyStatus.Text = "Not Initialized";
+            this.labelHarmonyStatus.Text = "Disconnected";
             this.labelHarmonyStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox1
@@ -354,7 +354,7 @@
             this.labelPLMstatus.Name = "labelPLMstatus";
             this.labelPLMstatus.Size = new System.Drawing.Size(120, 19);
             this.labelPLMstatus.TabIndex = 3;
-            this.labelPLMstatus.Text = "Not Initialized";
+            this.labelPLMstatus.Text = "Disconnected";
             this.labelPLMstatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // groupBox3

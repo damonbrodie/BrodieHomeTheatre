@@ -14,20 +14,6 @@ namespace BrodieTheatre
         public SpeechRecognitionEngine recognitionEngine;
         public SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer();
 
-        public string startupWave = "Powering up.wav";
-        public string ackWave = "Ack sound.wav";
-        public string wavePath = @"c:\Users\damon\Documents\Shared\Wavs";
-
-        private void playSound(string soundFile)
-        {
-            string fullPath = Path.Combine(wavePath, soundFile);
-            if (File.Exists(fullPath))
-            {
-                SoundPlayer simpleSound = new SoundPlayer(fullPath);
-                simpleSound.Play();
-            }
-        }
-
         private void speakText(string tts)
         {
             try
@@ -57,7 +43,7 @@ namespace BrodieTheatre
             {
                 timeGreeting = "good evening";
             }
-            writeLog("Voice:  Saying greeting");
+            writeLog("Voice:  Speak greeting");
             List<string> greetings = new List<string>(new string[] { timeGreeting, "hello there", "Welcome", "Hello", "Welcome Back" });
             int r = random.Next(greetings.Count);
             speakText(greetings[r]);
@@ -65,11 +51,18 @@ namespace BrodieTheatre
 
         private void sayPresense()
         {
-            writeLog("Voice:  Saying acknowledgement");
-            List<string> presense = new List<string>(new string[] { "I'm here", "Standing by", "Yes", "At your service", "Ready"
-            });
+            writeLog("Voice:  Speak presense acknowledgement");
+            List<string> presense = new List<string>(new string[] { "I'm here", "Standing by", "Yes", "At your service", "Ready"});
             int r = random.Next(presense.Count);
             speakText(presense[r]);
+        }
+
+        private void sayAcknowledgement()
+        {
+            writeLog("Voice:  Speak acknowledgement");
+            List<string> ack = new List<string>(new string[] { "Okay", "Doing that now", "One Moment"});
+            int r = random.Next(ack.Count);
+            speakText(ack[r]);
         }
 
         private static void loadVoiceCommands()
@@ -299,11 +292,11 @@ namespace BrodieTheatre
                     switch (topPhrase)
                     {
                         case "Turn on Theatre":
-                            if (labelKodiPlaybackStatus.Text != "Playing")
+                            if (labelKodiPlaybackStatus.Text != "Playing"  && ! harmonyIsActivityStarted())
                             {
                                 formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.playSound(ackWave);
+                                    formMain.sayAcknowledgement();
                                     formMain.labelLastVoiceCommand.Text = topPhrase;
                                     formMain.voiceStartTheatre();
                                     formMain.writeLog("Voice:  Processed " + topPhrase);
@@ -312,11 +305,11 @@ namespace BrodieTheatre
                             }
                             break;
                         case "Turn off Theatre":
-                            if (labelKodiPlaybackStatus.Text != "Playing")
+                            if (labelKodiPlaybackStatus.Text != "Playing" && harmonyIsActivityStarted())
                             {
                                 formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.playSound(ackWave);
+                                    formMain.sayAcknowledgement();
                                     formMain.labelLastVoiceCommand.Text = topPhrase;
                                     formMain.harmonyStartActivityByName("PowerOff");
                                     formMain.lightsToEnteringLevel();
@@ -332,7 +325,6 @@ namespace BrodieTheatre
                                 {
                                     if (formMain.WindowState == FormWindowState.Minimized)
                                     {
-                                        formMain.playSound(ackWave);
                                         formMain.labelLastVoiceCommand.Text = topPhrase;
                                         formMain.WindowState = FormWindowState.Normal;
                                         formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
@@ -349,7 +341,6 @@ namespace BrodieTheatre
                                 {
                                     if (formMain.WindowState == FormWindowState.Normal)
                                     {
-                                        formMain.playSound(ackWave);
                                         formMain.labelLastVoiceCommand.Text = topPhrase;
                                         formMain.WindowState = FormWindowState.Minimized;
                                         formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
@@ -382,23 +373,9 @@ namespace BrodieTheatre
                                 ));
                             }
                             break;
-                        case "Lights On":
-                            if (labelKodiPlaybackStatus.Text != "Playing")
-                            {
-                                formMain.BeginInvoke(new Action(() =>
-                                {
-                                    formMain.playSound(ackWave);
-                                    formMain.labelLastVoiceCommand.Text = topPhrase;
-                                    formMain.lightsToEnteringLevel();
-                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
-                                }
-                                ));
-                            }
-                            break;
                         case "Pause Playback":
                             formMain.BeginInvoke(new Action(() =>
                             {
-                                formMain.playSound(ackWave);
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.kodiPlaybackControl("Pause");
                                 formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
@@ -411,7 +388,6 @@ namespace BrodieTheatre
                             {
                                 formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.playSound(ackWave);
                                     formMain.labelLastVoiceCommand.Text = topPhrase;
                                     formMain.kodiPlaybackControl("Play");
                                     formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
@@ -422,7 +398,6 @@ namespace BrodieTheatre
                         case "Stop Playback":
                             formMain.BeginInvoke(new Action(() =>
                             {
-                                formMain.playSound(ackWave);
                                 formMain.labelLastVoiceCommand.Text = topPhrase;
                                 formMain.kodiPlaybackControl("Stop");
                                 formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
@@ -453,9 +428,20 @@ namespace BrodieTheatre
                             {
                                 formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.playSound(ackWave);
                                     formMain.labelLastVoiceCommand.Text = topPhrase;
                                     formMain.lightsToStoppedLevel();
+                                    formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
+                                }
+                                ));
+                            }
+                            break;
+                        case "Lights On":
+                            if (labelKodiPlaybackStatus.Text != "Playing")
+                            {
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.labelLastVoiceCommand.Text = topPhrase;
+                                    formMain.lightsToEnteringLevel();
                                     formMain.writeLog("Voice:  Processed '" + topPhrase + "'");
                                 }
                                 ));
