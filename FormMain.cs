@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.Recognition;
 
 
@@ -11,6 +12,7 @@ namespace BrodieTheatre
         //42.22.B8 Pot
         //42.20.F8 Tray
         //41.66.88 Motion Sensor
+        //41.58.FC Door Sensor
 
         static FormMain formMain;
         public DateTime GlobalShutdown;
@@ -120,7 +122,16 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerSetLights.Enabled = true;
-                formMain.recognitionEngine = new SpeechRecognitionEngine();
+                try
+                {
+                    formMain.recognitionEngine = new SpeechRecognitionEngine();
+                    formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
+                }
+                catch (Exception ex)
+                {
+                    formMain.writeLog("Voice:  Unable to load Microsoft Speech Recognition Engine");
+                    formMain.writeLog(ex.ToString());
+                }
                 try
                 {
                     formMain.recognitionEngine.SetInputToDefaultAudioDevice();
@@ -129,8 +140,17 @@ namespace BrodieTheatre
                 {
                     formMain.writeLog("Voice:  Unable to attach to default audio input device");
                 }
-                formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
+                
                 Task task = Task.Run((Action)loadVoiceCommands);
+                try
+                {
+                    speechSynthesizer = new SpeechSynthesizer();
+                }
+                catch (Exception ex)
+                {
+                    formMain.writeLog("Voice:  Unable to load Microsoft Speech Synthesizer Engine");
+                    formMain.writeLog(ex.ToString());
+                } 
             }
             ));        
         }

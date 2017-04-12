@@ -151,6 +151,7 @@ namespace BrodieTheatre
         {
             int level = 0;
             DeviceBase device;
+            if (address == string.Empty) return 0;
             if (powerlineModem.Network.TryConnectToDevice(address, out device))
             {
                 var lightingControl = device as DimmableLightingControl;
@@ -169,6 +170,7 @@ namespace BrodieTheatre
         public void insteonSetLightLevel(string address, int level)
         {
             DeviceBase device;
+            if (address == string.Empty) return;
             if (powerlineModem != null && powerlineModem.Network.TryConnectToDevice(address, out device))
             {
                 bool finished = false;

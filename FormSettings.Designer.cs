@@ -97,6 +97,8 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.textBoxDoorSensorAddress = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
@@ -321,6 +323,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.textBoxDoorSensorAddress);
+            this.tabPage2.Controls.Add(this.label25);
             this.tabPage2.Controls.Add(this.textBoxMotionSensorAddress);
             this.tabPage2.Controls.Add(this.label22);
             this.tabPage2.Controls.Add(this.textBoxPotsAddress);
@@ -342,7 +346,7 @@
             this.textBoxMotionSensorAddress.Location = new System.Drawing.Point(141, 131);
             this.textBoxMotionSensorAddress.Name = "textBoxMotionSensorAddress";
             this.textBoxMotionSensorAddress.Size = new System.Drawing.Size(100, 20);
-            this.textBoxMotionSensorAddress.TabIndex = 5;
+            this.textBoxMotionSensorAddress.TabIndex = 3;
             // 
             // label22
             // 
@@ -358,7 +362,7 @@
             this.textBoxPotsAddress.Location = new System.Drawing.Point(141, 95);
             this.textBoxPotsAddress.Name = "textBoxPotsAddress";
             this.textBoxPotsAddress.Size = new System.Drawing.Size(100, 20);
-            this.textBoxPotsAddress.TabIndex = 4;
+            this.textBoxPotsAddress.TabIndex = 2;
             // 
             // label4
             // 
@@ -374,7 +378,7 @@
             this.textBoxTrayAddress.Location = new System.Drawing.Point(141, 59);
             this.textBoxTrayAddress.Name = "textBoxTrayAddress";
             this.textBoxTrayAddress.Size = new System.Drawing.Size(100, 20);
-            this.textBoxTrayAddress.TabIndex = 3;
+            this.textBoxTrayAddress.TabIndex = 1;
             // 
             // label3
             // 
@@ -391,7 +395,7 @@
             this.comboBoxInsteonPort.Location = new System.Drawing.Point(141, 22);
             this.comboBoxInsteonPort.Name = "comboBoxInsteonPort";
             this.comboBoxInsteonPort.Size = new System.Drawing.Size(109, 21);
-            this.comboBoxInsteonPort.TabIndex = 2;
+            this.comboBoxInsteonPort.TabIndex = 0;
             // 
             // label2
             // 
@@ -811,6 +815,22 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // textBoxDoorSensorAddress
+            // 
+            this.textBoxDoorSensorAddress.Location = new System.Drawing.Point(141, 167);
+            this.textBoxDoorSensorAddress.Name = "textBoxDoorSensorAddress";
+            this.textBoxDoorSensorAddress.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDoorSensorAddress.TabIndex = 4;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(16, 170);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(110, 13);
+            this.label25.TabIndex = 8;
+            this.label25.Text = "Door Sensor Address:";
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -923,5 +943,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDownKodiPort;
         private System.Windows.Forms.TextBox textBoxKodiIP;
         private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.TextBox textBoxDoorSensorAddress;
+        private System.Windows.Forms.Label label25;
     }
 }

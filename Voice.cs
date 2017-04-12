@@ -10,7 +10,7 @@ namespace BrodieTheatre
     public partial class FormMain : Form
     {
         public SpeechRecognitionEngine recognitionEngine;
-        public SpeechSynthesizer speechSynthesizer = new SpeechSynthesizer();
+        public SpeechSynthesizer speechSynthesizer;
 
         private void speakText(string tts)
         {

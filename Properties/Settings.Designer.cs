@@ -274,5 +274,17 @@ namespace BrodieTheatre.Properties {
                 this["kodiIP"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string doorSensorAddress {
+            get {
+                return ((string)(this["doorSensorAddress"]));
+            }
+            set {
+                this["doorSensorAddress"] = value;
+            }
+        }
     }
 }

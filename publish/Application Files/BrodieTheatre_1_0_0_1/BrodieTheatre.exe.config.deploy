@@ -73,9 +73,6 @@
             <setting name="kodiIP" serializeAs="String">
                 <value />
             </setting>
-            <setting name="doorSensorAddress" serializeAs="String">
-                <value />
-            </setting>
         </BrodieTheatre.Properties.Settings>
     </userSettings>
 </configuration>

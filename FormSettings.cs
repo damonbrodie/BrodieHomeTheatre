@@ -30,6 +30,7 @@ namespace BrodieTheatre
             Properties.Settings.Default.potsEnteringLevel       = trackBarPotsEntering.Value;
             Properties.Settings.Default.globalShutdown          = trackBarGlobalShutdown.Value;
             Properties.Settings.Default.motionSensorAddress     = textBoxMotionSensorAddress.Text;
+            Properties.Settings.Default.doorSensorAddress       = textBoxDoorSensorAddress.Text;
             Properties.Settings.Default.voiceConfidence         = trackBarVoiceConfidence.Value;
             Properties.Settings.Default.startMinimized          = checkBoxStartMinimized.Checked;
             Properties.Settings.Default.computerName            = textBoxComputerName.Text;
@@ -47,6 +48,10 @@ namespace BrodieTheatre
             textBoxVoiceActivity.Text           = Properties.Settings.Default.voiceActivity;
             numericUpDownKodiPort.Value         = (decimal)Properties.Settings.Default.kodiJSONPort;
             textBoxKodiIP.Text                  = Properties.Settings.Default.kodiIP;
+            textBoxPotsAddress.Text             = Properties.Settings.Default.potsAddress;
+            textBoxTrayAddress.Text             = Properties.Settings.Default.trayAddress;
+            textBoxMotionSensorAddress.Text     = Properties.Settings.Default.motionSensorAddress;
+            textBoxDoorSensorAddress.Text       = Properties.Settings.Default.doorSensorAddress;
 
             try
             {
@@ -167,10 +172,6 @@ namespace BrodieTheatre
                     trackBarVoiceConfidence.Value = trackBarVoiceConfidence.Minimum;
                 }
             }
-
-            textBoxPotsAddress.Text = Properties.Settings.Default.potsAddress;
-            textBoxTrayAddress.Text = Properties.Settings.Default.trayAddress;
-            textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
 
             //show list of valid com ports
             foreach (string s in SerialPort.GetPortNames())
