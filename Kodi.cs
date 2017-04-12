@@ -247,6 +247,11 @@ namespace BrodieTheatre
                 foreach (JObject movie in result["result"]["movies"])
                 {            
                     MovieEntry movieEntry = new MovieEntry();
+                    if (movie == null)
+                    {
+                        writeLog("Kodi:  Error - Movie result is Null");
+                        return;
+                    }
                     movieEntry.file = movie["file"].ToString();
                     movieEntry.name = movie["label"].ToString();
                     //writeLog("Kodi:  Processing '" + movieEntry.name + "'");
