@@ -178,7 +178,17 @@ namespace BrodieTheatre
 
         public void kodiProcessJson(string jsonText)
         {
-            Dictionary<string, dynamic > result = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(jsonText);
+            writeLog("Kodi:  Received JSON:  " + jsonText);
+            Dictionary<string, dynamic> result = null;
+            try
+            {
+                result = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(jsonText);
+            }
+            catch
+            {
+                writeLog("Kodi:  Unable to decode JSON");
+                return;
+            }
             if (result.ContainsKey("method"))
             {
                 switch (result["method"])

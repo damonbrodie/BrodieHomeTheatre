@@ -139,6 +139,27 @@ namespace BrodieTheatre
                                 ));
                             }
                         }
+                        else if (address == Properties.Settings.Default.doorSensorAddress)
+                        {
+                            if (insteonProcessMotionSensorMessage(desc, address))
+                            { //Door Opened Detected
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.writeLog("Insteon:  Door Opened");
+                                    formMain.toolStripStatus.Text = "Door Opened";
+                                }
+                                ));
+                            }
+                            else
+                            { //Door Closed
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.writeLog("Insteon:  Door Closed");
+                                    formMain.toolStripStatus.Text = "Door Closed";
+                                }
+                                ));
+                            }
+                        }
                     });
                 timerPLMreceive.Enabled = true;
                 queueLightLevel(Properties.Settings.Default.potsAddress, 0);
