@@ -142,20 +142,24 @@ namespace BrodieTheatre
                         else if (address == Properties.Settings.Default.doorSensorAddress)
                         {
                             if (insteonProcessMotionSensorMessage(desc, address))
-                            { //Door Opened Detected
-                                formMain.BeginInvoke(new Action(() =>
-                                {
-                                    formMain.writeLog("Insteon:  Door Opened");
-                                    formMain.toolStripStatus.Text = "Door Opened";
-                                }
-                                ));
-                            }
-                            else
-                            { //Door Closed
+                            { //Door Closed Detected
                                 formMain.BeginInvoke(new Action(() =>
                                 {
                                     formMain.writeLog("Insteon:  Door Closed");
                                     formMain.toolStripStatus.Text = "Door Closed";
+                                }
+                                ));
+                            }
+                            else
+                            { //Door Opened
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.writeLog("Insteon:  Door Opened");
+                                    formMain.toolStripStatus.Text = "Door Opened";
+                                    if (!harmonyIsActivityStarted() && formMain.labelKodiPlaybackStatus.Text == "Stopped")
+                                    {
+                                        lightsToEnteringLevel();
+                                    }
                                 }
                                 ));
                             }
