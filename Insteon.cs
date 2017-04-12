@@ -156,7 +156,7 @@ namespace BrodieTheatre
                                 {
                                     formMain.writeLog("Insteon:  Door Opened");
                                     formMain.toolStripStatus.Text = "Door Opened";
-                                    if (!harmonyIsActivityStarted() && formMain.labelKodiPlaybackStatus.Text == "Stopped" && formMain.labelRoomOccupancy.Text == "Vacant")
+                                    if (!harmonyIsActivityStarted() && formMain.labelKodiPlaybackStatus.Text == "Stopped" && formMain.labelRoomOccupancy.Text != "Occupied")
                                     {
                                         lightsToEnteringLevel();
                                     }
