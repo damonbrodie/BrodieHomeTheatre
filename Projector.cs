@@ -63,18 +63,30 @@ namespace BrodieTheatre
                 case "Power":
                     if (response.Contains("001"))
                     {
-                        labelProjectorPower.Text = "On";
-                        buttonProjectorPower.Text = "Power Off";
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.labelProjectorPower.Text = "On";
+                            formMain.buttonProjectorPower.Text = "Power Off";
+                        }
+                        ));
                     }
                     else if (response.Contains("000"))
                     {
-                        labelProjectorPower.Text = "Off";
-                        buttonProjectorPower.Text = "Power On";
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.labelProjectorPower.Text = "Off";
+                            formMain.buttonProjectorPower.Text = "Power On";
+                        }
+                        ));
                     }
                     break;
                 case "Lens":
-                    toolStripStatus.Text = "Lens Change - received: " + response;
-                    writeLog("Projector:  Received Lens change response '" + response + "'");
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.toolStripStatus.Text = "Lens Change - received: " + response;
+                        formMain.writeLog("Projector:  Received Lens change response '" + response + "'");
+                    }
+                    ));
                     break;
             }
         }
