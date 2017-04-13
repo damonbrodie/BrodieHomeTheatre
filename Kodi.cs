@@ -245,70 +245,76 @@ namespace BrodieTheatre
                 moviesAfterColonNames.Clear();
                 moviesDuplicateNames.Clear();
                 moviesPartialNames.Clear();
-                
-                foreach (JObject movie in result["result"]["movies"])
-                {            
-                    MovieEntry movieEntry = new MovieEntry();
-                    if (movie == null)
+                try
+                {
+                    foreach (JObject movie in result["result"]["movies"])
                     {
-                        writeLog("Kodi:  Error - Movie result is Null");
-                        return;
-                    }
-                    movieEntry.file = movie["file"].ToString();
-                    movieEntry.name = movie["label"].ToString();
-                    //writeLog("Kodi:  Processing '" + movieEntry.name + "'");
-                    string cleanName = cleanString(movieEntry.name);
-                    movieEntry.cleanName = cleanName;
-                    kodiMovies.Add(movieEntry);
-                    PartialMovieEntry tempEntry = new PartialMovieEntry();
-                    tempEntry.file = movieEntry.file;
-                    tempEntry.name = cleanName;
-                    moviesFullNames.Add(tempEntry);
-
-                    // Some movies are more easily known by the part that comes after the : in a title
-                    // For Example:  The Lord of the Rings: The Fellowship of the Ring
-                    if ( movieEntry.name.Contains(":"))
-                    {
-                        string[] splitted = movieEntry.name.Split(new char[] { ':' }, 2);
-                        string afterColon = cleanString(splitted[1]);
-                        
-                        if (! searchMovieList(moviesFullNames, afterColon))
+                        MovieEntry movieEntry = new MovieEntry();
+                        if (movie == null)
                         {
-                            PartialMovieEntry tempColonEntry = new PartialMovieEntry();
-                            tempColonEntry.file = movieEntry.file;
-                            tempColonEntry.name = afterColon;
-                            if (searchMovieList(moviesAfterColonNames, afterColon))
+                            writeLog("Kodi:  Error - Movie result is Null");
+                            return;
+                        }
+                        movieEntry.file = movie["file"].ToString();
+                        movieEntry.name = movie["label"].ToString();
+                        //writeLog("Kodi:  Processing '" + movieEntry.name + "'");
+                        string cleanName = cleanString(movieEntry.name);
+                        movieEntry.cleanName = cleanName;
+                        kodiMovies.Add(movieEntry);
+                        PartialMovieEntry tempEntry = new PartialMovieEntry();
+                        tempEntry.file = movieEntry.file;
+                        tempEntry.name = cleanName;
+                        moviesFullNames.Add(tempEntry);
+
+                        // Some movies are more easily known by the part that comes after the : in a title
+                        // For Example:  The Lord of the Rings: The Fellowship of the Ring
+                        if (movieEntry.name.Contains(":"))
+                        {
+                            string[] splitted = movieEntry.name.Split(new char[] { ':' }, 2);
+                            string afterColon = cleanString(splitted[1]);
+
+                            if (!searchMovieList(moviesFullNames, afterColon))
                             {
-                                moviesDuplicateNames.Add(tempColonEntry);
+                                PartialMovieEntry tempColonEntry = new PartialMovieEntry();
+                                tempColonEntry.file = movieEntry.file;
+                                tempColonEntry.name = afterColon;
+                                if (searchMovieList(moviesAfterColonNames, afterColon))
+                                {
+                                    moviesDuplicateNames.Add(tempColonEntry);
+                                }
+                                else
+                                {
+                                    moviesAfterColonNames.Add(tempColonEntry);
+                                }
+                            }
+
+                        }
+                        List<string> cutNames = getShortMovieTitles(cleanName);
+                        foreach (string partName in cutNames)
+                        {
+                            PartialMovieEntry tempPrefixEntry = new PartialMovieEntry();
+                            tempPrefixEntry.file = movieEntry.file;
+                            tempPrefixEntry.name = partName;
+                            if (searchMovieList(moviesPartialNames, partName))
+                            {
+                                moviesDuplicateNames.Add(tempPrefixEntry);
                             }
                             else
                             {
-                                moviesAfterColonNames.Add(tempColonEntry);
+                                moviesPartialNames.Add(tempPrefixEntry);
                             }
-                        }
 
-                    }
-                    List<string> cutNames = getShortMovieTitles(cleanName);
-                    foreach (string partName in cutNames)
-                    {
-                        PartialMovieEntry tempPrefixEntry = new PartialMovieEntry();
-                        tempPrefixEntry.file = movieEntry.file;
-                        tempPrefixEntry.name = partName;
-                        if (searchMovieList(moviesPartialNames, partName))
-                        {
-                            moviesDuplicateNames.Add(tempPrefixEntry);
                         }
-                        else
-                        {
-                            moviesPartialNames.Add(tempPrefixEntry);
-                        }
-                        
+                        movieCounter += 1;
                     }
-                    movieCounter += 1;
+                    toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
+                    kodiLoadingMovies = false;
+                    Task task = Task.Run((Action)loadVoiceCommands);
                 }
-                toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
-                kodiLoadingMovies = false;
-                Task task = Task.Run((Action)loadVoiceCommands);
+                catch
+                {
+                    writeLog("Kodi:  Failed to process Movie JSON");
+                }
             }
             else
             {
