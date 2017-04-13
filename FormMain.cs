@@ -338,10 +338,5 @@ namespace BrodieTheatre
                 kodiPlayNext = null;
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            speakText("Columbia blew up a long time ago");
-        }
     }
 }
