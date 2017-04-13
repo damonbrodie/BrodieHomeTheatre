@@ -16,13 +16,23 @@ namespace BrodieTheatre
         {
             try
             {
-                speechSynthesizer.SetOutputToDefaultAudioDevice();
+                if (speechSynthesizer != null)
+                {
+                    speechSynthesizer.SetOutputToDefaultAudioDevice();
+                }
             }
             catch
             {
                 writeLog("Voice:  Unable to attach to default audio output device");
             }
-            speechSynthesizer.SpeakAsync(tts);
+            try
+            {
+                speechSynthesizer.SpeakAsync(tts);
+            }
+            catch
+            {
+                writeLog("Voice:  Unable to perform to TTS");
+            }
         }
 
         private void sayGreeting()

@@ -84,6 +84,16 @@ namespace BrodieTheatre
             insteonConnectPLM();
             projectorConnect();
 
+            try
+            {
+                speechSynthesizer = new SpeechSynthesizer();
+            }
+            catch (Exception ex)
+            {
+                formMain.writeLog("Voice:  Unable to load Microsoft Speech Synthesizer Engine");
+                formMain.writeLog(ex.ToString());
+            }
+
             if (labelProjectorStatus.Text == "Connected")
             {
                 projectorCheckPower();
@@ -125,7 +135,6 @@ namespace BrodieTheatre
                 try
                 {
                     formMain.recognitionEngine = new SpeechRecognitionEngine();
-                    formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
                 }
                 catch (Exception ex)
                 {
@@ -135,6 +144,7 @@ namespace BrodieTheatre
                 try
                 {
                     formMain.recognitionEngine.SetInputToDefaultAudioDevice();
+                    formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
                 }
                 catch
                 {
@@ -142,15 +152,6 @@ namespace BrodieTheatre
                 }
                 
                 Task task = Task.Run((Action)loadVoiceCommands);
-                try
-                {
-                    speechSynthesizer = new SpeechSynthesizer();
-                }
-                catch (Exception ex)
-                {
-                    formMain.writeLog("Voice:  Unable to load Microsoft Speech Synthesizer Engine");
-                    formMain.writeLog(ex.ToString());
-                } 
             }
             ));        
         }
@@ -336,6 +337,11 @@ namespace BrodieTheatre
                 writeLog("Kodi:  Starting movie: " + kodiPlayNext.name + " " + kodiPlayNext.file);
                 kodiPlayNext = null;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            speakText("Columbia blew up a long time ago");
         }
     }
 }

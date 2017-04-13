@@ -83,45 +83,53 @@ namespace BrodieTheatre
 
         private async void harmonyUpdateActivities(string currentActivityID)
         {
-            try
+            int counter = 0;
+            bool finished = false;
+            while (counter < 3 && !finished)
             {
-                var harmonyConfig = await Program.Client.GetConfigAsync();
-
-                formMain.BeginInvoke(new Action(() =>
+                try
                 {
-                    formMain.toolStripStatus.Text = "Updating Activities";
-                    formMain.writeLog("Harmony:  Updating Activities");
-                    formMain.listBoxActivities.Items.Clear();
-                    foreach (var activity in harmonyConfig.Activities)
+                    var harmonyConfig = await Program.Client.GetConfigAsync();
+
+                    formMain.BeginInvoke(new Action(() =>
                     {
-                        if (activity.Id == currentActivityID)
+                        formMain.toolStripStatus.Text = "Updating Activities";
+                        formMain.writeLog("Harmony:  Updating Activities");
+                        formMain.listBoxActivities.Items.Clear();
+                        foreach (var activity in harmonyConfig.Activities)
                         {
-                            formMain.labelCurrentActivity.Text = activity.Label;
-                            if (Convert.ToInt32(activity.Id) >= 0)
+                            if (activity.Id == currentActivityID)
                             {
-                                formMain.resetGlobalTimer();
+                                formMain.labelCurrentActivity.Text = activity.Label;
+                                if (Convert.ToInt32(activity.Id) >= 0)
+                                {
+                                    formMain.resetGlobalTimer();
+                                }
+                            }
+                            else
+                            {
+                                Activities item = new Activities();
+                                item.Id = activity.Id;
+                                item.Text = activity.Label;
+                                formMain.listBoxActivities.Items.Add(item);
                             }
                         }
-                        else
-                        {
-                            Activities item = new Activities();
-                            item.Id = activity.Id;
-                            item.Text = activity.Label;
-                            formMain.listBoxActivities.Items.Add(item);
-                        }
+                        formMain.writeLog("Harmony:  Activities updated");
+                        finished = true;
                     }
-                    formMain.writeLog("Harmony:  Activities updated");            
+                    ));
                 }
-                ));
-            }
 
-            catch (Exception ex)
-            {
-                formMain.BeginInvoke(new Action(() =>
+                catch (Exception ex)
                 {
-                    formMain.writeLog("Harmony:  Cannot update Harmony Activities " + ex.ToString());
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                    formMain.writeLog("Harmony:  Cannot update Harmony Activities ");
+                    formMain.writeLog("Harmony:  Error - " + ex.ToString());
+                        counter += 1;
+                    }
+                    ));
                 }
-                ));
             }
         }
 

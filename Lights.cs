@@ -22,13 +22,13 @@ namespace BrodieTheatre
         private void timerPotTrack_Tick(object sender, EventArgs e)
         {
             timerPotTrack.Enabled = false;
-            queueLightLevel(Properties.Settings.Default.potsAddress, trackBarPots.Value * 10);
+            queueLightLevel(Properties.Settings.Default.potsAddress, trackBarPots.Value);
         }
 
         private void timerTrayTrack_Tick(object sender, EventArgs e)
         {
             timerTrayTrack.Enabled = false;
-            queueLightLevel(Properties.Settings.Default.trayAddress, trackBarTray.Value * 10);
+            queueLightLevel(Properties.Settings.Default.trayAddress, trackBarTray.Value);
         }
 
         private void trackBarTray_Scroll(object sender, EventArgs e)

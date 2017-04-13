@@ -77,6 +77,8 @@ namespace BrodieTheatre
                 }
                 catch { }
             }
+
+            // Backoff the connection attempt rate
             kodiConnectAttempts += 1;
             if (kodiConnectAttempts > 15)
             {
