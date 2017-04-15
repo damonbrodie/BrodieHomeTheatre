@@ -133,13 +133,13 @@ namespace BrodieTheatre
                 "VXX:LMLI0=+00004",
                 "VXX:LMLI0=+00005" };
             projectorLastCommand = "Lens";
-            if (aspect < 1.9)
+            if (aspect < 1.9 && labelLensAspect.Text != "Narrow")
             {
                 projectorSendCommand(pj_codes[0]);
                 labelLensAspect.Text = "Narrow";
                 writeLog("Projector:  Changing to Lens Aspect Ratio to Narrow");
             }
-            else
+            else if (aspect >= 1.9 && labelLensAspect.Text != "Wide")
             {
                 projectorSendCommand(pj_codes[1]);
                 labelLensAspect.Text = "Wide";
