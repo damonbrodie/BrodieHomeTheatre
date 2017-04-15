@@ -141,15 +141,6 @@ namespace BrodieTheatre
                         }
                         else if (address == Properties.Settings.Default.doorSensorAddress)
                         {
-                            // No matter if the door is opened or closed, we turn on the lights if the room is idle.
-                            formMain.BeginInvoke(new Action(() =>
-                            {
-                                if (!harmonyIsActivityStarted() && formMain.labelKodiPlaybackStatus.Text == "Stopped" && formMain.labelRoomOccupancy.Text != "Occupied")
-                                {
-                                    formMain.lightsToEnteringLevel();
-                                }
-                            }
-                            ));
                             if (insteonProcessMotionSensorMessage(desc, address))
                             { //Door Open Detected
                                 formMain.BeginInvoke(new Action(() =>
@@ -168,6 +159,15 @@ namespace BrodieTheatre
                                 }
                                 ));
                             }
+                            // No matter if the door is opened or closed, we turn on the lights if the room is idle.
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                if (!harmonyIsActivityStarted() && formMain.labelKodiPlaybackStatus.Text == "Stopped" && formMain.labelRoomOccupancy.Text != "Occupied")
+                                {
+                                    formMain.lightsToEnteringLevel();
+                                }
+                            }
+                            ));
                         }
                     });
                 timerPLMreceive.Enabled = true;
