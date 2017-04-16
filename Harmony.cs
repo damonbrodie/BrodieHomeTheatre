@@ -202,6 +202,7 @@ namespace BrodieTheatre
                     {
                         formMain.writeLog("Harmony:  Starting Activity '" + activityName + "' Id '" + activityId + "'");
                         formMain.toolStripStatus.Text = "Starting Harmony activity - " + activityName;
+                        // Activities > 0 are those that are user driven. -1 means poweroff
                         if (Convert.ToInt32(activityId) >= 0)
                         {
                             formMain.projectorPowerOn();
@@ -213,7 +214,6 @@ namespace BrodieTheatre
                             //Turn up the ligths so occupants can find their way out
                             formMain.lightsToEnteringLevel();
                             formMain.projectorPowerOff();
-                            
                         }
                     }
                     ));

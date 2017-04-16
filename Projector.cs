@@ -8,7 +8,13 @@ namespace BrodieTheatre
     public partial class FormMain : Form
     {
         public string projectorLastCommand;
-        public float projectorNewAspect = 0;
+        public class ProjectorLensChange
+        {
+            public float newAspect = 0;
+            public bool force = false;
+        }
+
+        public ProjectorLensChange projectorLensChange = new ProjectorLensChange();
 
         private void projectorConnect()
         {
@@ -55,7 +61,7 @@ namespace BrodieTheatre
             }
         }
 
-        private void SerialPortProjector_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        private async void SerialPortProjector_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             string response = serialPortProjector.ReadExisting();
             switch (projectorLastCommand)
@@ -75,6 +81,16 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             formMain.labelProjectorPower.Text = "Off";
+                            formMain.buttonProjectorPower.Text = "Powering On";
+                        }
+                        ));
+                        // Wait for the projector to power on - it won't respond to Serial commands
+                        // for 10 seconds after Power On
+                        await doDelay(15);
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            // Set the Projector to the currently AR in the UI to ensure we are in sync.
+                            projectorQueueChangeAspect(1, true);
                             formMain.buttonProjectorPower.Text = "Power On";
                         }
                         ));
@@ -113,7 +129,6 @@ namespace BrodieTheatre
             {
                 projectorQueueChangeAspect((float)2.0); //Wide
             }
-
         }
 
         private void timerCheckProjector_Tick(object sender, EventArgs e)
@@ -121,54 +136,59 @@ namespace BrodieTheatre
             projectorCheckPower();
         }
 
-        private void projectorChangeAspect(float aspect)
+        private void projectorChangeAspect(float aspect, bool force=false)
         {
             timerProjectorLensControl.Enabled = true;
             buttonProjectorChangeAspect.Enabled = false;
             List<string> pj_codes = new List<string> {
-                "VXX:LMLI0=+00000" ,
+                "VXX:LMLI0=+00000",
                 "VXX:LMLI0=+00001",
                 "VXX:LMLI0=+00002",
-                "VXX:LMLI0=+00003" ,
+                "VXX:LMLI0=+00003",
                 "VXX:LMLI0=+00004",
-                "VXX:LMLI0=+00005" };
+                "VXX:LMLI0=+00005"
+            };
             projectorLastCommand = "Lens";
-            if (aspect < 1.9 && labelLensAspect.Text != "Narrow")
+            if (aspect < 1.9 && (force || labelProjectorLensAspect.Text != "Narrow"))
             {
                 projectorSendCommand(pj_codes[0]);
-                labelLensAspect.Text = "Narrow";
+                labelProjectorLensAspect.Text = "Narrow";
                 writeLog("Projector:  Changing to Lens Aspect Ratio to Narrow");
             }
-            else if (aspect >= 1.9 && labelLensAspect.Text != "Wide")
+            else if (aspect >= 1.9 && (force || labelProjectorLensAspect.Text != "Wide"))
             {
                 projectorSendCommand(pj_codes[1]);
-                labelLensAspect.Text = "Wide";
+                labelProjectorLensAspect.Text = "Wide";
                 writeLog("Projector:  Changing to Lens Aspect Ratio to Wide");
             }
+            projectorLensChange.force = false;
         }
 
-        private void projectorQueueChangeAspect(float aspect)
+        private void projectorQueueChangeAspect(float aspect, bool force=false)
         {
             if (timerProjectorLensControl.Enabled == true)
             {
                 // Wait for the last Aspect change to finish
                 writeLog("Projector:  Queueing Aspect Ratio change - " + aspect.ToString());
-                projectorNewAspect = aspect;
+                projectorLensChange.newAspect = aspect;
+                projectorLensChange.force = force;
             }
             else
             {
-                projectorChangeAspect(aspect);
+                projectorChangeAspect(aspect, force);
             }
         }
 
         private void timerProjectorLensControl_Tick(object sender, EventArgs e)
         {
             timerProjectorLensControl.Enabled = false;
-            if (projectorNewAspect > 0)
+            if (projectorLensChange.newAspect > 0)
             {
                 // A queued Aspect change is waiting
-                projectorQueueChangeAspect(projectorNewAspect);
-                projectorNewAspect = 0;
+                projectorQueueChangeAspect(projectorLensChange.newAspect, projectorLensChange.force);
+                projectorLensChange.newAspect = 0;
+                projectorLensChange.force = false;
+                
             }
             else
             {
@@ -190,10 +210,9 @@ namespace BrodieTheatre
             writeLog("Projector:  Powering Off");
         }
 
-
         private void labelLensAspect_TextChanged(object sender, EventArgs e)
         {
-            if (labelLensAspect.Text == "Narrow")
+            if (labelProjectorLensAspect.Text == "Narrow")
             {
                 buttonProjectorChangeAspect.Text = "Wide Aspect";
             }

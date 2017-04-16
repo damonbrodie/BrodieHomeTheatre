@@ -65,7 +65,7 @@
             this.labelProjectorPower = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.buttonProjectorChangeAspect = new System.Windows.Forms.Button();
-            this.labelLensAspect = new System.Windows.Forms.Label();
+            this.labelProjectorLensAspect = new System.Windows.Forms.Label();
             this.labelProjectorStatus = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -424,7 +424,7 @@
             this.groupBox4.Controls.Add(this.labelProjectorPower);
             this.groupBox4.Controls.Add(this.label11);
             this.groupBox4.Controls.Add(this.buttonProjectorChangeAspect);
-            this.groupBox4.Controls.Add(this.labelLensAspect);
+            this.groupBox4.Controls.Add(this.labelProjectorLensAspect);
             this.groupBox4.Controls.Add(this.labelProjectorStatus);
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.label7);
@@ -475,16 +475,16 @@
             this.buttonProjectorChangeAspect.UseVisualStyleBackColor = true;
             this.buttonProjectorChangeAspect.Click += new System.EventHandler(this.buttonProjectorChangeAspect_Click);
             // 
-            // labelLensAspect
+            // labelProjectorLensAspect
             // 
-            this.labelLensAspect.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelLensAspect.Location = new System.Drawing.Point(103, 106);
-            this.labelLensAspect.Name = "labelLensAspect";
-            this.labelLensAspect.Size = new System.Drawing.Size(120, 19);
-            this.labelLensAspect.TabIndex = 19;
-            this.labelLensAspect.Text = "Narrow";
-            this.labelLensAspect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelLensAspect.TextChanged += new System.EventHandler(this.labelLensAspect_TextChanged);
+            this.labelProjectorLensAspect.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelProjectorLensAspect.Location = new System.Drawing.Point(103, 106);
+            this.labelProjectorLensAspect.Name = "labelProjectorLensAspect";
+            this.labelProjectorLensAspect.Size = new System.Drawing.Size(120, 19);
+            this.labelProjectorLensAspect.TabIndex = 19;
+            this.labelProjectorLensAspect.Text = "Narrow";
+            this.labelProjectorLensAspect.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelProjectorLensAspect.TextChanged += new System.EventHandler(this.labelLensAspect_TextChanged);
             // 
             // labelProjectorStatus
             // 
@@ -789,7 +789,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.IO.Ports.SerialPort serialPortProjector;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.Label labelLensAspect;
+        private System.Windows.Forms.Label labelProjectorLensAspect;
         private System.Windows.Forms.Label labelProjectorStatus;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
