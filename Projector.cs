@@ -138,6 +138,10 @@ namespace BrodieTheatre
 
         private void projectorChangeAspect(float aspect, bool force=false)
         {
+            if (aspect <= 0)
+            {
+                return;
+            }
             timerProjectorLensControl.Enabled = true;
             buttonProjectorChangeAspect.Enabled = false;
             List<string> pj_codes = new List<string> {
@@ -166,16 +170,19 @@ namespace BrodieTheatre
 
         private void projectorQueueChangeAspect(float aspect, bool force=false)
         {
-            if (timerProjectorLensControl.Enabled == true)
+            if (labelProjectorPower.Text == "On")
             {
-                // Wait for the last Aspect change to finish
-                writeLog("Projector:  Queueing Aspect Ratio change - " + aspect.ToString());
-                projectorLensChange.newAspect = aspect;
-                projectorLensChange.force = force;
-            }
-            else
-            {
-                projectorChangeAspect(aspect, force);
+                if (timerProjectorLensControl.Enabled == true)
+                {
+                    // Wait for the last Aspect change to finish
+                    writeLog("Projector:  Queueing Aspect Ratio change - " + aspect.ToString());
+                    projectorLensChange.newAspect = aspect;
+                    projectorLensChange.force = force;
+                }
+                else
+                {
+                    projectorChangeAspect(aspect, force);
+                }
             }
         }
 
