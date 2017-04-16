@@ -124,7 +124,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                    formMain.writeLog("Harmony:  Cannot update Harmony Activities ");
+                    formMain.writeLog("Harmony:  Cannot update Harmony Activities");
                     formMain.writeLog("Harmony:  Error - " + ex.ToString());
                         counter += 1;
                     }
@@ -135,7 +135,7 @@ namespace BrodieTheatre
 
         public bool harmonyIsActivityStarted()
         {
-            if (labelCurrentActivity.Text == "PowerOff" || labelCurrentActivity.Text == "")
+            if (labelCurrentActivity.Text == "PowerOff" || labelCurrentActivity.Text == String.Empty)
             {
                 return false;
             }

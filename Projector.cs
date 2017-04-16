@@ -67,6 +67,7 @@ namespace BrodieTheatre
             switch (projectorLastCommand)
             {
                 case "Power":
+                    // Projector is in Power On State
                     if (response.Contains("001"))
                     {
                         formMain.BeginInvoke(new Action(() =>
@@ -76,12 +77,13 @@ namespace BrodieTheatre
                         }
                         ));
                     }
+                    //  Projector is in Power off State
                     else if (response.Contains("000"))
                     {
                         formMain.BeginInvoke(new Action(() =>
                         {
                             formMain.labelProjectorPower.Text = "Off";
-                            formMain.buttonProjectorPower.Text = "Powering On";
+                            formMain.buttonProjectorPower.Text = "Power On";
                         }
                         ));
                         // Wait for the projector to power on - it won't respond to Serial commands
@@ -91,7 +93,6 @@ namespace BrodieTheatre
                         {
                             // Set the Projector to the currently AR in the UI to ensure we are in sync.
                             projectorQueueChangeAspect(1, true);
-                            formMain.buttonProjectorPower.Text = "Power On";
                         }
                         ));
                     }

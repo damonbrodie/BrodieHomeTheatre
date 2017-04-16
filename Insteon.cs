@@ -39,6 +39,7 @@ namespace BrodieTheatre
         public bool insteonProcessMotionSensorMessage(string message, string address)
         {
             bool state = false;
+            writeLog("Insteon:  Received from address '" + address + "' message '" + message + "'");
             switch (message)
             {
                 case "Turn On":
@@ -191,7 +192,7 @@ namespace BrodieTheatre
                 float decLevel = (float)integerLevel / 254 * 10;
 
                 level = (int)decLevel;
-                writeLog("Insteon:  Get Level Light " + address + " at level " + level.ToString());
+                writeLog("Insteon:  Get light " + address + " at level " + level.ToString());
             }
             return level;
         }
@@ -213,12 +214,12 @@ namespace BrodieTheatre
                     finished = lightingControl.RampOn((byte)toInt);
                     if (!finished)
                     {
-                        writeLog("Insteon:  Could not set Light " + address + " Level " + level.ToString());
+                        writeLog("Insteon:  Could not set Light " + address + " to level " + level.ToString());
                     }
                     else
                     {
                         lights[address] = -1;
-                        writeLog("Insteon:  Set Light " + address + " Level " + level.ToString());
+                        writeLog("Insteon:  Set Light " + address + " to level " + level.ToString());
 
                         if (toInt > 0)
                         {
@@ -230,7 +231,7 @@ namespace BrodieTheatre
                 }
             }
             toolStripStatus.Text = "Could not connect to light - " + address;
-            writeLog("Insteon:  Error Setting Light " + address + " Level " + level.ToString());
+            writeLog("Insteon:  Error Setting Light " + address + " to level " + level.ToString());
         }
 
         private void PowerlineModem_OnError(object sender, EventArgs e)
