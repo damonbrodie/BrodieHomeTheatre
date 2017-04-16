@@ -170,7 +170,10 @@ namespace BrodieTheatre
 
         private void toolStripStatus_TextChanged(object sender, EventArgs e)
         {
-            statusTickCounter = 2;       
+            if (toolStripStatus.Text != string.Empty)
+            {
+                statusTickCounter = 2;
+            }
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
