@@ -203,6 +203,7 @@
   <ItemGroup>
     <Content Include="Brodie-HomeTheatre - 48.ico" />
     <Content Include="Brodie-HomeTheatre.ico" />
+    <Content Include="Issues.txt" />
     <Content Include="Process Flow.txt" />
     <None Include="Resources\Icon2.ico" />
     <None Include="Resources\Icon1.ico" />
