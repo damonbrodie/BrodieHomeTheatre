@@ -86,7 +86,7 @@ namespace BrodieTheatre
                         ));
                         // Wait for the projector to power on - it won't respond to Serial commands
                         // for 10 seconds after Power On
-                        await doDelay(15);
+                        await doDelay(15000);
                         formMain.BeginInvoke(new Action(() =>
                         {
                             // Set the Projector to the currently AR in the UI to ensure we are in sync.

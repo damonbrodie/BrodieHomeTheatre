@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -9,7 +8,7 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        public void writeLog(string Message)
+        public async void writeLog(string Message)
         {
             DateTime now = DateTime.Now;
             int counter = 0;
@@ -27,14 +26,14 @@ namespace BrodieTheatre
                 catch
                 {
                     counter += 1;
-                    Thread.Sleep(50);
+                    await doDelay(50);
                 }
             }
         }
 
-        async Task doDelay(int seconds)
+        async Task doDelay(int ms)
         {
-            await Task.Delay(seconds * 1000);
+            await Task.Delay(ms);
         }
     }
 }

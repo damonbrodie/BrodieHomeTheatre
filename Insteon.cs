@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Windows.Forms;
 using SoapBox.FluentDwelling;
 using SoapBox.FluentDwelling.Devices;
@@ -247,7 +246,7 @@ namespace BrodieTheatre
             }
         }
 
-        private void timerCheckPLM_Tick(object sender, EventArgs e)
+        private async void timerCheckPLM_Tick(object sender, EventArgs e)
         {
             timerCheckPLM.Enabled = false;
             plmConnected = true;
@@ -255,7 +254,7 @@ namespace BrodieTheatre
             writeLog("Insteon:  Connected to PLM");
             labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
             trackBarTray.Value = insteonGetLightLevel(Properties.Settings.Default.trayAddress);
-            Thread.Sleep(200);
+            await doDelay(200);
             trackBarPots.Value = insteonGetLightLevel(Properties.Settings.Default.potsAddress);
         }
     }

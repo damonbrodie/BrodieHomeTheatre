@@ -33,7 +33,7 @@ namespace BrodieTheatre
             try
             {
                 Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
-                await doDelay(1);
+                await doDelay(1000);
                 currentActivityID = await Program.Client.GetCurrentActivityAsync();
                 formMain.BeginInvoke(new Action(() =>
                 {
@@ -52,7 +52,7 @@ namespace BrodieTheatre
             }
             if (!error && shouldUpdate)
             {
-                await doDelay(3);
+                await doDelay(3000);
                 formMain.BeginInvoke(new Action(() =>
                 { 
                     formMain.harmonyUpdateActivities(currentActivityID);
