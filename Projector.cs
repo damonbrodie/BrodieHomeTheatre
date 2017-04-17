@@ -31,7 +31,7 @@ namespace BrodieTheatre
             }
             catch
             {
-                toolStripStatus.Text = "Could not open Projector Serial Port";
+                toolStripStatus.Text = "Could not open projector serial port";
                 labelProjectorStatus.Text = "Disconnected";
                 labelProjectorStatus.ForeColor = System.Drawing.Color.Maroon;
             }
@@ -100,8 +100,8 @@ namespace BrodieTheatre
                 case "Lens":
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.toolStripStatus.Text = "Lens Change - received: " + response;
-                        formMain.writeLog("Projector:  Received Lens change response '" + response + "'");
+                        formMain.toolStripStatus.Text = "Lens change - received: " + response;
+                        formMain.writeLog("Projector:  Received lens change response '" + response + "'");
                     }
                     ));
                     break;
@@ -158,13 +158,13 @@ namespace BrodieTheatre
             {
                 projectorSendCommand(pj_codes[0]);
                 labelProjectorLensAspect.Text = "Narrow";
-                writeLog("Projector:  Changing to Lens Aspect Ratio to Narrow");
+                writeLog("Projector:  Changing lens aspect ratio to 'narrow'");
             }
             else if (aspect >= 1.9 && (force || labelProjectorLensAspect.Text != "Wide"))
             {
                 projectorSendCommand(pj_codes[1]);
                 labelProjectorLensAspect.Text = "Wide";
-                writeLog("Projector:  Changing to Lens Aspect Ratio to Wide");
+                writeLog("Projector:  Changing lens aspect ratio to 'wide'");
             }
             projectorLensChange.force = false;
         }
@@ -192,11 +192,10 @@ namespace BrodieTheatre
             timerProjectorLensControl.Enabled = false;
             if (projectorLensChange.newAspect > 0)
             {
-                // A queued Aspect change is waiting
+                // A queued projector lens aspect ratio change is waiting
                 projectorQueueChangeAspect(projectorLensChange.newAspect, projectorLensChange.force);
                 projectorLensChange.newAspect = 0;
                 projectorLensChange.force = false;
-                
             }
             else
             {

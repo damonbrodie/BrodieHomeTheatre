@@ -245,7 +245,7 @@ namespace BrodieTheatre
         {
             if (labelRoomOccupancy.Text == "Occupied")
             {                
-                writeLog("Occupancy:  Room Occupied");
+                writeLog("Occupancy:  Override - Room Occupied");
                 resetGlobalTimer();
 
                 if (! harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
@@ -285,7 +285,7 @@ namespace BrodieTheatre
                         harmonyStartActivityByName("PowerOff");
                     }
 
-                    writeLog("Occupancy:  Room vacant");
+                    writeLog("Occupancy:  Override - Room vacant");
                     toolStripStatus.Text = "Room is now vacant";
                     lightsOff();      
                 }

@@ -79,7 +79,7 @@ namespace BrodieTheatre
                             {
                                 if (level >= 0)
                                 {
-                                    formMain.writeLog("Insteon:  Received Tray dimmer update from PLM - level " + level.ToString());
+                                    formMain.writeLog("Insteon:  Received Tray dimmer update from PLM - level '" + level.ToString() + "'");
                                     formMain.trackBarTray.Value = level;
                                     if (level > 0)
                                     {
@@ -98,7 +98,7 @@ namespace BrodieTheatre
                             {        
                                 if (level >= 0)
                                 {
-                                    formMain.writeLog("Insteon:  Received Pots dimmer update from PLM - level " + level.ToString());
+                                    formMain.writeLog("Insteon:  Received Pots dimmer update from PLM - level '" + level.ToString() + "'");
                                     formMain.trackBarPots.Value = level;
                                     if (level > 0)
                                     {
@@ -192,7 +192,7 @@ namespace BrodieTheatre
                 float decLevel = (float)integerLevel / 254 * 10;
 
                 level = (int)decLevel;
-                writeLog("Insteon:  Get light " + address + " at level " + level.ToString());
+                writeLog("Insteon:  Get light '" + address + "' at level '" + level.ToString() + "'");
             }
             return level;
         }
@@ -214,12 +214,12 @@ namespace BrodieTheatre
                     finished = lightingControl.RampOn((byte)toInt);
                     if (!finished)
                     {
-                        writeLog("Insteon:  Could not set Light " + address + " to level " + level.ToString());
+                        writeLog("Insteon:  Could not set light '" + address + "' to level '" + level.ToString() + "'");
                     }
                     else
                     {
                         lights[address] = -1;
-                        writeLog("Insteon:  Set Light " + address + " to level " + level.ToString());
+                        writeLog("Insteon:  Set light '" + address + "' to level '" + level.ToString() + "'");
 
                         if (toInt > 0)
                         {
@@ -230,8 +230,8 @@ namespace BrodieTheatre
                     counter++;
                 }
             }
-            toolStripStatus.Text = "Could not connect to light - " + address;
-            writeLog("Insteon:  Error Setting Light " + address + " to level " + level.ToString());
+            toolStripStatus.Text = "Could not connect to light '" + address + "'";
+            writeLog("Insteon:  Error setting light '" + address + "' to level '" + level.ToString() + "'");
         }
 
         private void PowerlineModem_OnError(object sender, EventArgs e)
