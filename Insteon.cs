@@ -239,24 +239,37 @@ namespace BrodieTheatre
             if (powerlineModem.Exception.GetType() == typeof(TimeoutException))
             {
                 plmConnected = false;
-                labelPLMstatus.Text = "Disconnected";
-                writeLog("Insteon:  Error connecting to PLM");
-                labelPLMstatus.ForeColor = System.Drawing.Color.Maroon;
-                timerPLMreceive.Enabled = false;
-                timerCheckPLM.Enabled = true;
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    labelPLMstatus.Text = "Disconnected";
+                    writeLog("Insteon:  Error connecting to PLM");
+                    labelPLMstatus.ForeColor = System.Drawing.Color.Maroon;
+                    timerPLMreceive.Enabled = false;
+                    timerCheckPLM.Enabled = true;
+                }
+                ));
             }
         }
 
         private async void timerCheckPLM_Tick(object sender, EventArgs e)
         {
-            timerCheckPLM.Enabled = false;
             plmConnected = true;
-            labelPLMstatus.Text = "Connected";
-            writeLog("Insteon:  Connected to PLM");
-            labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
-            trackBarTray.Value = insteonGetLightLevel(Properties.Settings.Default.trayAddress);
+
+            timerCheckPLM.Enabled = false;
+            formMain.BeginInvoke(new Action(() =>
+            {
+                labelPLMstatus.Text = "Connected";
+                writeLog("Insteon:  Connected to PLM");
+                labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
+                trackBarTray.Value = insteonGetLightLevel(Properties.Settings.Default.trayAddress);
+            }
+            ));
             await doDelay(200);
-            trackBarPots.Value = insteonGetLightLevel(Properties.Settings.Default.potsAddress);
+            formMain.BeginInvoke(new Action(() =>
+            {
+                trackBarPots.Value = insteonGetLightLevel(Properties.Settings.Default.potsAddress);
+            }
+            ));
         }
     }
 }
