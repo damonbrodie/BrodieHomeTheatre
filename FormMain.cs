@@ -21,7 +21,7 @@ namespace BrodieTheatre
         public DateTime GlobalShutdown;
         public int statusTickCounter = 0;
         public Random random = new Random();
-        
+
         public FormMain()
         {
             hookID = SetHook(proc);
@@ -87,15 +87,19 @@ namespace BrodieTheatre
             insteonConnectPLM();
             projectorConnect();
 
-            try
+            //try
+            //{
+            formMain.BeginInvoke(new Action(() =>
             {
-                speechSynthesizer = new SpeechSynthesizer();
+                formMain.speechSynthesizer = new SpeechSynthesizer();
             }
-            catch (Exception ex)
-            {
-                formMain.writeLog("Voice:  Unable to load Microsoft Speech Synthesizer Engine");
-                formMain.writeLog(ex.ToString());
-            }
+            ));
+            //}
+            //catch (Exception ex)
+            //{
+            //    formMain.writeLog("Voice:  Unable to load Microsoft Speech Synthesizer Engine");
+            //    formMain.writeLog(ex.ToString());
+            //}
 
             if (labelProjectorStatus.Text == "Connected")
             {
@@ -135,28 +139,45 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerSetLights.Enabled = true;
-                try
+                /*  try
+                  {*/
+
+                RecognizerInfo info = null;
+                foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers())
                 {
-                    formMain.recognitionEngine = new SpeechRecognitionEngine();
+                    if (ri.Culture.TwoLetterISOLanguageName.Equals("en"))
+                    {
+                        info = ri;
+                        break;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    formMain.writeLog("Voice:  Unable to load Microsoft Speech Recognition Engine");
-                    formMain.writeLog(ex.ToString());
-                }
-                try
-                {
+                if (info != null)
+                { 
+
+
+
+
+                    formMain.recognitionEngine = new SpeechRecognitionEngine(info);
+                    // }
+                    // catch (Exception ex)
+                    // {
+                    //     formMain.writeLog("Voice:  Unable to load Microsoft Speech Recognition Engine");
+                    //     formMain.writeLog(ex.ToString());
+                    // }
+                    // try
+                    // {
                     formMain.recognitionEngine.SetInputToDefaultAudioDevice();
                     formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
-                }
-                catch
-                {
-                    formMain.writeLog("Voice:  Unable to attach to default audio input device");
-                }
-                
+                    // }
+                    // catch
+                    // {
+                    //     formMain.writeLog("Voice:  Unable to attach to default audio input device");
+                    // }
+            }
+
                 Task task = Task.Run((Action)loadVoiceCommands);
             }
-            ));        
+            ));
         }
 
         private void timerClearStatus_Tick(object sender, EventArgs e)
@@ -168,7 +189,7 @@ namespace BrodieTheatre
             else
             {
                 toolStripStatus.Text = "";
-            }     
+            }
         }
 
         private void toolStripStatus_TextChanged(object sender, EventArgs e)
@@ -218,16 +239,16 @@ namespace BrodieTheatre
             // - The Harmony Activity is Off
             // - The Room is vacant
 
-            if (( harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text == "Vacant")
+            if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text == "Vacant")
             {
                 if (GlobalShutdown > now)
                 {
-                    int percentage = Math.Abs(100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));    
+                    int percentage = Math.Abs(100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
                     toolStripProgressBarGlobal.Value = percentage;
-                    return;            
+                    return;
                 }
                 else
-                {    
+                {
                     writeLog("Global Timer:  Sending Harmony 'PowerOff', turning off lights");
                     harmonyStartActivityByName("PowerOff");
                     toolStripProgressBarGlobal.Value = 0;
@@ -247,14 +268,14 @@ namespace BrodieTheatre
         private void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
         {
             if (labelRoomOccupancy.Text == "Occupied")
-            {                
+            {
                 writeLog("Occupancy:  Override - Room Occupied");
                 resetGlobalTimer();
 
-                if (! harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
+                if (!harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     lightsToEnteringLevel();
-                } 
+                }
                 try
                 {
                     recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
@@ -265,11 +286,11 @@ namespace BrodieTheatre
                     labelLastVoiceCommand.Text = "Grammar not loaded";
                     writeLog("Voice:  Can't start Speech Recognizer");
                 }
-                
+
                 toolStripStatus.Text = "Room is now occupied";
             }
             else if (labelRoomOccupancy.Text == "Vacant")
-            {     
+            {
                 try
                 {
                     recognitionEngine.RecognizeAsyncStop();
@@ -290,7 +311,7 @@ namespace BrodieTheatre
 
                     writeLog("Occupancy:  Override - Room vacant");
                     toolStripStatus.Text = "Room is now vacant";
-                    lightsOff();      
+                    lightsOff();
                 }
                 else // There is playback or it is paused.  Start the timer to shut this off after configured time
                 {
@@ -331,7 +352,7 @@ namespace BrodieTheatre
 
         private void timerKodiConnect_Tick(object sender, EventArgs e)
         {
-            kodiConnect();       
+            kodiConnect();
         }
 
         private void timerKodiStartPlayback_Tick(object sender, EventArgs e)

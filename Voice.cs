@@ -60,7 +60,7 @@ namespace BrodieTheatre
         private void sayPresense()
         {
             writeLog("Voice:  Speak presense acknowledgement");
-            List<string> presense = new List<string>(new string[] { "I'm here", "Standing by", "Yes", "At your service", "Ready"});
+            List<string> presense = new List<string>(new string[] { "I'm here", "Standing by", "Yes", "At your service", "Ready" });
             int r = random.Next(presense.Count);
             speakText(presense[r]);
         }
@@ -68,132 +68,132 @@ namespace BrodieTheatre
         private void sayAcknowledgement()
         {
             writeLog("Voice:  Speak acknowledgement");
-            List<string> ack = new List<string>(new string[] { "Okay", "Doing that now", "One Moment"});
+            List<string> ack = new List<string>(new string[] { "Okay", "Doing that now", "One Moment" });
             int r = random.Next(ack.Count);
             speakText(ack[r]);
         }
 
-        private static void loadVoiceCommands()
+        private void loadVoiceCommands()
         {
             GrammarBuilder gb = new GrammarBuilder();
             Choices commandChoice = new Choices();
 
             int grammarCount = 0;
-            formMain.writeLog("Voice:  Loading base grammars");
-            grammarCount += formMain.expandCommands(ref commandChoice, "turn on projector", "Turn on Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "projector on", "Turn on Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "home theater on", "Turn on Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "let's watch a movie", "Turn on Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "start theater", "Turn on Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "power on projector", "Turn on Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "power on theater", "Turn on Theatre", true, true);
+            writeLog("Voice:  Loading base grammars");
+            grammarCount += expandCommands(ref commandChoice, "turn on projector", "Turn on Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "projector on", "Turn on Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "home theater on", "Turn on Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "let's watch a movie", "Turn on Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "start theater", "Turn on Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "power on projector", "Turn on Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "power on theater", "Turn on Theatre", true, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "turn off projector", "Turn off Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "projector off", "Turn off Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "home theater off", "Turn off Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "shutdown theater", "Turn off Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "turn off theater", "Turn off Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "power down theater", "Turn off Theatre", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "power off theater", "Turn off Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "turn off projector", "Turn off Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "projector off", "Turn off Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "home theater off", "Turn off Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "shutdown theater", "Turn off Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "turn off theater", "Turn off Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "power down theater", "Turn off Theatre", true, true);
+            grammarCount += expandCommands(ref commandChoice, "power off theater", "Turn off Theatre", true, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "show yourself", "Show Application", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "show application", "Show Application", true, true);
+            grammarCount += expandCommands(ref commandChoice, "show yourself", "Show Application", true, true);
+            grammarCount += expandCommands(ref commandChoice, "show application", "Show Application", true, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "hide yourself", "Hide Application", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "hide application", "Hide Application", true, true);
+            grammarCount += expandCommands(ref commandChoice, "hide yourself", "Hide Application", true, true);
+            grammarCount += expandCommands(ref commandChoice, "hide application", "Hide Application", true, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "are you there", "Presense", false, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "are you listening", "Presense", false, true);
+            grammarCount += expandCommands(ref commandChoice, "are you there", "Presense", false, true);
+            grammarCount += expandCommands(ref commandChoice, "are you listening", "Presense", false, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "Hello " + Properties.Settings.Default.computerName, "Greeting", false, false);
-            grammarCount += formMain.expandCommands(ref commandChoice, "OK " + Properties.Settings.Default.computerName, "Greeting", false, false);
+            grammarCount += expandCommands(ref commandChoice, "Hello " + Properties.Settings.Default.computerName, "Greeting", false, false);
+            grammarCount += expandCommands(ref commandChoice, "OK " + Properties.Settings.Default.computerName, "Greeting", false, false);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "dim the lights", "Dim Lights", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "turn down lights", "Dim Lights", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "turn down the lights", "Dim Lights", true, true);
+            grammarCount += expandCommands(ref commandChoice, "dim the lights", "Dim Lights", true, true);
+            grammarCount += expandCommands(ref commandChoice, "turn down lights", "Dim Lights", true, true);
+            grammarCount += expandCommands(ref commandChoice, "turn down the lights", "Dim Lights", true, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "turn on lights", "Lights On", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "turn on the lights", "Lights On", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "raise the lights", "Lights On", true, true);
+            grammarCount += expandCommands(ref commandChoice, "turn on lights", "Lights On", true, true);
+            grammarCount += expandCommands(ref commandChoice, "turn on the lights", "Lights On", true, true);
+            grammarCount += expandCommands(ref commandChoice, "raise the lights", "Lights On", true, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "pause playback", "Pause Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "pause movie", "Pause Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "pause the movie", "Pause Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "pause the playback", "Pause Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "pause the movie playback", "Pause Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "pause playback", "Pause Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "pause movie", "Pause Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "pause the movie", "Pause Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "pause the playback", "Pause Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "pause the movie playback", "Pause Playback", true, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "resume playback", "Resume Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "continue playing", "Resume Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "unpause playback", "Resume Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "unpause movie", "Resume Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "unpause movie playback", "Resume Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "unpause the movie playback", "Resume Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "resume playback", "Resume Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "continue playing", "Resume Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "unpause playback", "Resume Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "unpause movie", "Resume Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "unpause movie playback", "Resume Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "unpause the movie playback", "Resume Playback", true, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "stop playback", "Stop Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "stop playback", "Stop Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "stop movie", "Stop Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "stop movie playback", "Stop Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "stop the movie playback", "Stop Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "stop playback", "Stop Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "stop playback", "Stop Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "stop movie", "Stop Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "stop movie playback", "Stop Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "stop the movie playback", "Stop Playback", true, true);
 
-            grammarCount += formMain.expandCommands(ref commandChoice, "don't play that", "Cancel Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "cancel that", "Cancel Playback", true, true);
-            grammarCount += formMain.expandCommands(ref commandChoice, "cancel playback", "Cancel Playback", true, true);
-            if (!formMain.kodiLoadingMovies)
+            grammarCount += expandCommands(ref commandChoice, "don't play that", "Cancel Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "cancel that", "Cancel Playback", true, true);
+            grammarCount += expandCommands(ref commandChoice, "cancel playback", "Cancel Playback", true, true);
+            if (!kodiLoadingMovies)
             {
                 foreach (MovieEntry movieEntry in formMain.kodiMovies)
                 {
-                    grammarCount += formMain.expandCommands(ref commandChoice, "do we have the movie " + movieEntry.cleanName, "check movie|" + movieEntry.file, false, true);
-                    grammarCount += formMain.expandCommands(ref commandChoice, "play movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
-                    //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    grammarCount += expandCommands(ref commandChoice, "do we have the movie " + movieEntry.cleanName, "check movie|" + movieEntry.file, false, true);
+                    grammarCount += expandCommands(ref commandChoice, "play movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    //grammarCount += expandCommands(ref commandChoice, "play the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
 
-                    //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
-                    //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    //grammarCount += expandCommands(ref commandChoice, "Let's watch movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    //grammarCount += expandCommands(ref commandChoice, "Let's watch the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
 
-                    grammarCount += formMain.expandCommands(ref commandChoice, "watch movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
-                    //grammarCount += formMain.expandCommands(ref commandChoice, "watch the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    grammarCount += expandCommands(ref commandChoice, "watch movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
+                    //grammarCount += expandCommands(ref commandChoice, "watch the movie " + movieEntry.cleanName, "play movie|" + movieEntry.file, true, true);
                 }
                 foreach (PartialMovieEntry entry in formMain.moviesAfterColonNames)
                 {
-                    if (!formMain.searchMovieList(formMain.moviesDuplicateNames, entry.name))
+                    if (!searchMovieList(formMain.moviesDuplicateNames, entry.name))
                     {
-                        grammarCount += formMain.expandCommands(ref commandChoice, "do we have the movie " + entry.name, "check movie|" + entry.file, false, true);
-                        grammarCount += formMain.expandCommands(ref commandChoice, "play movie " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie " + entry.name, "play movie|" + entry.file, true, true);
+                        grammarCount += expandCommands(ref commandChoice, "do we have the movie " + entry.name, "check movie|" + entry.file, false, true);
+                        grammarCount += expandCommands(ref commandChoice, "play movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += expandCommands(ref commandChoice, "play the movie " + entry.name, "play movie|" + entry.file, true, true);
 
-                       // grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch the movie " + entry.name, "play movie|" + entry.file, true, true);
+                        // grammarCount += expandCommands(ref commandChoice, "Let's watch movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += expandCommands(ref commandChoice, "Let's watch the movie " + entry.name, "play movie|" + entry.file, true, true);
 
-                        grammarCount += formMain.expandCommands(ref commandChoice, "watch movie " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "watch the movie " + entry.name, "play movie|" + entry.file, true, true);
+                        grammarCount += expandCommands(ref commandChoice, "watch movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += expandCommands(ref commandChoice, "watch the movie " + entry.name, "play movie|" + entry.file, true, true);
                     }
                 }
                 foreach (PartialMovieEntry entry in formMain.moviesPartialNames)
                 {
                     if (!formMain.searchMovieList(formMain.moviesDuplicateNames, entry.name))
                     {
-                        grammarCount += formMain.expandCommands(ref commandChoice, "do we have the movie " + entry.name, "check movie|" + entry.file, false, true);
-                        grammarCount += formMain.expandCommands(ref commandChoice, "play movie " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "play the movie " + entry.name, "play movie|" + entry.file, true, true);
+                        grammarCount += expandCommands(ref commandChoice, "do we have the movie " + entry.name, "check movie|" + entry.file, false, true);
+                        grammarCount += expandCommands(ref commandChoice, "play movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += expandCommands(ref commandChoice, "play the movie " + entry.name, "play movie|" + entry.file, true, true);
 
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch movie " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "Let's watch the movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += expandCommands(ref commandChoice, "Let's watch movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += expandCommands(ref commandChoice, "Let's watch the movie " + entry.name, "play movie|" + entry.file, true, true);
 
-                        grammarCount += formMain.expandCommands(ref commandChoice, "watch movie " + entry.name, "play movie|" + entry.file, true, true);
-                        //grammarCount += formMain.expandCommands(ref commandChoice, "watch the movie " + entry.name, "play movie|" + entry.file, true, true);
+                        grammarCount += expandCommands(ref commandChoice, "watch movie " + entry.name, "play movie|" + entry.file, true, true);
+                        //grammarCount += expandCommands(ref commandChoice, "watch the movie " + entry.name, "play movie|" + entry.file, true, true);
                     }
                 }
-                formMain.writeLog("Voice:  " + grammarCount.ToString() + " grammar entries loaded");
+                writeLog("Voice:  " + grammarCount.ToString() + " grammar entries loaded");
             }
             gb.Append(commandChoice);
 
             Grammar grammar = new Grammar(gb);
 
             grammar.Name = "commands";
-            formMain.recognitionEngine.LoadGrammar(grammar);
-            formMain.toolStripStatus.Text = "Speech recognition grammars loaded";
+            recognitionEngine.LoadGrammar(grammar);
+            toolStripStatus.Text = "Speech recognition grammars loaded";
         }
 
-        private int expandCommands(ref Choices commandChoice, string spoken, string command, bool bePolite=false, bool useName=false)
+        private int expandCommands(ref Choices commandChoice, string spoken, string command, bool bePolite = false, bool useName = false)
         {
             bool debugVoice = false;
             string phrase = "";
@@ -201,7 +201,7 @@ namespace BrodieTheatre
             if (debugVoice) writeLog("Voice Grammar:  '" + spoken + "'");
             commandChoice.Add(new GrammarBuilder(commandSemantic));
             int counter = 1;
-            
+
             if (bePolite)
             {
                 phrase = "please " + spoken;
@@ -255,12 +255,12 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Voice:  Recognized Speech '" + e.Result.Text + "' Confidence " + confidence+"%");
+                    formMain.writeLog("Voice:  Recognized Speech '" + e.Result.Text + "' Confidence " + confidence + "%");
                     formMain.toolStripStatus.Text = "Heard:  '" + e.Result.Text + "' (" + confidence + "%)";
                 }
                 ));
                 RecognizedPhrase phrase = e.Result.Alternates[0];
-                
+
                 string topPhrase = phrase.Semantics.Value.ToString();
                 if (topPhrase.StartsWith("check movie|") && labelKodiPlaybackStatus.Text != "Playing")
                 {
