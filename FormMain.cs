@@ -14,6 +14,9 @@ namespace BrodieTheatre
         //41.66.88 Motion Sensor
         //41.58.FC Door Sensor
 
+        // Projector on COM3
+        // Insteon on COM1
+
         static FormMain formMain;
         public DateTime GlobalShutdown;
         public int statusTickCounter = 0;
