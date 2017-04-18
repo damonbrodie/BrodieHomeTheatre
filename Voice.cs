@@ -182,7 +182,7 @@ namespace BrodieTheatre
                         //grammarCount += expandCommands(ref commandChoice, "watch the movie " + entry.name, "play movie|" + entry.file, true, true);
                     }
                 }
-                writeLog("Voice:  " + grammarCount.ToString() + " grammar entries loaded");
+                
             }
             gb.Append(commandChoice);
 
@@ -191,6 +191,7 @@ namespace BrodieTheatre
             grammar.Name = "commands";
             recognitionEngine.LoadGrammar(grammar);
             toolStripStatus.Text = "Speech recognition grammars loaded";
+            writeLog("Voice:  " + grammarCount.ToString() + " grammar entries loaded");
         }
 
         private int expandCommands(ref Choices commandChoice, string spoken, string command, bool bePolite = false, bool useName = false)
