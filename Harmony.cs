@@ -88,16 +88,20 @@ namespace BrodieTheatre
         {
             int counter = 0;
             bool finished = false;
-            while (counter < 3 && !finished)
+            while (counter < 3 && ! finished)
             {
                 try
                 {
-                    var harmonyConfig = await Program.Client.GetConfigAsync();
-
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.toolStripStatus.Text = "Updating Activities";
                         formMain.writeLog("Harmony:  Updating Activities");
+                    }
+                    ));
+                    var harmonyConfig = await Program.Client.GetConfigAsync();
+
+                    formMain.BeginInvoke(new Action(() =>
+                    {
                         formMain.listBoxActivities.Items.Clear();
                         foreach (var activity in harmonyConfig.Activities)
                         {

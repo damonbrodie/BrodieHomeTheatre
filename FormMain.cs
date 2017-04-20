@@ -371,8 +371,7 @@ namespace BrodieTheatre
 
         private void timerKodiPoll_Tick(object sender, EventArgs e)
         {
-            // Periodically poll Kodi and retrieve the Active Players. If the result is 0 then
-            // we know that the playback status should be Stopped.  Use this to keep consistency
+            // Periodically poll Kodi and retrieve the Player properties.  Use this to keep consistency
             // in our view of the current Kodi status
 
             if (labelKodiStatus.Text == "Connected")
