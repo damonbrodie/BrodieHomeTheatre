@@ -70,16 +70,13 @@ namespace BrodieTheatre
                 formMain.harmonyUpdateActivities(activity);
                 if (activity == "-1")
                 {
-                    //  Projector is turned on/off with the 12v trigger on the Amp
-                    //formMain.projectorPowerOff();
+                    formMain.projectorPowerOff();
                     formMain.lightsToEnteringLevel();
                 }
-                // Project is turned on/off with the 12v trigger on the Amp
-                /*else
+                else
                 {
                     formMain.projectorPowerOn();
                 }
-                */
             }
             ));
         }
@@ -220,9 +217,7 @@ namespace BrodieTheatre
                         {
                             //Turn up the ligths so occupants can find their way out
                             formMain.lightsToEnteringLevel();
-
-                            // Projector is turned on/off with the 12v trigger on the Amp
-                            //formMain.projectorPowerOff();
+                            formMain.projectorPowerOff();
                         }
                     }
                     ));
