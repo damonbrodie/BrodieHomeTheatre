@@ -250,7 +250,10 @@ namespace BrodieTheatre
                 else
                 {
                     writeLog("Global Timer:  Sending Harmony 'PowerOff', turning off lights");
-                    harmonyStartActivityByName("PowerOff");
+                    if (harmonyIsActivityStarted())
+                    {
+                        harmonyStartActivityByName("PowerOff");
+                    }
                     toolStripProgressBarGlobal.Value = 0;
                     lightsOff();
                     return;
@@ -363,6 +366,18 @@ namespace BrodieTheatre
                 kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiPlayNext.file + "\" }}, \"id\": \"1\"}");
                 writeLog("Kodi:  Starting movie: " + kodiPlayNext.name + " " + kodiPlayNext.file);
                 kodiPlayNext = null;
+            }
+        }
+
+        private void timerKodiPoll_Tick(object sender, EventArgs e)
+        {
+            // Periodically poll Kodi and retrieve the Active Players. If the result is 0 then
+            // we know that the playback status should be Stopped.  Use this to keep consistency
+            // in our view of the current Kodi status
+
+            if (labelKodiStatus.Text == "Connected")
+            {
+                kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": \"99\"}");
             }
         }
     }

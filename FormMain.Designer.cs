@@ -95,6 +95,7 @@
             this.timerSetLights = new System.Windows.Forms.Timer(this.components);
             this.timerKodiConnect = new System.Windows.Forms.Timer(this.components);
             this.timerKodiStartPlayback = new System.Windows.Forms.Timer(this.components);
+            this.timerKodiPoll = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -694,6 +695,12 @@
             this.timerKodiStartPlayback.Interval = 3000;
             this.timerKodiStartPlayback.Tick += new System.EventHandler(this.timerKodiStartPlayback_Tick);
             // 
+            // timerKodiPoll
+            // 
+            this.timerKodiPoll.Enabled = true;
+            this.timerKodiPoll.Interval = 60000;
+            this.timerKodiPoll.Tick += new System.EventHandler(this.timerKodiPoll_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -808,5 +815,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Timer timerKodiConnect;
         private System.Windows.Forms.Timer timerKodiStartPlayback;
+        private System.Windows.Forms.Timer timerKodiPoll;
     }
 }

@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="harmonyHubIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">10.0.0.60</Value>
     </Setting>
     <Setting Name="plmPort" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="trayAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">42.20.F8</Value>
     </Setting>
     <Setting Name="potsAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">42.22.B8</Value>
     </Setting>
     <Setting Name="trayPlaybackLevel" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -45,10 +45,10 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="motionSensorAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">41.66.88</Value>
     </Setting>
     <Setting Name="voiceActivity" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">Watch Movie</Value>
     </Setting>
     <Setting Name="voiceConfidence" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -63,10 +63,10 @@
       <Value Profile="(Default)">9090</Value>
     </Setting>
     <Setting Name="kodiIP" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
     <Setting Name="doorSensorAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">41.58.FC</Value>
     </Setting>
   </Settings>
 </SettingsFile>

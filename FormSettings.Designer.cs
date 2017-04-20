@@ -50,6 +50,8 @@
             this.textBoxHarmonyHubIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textBoxDoorSensorAddress = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
             this.textBoxMotionSensorAddress = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.textBoxPotsAddress = new System.Windows.Forms.TextBox();
@@ -97,8 +99,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.textBoxDoorSensorAddress = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
@@ -341,6 +341,22 @@
             this.tabPage2.Text = "Insteon";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // textBoxDoorSensorAddress
+            // 
+            this.textBoxDoorSensorAddress.Location = new System.Drawing.Point(141, 167);
+            this.textBoxDoorSensorAddress.Name = "textBoxDoorSensorAddress";
+            this.textBoxDoorSensorAddress.Size = new System.Drawing.Size(100, 20);
+            this.textBoxDoorSensorAddress.TabIndex = 4;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(25, 170);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(110, 13);
+            this.label25.TabIndex = 8;
+            this.label25.Text = "Door Sensor Address:";
+            // 
             // textBoxMotionSensorAddress
             // 
             this.textBoxMotionSensorAddress.Location = new System.Drawing.Point(141, 131);
@@ -394,7 +410,7 @@
             this.comboBoxInsteonPort.FormattingEnabled = true;
             this.comboBoxInsteonPort.Location = new System.Drawing.Point(141, 22);
             this.comboBoxInsteonPort.Name = "comboBoxInsteonPort";
-            this.comboBoxInsteonPort.Size = new System.Drawing.Size(109, 21);
+            this.comboBoxInsteonPort.Size = new System.Drawing.Size(100, 21);
             this.comboBoxInsteonPort.TabIndex = 0;
             // 
             // label2
@@ -419,10 +435,11 @@
             // 
             // comboBoxProjectorPort
             // 
+            this.comboBoxProjectorPort.DropDownWidth = 100;
             this.comboBoxProjectorPort.FormattingEnabled = true;
             this.comboBoxProjectorPort.Location = new System.Drawing.Point(77, 26);
             this.comboBoxProjectorPort.Name = "comboBoxProjectorPort";
-            this.comboBoxProjectorPort.Size = new System.Drawing.Size(109, 21);
+            this.comboBoxProjectorPort.Size = new System.Drawing.Size(100, 21);
             this.comboBoxProjectorPort.TabIndex = 4;
             // 
             // label21
@@ -701,7 +718,7 @@
             // labelGlobalShutdownHours
             // 
             this.labelGlobalShutdownHours.AutoSize = true;
-            this.labelGlobalShutdownHours.Location = new System.Drawing.Point(300, 162);
+            this.labelGlobalShutdownHours.Location = new System.Drawing.Point(296, 162);
             this.labelGlobalShutdownHours.Name = "labelGlobalShutdownHours";
             this.labelGlobalShutdownHours.Size = new System.Drawing.Size(33, 13);
             this.labelGlobalShutdownHours.TabIndex = 35;
@@ -814,22 +831,6 @@
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
-            // 
-            // textBoxDoorSensorAddress
-            // 
-            this.textBoxDoorSensorAddress.Location = new System.Drawing.Point(141, 167);
-            this.textBoxDoorSensorAddress.Name = "textBoxDoorSensorAddress";
-            this.textBoxDoorSensorAddress.Size = new System.Drawing.Size(100, 20);
-            this.textBoxDoorSensorAddress.TabIndex = 4;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(25, 170);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(110, 13);
-            this.label25.TabIndex = 8;
-            this.label25.Text = "Door Sensor Address:";
             // 
             // FormSettings
             // 

@@ -191,7 +191,17 @@ namespace BrodieTheatre
                 writeLog("Kodi:  Unable to decode JSON");
                 return;
             }
-            if (result.ContainsKey("method"))
+            if (result["id"] == "99")
+            {
+                // Our submitted request for Get Active Players
+                int numPlayers = result["result"].Count;
+                if (numPlayers == 0 && labelKodiPlaybackStatus.Text != "Stopped")
+                {
+                    labelKodiPlaybackStatus.Text = "Stopped";
+                    writeLog("Kodi:  Playback status incorrect - no current players");
+                }
+            }
+            else if (result.ContainsKey("method"))
             {
                 switch (result["method"])
                 {
@@ -234,7 +244,7 @@ namespace BrodieTheatre
             {
                 writeLog("Kodi:  Received JSON " + jsonText);
             }
-            else if(result.ContainsKey("result") && result["result"]["movies"] != null)
+            else if (result.ContainsKey("result") && result["result"]["movies"] != null)
             {
                 writeLog("Kodi:  Received list of movies");
                 kodiLoadingMovies = true;
