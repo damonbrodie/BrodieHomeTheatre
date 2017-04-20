@@ -377,7 +377,7 @@ namespace BrodieTheatre
 
             if (labelKodiStatus.Text == "Connected")
             {
-                kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": \"99\"}");
+                kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetProperties\", \"params\": {\"playerid\": 1, \"properties\" : [\"type\", \"currentvideostream\", \"speed\"]}, \"id\": \"99\"}");
             }
         }
     }

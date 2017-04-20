@@ -191,14 +191,27 @@ namespace BrodieTheatre
                 writeLog("Kodi:  Unable to decode JSON");
                 return;
             }
-            if (result["id"] == "99")
+            if (result.ContainsKey("id") && result["id"] == "99")
             {
-                // Our submitted request for Get Active Players
-                int numPlayers = result["result"].Count;
-                if (numPlayers == 0 && labelKodiPlaybackStatus.Text != "Stopped")
+                // Our submitted request for Player Get Properties
+                // PLAYING {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"vc1","height":1080,"index":0,"language":"","name":"FraMeSToR VC-1 Video","width":1920},"speed":1,"type":"video"}}
+                // PAUSED  {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"vc1","height":1080,"index":0,"language":"","name":"FraMeSToR VC-1 Video","width":1920},"speed":0,"type":"video"}}
+                // STOPPED {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"","height":0,"index":0,"language":"","name":"","width":0},"speed":0,"type":"video"}}
+                
+                if (result["result"]["currentvideostream"]["codec"] == string.Empty && labelKodiPlaybackStatus.Text != "Stopped")
                 {
                     labelKodiPlaybackStatus.Text = "Stopped";
-                    writeLog("Kodi:  Playback status incorrect - no current players");
+                    writeLog("Kodi:  Playback status incorrect - No players active");
+                }
+                else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["currentvideostream"]["speed"] != 0 && labelKodiPlaybackStatus.Text != "Playing")
+                {
+                    labelKodiPlaybackStatus.Text = "Playing";
+                    writeLog("Kodi:  Playback status incorrect - Player is running");
+                }
+                else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["currentvideostream"]["speed"] == 0 && labelKodiPlaybackStatus.Text != "Paused")
+                {
+                    labelKodiPlaybackStatus.Text = "Paused";
+                    writeLog("Kodi:  Playback status incorrect - Player is paused");
                 }
             }
             else if (result.ContainsKey("method"))
