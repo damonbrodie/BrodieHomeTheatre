@@ -10,7 +10,7 @@ namespace BrodieTheatre
         public Choices choicesPolite = new Choices(new string[]
         {
             "Please",
-            " "
+            " " // This makes the please optional
         });
 
         public Choices choicesDimLights = new Choices(new String[]

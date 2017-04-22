@@ -359,7 +359,7 @@ namespace BrodieTheatre
 
                             // Wait for the projector to warm up.
                             formMain.timerKodiStartPlayback.Interval = 30000;
-                            //formMain.voiceStartTheatre();
+                            formMain.voiceStartTheatre();
                         }
                         else
                         {

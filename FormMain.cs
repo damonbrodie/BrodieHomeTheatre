@@ -111,19 +111,11 @@ namespace BrodieTheatre
             insteonConnectPLM();
             projectorConnect();
 
-            //try
-            //{
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.speechSynthesizer = new SpeechSynthesizer();
             }
             ));
-            //}
-            //catch (Exception ex)
-            //{
-            //    formMain.writeLog("Voice:  Unable to load Microsoft Speech Synthesizer Engine");
-            //    formMain.writeLog(ex.ToString());
-            //}
 
             if (labelProjectorStatus.Text == "Connected")
             {
@@ -141,7 +133,7 @@ namespace BrodieTheatre
             }
 
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
-            if (Program.Client.Token != string.Empty)
+            if (Program.Client!= null && Program.Client.Token != string.Empty)
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
