@@ -310,7 +310,6 @@ namespace BrodieTheatre
                                     moviesAfterColonNames.Add(tempColonEntry);
                                 }
                             }
-
                         }
                         List<string> cutNames = getShortMovieTitles(cleanName);
                         foreach (string partName in cutNames)
@@ -326,7 +325,6 @@ namespace BrodieTheatre
                             {
                                 moviesPartialNames.Add(tempPrefixEntry);
                             }
-
                         }
                         movieCounter += 1;
                     }

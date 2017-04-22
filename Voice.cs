@@ -340,7 +340,11 @@ namespace BrodieTheatre
                             if (movieEntry.file == kodiMovieFile)
                             {
                                 formMain.writeLog("Voice: Checking for movie '" + movieEntry.name + "'");
-                                List<string> foundMovie = new List<string>(new string[] { "I found ", "We have " });
+                                List<string> foundMovie = new List<string>(new string[] 
+                                {
+                                    "I found ",
+                                    "We have "
+                                });
                                 int r = random.Next(foundMovie.Count);
                                 speakText(foundMovie[r] + movieEntry.name);
                             }
@@ -384,8 +388,15 @@ namespace BrodieTheatre
                             kodiPlayNext = movieEntry;
                         }
                     }
-                    
-                    speakText("Starting movie: "+ kodiPlayNext.name);
+
+                    List<string> startMovie = new List<string>(new string[] 
+                    {
+                        "Starting Movie ",
+                        "Queuing up "
+                    });
+                    int r = random.Next(startMovie.Count);
+
+                    speakText(startMovie[r] + kodiPlayNext.name);
                     
                     formMain.BeginInvoke(new Action(() =>
                     {
