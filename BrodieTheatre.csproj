@@ -171,6 +171,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SpeechRecognitionChoices.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Voice.cs">
       <SubType>Form</SubType>
     </Compile>

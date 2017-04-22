@@ -180,7 +180,7 @@ namespace BrodieTheatre
 
         public void kodiProcessJson(string jsonText)
         {
-            writeLog("Kodi:  Received JSON:  " + jsonText);
+            //writeLog("Kodi:  Received JSON:  " + jsonText);
             Dictionary<string, dynamic> result = null;
             try
             {
@@ -332,7 +332,7 @@ namespace BrodieTheatre
                     }
                     toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
                     kodiLoadingMovies = false;
-                    Task task = Task.Run((Action)loadVoiceCommands);
+                    loadVoiceCommands();
                 }
                 catch
                 {

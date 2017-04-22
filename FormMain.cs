@@ -75,8 +75,32 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.writeLog("------ Brodie Theatre Starting Up ------");
+                formMain.timerSetLights.Enabled = true;
+                RecognizerInfo info = null;
+                foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers())
+                {
+                    if (ri.Culture.TwoLetterISOLanguageName.Equals("en"))
+                    {
+                        info = ri;
+                        break;
+                    }
+                }
+                if (info != null)
+                {
+                    formMain.recognitionEngine = new SpeechRecognitionEngine(info);
+                    formMain.recognitionEngine.SetInputToDefaultAudioDevice();
+                    formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
+                }
+                else
+                {
+                    formMain.writeLog("Voice:  Unable to load Speech Recognition Engine.  Shutting Down.");
+                    Application.Exit();
+                }
+
+                loadVoiceCommands();
             }
             ));
+
             await harmonyConnectAsync(true);
             if (Program.Client != null)
             {
@@ -135,49 +159,6 @@ namespace BrodieTheatre
                 }
                 ));
             }
-
-            formMain.BeginInvoke(new Action(() =>
-            {
-                formMain.timerSetLights.Enabled = true;
-                /*  try
-                  {*/
-
-                RecognizerInfo info = null;
-                foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers())
-                {
-                    if (ri.Culture.TwoLetterISOLanguageName.Equals("en"))
-                    {
-                        info = ri;
-                        break;
-                    }
-                }
-                if (info != null)
-                { 
-
-
-
-
-                    formMain.recognitionEngine = new SpeechRecognitionEngine(info);
-                    // }
-                    // catch (Exception ex)
-                    // {
-                    //     formMain.writeLog("Voice:  Unable to load Microsoft Speech Recognition Engine");
-                    //     formMain.writeLog(ex.ToString());
-                    // }
-                    // try
-                    // {
-                    formMain.recognitionEngine.SetInputToDefaultAudioDevice();
-                    formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
-                    // }
-                    // catch
-                    // {
-                    //     formMain.writeLog("Voice:  Unable to attach to default audio input device");
-                    // }
-            }
-
-                Task task = Task.Run((Action)loadVoiceCommands);
-            }
-            ));
         }
 
         private void timerClearStatus_Tick(object sender, EventArgs e)

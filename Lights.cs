@@ -129,7 +129,7 @@ namespace BrodieTheatre
 
         public void queueLightLevel(string address, int level)
         {
-            writeLog("Lighting:  Queuing light " + address + " to level " + level.ToString());
+            writeLog("Lighting:  Queuing light '" + address + "' to level '" + level.ToString() + "'");
             lights[address] = level;
         }
     }
