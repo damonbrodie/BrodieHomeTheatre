@@ -299,9 +299,7 @@ namespace BrodieTheatre
                     return;
                 }
             }
-
             progressBarInsteonMotionLatch.Value = progressBarInsteonMotionLatch.Minimum;
-
         }
 
         private void insteonDoMotion()

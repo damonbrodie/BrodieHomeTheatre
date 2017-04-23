@@ -373,20 +373,6 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         string kodiMovieFile = null;
-                        if (!formMain.harmonyIsActivityStarted())
-                        {
-                            formMain.writeLog("Voice: Starting delay timer for movie to 30 seconds");
-
-                            // Wait for the projector to warm up.
-                            formMain.timerKodiStartPlayback.Interval = 30000;
-                            formMain.voiceStartTheatre();
-                        }
-                        else
-                        {
-                            formMain.writeLog("Voice: Starting delay timer for movie to 5 seconds");
-                            formMain.timerKodiStartPlayback.Interval = 5000;
-                        }
-
                         foreach (KeyValuePair<string, SemanticValue> items in e.Result.Semantics)
                         {
                             if (items.Key != "Play Movie")
@@ -415,9 +401,25 @@ namespace BrodieTheatre
                             formMain.speakText(startMovie[r] + kodiPlayNext.name);
                             formMain.timerKodiStartPlayback.Enabled = false;
                             formMain.timerKodiStartPlayback.Enabled = true;
+
+                            if (!formMain.harmonyIsActivityStarted())
+                            {
+                                formMain.writeLog("Voice: Starting delay timer for movie to 30 seconds");
+
+                                // Wait for the projector to warm up.
+                                formMain.timerKodiStartPlayback.Interval = 30000;
+                                formMain.voiceStartTheatre();
+                            }
+                            else
+                            {
+                                formMain.writeLog("Voice: Starting delay timer for movie to 5 seconds");
+                                formMain.timerKodiStartPlayback.Interval = 5000;
+                            }
+
                         }
                         else
                         {
+                            formMain.speakText("Unable to start that movie");
                             formMain.writeLog("Voice:  Unable to start movie playback for '" + kodiMovieFile + "'");
                         }
                     }
