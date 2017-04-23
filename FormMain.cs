@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.Recognition;
 
@@ -50,6 +49,8 @@ namespace BrodieTheatre
             Form formSettings = new FormSettings();
             formSettings.ShowDialog();
 
+
+            // Reset things after the settings have been saved.
             if (currentPLMport != Properties.Settings.Default.plmPort)
             {
                 currentPLMport = Properties.Settings.Default.plmPort;
@@ -68,6 +69,8 @@ namespace BrodieTheatre
                 currentKodiPort = Properties.Settings.Default.kodiJSONPort;
                 kodiStatusDisconnect();
             }
+
+            setVoice();
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
@@ -114,19 +117,7 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.speechSynthesizer = new SpeechSynthesizer();
-                if (Properties.Settings.Default.speechVoice != String.Empty)
-                {
-
-                    foreach (InstalledVoice voice in formMain.speechSynthesizer.GetInstalledVoices())
-                    {
-                        VoiceInfo info = voice.VoiceInfo;
-                        if (info.Id == Properties.Settings.Default.speechVoice)
-                        {
-                            formMain.speechSynthesizer.SelectVoice(info.Name);
-                                formMain.writeLog("Voice:  Select Speech Voice '" + info.Name + "'");
-                            }
-                        }
-                }
+                formMain.setVoice();
             }
             ));
 

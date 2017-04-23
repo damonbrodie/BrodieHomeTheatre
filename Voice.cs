@@ -12,6 +12,22 @@ namespace BrodieTheatre
         public SpeechRecognitionEngine recognitionEngine;
         public SpeechSynthesizer speechSynthesizer;
 
+        private void setVoice()
+        {
+            if (Properties.Settings.Default.speechVoice != String.Empty)
+            {
+                foreach (InstalledVoice voice in formMain.speechSynthesizer.GetInstalledVoices())
+                {
+                    VoiceInfo info = voice.VoiceInfo;
+                    if (info.Id == Properties.Settings.Default.speechVoice)
+                    {
+                        speechSynthesizer.SelectVoice(info.Name);
+                        writeLog("Voice:  Select Speech Voice '" + info.Name + "'");
+                    }
+                }
+            }
+        }
+
         private void speakText(string tts)
         {
             try
