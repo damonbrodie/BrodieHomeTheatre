@@ -1,12 +1,16 @@
 ﻿using System;
 using System.IO.Ports;
 using System.Windows.Forms;
+using Microsoft.Speech.Synthesis;
 
 
 namespace BrodieTheatre
 {
     public partial class FormSettings : Form
     {
+
+        public SpeechSynthesizer speechSynthesizer;
+
         public FormSettings()
         {
             InitializeComponent();
@@ -36,22 +40,24 @@ namespace BrodieTheatre
             Properties.Settings.Default.computerName            = textBoxComputerName.Text;
             Properties.Settings.Default.kodiJSONPort            = (int)numericUpDownKodiPort.Value;
             Properties.Settings.Default.kodiIP                  = textBoxKodiIP.Text;
+            Properties.Settings.Default.speechVoice             = comboBoxTextToSpeechVoice.Text;
+
             Properties.Settings.Default.Save();
             this.Close();
         }
 
         private void FormSettings_Load(object sender, EventArgs e)
         {
-            checkBoxStartMinimized.Checked      = Properties.Settings.Default.startMinimized;
-            textBoxComputerName.Text            = Properties.Settings.Default.computerName;
-            textBoxHarmonyHubIP.Text            = Properties.Settings.Default.harmonyHubIP;
-            textBoxVoiceActivity.Text           = Properties.Settings.Default.voiceActivity;
-            numericUpDownKodiPort.Value         = (decimal)Properties.Settings.Default.kodiJSONPort;
-            textBoxKodiIP.Text                  = Properties.Settings.Default.kodiIP;
-            textBoxPotsAddress.Text             = Properties.Settings.Default.potsAddress;
-            textBoxTrayAddress.Text             = Properties.Settings.Default.trayAddress;
-            textBoxMotionSensorAddress.Text     = Properties.Settings.Default.motionSensorAddress;
-            textBoxDoorSensorAddress.Text       = Properties.Settings.Default.doorSensorAddress;
+            checkBoxStartMinimized.Checked = Properties.Settings.Default.startMinimized;
+            textBoxComputerName.Text = Properties.Settings.Default.computerName;
+            textBoxHarmonyHubIP.Text = Properties.Settings.Default.harmonyHubIP;
+            textBoxVoiceActivity.Text = Properties.Settings.Default.voiceActivity;
+            numericUpDownKodiPort.Value = (decimal)Properties.Settings.Default.kodiJSONPort;
+            textBoxKodiIP.Text = Properties.Settings.Default.kodiIP;
+            textBoxPotsAddress.Text = Properties.Settings.Default.potsAddress;
+            textBoxTrayAddress.Text = Properties.Settings.Default.trayAddress;
+            textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
+            textBoxDoorSensorAddress.Text = Properties.Settings.Default.doorSensorAddress;
 
             try
             {
@@ -187,6 +193,27 @@ namespace BrodieTheatre
                     comboBoxProjectorPort.SelectedItem = s;
                 }
             }
+
+            try
+            {
+                speechSynthesizer = new SpeechSynthesizer();
+
+
+                foreach (InstalledVoice voice in speechSynthesizer.GetInstalledVoices())
+                {
+                    VoiceInfo info = voice.VoiceInfo;
+                    comboBoxTextToSpeechVoice.Items.Add(info.Id);
+                    if (info.Id == Properties.Settings.Default.speechVoice)
+                    {
+                        comboBoxTextToSpeechVoice.SelectedItem = info.Id;
+                    }
+                }
+ 
+            }
+            catch
+            {
+
+            }
         }
 
         private void trackBarTrayPlayback_ValueChanged(object sender, EventArgs e)
@@ -250,6 +277,29 @@ namespace BrodieTheatre
         private void trackBarVoiceConfidence_ValueChanged_1(object sender, EventArgs e)
         {
             labelVoiceConfidence.Text = (trackBarVoiceConfidence.Value * 10).ToString() + "%";
+        }
+
+        private void buttonPreviewVoice_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (InstalledVoice voice in speechSynthesizer.GetInstalledVoices())
+                {
+                    VoiceInfo info = voice.VoiceInfo;
+
+                    if (info.Id == comboBoxTextToSpeechVoice.Text)
+                    {
+                        speechSynthesizer.SelectVoice(info.Name);
+                    }
+                }
+                speechSynthesizer.SetOutputToDefaultAudioDevice();
+
+                speechSynthesizer.SpeakAsync("Maybe we should watch the movie Rogue One");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error:  " + ex.ToString());
+            }
         }
     }
 }

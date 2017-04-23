@@ -31,6 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.comboBoxTextToSpeechVoice = new System.Windows.Forms.ComboBox();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
             this.textBoxKodiIP = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.numericUpDownKodiPort = new System.Windows.Forms.NumericUpDown();
@@ -99,6 +102,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonPreviewVoice = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
@@ -135,6 +139,10 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.buttonPreviewVoice);
+            this.tabPage6.Controls.Add(this.comboBoxTextToSpeechVoice);
+            this.tabPage6.Controls.Add(this.label29);
+            this.tabPage6.Controls.Add(this.label28);
             this.tabPage6.Controls.Add(this.textBoxKodiIP);
             this.tabPage6.Controls.Add(this.label32);
             this.tabPage6.Controls.Add(this.numericUpDownKodiPort);
@@ -153,6 +161,33 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Global";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxTextToSpeechVoice
+            // 
+            this.comboBoxTextToSpeechVoice.FormattingEnabled = true;
+            this.comboBoxTextToSpeechVoice.Location = new System.Drawing.Point(107, 267);
+            this.comboBoxTextToSpeechVoice.Name = "comboBoxTextToSpeechVoice";
+            this.comboBoxTextToSpeechVoice.Size = new System.Drawing.Size(205, 21);
+            this.comboBoxTextToSpeechVoice.TabIndex = 5;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(61, 270);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(37, 13);
+            this.label29.TabIndex = 51;
+            this.label29.Text = "Voice:";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(11, 238);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(134, 13);
+            this.label28.TabIndex = 50;
+            this.label28.Text = "Text-to-Speech Voice:";
             // 
             // textBoxKodiIP
             // 
@@ -832,6 +867,16 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // buttonPreviewVoice
+            // 
+            this.buttonPreviewVoice.Location = new System.Drawing.Point(237, 303);
+            this.buttonPreviewVoice.Name = "buttonPreviewVoice";
+            this.buttonPreviewVoice.Size = new System.Drawing.Size(75, 23);
+            this.buttonPreviewVoice.TabIndex = 6;
+            this.buttonPreviewVoice.Text = "Preview";
+            this.buttonPreviewVoice.UseVisualStyleBackColor = true;
+            this.buttonPreviewVoice.Click += new System.EventHandler(this.buttonPreviewVoice_Click);
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -946,5 +991,9 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.TextBox textBoxDoorSensorAddress;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.ComboBox comboBoxTextToSpeechVoice;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Button buttonPreviewVoice;
     }
 }

@@ -407,7 +407,6 @@ namespace BrodieTheatre
                     }
                     ));
                 }
-
                 else if (e.Result.Semantics.ContainsKey("Turn on Theatre"))
                 {
                     if (labelKodiPlaybackStatus.Text != "Playing" && !harmonyIsActivityStarted())
@@ -423,7 +422,6 @@ namespace BrodieTheatre
                         ));
                     }
                 }
-
                 else if (e.Result.Semantics.ContainsKey("Turn off Theatre"))
                 {
                     if (labelKodiPlaybackStatus.Text != "Playing" && harmonyIsActivityStarted())

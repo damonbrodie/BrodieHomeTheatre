@@ -114,6 +114,19 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.speechSynthesizer = new SpeechSynthesizer();
+                if (Properties.Settings.Default.speechVoice != String.Empty)
+                {
+
+                    foreach (InstalledVoice voice in formMain.speechSynthesizer.GetInstalledVoices())
+                    {
+                        VoiceInfo info = voice.VoiceInfo;
+                        if (info.Id == Properties.Settings.Default.speechVoice)
+                        {
+                            formMain.speechSynthesizer.SelectVoice(info.Name);
+                                formMain.writeLog("Voice:  Select Speech Voice '" + info.Name + "'");
+                            }
+                        }
+                }
             }
             ));
 

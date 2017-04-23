@@ -286,5 +286,17 @@ namespace BrodieTheatre.Properties {
                 this["doorSensorAddress"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string speechVoice {
+            get {
+                return ((string)(this["speechVoice"]));
+            }
+            set {
+                this["speechVoice"] = value;
+            }
+        }
     }
 }

@@ -68,5 +68,8 @@
     <Setting Name="doorSensorAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)">41.58.FC</Value>
     </Setting>
+    <Setting Name="speechVoice" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
