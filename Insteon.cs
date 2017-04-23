@@ -12,6 +12,9 @@ namespace BrodieTheatre
         public string currentPLMport;
         public bool plmConnected;
 
+        public DateTime insteonMotionLatchExpires;
+        public bool insteonMotionLatchActive = false;
+
         public int insteonProcessDimmerMessage(string message, string address)
         {
             int level = -1;
@@ -115,18 +118,17 @@ namespace BrodieTheatre
                             { //Motion Detected
                                 formMain.BeginInvoke(new Action(() =>
                                 {
-                                    if (labelMotionSensorStatus.Text != "Motion Detected")
-                                    {
-                                        formMain.writeLog("Insteon:  Motion Detected");
-                                        formMain.labelMotionSensorStatus.Text = "Motion Detected";
-                                        formMain.labelRoomOccupancy.Text = "Occupied";
-                                        formMain.resetGlobalTimer();
-                                    }
+                                    formMain.insteonDoMotion();
                                 }
                                 ));
                             }
                             else
                             { //No Motion Detected
+                                
+                                //Ignore this - use our own latch
+
+
+                                /*
                                 formMain.BeginInvoke(new Action(() =>
                                 {
                                     if (labelMotionSensorStatus.Text != "No Motion")
@@ -137,6 +139,7 @@ namespace BrodieTheatre
                                     }
                                 }
                                 ));
+                                */
                             }
                         }
                         else if (address == Properties.Settings.Default.doorSensorAddress)
@@ -270,6 +273,49 @@ namespace BrodieTheatre
                 trackBarPots.Value = insteonGetLightLevel(Properties.Settings.Default.potsAddress);
             }
             ));
+        }
+
+        private void timerInsteonMotionLatch_Tick(object sender, EventArgs e)
+        {
+            if (insteonMotionLatchActive)
+            {
+                DateTime rightNow = DateTime.Now;
+                if (insteonMotionLatchExpires < rightNow)
+                {
+                    if (labelMotionSensorStatus.Text != "No Motion")
+                    {
+                        insteonMotionLatchActive = false;
+                        writeLog("Insteon:  No Motion Detected");
+                        labelRoomOccupancy.Text = "Vacant";
+                        labelMotionSensorStatus.Text = "No Motion";
+                    }
+                }
+                else
+                {
+                    float secondsDiff = (float)(insteonMotionLatchExpires - rightNow).TotalSeconds;
+                    float totalSecs = Properties.Settings.Default.InsteonMotionLatch * 60;
+                    float percentage = (secondsDiff / totalSecs) * 100;
+                    progressBarInsteonMotionLatch.Value = Convert.ToInt32(percentage);
+                    return;
+                }
+            }
+
+            progressBarInsteonMotionLatch.Value = progressBarInsteonMotionLatch.Minimum;
+
+        }
+
+        private void insteonDoMotion()
+        {
+            if (labelMotionSensorStatus.Text != "Motion Detected")
+            {
+                writeLog("Insteon:  Motion Detected");
+                labelMotionSensorStatus.Text = "Motion Detected";
+                labelRoomOccupancy.Text = "Occupied";
+                progressBarInsteonMotionLatch.Value = formMain.progressBarInsteonMotionLatch.Maximum;
+                insteonMotionLatchExpires = DateTime.Now.AddMinutes(Properties.Settings.Default.InsteonMotionLatch);
+                insteonMotionLatchActive = true;
+                resetGlobalTimer();
+            }
         }
     }
 }

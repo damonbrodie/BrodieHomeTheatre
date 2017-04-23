@@ -96,6 +96,8 @@
             this.timerKodiConnect = new System.Windows.Forms.Timer(this.components);
             this.timerKodiStartPlayback = new System.Windows.Forms.Timer(this.components);
             this.timerKodiPoll = new System.Windows.Forms.Timer(this.components);
+            this.timerInsteonMotionLatch = new System.Windows.Forms.Timer(this.components);
+            this.progressBarInsteonMotionLatch = new System.Windows.Forms.ProgressBar();
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -231,6 +233,7 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.White;
+            this.groupBox2.Controls.Add(this.progressBarInsteonMotionLatch);
             this.groupBox2.Controls.Add(this.labelPots);
             this.groupBox2.Controls.Add(this.labelTray);
             this.groupBox2.Controls.Add(this.labelMotionSensorStatus);
@@ -701,6 +704,19 @@
             this.timerKodiPoll.Interval = 60000;
             this.timerKodiPoll.Tick += new System.EventHandler(this.timerKodiPoll_Tick);
             // 
+            // timerInsteonMotionLatch
+            // 
+            this.timerInsteonMotionLatch.Enabled = true;
+            this.timerInsteonMotionLatch.Interval = 1000;
+            this.timerInsteonMotionLatch.Tick += new System.EventHandler(this.timerInsteonMotionLatch_Tick);
+            // 
+            // progressBarInsteonMotionLatch
+            // 
+            this.progressBarInsteonMotionLatch.Location = new System.Drawing.Point(227, 177);
+            this.progressBarInsteonMotionLatch.Name = "progressBarInsteonMotionLatch";
+            this.progressBarInsteonMotionLatch.Size = new System.Drawing.Size(92, 18);
+            this.progressBarInsteonMotionLatch.TabIndex = 18;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -816,5 +832,7 @@
         private System.Windows.Forms.Timer timerKodiConnect;
         private System.Windows.Forms.Timer timerKodiStartPlayback;
         private System.Windows.Forms.Timer timerKodiPoll;
+        private System.Windows.Forms.Timer timerInsteonMotionLatch;
+        private System.Windows.Forms.ProgressBar progressBarInsteonMotionLatch;
     }
 }

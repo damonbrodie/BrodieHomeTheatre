@@ -298,5 +298,17 @@ namespace BrodieTheatre.Properties {
                 this["speechVoice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int InsteonMotionLatch {
+            get {
+                return ((int)(this["InsteonMotionLatch"]));
+            }
+            set {
+                this["InsteonMotionLatch"] = value;
+            }
+        }
     }
 }

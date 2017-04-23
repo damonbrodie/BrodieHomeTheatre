@@ -41,6 +41,7 @@ namespace BrodieTheatre
             Properties.Settings.Default.kodiJSONPort            = (int)numericUpDownKodiPort.Value;
             Properties.Settings.Default.kodiIP                  = textBoxKodiIP.Text;
             Properties.Settings.Default.speechVoice             = comboBoxTextToSpeechVoice.Text;
+            Properties.Settings.Default.InsteonMotionLatch      = trackBarInsteonMotionMinimumTime.Value;
 
             Properties.Settings.Default.Save();
             this.Close();
@@ -179,6 +180,18 @@ namespace BrodieTheatre
                 }
             }
 
+            try
+            {
+                trackBarInsteonMotionMinimumTime.Value = Properties.Settings.Default.InsteonMotionLatch;
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    trackBarInsteonMotionMinimumTime.Value = trackBarInsteonMotionMinimumTime.Minimum; 
+                }
+            }
+
             //show list of valid com ports
             foreach (string s in SerialPort.GetPortNames())
             {
@@ -300,6 +313,11 @@ namespace BrodieTheatre
             {
                 MessageBox.Show("Error:  " + ex.ToString());
             }
+        }
+
+        private void trackBarInsteonMotionMinimumTime_ValueChanged(object sender, EventArgs e)
+        {
+            labelInsteonMotionLatch.Text = trackBarInsteonMotionMinimumTime.Value.ToString();
         }
     }
 }

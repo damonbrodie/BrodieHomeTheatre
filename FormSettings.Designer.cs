@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.buttonPreviewVoice = new System.Windows.Forms.Button();
             this.comboBoxTextToSpeechVoice = new System.Windows.Forms.ComboBox();
             this.label29 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
@@ -102,7 +103,11 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.buttonPreviewVoice = new System.Windows.Forms.Button();
+            this.labelInsteonMotionLatch = new System.Windows.Forms.Label();
+            this.trackBarInsteonMotionMinimumTime = new System.Windows.Forms.TrackBar();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.labelInsteonMotionLatchMinutes = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
@@ -121,6 +126,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarInsteonMotionMinimumTime)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -161,6 +167,16 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Global";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // buttonPreviewVoice
+            // 
+            this.buttonPreviewVoice.Location = new System.Drawing.Point(237, 303);
+            this.buttonPreviewVoice.Name = "buttonPreviewVoice";
+            this.buttonPreviewVoice.Size = new System.Drawing.Size(75, 23);
+            this.buttonPreviewVoice.TabIndex = 6;
+            this.buttonPreviewVoice.Text = "Preview";
+            this.buttonPreviewVoice.UseVisualStyleBackColor = true;
+            this.buttonPreviewVoice.Click += new System.EventHandler(this.buttonPreviewVoice_Click);
             // 
             // comboBoxTextToSpeechVoice
             // 
@@ -358,6 +374,11 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.labelInsteonMotionLatchMinutes);
+            this.tabPage2.Controls.Add(this.label34);
+            this.tabPage2.Controls.Add(this.labelInsteonMotionLatch);
+            this.tabPage2.Controls.Add(this.trackBarInsteonMotionMinimumTime);
+            this.tabPage2.Controls.Add(this.label33);
             this.tabPage2.Controls.Add(this.textBoxDoorSensorAddress);
             this.tabPage2.Controls.Add(this.label25);
             this.tabPage2.Controls.Add(this.textBoxMotionSensorAddress);
@@ -867,15 +888,56 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // buttonPreviewVoice
+            // labelInsteonMotionLatch
             // 
-            this.buttonPreviewVoice.Location = new System.Drawing.Point(237, 303);
-            this.buttonPreviewVoice.Name = "buttonPreviewVoice";
-            this.buttonPreviewVoice.Size = new System.Drawing.Size(75, 23);
-            this.buttonPreviewVoice.TabIndex = 6;
-            this.buttonPreviewVoice.Text = "Preview";
-            this.buttonPreviewVoice.UseVisualStyleBackColor = true;
-            this.buttonPreviewVoice.Click += new System.EventHandler(this.buttonPreviewVoice_Click);
+            this.labelInsteonMotionLatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelInsteonMotionLatch.Location = new System.Drawing.Point(250, 250);
+            this.labelInsteonMotionLatch.Name = "labelInsteonMotionLatch";
+            this.labelInsteonMotionLatch.Size = new System.Drawing.Size(35, 23);
+            this.labelInsteonMotionLatch.TabIndex = 21;
+            this.labelInsteonMotionLatch.Text = "5";
+            this.labelInsteonMotionLatch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // trackBarInsteonMotionMinimumTime
+            // 
+            this.trackBarInsteonMotionMinimumTime.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarInsteonMotionMinimumTime.LargeChange = 1;
+            this.trackBarInsteonMotionMinimumTime.Location = new System.Drawing.Point(74, 246);
+            this.trackBarInsteonMotionMinimumTime.Maximum = 30;
+            this.trackBarInsteonMotionMinimumTime.Minimum = 5;
+            this.trackBarInsteonMotionMinimumTime.Name = "trackBarInsteonMotionMinimumTime";
+            this.trackBarInsteonMotionMinimumTime.Size = new System.Drawing.Size(177, 45);
+            this.trackBarInsteonMotionMinimumTime.TabIndex = 5;
+            this.trackBarInsteonMotionMinimumTime.Value = 5;
+            this.trackBarInsteonMotionMinimumTime.ValueChanged += new System.EventHandler(this.trackBarInsteonMotionMinimumTime_ValueChanged);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(18, 250);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(51, 13);
+            this.label33.TabIndex = 20;
+            this.label33.Text = "Minimum:";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label34.Location = new System.Drawing.Point(16, 216);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(175, 13);
+            this.label34.TabIndex = 22;
+            this.label34.Text = "Motion Sensor Minimum Time:";
+            // 
+            // labelInsteonMotionLatchMinutes
+            // 
+            this.labelInsteonMotionLatchMinutes.AutoSize = true;
+            this.labelInsteonMotionLatchMinutes.Location = new System.Drawing.Point(287, 254);
+            this.labelInsteonMotionLatchMinutes.Name = "labelInsteonMotionLatchMinutes";
+            this.labelInsteonMotionLatchMinutes.Size = new System.Drawing.Size(43, 13);
+            this.labelInsteonMotionLatchMinutes.TabIndex = 23;
+            this.labelInsteonMotionLatchMinutes.Text = "minutes";
             // 
             // FormSettings
             // 
@@ -915,6 +977,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarInsteonMotionMinimumTime)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -995,5 +1058,10 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button buttonPreviewVoice;
+        private System.Windows.Forms.Label labelInsteonMotionLatchMinutes;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label labelInsteonMotionLatch;
+        private System.Windows.Forms.TrackBar trackBarInsteonMotionMinimumTime;
+        private System.Windows.Forms.Label label33;
     }
 }
