@@ -340,7 +340,7 @@ namespace BrodieTheatre
                             if (movieEntry.file == kodiMovieFile)
                             {
                                 formMain.writeLog("Voice: Checking for movie '" + movieEntry.name + "'");
-                                List<string> foundMovie = new List<string>(new string[] 
+                                List<string> foundMovie = new List<string>(new string[]
                                 {
                                     "I found ",
                                     "We have "
@@ -354,9 +354,9 @@ namespace BrodieTheatre
                 }
                 else if (e.Result.Semantics.ContainsKey("Play Movie") && labelKodiPlaybackStatus.Text != "Playing")
                 {
-                    string kodiMovieFile = null;
                     formMain.BeginInvoke(new Action(() =>
                     {
+                        string kodiMovieFile = null;
                         if (!formMain.harmonyIsActivityStarted())
                         {
                             formMain.writeLog("Voice: Starting delay timer for movie to 30 seconds");
@@ -378,33 +378,36 @@ namespace BrodieTheatre
                                 kodiMovieFile = items.Key;
                             }
                         }
-                    }));
-                    
-                    kodiPlayNext = null;
-                    foreach (MovieEntry movieEntry in kodiMovies)
-                    {
-                        if (movieEntry.file == kodiMovieFile)
+                        kodiPlayNext = null;
+                        foreach (MovieEntry movieEntry in kodiMovies)
                         {
-                            kodiPlayNext = movieEntry;
+                            if (movieEntry.file == kodiMovieFile)
+                            {
+                                kodiPlayNext = movieEntry;
+                            }
                         }
-                    }
 
-                    List<string> startMovie = new List<string>(new string[] 
-                    {
-                        "Starting Movie ",
-                        "Queuing up "
-                    });
-                    int r = random.Next(startMovie.Count);
+                        if (kodiPlayNext != null)
+                        {
+                            List<string> startMovie = new List<string>(new string[]
+                            {
+                                    "Starting Movie ",
+                                    "Queuing up "
+                            });
+                            int r = random.Next(startMovie.Count);
 
-                    speakText(startMovie[r] + kodiPlayNext.name);
-                    
-                    formMain.BeginInvoke(new Action(() =>
-                    {
-                        formMain.timerKodiStartPlayback.Enabled = false;
-                        formMain.timerKodiStartPlayback.Enabled = true;
+                            formMain.speakText(startMovie[r] + kodiPlayNext.name);
+                            formMain.timerKodiStartPlayback.Enabled = false;
+                            formMain.timerKodiStartPlayback.Enabled = true;
+                        }
+                        else
+                        {
+                            formMain.writeLog("Voice:  Unable to start movie playback for '" + kodiMovieFile + "'");
+                        }
                     }
                     ));
                 }
+
                 else if (e.Result.Semantics.ContainsKey("Turn on Theatre"))
                 {
                     if (labelKodiPlaybackStatus.Text != "Playing" && !harmonyIsActivityStarted())
@@ -430,7 +433,6 @@ namespace BrodieTheatre
                             formMain.sayAcknowledgement();
                             formMain.labelLastVoiceCommand.Text = "Turn off theatre";
                             formMain.harmonyStartActivityByName("PowerOff");
-                            formMain.lightsToEnteringLevel();
                             formMain.writeLog("Voice:  Processed 'Turn off theatre'");
                         }
                         ));
@@ -561,7 +563,7 @@ namespace BrodieTheatre
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Lights On"))
-                { 
+                {
                     if (labelKodiPlaybackStatus.Text != "Playing")
                     {
                         formMain.BeginInvoke(new Action(() =>
