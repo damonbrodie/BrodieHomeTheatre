@@ -191,7 +191,6 @@ namespace BrodieTheatre
 
         private Tuple<GrammarBuilder, GrammarBuilder> commandMovies()
         {
-
             Choices movies = new Choices();
             foreach (MovieEntry movieEntry in kodiMovies)
             {
@@ -212,8 +211,7 @@ namespace BrodieTheatre
                     movies.Add(new SemanticResultKey(entry.file, entry.name));
                 }
             }
-            GrammarBuilder grammarBuilderPlay = new GrammarBuilder();
-            
+            GrammarBuilder grammarBuilderPlay = new GrammarBuilder();      
             grammarBuilderPlay.Append(choicesComputerName());
             grammarBuilderPlay.Append(choicesPolite);
             grammarBuilderPlay.Append(new SemanticResultKey("Play Movie", choicesPlayMovie));
@@ -250,12 +248,22 @@ namespace BrodieTheatre
                     commandCancelPlayback()
                 });
 
-                if (!kodiLoadingMovies && kodiMovies.Count > 0)
+                if (kodiLoadingMovies)
+                {
+                    writeLog("Voice:  Skipping movie grammar - movie loading underway");
+                }
+                else if (kodiMovies.Count == 0)
+                {
+                    writeLog("Voice:  Skipping movie grammar - movie count is zero");
+                }
+                else
                 {
                     Tuple<GrammarBuilder, GrammarBuilder> commandsTuple = commandMovies();
                     commands.Add(commandsTuple.Item1);
                     commands.Add(commandsTuple.Item2);
+                    writeLog("Voice:  Adding movie grammars");
                 }
+                
                 Grammar grammar = new Grammar(commands);
                 grammar.Name = "commands";
                 recognitionEngine.LoadGrammarAsync(grammar);

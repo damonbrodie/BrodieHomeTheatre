@@ -256,7 +256,7 @@ namespace BrodieTheatre
             }
             else if (result.ContainsKey("result") && result["result"]["movies"] != null)
             {
-                writeLog("Kodi:  Received list of movies");
+                //writeLog("Kodi:  Received list of movies");
                 kodiLoadingMovies = true;
                 kodiMovies.Clear();
                 int movieCounter = 0;
@@ -331,8 +331,8 @@ namespace BrodieTheatre
                     if (!error)
                     {
                         toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
-                        labelKodiMoviesAvailable.Text = movieCounter.ToString();
                         kodiLoadingMovies = false;
+                        labelKodiMoviesAvailable.Text = movieCounter.ToString();
                     }
                     else
                     {
@@ -343,6 +343,7 @@ namespace BrodieTheatre
                 {
                     writeLog("Kodi:  Failed to process Movie JSON");
                 }
+                kodiLoadingMovies = false;
             }
             else
             {
@@ -395,7 +396,6 @@ namespace BrodieTheatre
 
         public string cleanString(string name)
         {
-
             string newName = Regex.Replace(name, @"\&", " and ");
             newName = Regex.Replace(newName, @"[^a-zA-Z0-9\s\']", " ");
             newName = Regex.Replace(newName, @"\s+", " ");

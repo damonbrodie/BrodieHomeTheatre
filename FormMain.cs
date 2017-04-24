@@ -98,8 +98,6 @@ namespace BrodieTheatre
                     formMain.writeLog("Voice:  Unable to load Speech Recognition Engine.  Shutting Down.");
                     Application.Exit();
                 }
-
-                loadVoiceCommands();
             }
             ));
 
