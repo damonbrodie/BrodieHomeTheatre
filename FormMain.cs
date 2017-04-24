@@ -333,5 +333,7 @@ namespace BrodieTheatre
                 writeLog("Occupancy:  Overriding Room to Occupied");
             }
         }
+
+
     }
 }

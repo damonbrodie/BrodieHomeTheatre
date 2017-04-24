@@ -152,7 +152,6 @@ namespace BrodieTheatre
                 lastB = (char)b;
                 if (braces == 0)
                 {
-
                     int newBufferLength = kodiReadBufferPos - curPos;
                     string currJson = sb.ToString();
                     sb = new System.Text.StringBuilder();
@@ -161,7 +160,6 @@ namespace BrodieTheatre
                         formMain.kodiProcessJson(currJson);
                     }
                     ));
-
                     startPos = curPos;
                 }
             }
@@ -267,6 +265,7 @@ namespace BrodieTheatre
                 moviesAfterColonNames.Clear();
                 moviesDuplicateNames.Clear();
                 moviesPartialNames.Clear();
+                bool error = false;
                 try
                 {
                     foreach (JObject movie in result["result"]["movies"])
@@ -324,11 +323,21 @@ namespace BrodieTheatre
                             }
                             movieCounter += 1;
                         }
+                        else
+                        {
+                            error = true;
+                        }
                     }
-                    toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
-                    labelKodiMoviesAvailable.Text = movieCounter.ToString();
-                    kodiLoadingMovies = false;
-                    loadVoiceCommands();
+                    if (!error)
+                    {
+                        toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
+                        labelKodiMoviesAvailable.Text = movieCounter.ToString();
+                        kodiLoadingMovies = false;
+                    }
+                    else
+                    {
+                        writeLog("Kodi:  There was an error decoding the Kodi library JSON");
+                    }
                 }
                 catch
                 {
@@ -417,7 +426,6 @@ namespace BrodieTheatre
 
         public void kodiSendGetMoviesRequest()
         {
-            writeLog("Kodi:  Request movie list");
             kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"file\"] }, \"id\": \"1\"}");
         }
 
@@ -465,6 +473,11 @@ namespace BrodieTheatre
                 kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetProperties\", \"params\": {\"playerid\": 1, \"properties\" : [\"type\", \"currentvideostream\", \"speed\"]}, \"id\": \"99\"}");
                 kodiSendGetMoviesRequest();
             }
+        }
+
+        private void labelKodiMoviesAvailable_TextChanged(object sender, EventArgs e)
+        {
+            loadVoiceCommands();
         }
     }
 }
