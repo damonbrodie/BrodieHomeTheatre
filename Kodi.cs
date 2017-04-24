@@ -92,14 +92,14 @@ namespace BrodieTheatre
 
         public async void kodiReadStream()
         {
-            char[] buffer = new char[1000];
+            char[] buffer = new char[100000];
             //int bytesRead = 0;
             bool ended = false;
             while (!ended)
             {
                 try
                 {
-                    int bytesRead = await kodiStreamReader.ReadAsync(buffer, 0, 1000);
+                    int bytesRead = await kodiStreamReader.ReadAsync(buffer, 0, 100000);
                     Array.Copy(buffer, 0, kodiReadBuffer, kodiReadBufferPos, bytesRead);
                     kodiReadBufferPos += bytesRead;
                     formMain.BeginInvoke(new Action(() =>
