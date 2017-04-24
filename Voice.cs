@@ -94,9 +94,9 @@ namespace BrodieTheatre
             GrammarBuilder grammarBuilder = new GrammarBuilder();
             Choices choicesHello = new Choices(new String[]
             {
-            "hello " + Properties.Settings.Default.computerName,
-            "ok " + Properties.Settings.Default.computerName,
-            "hey " + Properties.Settings.Default.computerName
+                "hello " + Properties.Settings.Default.computerName,
+                "ok "    + Properties.Settings.Default.computerName,
+                "hey "   + Properties.Settings.Default.computerName
             });
 
             grammarBuilder.Append(new SemanticResultKey("Greeting", choicesHello));
@@ -191,8 +191,7 @@ namespace BrodieTheatre
 
         private Tuple<GrammarBuilder, GrammarBuilder> commandMovies()
         {
-            GrammarBuilder grammarBuilderPlay = new GrammarBuilder();
-            GrammarBuilder grammarBuilderCheck = new GrammarBuilder();
+
             Choices movies = new Choices();
             foreach (MovieEntry movieEntry in kodiMovies)
             {
@@ -213,6 +212,7 @@ namespace BrodieTheatre
                     movies.Add(new SemanticResultKey(entry.file, entry.name));
                 }
             }
+            GrammarBuilder grammarBuilderPlay = new GrammarBuilder();
             
             grammarBuilderPlay.Append(choicesComputerName());
             grammarBuilderPlay.Append(choicesPolite);
@@ -220,6 +220,7 @@ namespace BrodieTheatre
             grammarBuilderPlay.Append(movies);
             grammarBuilderPlay.Append(choicesPolite);
 
+            GrammarBuilder grammarBuilderCheck = new GrammarBuilder();
             grammarBuilderCheck.Append(choicesComputerName());
             grammarBuilderCheck.Append(choicesPolite);
             grammarBuilderCheck.Append(new SemanticResultKey("Check Movie", choicesCheckMovie));
@@ -255,9 +256,7 @@ namespace BrodieTheatre
                     commands.Add(commandsTuple.Item1);
                     commands.Add(commandsTuple.Item2);
                 }
-
                 Grammar grammar = new Grammar(commands);
-
                 grammar.Name = "commands";
                 recognitionEngine.LoadGrammarAsync(grammar);
                 toolStripStatus.Text = "Speech recognition grammars loaded";
@@ -268,52 +267,6 @@ namespace BrodieTheatre
                 writeLog("Voice:  Error loading grammar - " + ex.ToString());
                 Application.Exit();
             }
-        }
-
-        private int expandCommands(ref Choices commandChoice, string spoken, string command, bool bePolite = false, bool useName = false)
-        {
-            bool debugVoice = false;
-            string phrase = "";
-            SemanticResultValue commandSemantic = new SemanticResultValue(spoken, command);
-            if (debugVoice) writeLog("Voice Grammar:  '" + spoken + "'");
-            commandChoice.Add(new GrammarBuilder(commandSemantic));
-            int counter = 1;
-
-            if (bePolite)
-            {
-                phrase = "please " + spoken;
-                commandSemantic = new SemanticResultValue(phrase, command);
-                if (debugVoice) writeLog("Voice Grammar:  '" + phrase + "'");
-                commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-                phrase = spoken + " please";
-                commandSemantic = new SemanticResultValue(phrase, command);
-                if (debugVoice) writeLog("Voice Grammar:  '" + phrase + "'");
-                commandChoice.Add(new GrammarBuilder(commandSemantic));
-                counter += 2;
-            }
-            if (useName)
-            {
-                phrase = Properties.Settings.Default.computerName + " " + spoken;
-                commandSemantic = new SemanticResultValue(phrase, command);
-                if (debugVoice) writeLog("Voice Grammar:  '" + phrase + "'");
-                commandChoice.Add(new GrammarBuilder(commandSemantic));
-                counter += 1;
-            }
-            if (useName && bePolite)
-            {
-                phrase = Properties.Settings.Default.computerName + " please " + spoken;
-                commandSemantic = new SemanticResultValue(phrase, command);
-                if (debugVoice) writeLog("Voice Grammar:  '" + phrase + "'");
-                commandChoice.Add(new GrammarBuilder(commandSemantic));
-
-                phrase = Properties.Settings.Default.computerName + " " + spoken + " please";
-                commandSemantic = new SemanticResultValue(phrase, command);
-                if (debugVoice) writeLog("Voice Grammar:  '" + phrase + "'");
-                commandChoice.Add(new GrammarBuilder(commandSemantic));
-                counter += 2;
-            }
-            return counter;
         }
 
         public void voiceStartTheatre()
@@ -337,7 +290,6 @@ namespace BrodieTheatre
                 }
                 ));
                 RecognizedPhrase phrase = e.Result.Alternates[0];
-
 
                 if (e.Result.Semantics.ContainsKey("Check Movie") && labelKodiPlaybackStatus.Text != "Playing")
                 {
@@ -393,8 +345,8 @@ namespace BrodieTheatre
                         {
                             List<string> startMovie = new List<string>(new string[]
                             {
-                                    "Starting Movie ",
-                                    "Queuing up "
+                                "Starting Movie ",
+                                "Queuing up "
                             });
                             int r = random.Next(startMovie.Count);
 
@@ -433,7 +385,6 @@ namespace BrodieTheatre
                         {
                             formMain.sayAcknowledgement();
                             formMain.labelLastVoiceCommand.Text = "Turn on theatre";
-
                             formMain.voiceStartTheatre();
                             formMain.writeLog("Voice:  Processed 'Turn on theatre'");
                         }
@@ -557,7 +508,6 @@ namespace BrodieTheatre
                                 List<string> cancel = new List<string>(new string[] { "Cancelling Playback", "Playback Aborted", "Ok" });
                                 int r = random.Next(cancel.Count);
                                 speakText(cancel[r]);
-
                             }
                             formMain.labelLastVoiceCommand.Text = "Cancel playback";
                             formMain.writeLog("Voice:  Processed 'Cancel playback'");

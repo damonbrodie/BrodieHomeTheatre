@@ -91,8 +91,7 @@ namespace BrodieTheatre
 
             if (address == Properties.Settings.Default.trayAddress)
             {
-                level = insteonProcessDimmerMessage(desc, address);
-                
+                level = insteonProcessDimmerMessage(desc, address);     
                 if (level >= 0)
                 {
                     formMain.BeginInvoke(new Action(() =>
@@ -111,9 +110,7 @@ namespace BrodieTheatre
                         ));
                     }
                 }
-               
             }
-
             else if (address == Properties.Settings.Default.potsAddress)
             {
                 level = insteonProcessDimmerMessage(desc, address);            
@@ -242,7 +239,6 @@ namespace BrodieTheatre
                     {
                         lights[address] = -1;
                         writeLog("Insteon:  Set light '" + address + "' to level '" + level.ToString() + "'");
-
                         if (toInt > 0)
                         {
                             resetGlobalTimer();
