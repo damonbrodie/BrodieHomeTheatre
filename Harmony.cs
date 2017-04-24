@@ -27,6 +27,7 @@ namespace BrodieTheatre
             var currentActivityID = "";
             formMain.BeginInvoke(new Action(() =>
             {
+                formMain.timerHarmonyPoll.Enabled = false;
                 formMain.writeLog("Harmony:  Connecting to Hub");
             }
             ));
@@ -56,6 +57,12 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 { 
                     formMain.harmonyUpdateActivities(currentActivityID);
+                }
+                ));
+                await doDelay(30000);
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    formMain.timerHarmonyPoll.Enabled = true;
                 }
                 ));
             }
@@ -88,13 +95,7 @@ namespace BrodieTheatre
             while (counter < 3 && ! finished)
             {
                 try
-                {
-                    formMain.BeginInvoke(new Action(() =>
-                    {
-                        formMain.toolStripStatus.Text = "Updating Activities";
-                        formMain.writeLog("Harmony:  Updating Activities");
-                    }
-                    ));
+                { 
                     var harmonyConfig = await Program.Client.GetConfigAsync();
 
                     formMain.BeginInvoke(new Action(() =>
@@ -118,21 +119,18 @@ namespace BrodieTheatre
                                 formMain.listBoxActivities.Items.Add(item);
                             }
                         }
-                        formMain.writeLog("Harmony:  Activities updated");
                         finished = true;
                     }
                     ));
                 }
-
-                catch (Exception ex)
+                catch
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                    formMain.writeLog("Harmony:  Cannot update Harmony Activities");
-                    formMain.writeLog("Harmony:  Error - " + ex.ToString());
-                        counter += 1;
+                        formMain.writeLog("Harmony:  Cannot update Harmony Activities");
                     }
                     ));
+                    counter += 1;
                 }
             }
         }
@@ -255,6 +253,30 @@ namespace BrodieTheatre
                 }
             }
             writeLog("Harmony:  Unknown Activity - cound not start by Name");
+        }
+
+        private async void timerHarmonyPoll_Tick(object sender, EventArgs e)
+        {
+            var currentActivityID = "";
+            bool error = false;
+            try
+            {
+                currentActivityID = await Program.Client.GetCurrentActivityAsync();
+            }
+            catch
+            {
+                error = true;
+            }
+            await doDelay(3000);
+            formMain.BeginInvoke(new Action(() =>
+            {
+                if (!error)
+                { 
+                    formMain.toolStripStatus.Text = "Poll Harmony Hub for updated Activities";
+                    formMain.harmonyUpdateActivities(currentActivityID);
+                }
+            }
+            ));
         }
     }
 }

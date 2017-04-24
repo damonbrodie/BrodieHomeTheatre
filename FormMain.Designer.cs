@@ -103,6 +103,7 @@
             this.timerKodiPoll = new System.Windows.Forms.Timer(this.components);
             this.timerInsteonMotionLatch = new System.Windows.Forms.Timer(this.components);
             this.timerInsteonPoll = new System.Windows.Forms.Timer(this.components);
+            this.timerHarmonyPoll = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -770,6 +771,11 @@
             this.timerInsteonPoll.Interval = 60000;
             this.timerInsteonPoll.Tick += new System.EventHandler(this.timerInsteonPoll_Tick);
             // 
+            // timerHarmonyPoll
+            // 
+            this.timerHarmonyPoll.Interval = 60000;
+            this.timerHarmonyPoll.Tick += new System.EventHandler(this.timerHarmonyPoll_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -892,5 +898,6 @@
         private System.Windows.Forms.Label labelListeningStatus;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Timer timerInsteonPoll;
+        private System.Windows.Forms.Timer timerHarmonyPoll;
     }
 }

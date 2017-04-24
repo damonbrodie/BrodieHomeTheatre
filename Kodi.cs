@@ -438,5 +438,33 @@ namespace BrodieTheatre
                     break;
             }
         }
+
+        private void timerKodiConnect_Tick(object sender, EventArgs e)
+        {
+            kodiConnect();
+        }
+
+        private void timerKodiStartPlayback_Tick(object sender, EventArgs e)
+        {
+            timerKodiStartPlayback.Enabled = false;
+            if (kodiPlayNext != null)
+            {
+                kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiPlayNext.file + "\" }}, \"id\": \"1\"}");
+                writeLog("Kodi:  Starting movie: " + kodiPlayNext.name + " " + kodiPlayNext.file);
+                kodiPlayNext = null;
+            }
+        }
+
+        private void timerKodiPoll_Tick(object sender, EventArgs e)
+        {
+            // Periodically poll Kodi and retrieve the Player properties.  Use this to keep consistency
+            // in our view of the current Kodi status
+
+            if (labelKodiStatus.Text == "Connected")
+            {
+                kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetProperties\", \"params\": {\"playerid\": 1, \"properties\" : [\"type\", \"currentvideostream\", \"speed\"]}, \"id\": \"99\"}");
+                kodiSendGetMoviesRequest();
+            }
+        }
     }
 }
