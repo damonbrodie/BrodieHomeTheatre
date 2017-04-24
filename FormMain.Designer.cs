@@ -43,6 +43,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.progressBarInsteonMotionLatch = new System.Windows.Forms.ProgressBar();
             this.labelPots = new System.Windows.Forms.Label();
             this.labelTray = new System.Windows.Forms.Label();
             this.labelMotionSensorStatus = new System.Windows.Forms.Label();
@@ -55,6 +56,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.labelPLMstatus = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.labelKodiMoviesAvailable = new System.Windows.Forms.Label();
             this.labelKodiStatus = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.labelKodiPlaybackStatus = new System.Windows.Forms.Label();
@@ -87,6 +90,8 @@
             this.timerGlobal = new System.Windows.Forms.Timer(this.components);
             this.serialPortProjector = new System.IO.Ports.SerialPort(this.components);
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.labelListeningStatus = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.labelRoomOccupancy = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -97,7 +102,7 @@
             this.timerKodiStartPlayback = new System.Windows.Forms.Timer(this.components);
             this.timerKodiPoll = new System.Windows.Forms.Timer(this.components);
             this.timerInsteonMotionLatch = new System.Windows.Forms.Timer(this.components);
-            this.progressBarInsteonMotionLatch = new System.Windows.Forms.ProgressBar();
+            this.timerInsteonPoll = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -152,7 +157,7 @@
             this.listBoxActivities.FormattingEnabled = true;
             this.listBoxActivities.Location = new System.Drawing.Point(227, 33);
             this.listBoxActivities.Name = "listBoxActivities";
-            this.listBoxActivities.Size = new System.Drawing.Size(149, 121);
+            this.listBoxActivities.Size = new System.Drawing.Size(149, 147);
             this.listBoxActivities.TabIndex = 1;
             this.listBoxActivities.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxActivities_MouseDoubleClick);
             // 
@@ -181,7 +186,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBox1.Location = new System.Drawing.Point(12, 42);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(392, 168);
+            this.groupBox1.Size = new System.Drawing.Size(392, 200);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             // 
@@ -247,16 +252,23 @@
             this.groupBox2.Controls.Add(this.labelPLMstatus);
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox2.Location = new System.Drawing.Point(12, 226);
+            this.groupBox2.Location = new System.Drawing.Point(12, 263);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(392, 204);
+            this.groupBox2.Size = new System.Drawing.Size(392, 224);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
+            // 
+            // progressBarInsteonMotionLatch
+            // 
+            this.progressBarInsteonMotionLatch.Location = new System.Drawing.Point(227, 186);
+            this.progressBarInsteonMotionLatch.Name = "progressBarInsteonMotionLatch";
+            this.progressBarInsteonMotionLatch.Size = new System.Drawing.Size(92, 18);
+            this.progressBarInsteonMotionLatch.TabIndex = 18;
             // 
             // labelPots
             // 
             this.labelPots.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelPots.Location = new System.Drawing.Point(335, 125);
+            this.labelPots.Location = new System.Drawing.Point(335, 129);
             this.labelPots.Name = "labelPots";
             this.labelPots.Size = new System.Drawing.Size(35, 23);
             this.labelPots.TabIndex = 22;
@@ -266,7 +278,7 @@
             // labelTray
             // 
             this.labelTray.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelTray.Location = new System.Drawing.Point(335, 80);
+            this.labelTray.Location = new System.Drawing.Point(335, 85);
             this.labelTray.Name = "labelTray";
             this.labelTray.Size = new System.Drawing.Size(35, 23);
             this.labelTray.TabIndex = 21;
@@ -276,7 +288,7 @@
             // labelMotionSensorStatus
             // 
             this.labelMotionSensorStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelMotionSensorStatus.Location = new System.Drawing.Point(95, 176);
+            this.labelMotionSensorStatus.Location = new System.Drawing.Point(95, 185);
             this.labelMotionSensorStatus.Name = "labelMotionSensorStatus";
             this.labelMotionSensorStatus.Size = new System.Drawing.Size(120, 19);
             this.labelMotionSensorStatus.TabIndex = 8;
@@ -287,7 +299,7 @@
             // 
             this.trackBarPots.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarPots.LargeChange = 1;
-            this.trackBarPots.Location = new System.Drawing.Point(90, 126);
+            this.trackBarPots.Location = new System.Drawing.Point(90, 130);
             this.trackBarPots.Name = "trackBarPots";
             this.trackBarPots.Size = new System.Drawing.Size(239, 45);
             this.trackBarPots.TabIndex = 20;
@@ -297,7 +309,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(14, 179);
+            this.label12.Location = new System.Drawing.Point(14, 188);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(75, 13);
             this.label12.TabIndex = 14;
@@ -307,7 +319,7 @@
             // 
             this.trackBarTray.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarTray.LargeChange = 1;
-            this.trackBarTray.Location = new System.Drawing.Point(90, 81);
+            this.trackBarTray.Location = new System.Drawing.Point(90, 86);
             this.trackBarTray.Name = "trackBarTray";
             this.trackBarTray.Size = new System.Drawing.Size(239, 45);
             this.trackBarTray.TabIndex = 19;
@@ -317,7 +329,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(35, 130);
+            this.label9.Location = new System.Drawing.Point(35, 134);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(54, 13);
             this.label9.TabIndex = 18;
@@ -326,7 +338,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(30, 85);
+            this.label4.Location = new System.Drawing.Point(30, 90);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 13);
             this.label4.TabIndex = 17;
@@ -344,7 +356,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(27, 46);
+            this.label5.Location = new System.Drawing.Point(27, 48);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(62, 13);
             this.label5.TabIndex = 6;
@@ -354,7 +366,7 @@
             // 
             this.labelPLMstatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelPLMstatus.ForeColor = System.Drawing.Color.Maroon;
-            this.labelPLMstatus.Location = new System.Drawing.Point(95, 43);
+            this.labelPLMstatus.Location = new System.Drawing.Point(95, 45);
             this.labelPLMstatus.Name = "labelPLMstatus";
             this.labelPLMstatus.Size = new System.Drawing.Size(120, 19);
             this.labelPLMstatus.TabIndex = 3;
@@ -363,6 +375,8 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.labelKodiMoviesAvailable);
             this.groupBox3.Controls.Add(this.labelKodiStatus);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.labelKodiPlaybackStatus);
@@ -370,9 +384,28 @@
             this.groupBox3.Controls.Add(this.pictureBox3);
             this.groupBox3.Location = new System.Drawing.Point(426, 42);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(239, 102);
+            this.groupBox3.Size = new System.Drawing.Size(239, 122);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(8, 101);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(87, 13);
+            this.label16.TabIndex = 16;
+            this.label16.Text = "Movies Available";
+            // 
+            // labelKodiMoviesAvailable
+            // 
+            this.labelKodiMoviesAvailable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelKodiMoviesAvailable.Location = new System.Drawing.Point(101, 98);
+            this.labelKodiMoviesAvailable.Name = "labelKodiMoviesAvailable";
+            this.labelKodiMoviesAvailable.Size = new System.Drawing.Size(120, 19);
+            this.labelKodiMoviesAvailable.TabIndex = 15;
+            this.labelKodiMoviesAvailable.Text = "0";
+            this.labelKodiMoviesAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelKodiStatus
             // 
@@ -407,7 +440,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(45, 68);
+            this.label6.Location = new System.Drawing.Point(45, 71);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 11;
@@ -433,7 +466,7 @@
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.pictureBox4);
-            this.groupBox4.Location = new System.Drawing.Point(425, 155);
+            this.groupBox4.Location = new System.Drawing.Point(425, 184);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(238, 174);
             this.groupBox4.TabIndex = 10;
@@ -532,7 +565,7 @@
             // labelLastVoiceCommand
             // 
             this.labelLastVoiceCommand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelLastVoiceCommand.Location = new System.Drawing.Point(103, 33);
+            this.labelLastVoiceCommand.Location = new System.Drawing.Point(103, 89);
             this.labelLastVoiceCommand.Name = "labelLastVoiceCommand";
             this.labelLastVoiceCommand.Size = new System.Drawing.Size(120, 19);
             this.labelLastVoiceCommand.TabIndex = 16;
@@ -542,7 +575,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(20, 36);
+            this.label14.Location = new System.Drawing.Point(20, 92);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(77, 13);
             this.label14.TabIndex = 15;
@@ -573,7 +606,7 @@
             this.toolStripProgressBarGlobal,
             this.toolStripStatusLabel2,
             this.toolStripStatus});
-            this.statusStrip.Location = new System.Drawing.Point(0, 447);
+            this.statusStrip.Location = new System.Drawing.Point(0, 501);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(675, 24);
             this.statusStrip.SizingGrip = false;
@@ -630,21 +663,42 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.labelListeningStatus);
+            this.groupBox5.Controls.Add(this.label17);
             this.groupBox5.Controls.Add(this.labelRoomOccupancy);
             this.groupBox5.Controls.Add(this.label10);
             this.groupBox5.Controls.Add(this.pictureBox5);
             this.groupBox5.Controls.Add(this.label14);
             this.groupBox5.Controls.Add(this.labelLastVoiceCommand);
-            this.groupBox5.Location = new System.Drawing.Point(425, 340);
+            this.groupBox5.Location = new System.Drawing.Point(425, 368);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(239, 90);
+            this.groupBox5.Size = new System.Drawing.Size(239, 118);
             this.groupBox5.TabIndex = 17;
             this.groupBox5.TabStop = false;
+            // 
+            // labelListeningStatus
+            // 
+            this.labelListeningStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelListeningStatus.Location = new System.Drawing.Point(103, 60);
+            this.labelListeningStatus.Name = "labelListeningStatus";
+            this.labelListeningStatus.Size = new System.Drawing.Size(120, 19);
+            this.labelListeningStatus.TabIndex = 22;
+            this.labelListeningStatus.Text = "Not Listening";
+            this.labelListeningStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(15, 63);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(82, 13);
+            this.label17.TabIndex = 21;
+            this.label17.Text = "Listening Status";
             // 
             // labelRoomOccupancy
             // 
             this.labelRoomOccupancy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelRoomOccupancy.Location = new System.Drawing.Point(103, 62);
+            this.labelRoomOccupancy.Location = new System.Drawing.Point(103, 31);
             this.labelRoomOccupancy.Name = "labelRoomOccupancy";
             this.labelRoomOccupancy.Size = new System.Drawing.Size(120, 19);
             this.labelRoomOccupancy.TabIndex = 20;
@@ -656,7 +710,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(35, 65);
+            this.label10.Location = new System.Drawing.Point(35, 34);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(62, 13);
             this.label10.TabIndex = 19;
@@ -710,19 +764,18 @@
             this.timerInsteonMotionLatch.Interval = 1000;
             this.timerInsteonMotionLatch.Tick += new System.EventHandler(this.timerInsteonMotionLatch_Tick);
             // 
-            // progressBarInsteonMotionLatch
+            // timerInsteonPoll
             // 
-            this.progressBarInsteonMotionLatch.Location = new System.Drawing.Point(227, 177);
-            this.progressBarInsteonMotionLatch.Name = "progressBarInsteonMotionLatch";
-            this.progressBarInsteonMotionLatch.Size = new System.Drawing.Size(92, 18);
-            this.progressBarInsteonMotionLatch.TabIndex = 18;
+            this.timerInsteonPoll.Enabled = true;
+            this.timerInsteonPoll.Interval = 60000;
+            this.timerInsteonPoll.Tick += new System.EventHandler(this.timerInsteonPoll_Tick);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(675, 471);
+            this.ClientSize = new System.Drawing.Size(675, 525);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox4);
@@ -834,5 +887,10 @@
         private System.Windows.Forms.Timer timerKodiPoll;
         private System.Windows.Forms.Timer timerInsteonMotionLatch;
         private System.Windows.Forms.ProgressBar progressBarInsteonMotionLatch;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label labelKodiMoviesAvailable;
+        private System.Windows.Forms.Label labelListeningStatus;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Timer timerInsteonPoll;
     }
 }

@@ -74,114 +74,126 @@ namespace BrodieTheatre
                 labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
 
                 powerlineModem = new Plm(Properties.Settings.Default.plmPort);
-                powerlineModem.Network.StandardMessageReceived
-                    += new StandardMessageReceivedHandler((s, eventReceive) =>
-                    {
-                        string desc = eventReceive.Description;
-                        string address = eventReceive.PeerId.ToString();
+                powerlineModem.Network.StandardMessageReceived += Network_StandardMessageReceived;
 
-                        int level;
-
-                        if (address == Properties.Settings.Default.trayAddress)
-                        {
-                            level = insteonProcessDimmerMessage(desc, address);
-                            formMain.BeginInvoke(new Action(() =>
-                            {
-                                if (level >= 0)
-                                {
-                                    formMain.writeLog("Insteon:  Received Tray dimmer update from PLM - level '" + level.ToString() + "'");
-                                    formMain.trackBarTray.Value = level;
-                                    if (level > 0)
-                                    {
-                                        //Only need to reset the timer if it is on
-                                        formMain.resetGlobalTimer();
-                                    }
-                                }
-                            }
-                            ));
-                        }
-
-                        else if (address == Properties.Settings.Default.potsAddress)
-                        {
-                            level = insteonProcessDimmerMessage(desc, address);
-                            formMain.BeginInvoke(new Action(() =>
-                            {        
-                                if (level >= 0)
-                                {
-                                    formMain.writeLog("Insteon:  Received Pots dimmer update from PLM - level '" + level.ToString() + "'");
-                                    formMain.trackBarPots.Value = level;
-                                    if (level > 0)
-                                    {
-                                        //Only need to reset the timer if it is on
-                                        formMain.resetGlobalTimer();
-                                    }
-                                }
-                            }
-                            ));
-                        }
-                        else if (address == Properties.Settings.Default.motionSensorAddress)
-                        {
-                            int state = insteonProcessMotionSensorMessage(desc, address);
-                            if (state == 1)
-                            { //Motion Detected
-                                formMain.BeginInvoke(new Action(() =>
-                                {
-                                    formMain.insteonDoMotion();
-                                }
-                                ));
-                            }
-                            else if (state == 0)
-                            { //No Motion Detected
-                                formMain.BeginInvoke(new Action(() =>
-                                {
-                                    if (labelMotionSensorStatus.Text != "No Motion")
-                                    {
-                                        formMain.writeLog("Insteon:  Motion Sensor reported 'No Motion Detected'");
-                                        formMain.progressBarInsteonMotionLatch.Value = formMain.progressBarInsteonMotionLatch.Maximum;
-                                        formMain.insteonMotionLatchExpires = DateTime.Now.AddMinutes(Properties.Settings.Default.InsteonMotionLatch);
-                                        formMain.insteonMotionLatchActive = true;
-                                        formMain.labelMotionSensorStatus.Text = "No Motion";
-                                    }
-                                }
-                                ));
-                            }
-                        }
-                        else if (address == Properties.Settings.Default.doorSensorAddress)
-                        {
-                            int state = insteonProcessMotionSensorMessage(desc, address);
-                            if (state == 1)
-                            { //Door Open Detected
-                                formMain.BeginInvoke(new Action(() =>
-                                {
-                                    formMain.writeLog("Insteon:  Door Opened");
-                                    formMain.toolStripStatus.Text = "Door Opened";
-                                }
-                                ));
-                            }
-                            else if (state == 0)
-                            { //Door Closed
-                                formMain.BeginInvoke(new Action(() =>
-                                {
-                                    formMain.writeLog("Insteon:  Door Closed");
-                                    formMain.toolStripStatus.Text = "Door Closed";
-                                }
-                                ));
-                            }
-                            // No matter if the door is opened or closed, we turn on the lights if the room is idle.
-                            formMain.BeginInvoke(new Action(() =>
-                            {
-                                if (!harmonyIsActivityStarted() && formMain.labelKodiPlaybackStatus.Text == "Stopped" && formMain.labelRoomOccupancy.Text != "Occupied")
-                                {
-                                    formMain.lightsToEnteringLevel();
-                                }
-                            }
-                            ));
-                        }
-                    });
                 timerPLMreceive.Enabled = true;
                 queueLightLevel(Properties.Settings.Default.potsAddress, 0);
                 queueLightLevel(Properties.Settings.Default.trayAddress, 0);
                 timerCheckPLM.Enabled = true;
+            }
+        }
+
+        private void Network_StandardMessageReceived(object sender, StandardMessageReceivedArgs e)
+        {                  
+            string desc = e.Description;
+            string address = e.PeerId.ToString();
+            int level;
+
+            if (address == Properties.Settings.Default.trayAddress)
+            {
+                level = insteonProcessDimmerMessage(desc, address);
+                
+                if (level >= 0)
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.writeLog("Insteon:  Received Tray dimmer update from PLM - level '" + level.ToString() + "'");
+                        formMain.trackBarTray.Value = level;
+                    }
+                    ));
+                    if (level > 0)
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            //Only need to reset the timer if it is on
+                            formMain.resetGlobalTimer();
+                        }
+                        ));
+                    }
+                }
+               
+            }
+
+            else if (address == Properties.Settings.Default.potsAddress)
+            {
+                level = insteonProcessDimmerMessage(desc, address);            
+                if (level >= 0)
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.writeLog("Insteon:  Received Pots dimmer update from PLM - level '" + level.ToString() + "'");
+                        formMain.trackBarPots.Value = level;
+                    }
+                    ));
+                    if (level > 0)
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            //Only need to reset the timer if it is on
+                            formMain.resetGlobalTimer();
+                        }
+                        ));
+                    }
+                }
+            }
+            else if (address == Properties.Settings.Default.motionSensorAddress)
+            {
+                int state = insteonProcessMotionSensorMessage(desc, address);
+                if (state == 1)
+                { //Motion Detected
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.insteonDoMotion();
+                    }
+                    ));
+                }
+                else if (state == 0)
+                { //No Motion Detected
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        if (formMain.labelMotionSensorStatus.Text != "No Motion")
+                        {
+                            formMain.writeLog("Insteon:  Motion Sensor reported 'No Motion Detected'");
+                            formMain.progressBarInsteonMotionLatch.Value = formMain.progressBarInsteonMotionLatch.Maximum;
+                            formMain.insteonMotionLatchExpires = DateTime.Now.AddMinutes(Properties.Settings.Default.InsteonMotionLatch);
+                            formMain.insteonMotionLatchActive = true;
+                            formMain.labelMotionSensorStatus.Text = "No Motion";
+                        }
+                    }
+                    ));
+                }
+            }
+            else if (address == Properties.Settings.Default.doorSensorAddress)
+            {
+                int state = insteonProcessMotionSensorMessage(desc, address);
+                if (state == 1)
+                { //Door Open Detected
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.writeLog("Insteon:  Door Opened");
+                        formMain.toolStripStatus.Text = "Door Opened";
+                    }
+                    ));
+                }
+                else if (state == 0)
+                { //Door Closed
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.writeLog("Insteon:  Door Closed");
+                        formMain.toolStripStatus.Text = "Door Closed";
+                    }
+                    ));
+                }
+                // No matter if the door is opened or closed, we turn on the lights if the room is idle.
+
+                if (!harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped" && labelRoomOccupancy.Text != "Occupied")
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.lightsToEnteringLevel();
+                    }
+                    ));
+                }
             }
         }
 
@@ -196,11 +208,13 @@ namespace BrodieTheatre
                 byte onLevel;
 
                 lightingControl.TryGetOnLevel(out onLevel);
+
                 int integerLevel = Convert.ToInt32(onLevel);
                 float decLevel = (float)integerLevel / 254 * 10;
 
                 level = (int)decLevel;
                 writeLog("Insteon:  Get light '" + address + "' at level '" + level.ToString() + "'");
+                writeLog("raw onlevel " + onLevel.ToString());
             }
             return level;
         }
@@ -215,7 +229,7 @@ namespace BrodieTheatre
                 int counter = 0;
 
                 while (!finished && counter < 3)
-                { 
+                {
                     var lightingControl = device as DimmableLightingControl;
                     float theVal = (level * 254 / 10) + 1;
                     int toInt = (int)theVal;
@@ -259,25 +273,14 @@ namespace BrodieTheatre
             }
         }
 
-        private async void timerCheckPLM_Tick(object sender, EventArgs e)
+        private void timerCheckPLM_Tick(object sender, EventArgs e)
         {
             plmConnected = true;
-
             timerCheckPLM.Enabled = false;
-            formMain.BeginInvoke(new Action(() =>
-            {
-                labelPLMstatus.Text = "Connected";
-                writeLog("Insteon:  Connected to PLM");
-                labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
-                trackBarTray.Value = insteonGetLightLevel(Properties.Settings.Default.trayAddress);
-            }
-            ));
-            await doDelay(200);
-            formMain.BeginInvoke(new Action(() =>
-            {
-                trackBarPots.Value = insteonGetLightLevel(Properties.Settings.Default.potsAddress);
-            }
-            ));
+            formMain.labelPLMstatus.Text = "Connected";
+            formMain.writeLog("Insteon:  Connected to PLM");
+            formMain.labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
+            formMain.insteonPollLights();
         }
 
         private void timerInsteonMotionLatch_Tick(object sender, EventArgs e)
@@ -291,7 +294,6 @@ namespace BrodieTheatre
                     writeLog("Insteon:  Latch timer expired - setting room vacant");
                     labelRoomOccupancy.Text = "Vacant";
                     labelMotionSensorStatus.Text = "No Motion";
-
                 }
                 else
                 {
@@ -314,6 +316,29 @@ namespace BrodieTheatre
                 labelRoomOccupancy.Text = "Occupied";
                 resetGlobalTimer();
                 insteonMotionLatchActive = false;
+            }
+        }
+
+        private async void insteonPollLights()
+        {
+            formMain.BeginInvoke(new Action(() =>
+            {
+                formMain.trackBarTray.Value = insteonGetLightLevel(Properties.Settings.Default.trayAddress);
+            }
+            ));   
+            await doDelay(1200);
+            formMain.BeginInvoke(new Action(() =>
+            {
+                formMain.trackBarPots.Value = insteonGetLightLevel(Properties.Settings.Default.potsAddress);
+            }
+            ));
+        }
+        private void timerInsteonPoll_Tick(object sender, EventArgs e)
+        {
+            if (labelPLMstatus.Text == "Connected")
+            {
+                toolStripStatus.Text = "Polling for lights status";
+                insteonPollLights();
             }
         }
     }

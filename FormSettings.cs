@@ -211,7 +211,6 @@ namespace BrodieTheatre
             {
                 speechSynthesizer = new SpeechSynthesizer();
 
-
                 foreach (InstalledVoice voice in speechSynthesizer.GetInstalledVoices())
                 {
                     VoiceInfo info = voice.VoiceInfo;
@@ -221,12 +220,9 @@ namespace BrodieTheatre
                         comboBoxTextToSpeechVoice.SelectedItem = info.Id;
                     }
                 }
- 
             }
             catch
-            {
-
-            }
+            { }
         }
 
         private void trackBarTrayPlayback_ValueChanged(object sender, EventArgs e)
@@ -306,7 +302,6 @@ namespace BrodieTheatre
                     }
                 }
                 speechSynthesizer.SetOutputToDefaultAudioDevice();
-
                 speechSynthesizer.SpeakAsync("Maybe we should watch the movie Rogue One");
             }
             catch (Exception ex)

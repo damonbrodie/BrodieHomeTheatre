@@ -116,6 +116,7 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.speechSynthesizer = new SpeechSynthesizer();
+                formMain.speechSynthesizer.TtsVolume = 100;
                 formMain.setVoice();
             }
             ));
@@ -258,7 +259,7 @@ namespace BrodieTheatre
                 try
                 {
                     recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-                    labelLastVoiceCommand.Text = "Listening";
+                    labelListeningStatus.Text = "Listening";
                 }
                 catch
                 {
@@ -273,7 +274,7 @@ namespace BrodieTheatre
                 try
                 {
                     recognitionEngine.RecognizeAsyncStop();
-                    labelLastVoiceCommand.Text = "Stopped listening";
+                    labelListeningStatus.Text = "Stopped listening";
                 }
                 catch
                 {
