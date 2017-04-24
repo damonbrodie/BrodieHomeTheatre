@@ -283,13 +283,11 @@ namespace BrodieTheatre
                 DateTime rightNow = DateTime.Now;
                 if (insteonMotionLatchExpires < rightNow)
                 {
-                    if (labelMotionSensorStatus.Text != "No Motion")
-                    {
-                        insteonMotionLatchActive = false;
-                        writeLog("Insteon:  No Motion Detected");
-                        labelRoomOccupancy.Text = "Vacant";
-                        labelMotionSensorStatus.Text = "No Motion";
-                    }
+                    insteonMotionLatchActive = false;
+                    writeLog("Insteon:  Latch timer expired - setting room vacant");
+                    labelRoomOccupancy.Text = "Vacant";
+                    labelMotionSensorStatus.Text = "No Motion";
+
                 }
                 else
                 {
