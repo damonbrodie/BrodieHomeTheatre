@@ -49,7 +49,6 @@ namespace BrodieTheatre
             Form formSettings = new FormSettings();
             formSettings.ShowDialog();
 
-
             // Reset things after the settings have been saved.
             if (currentPLMport != Properties.Settings.Default.plmPort)
             {
@@ -263,7 +262,7 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    labelLastVoiceCommand.Text = "Grammar not loaded";
+                    labelLastVoiceCommand.Text = "Can't turn speech recognizer on";
                     writeLog("Voice:  Can't start Speech Recognizer");
                 }
 
@@ -278,7 +277,7 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    writeLog("Voice:  Failed to pause Recognition Engine");
+                    writeLog("Voice:  Failed to pause recognition engine");
                 }
 
                 if (labelKodiPlaybackStatus.Text == "Stopped")

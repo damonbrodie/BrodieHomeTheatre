@@ -42,7 +42,11 @@ namespace BrodieTheatre
         public int insteonProcessMotionSensorMessage(string message, string address)
         {
             int state = -1;
-            //writeLog("Insteon:  Received from address '" + address + "' message '" + message + "'");
+            if (message == string.Empty)
+            {
+                return state;
+            }
+            writeLog("Insteon:  Process motion sensor from address '" + address + "' message '" + message + "'");
             switch (message)
             {
                 case "Turn On":
