@@ -39,14 +39,17 @@ namespace BrodieTheatre
             return level;
         }
 
-        public bool insteonProcessMotionSensorMessage(string message, string address)
+        public int insteonProcessMotionSensorMessage(string message, string address)
         {
-            bool state = false;
-            writeLog("Insteon:  Received from address '" + address + "' message '" + message + "'");
+            int state = -1;
+            //writeLog("Insteon:  Received from address '" + address + "' message '" + message + "'");
             switch (message)
             {
                 case "Turn On":
-                    state = true;
+                    state = 1;
+                    break;
+                case "Turn Off":
+                    state = 0;
                     break;
             }
             return state;
@@ -114,7 +117,8 @@ namespace BrodieTheatre
                         }
                         else if (address == Properties.Settings.Default.motionSensorAddress)
                         {
-                            if (insteonProcessMotionSensorMessage(desc, address))
+                            int state = insteonProcessMotionSensorMessage(desc, address);
+                            if (state == 1)
                             { //Motion Detected
                                 formMain.BeginInvoke(new Action(() =>
                                 {
@@ -122,29 +126,26 @@ namespace BrodieTheatre
                                 }
                                 ));
                             }
-                            else
+                            else if (state == 0)
                             { //No Motion Detected
-                                
-                                //Ignore this - use our own latch
-
-
-                                /*
                                 formMain.BeginInvoke(new Action(() =>
                                 {
                                     if (labelMotionSensorStatus.Text != "No Motion")
                                     {
-                                        formMain.writeLog("Insteon:  No Motion Detected");
-                                        formMain.labelRoomOccupancy.Text = "Vacant";
+                                        formMain.writeLog("Insteon:  Motion Sensor reported 'No Motion Detected'");
+                                        formMain.progressBarInsteonMotionLatch.Value = formMain.progressBarInsteonMotionLatch.Maximum;
+                                        formMain.insteonMotionLatchExpires = DateTime.Now.AddMinutes(Properties.Settings.Default.InsteonMotionLatch);
+                                        formMain.insteonMotionLatchActive = true;
                                         formMain.labelMotionSensorStatus.Text = "No Motion";
                                     }
                                 }
                                 ));
-                                */
                             }
                         }
                         else if (address == Properties.Settings.Default.doorSensorAddress)
                         {
-                            if (insteonProcessMotionSensorMessage(desc, address))
+                            int state = insteonProcessMotionSensorMessage(desc, address);
+                            if (state == 1)
                             { //Door Open Detected
                                 formMain.BeginInvoke(new Action(() =>
                                 {
@@ -153,7 +154,7 @@ namespace BrodieTheatre
                                 }
                                 ));
                             }
-                            else
+                            else if (state == 0)
                             { //Door Closed
                                 formMain.BeginInvoke(new Action(() =>
                                 {
@@ -306,13 +307,11 @@ namespace BrodieTheatre
         {
             if (labelMotionSensorStatus.Text != "Motion Detected")
             {
-                writeLog("Insteon:  Motion Detected");
+                writeLog("Insteon:  Motion Sensor reported 'Motion Detected'");
                 labelMotionSensorStatus.Text = "Motion Detected";
                 labelRoomOccupancy.Text = "Occupied";
-                progressBarInsteonMotionLatch.Value = formMain.progressBarInsteonMotionLatch.Maximum;
-                insteonMotionLatchExpires = DateTime.Now.AddMinutes(Properties.Settings.Default.InsteonMotionLatch);
-                insteonMotionLatchActive = true;
                 resetGlobalTimer();
+                insteonMotionLatchActive = false;
             }
         }
     }
