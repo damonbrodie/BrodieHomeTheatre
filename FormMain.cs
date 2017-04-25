@@ -78,27 +78,7 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.writeLog("------ Brodie Theatre Starting Up ------");
-                formMain.timerSetLights.Enabled = true;
-                RecognizerInfo info = null;
-                foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers())
-                {
-                    if (ri.Culture.TwoLetterISOLanguageName.Equals("en"))
-                    {
-                        info = ri;
-                        break;
-                    }
-                }
-                if (info != null)
-                {
-                    formMain.recognitionEngine = new SpeechRecognitionEngine(info);
-                    formMain.recognitionEngine.SetInputToDefaultAudioDevice();
-                    formMain.recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
-                }
-                else
-                {
-                    formMain.writeLog("Voice:  Unable to load Speech Recognition Engine.  Shutting Down.");
-                    Application.Exit();
-                }
+                formMain.timerSetLights.Enabled = true; 
             }));
 
             currentPLMport = Properties.Settings.Default.plmPort;
@@ -252,6 +232,28 @@ namespace BrodieTheatre
                 }
                 try
                 {
+                    RecognizerInfo info = null;
+                    foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers())
+                    {
+                        if (ri.Culture.TwoLetterISOLanguageName.Equals("en"))
+                        {
+                            info = ri;
+                            break;
+                        }
+                    }
+                    if (info != null)
+                    {
+                        recognitionEngine = new SpeechRecognitionEngine(info);
+                        recognitionEngine.SetInputToDefaultAudioDevice();
+                        recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
+                    }
+                    else
+                    {
+                        writeLog("Voice:  Unable to load Speech Recognition Engine.  Shutting Down.");
+                        Application.Exit();
+                    }
+                    loadVoiceCommands();
+
                     recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
                     labelListeningStatus.Text = "Listening";
                 }
@@ -268,6 +270,7 @@ namespace BrodieTheatre
                 try
                 {
                     recognitionEngine.RecognizeAsyncStop();
+                    recognitionEngine.UnloadAllGrammars();
                     labelListeningStatus.Text = "Stopped listening";
                 }
                 catch

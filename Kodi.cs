@@ -477,10 +477,5 @@ namespace BrodieTheatre
                 kodiSendGetMoviesRequest();
             }
         }
-
-        private void labelKodiMediaAvailable_TextChanged(object sender, EventArgs e)
-        {
-            loadVoiceCommands();
-        }
     }
 }

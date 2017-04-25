@@ -407,7 +407,6 @@
             this.labelKodiMediaAvailable.TabIndex = 15;
             this.labelKodiMediaAvailable.Text = "0 movies";
             this.labelKodiMediaAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelKodiMediaAvailable.TextChanged += new System.EventHandler(this.labelKodiMediaAvailable_TextChanged);
             // 
             // labelKodiStatus
             // 
