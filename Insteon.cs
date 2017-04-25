@@ -47,7 +47,7 @@ namespace BrodieTheatre
             {
                 return state;
             }
-            writeLog("Insteon:  Process motion sensor from address '" + address + "' message '" + message + "'");
+            //writeLog("Insteon:  Process motion sensor from address '" + address + "' message '" + message + "'");
             switch (message)
             {
                 case "Turn On":
