@@ -13,9 +13,7 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-
         public string kodiBehindScreen = @"smb://10.0.0.7/Pictures/ht_0.jpg";
-
         public int kodiConnectAttempts = 0;
         public string currentKodiIP = "";
         public int currentKodiPort = 0;
@@ -46,7 +44,6 @@ namespace BrodieTheatre
         public List<PartialMovieEntry> moviesPartialNames = new List<PartialMovieEntry>();
         public List<PartialMovieEntry> moviesDuplicateNames = new List<PartialMovieEntry>();
         public bool kodiLoadingMovies = false;
-
 
         private void kodiConnect()
         {
@@ -80,7 +77,7 @@ namespace BrodieTheatre
                 catch { }
             }
 
-            // Backoff the connection attempt rate
+            // Back-off the connection attempt rate
             kodiConnectAttempts += 1;
             if (kodiConnectAttempts > 15)
             {
