@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -34,6 +35,13 @@ namespace BrodieTheatre
         async Task doDelay(int ms)
         {
             await Task.Delay(ms);
+        }
+
+        public void playAlert()
+        {
+            Stream str = Properties.Resources.alert;
+            SoundPlayer snd = new SoundPlayer(str);
+            snd.Play();
         }
     }
 }

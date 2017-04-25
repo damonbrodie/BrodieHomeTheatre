@@ -256,6 +256,7 @@ namespace BrodieTheatre
 
                     recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
                     labelListeningStatus.Text = "Listening";
+                    playAlert();
                 }
                 catch
                 {

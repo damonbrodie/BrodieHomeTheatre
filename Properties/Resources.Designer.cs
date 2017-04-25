@@ -59,5 +59,14 @@ namespace BrodieTheatre.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream alert {
+            get {
+                return ResourceManager.GetStream("alert", resourceCulture);
+            }
+        }
     }
 }
