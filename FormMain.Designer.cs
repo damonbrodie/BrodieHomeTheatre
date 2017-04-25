@@ -57,7 +57,7 @@
             this.labelPLMstatus = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.labelKodiMoviesAvailable = new System.Windows.Forms.Label();
+            this.labelKodiMediaAvailable = new System.Windows.Forms.Label();
             this.labelKodiStatus = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.labelKodiPlaybackStatus = new System.Windows.Forms.Label();
@@ -377,7 +377,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label16);
-            this.groupBox3.Controls.Add(this.labelKodiMoviesAvailable);
+            this.groupBox3.Controls.Add(this.labelKodiMediaAvailable);
             this.groupBox3.Controls.Add(this.labelKodiStatus);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.labelKodiPlaybackStatus);
@@ -392,22 +392,22 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(8, 101);
+            this.label16.Location = new System.Drawing.Point(13, 101);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(87, 13);
+            this.label16.Size = new System.Drawing.Size(82, 13);
             this.label16.TabIndex = 16;
-            this.label16.Text = "Movies Available";
+            this.label16.Text = "Media Available";
             // 
-            // labelKodiMoviesAvailable
+            // labelKodiMediaAvailable
             // 
-            this.labelKodiMoviesAvailable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelKodiMoviesAvailable.Location = new System.Drawing.Point(101, 98);
-            this.labelKodiMoviesAvailable.Name = "labelKodiMoviesAvailable";
-            this.labelKodiMoviesAvailable.Size = new System.Drawing.Size(120, 19);
-            this.labelKodiMoviesAvailable.TabIndex = 15;
-            this.labelKodiMoviesAvailable.Text = "0";
-            this.labelKodiMoviesAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelKodiMoviesAvailable.TextChanged += new System.EventHandler(this.labelKodiMoviesAvailable_TextChanged);
+            this.labelKodiMediaAvailable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelKodiMediaAvailable.Location = new System.Drawing.Point(101, 98);
+            this.labelKodiMediaAvailable.Name = "labelKodiMediaAvailable";
+            this.labelKodiMediaAvailable.Size = new System.Drawing.Size(120, 19);
+            this.labelKodiMediaAvailable.TabIndex = 15;
+            this.labelKodiMediaAvailable.Text = "0 movies";
+            this.labelKodiMediaAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelKodiMediaAvailable.TextChanged += new System.EventHandler(this.labelKodiMediaAvailable_TextChanged);
             // 
             // labelKodiStatus
             // 
@@ -442,7 +442,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(45, 71);
+            this.label6.Location = new System.Drawing.Point(45, 68);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 11;
@@ -895,7 +895,7 @@
         private System.Windows.Forms.Timer timerInsteonMotionLatch;
         private System.Windows.Forms.ProgressBar progressBarInsteonMotionLatch;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label labelKodiMoviesAvailable;
+        private System.Windows.Forms.Label labelKodiMediaAvailable;
         private System.Windows.Forms.Label labelListeningStatus;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Timer timerInsteonPoll;

@@ -62,7 +62,7 @@ namespace BrodieTheatre
             }
         }
 
-        private async void SerialPortProjector_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        private void SerialPortProjector_DataReceived(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             string response = serialPortProjector.ReadExisting();
             switch (projectorLastCommand)
@@ -75,8 +75,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelProjectorPower.Text = "On";
                             formMain.buttonProjectorPower.Text = "Power Off";
-                            formMain.writeLog("Projector:  Received 'Power On' message");
-                        }
+                                                    }
                         ));
                     }
                     //  Projector is in Power off State
@@ -86,16 +85,6 @@ namespace BrodieTheatre
                         {
                             formMain.labelProjectorPower.Text = "Off";
                             formMain.buttonProjectorPower.Text = "Power On";
-                            formMain.writeLog("Projector:  Received 'Power Off' message");
-                        }
-                        ));
-                        // Wait for the projector to power on - it won't respond to Serial commands
-                        // for 10 seconds after Power On
-                        await doDelay(15000);
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            // Set the Projector to the currently AR in the UI to ensure we are in sync.
-                            projectorQueueChangeAspect(1, true);
                         }
                         ));
                     }
@@ -224,6 +213,9 @@ namespace BrodieTheatre
         {
             writeLog("Projector:  Powering On");
             labelProjectorPower.Text = "Powering On";
+            // Set the Projector to the currently AR in the UI to ensure we are in sync.
+            projectorCommand.newAspect = 1;
+            projectorCommand.force = true;
             if (timerProjectorControl.Enabled == true)
             {
                 projectorCommand.powerCommand = "001";
@@ -231,6 +223,7 @@ namespace BrodieTheatre
             else
             {
                 projectorSendCommand("PON");
+      
                 timerProjectorControl.Enabled = true;
             }
         }

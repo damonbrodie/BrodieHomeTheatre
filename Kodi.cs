@@ -332,7 +332,7 @@ namespace BrodieTheatre
                     {
                         toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
                         kodiLoadingMovies = false;
-                        labelKodiMoviesAvailable.Text = movieCounter.ToString();
+                        labelKodiMediaAvailable.Text = movieCounter.ToString() + " movies";
                     }
                     else
                     {
@@ -475,7 +475,7 @@ namespace BrodieTheatre
             }
         }
 
-        private void labelKodiMoviesAvailable_TextChanged(object sender, EventArgs e)
+        private void labelKodiMediaAvailable_TextChanged(object sender, EventArgs e)
         {
             loadVoiceCommands();
         }
