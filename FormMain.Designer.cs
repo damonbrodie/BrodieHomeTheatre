@@ -194,7 +194,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(9, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(7, -2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(108, 23);
             this.pictureBox1.TabIndex = 5;
@@ -348,7 +348,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(9, -3);
+            this.pictureBox2.Location = new System.Drawing.Point(7, -5);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(187, 23);
             this.pictureBox2.TabIndex = 5;
@@ -383,7 +383,7 @@
             this.groupBox3.Controls.Add(this.labelKodiPlaybackStatus);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.pictureBox3);
-            this.groupBox3.Location = new System.Drawing.Point(426, 42);
+            this.groupBox3.Location = new System.Drawing.Point(425, 42);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(239, 122);
             this.groupBox3.TabIndex = 9;
@@ -451,7 +451,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(8, 0);
+            this.pictureBox3.Location = new System.Drawing.Point(7, -2);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(80, 23);
             this.pictureBox3.TabIndex = 10;
@@ -468,15 +468,15 @@
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.pictureBox4);
-            this.groupBox4.Location = new System.Drawing.Point(425, 184);
+            this.groupBox4.Location = new System.Drawing.Point(425, 180);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(238, 174);
+            this.groupBox4.Size = new System.Drawing.Size(238, 169);
             this.groupBox4.TabIndex = 10;
             this.groupBox4.TabStop = false;
             // 
             // buttonProjectorPower
             // 
-            this.buttonProjectorPower.Location = new System.Drawing.Point(34, 139);
+            this.buttonProjectorPower.Location = new System.Drawing.Point(34, 131);
             this.buttonProjectorPower.Name = "buttonProjectorPower";
             this.buttonProjectorPower.Size = new System.Drawing.Size(79, 23);
             this.buttonProjectorPower.TabIndex = 23;
@@ -487,7 +487,7 @@
             // labelProjectorPower
             // 
             this.labelProjectorPower.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelProjectorPower.Location = new System.Drawing.Point(103, 70);
+            this.labelProjectorPower.Location = new System.Drawing.Point(103, 68);
             this.labelProjectorPower.Name = "labelProjectorPower";
             this.labelProjectorPower.Size = new System.Drawing.Size(120, 19);
             this.labelProjectorPower.TabIndex = 22;
@@ -506,7 +506,7 @@
             // 
             // buttonProjectorChangeAspect
             // 
-            this.buttonProjectorChangeAspect.Location = new System.Drawing.Point(131, 139);
+            this.buttonProjectorChangeAspect.Location = new System.Drawing.Point(131, 131);
             this.buttonProjectorChangeAspect.Name = "buttonProjectorChangeAspect";
             this.buttonProjectorChangeAspect.Size = new System.Drawing.Size(79, 23);
             this.buttonProjectorChangeAspect.TabIndex = 20;
@@ -517,7 +517,7 @@
             // labelProjectorLensAspect
             // 
             this.labelProjectorLensAspect.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelProjectorLensAspect.Location = new System.Drawing.Point(103, 102);
+            this.labelProjectorLensAspect.Location = new System.Drawing.Point(103, 98);
             this.labelProjectorLensAspect.Name = "labelProjectorLensAspect";
             this.labelProjectorLensAspect.Size = new System.Drawing.Size(120, 19);
             this.labelProjectorLensAspect.TabIndex = 19;
@@ -539,7 +539,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(20, 105);
+            this.label8.Location = new System.Drawing.Point(20, 101);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 13);
             this.label8.TabIndex = 17;
@@ -548,7 +548,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(27, 73);
+            this.label7.Location = new System.Drawing.Point(27, 71);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(70, 13);
             this.label7.TabIndex = 16;
@@ -558,7 +558,7 @@
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
             this.pictureBox4.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox4.InitialImage")));
-            this.pictureBox4.Location = new System.Drawing.Point(6, -1);
+            this.pictureBox4.Location = new System.Drawing.Point(7, -2);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(140, 26);
             this.pictureBox4.TabIndex = 13;
@@ -672,9 +672,9 @@
             this.groupBox5.Controls.Add(this.pictureBox5);
             this.groupBox5.Controls.Add(this.label14);
             this.groupBox5.Controls.Add(this.labelLastVoiceCommand);
-            this.groupBox5.Location = new System.Drawing.Point(425, 368);
+            this.groupBox5.Location = new System.Drawing.Point(425, 365);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(239, 118);
+            this.groupBox5.Size = new System.Drawing.Size(239, 122);
             this.groupBox5.TabIndex = 17;
             this.groupBox5.TabStop = false;
             // 
@@ -721,7 +721,7 @@
             // pictureBox5
             // 
             this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(7, 0);
+            this.pictureBox5.Location = new System.Drawing.Point(7, -2);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(100, 23);
             this.pictureBox5.TabIndex = 18;
