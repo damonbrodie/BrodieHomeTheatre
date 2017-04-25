@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using SoapBox.FluentDwelling;
 using SoapBox.FluentDwelling.Devices;
@@ -289,6 +290,13 @@ namespace BrodieTheatre
                     writeLog("Insteon:  Latch timer expired - setting room vacant");
                     labelRoomOccupancy.Text = "Vacant";
                     labelMotionSensorStatus.Text = "No Motion";
+                    vacancyWarning = false;
+                }
+                else if (insteonMotionLatchExpires.AddMinutes(1) < rightNow && ! vacancyWarning && labelKodiPlaybackStatus.Text == "Stopped")
+                {
+                    vacancyWarning = true;
+                    int r = random.Next(warning.Count);
+                    speakText(warning[r]);
                 }
                 else
                 {
@@ -307,6 +315,7 @@ namespace BrodieTheatre
             if (labelMotionSensorStatus.Text != "Motion Detected")
             {
                 writeLog("Insteon:  Motion Sensor reported 'Motion Detected'");
+                vacancyWarning = false;
                 labelMotionSensorStatus.Text = "Motion Detected";
                 labelRoomOccupancy.Text = "Occupied";
                 resetGlobalTimer();

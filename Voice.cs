@@ -68,15 +68,15 @@ namespace BrodieTheatre
                 timeGreeting = "good evening";
             }
             writeLog("Voice:  Speak greeting");
-            List<string> greetings = new List<string>(new string[] { timeGreeting, "hello there", "Welcome", "Hello", "Welcome Back" });
-            int r = random.Next(greetings.Count);
-            speakText(greetings[r]);
+            List<string> allGreetings = greetings;
+            allGreetings.Add(timeGreeting);
+            int r = random.Next(allGreetings.Count);
+            speakText(allGreetings[r]);
         }
 
         private void sayPresense()
         {
             writeLog("Voice:  Speak presense acknowledgement");
-            List<string> presense = new List<string>(new string[] { "I'm here", "Standing by", "Yes", "At your service", "Ready" });
             int r = random.Next(presense.Count);
             speakText(presense[r]);
         }
@@ -84,7 +84,6 @@ namespace BrodieTheatre
         private void sayAcknowledgement()
         {
             writeLog("Voice:  Speak acknowledgement");
-            List<string> ack = new List<string>(new string[] { "Okay", "Doing that now", "One Moment" });
             int r = random.Next(ack.Count);
             speakText(ack[r]);
         }
@@ -322,11 +321,6 @@ namespace BrodieTheatre
                             if (movieEntry.file == kodiMovieFile)
                             {
                                 formMain.writeLog("Voice: Checking for movie '" + movieEntry.name + "'");
-                                List<string> foundMovie = new List<string>(new string[]
-                                {
-                                    "I found ",
-                                    "We have "
-                                });
                                 int r = random.Next(foundMovie.Count);
                                 speakText(foundMovie[r] + movieEntry.name);
                             }
@@ -357,13 +351,7 @@ namespace BrodieTheatre
 
                         if (kodiPlayNext != null)
                         {
-                            List<string> startMovie = new List<string>(new string[]
-                            {
-                                "Starting Movie ",
-                                "Queuing up "
-                            });
                             int r = random.Next(startMovie.Count);
-
                             formMain.speakText(startMovie[r] + kodiPlayNext.name);
                             formMain.timerKodiStartPlayback.Enabled = false;
                             formMain.timerKodiStartPlayback.Enabled = true;
@@ -385,7 +373,8 @@ namespace BrodieTheatre
                         }
                         else
                         {
-                            formMain.speakText("Unable to start that movie");
+                            int r = random.Next(unableToStart.Count);
+                            formMain.speakText(unableToStart[r]);
                             formMain.writeLog("Voice:  Unable to start movie playback for '" + kodiMovieFile + "'");
                         }
                     }
@@ -532,7 +521,6 @@ namespace BrodieTheatre
                             if (kodiPlayNext != null)
                             {
                                 formMain.kodiPlayNext = null;
-                                List<string> cancel = new List<string>(new string[] { "Cancelling Playback", "Playback Aborted", "Ok" });
                                 int r = random.Next(cancel.Count);
                                 speakText(cancel[r]);
                             }

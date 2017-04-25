@@ -20,6 +20,7 @@ namespace BrodieTheatre
         public DateTime GlobalShutdown;
         public int statusTickCounter = 0;
         public Random random = new Random();
+        public bool vacancyWarning = false;
 
         public FormMain()
         {
