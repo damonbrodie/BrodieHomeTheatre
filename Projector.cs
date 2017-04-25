@@ -12,9 +12,10 @@ namespace BrodieTheatre
         {
             public float newAspect = 0;
             public bool force = false;
+            public string powerCommand = null;
         }
 
-        public ProjectorLensChange projectorLensChange = new ProjectorLensChange();
+        public ProjectorLensChange projectorCommand = new ProjectorLensChange();
 
         private void projectorConnect()
         {
@@ -74,6 +75,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelProjectorPower.Text = "On";
                             formMain.buttonProjectorPower.Text = "Power Off";
+                            formMain.writeLog("Projector:  Received 'Power On' message");
                         }
                         ));
                     }
@@ -84,6 +86,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelProjectorPower.Text = "Off";
                             formMain.buttonProjectorPower.Text = "Power On";
+                            formMain.writeLog("Projector:  Received 'Power Off' message");
                         }
                         ));
                         // Wait for the projector to power on - it won't respond to Serial commands
@@ -143,7 +146,7 @@ namespace BrodieTheatre
             {
                 return;
             }
-            timerProjectorLensControl.Enabled = true;
+            timerProjectorControl.Enabled = true;
             buttonProjectorChangeAspect.Enabled = false;
             List<string> pj_codes = new List<string> {
                 "VXX:LMLI0=+00000",
@@ -166,19 +169,19 @@ namespace BrodieTheatre
                 labelProjectorLensAspect.Text = "Wide";
                 writeLog("Projector:  Changing lens aspect ratio to 'wide'");
             }
-            projectorLensChange.force = false;
+            projectorCommand.force = false;
         }
 
         private void projectorQueueChangeAspect(float aspect, bool force=false)
         {
             if (labelProjectorPower.Text == "On")
             {
-                if (timerProjectorLensControl.Enabled == true)
+                if (timerProjectorControl.Enabled == true)
                 {
                     // Wait for the last Aspect change to finish
                     writeLog("Projector:  Queueing Aspect Ratio change - " + aspect.ToString());
-                    projectorLensChange.newAspect = aspect;
-                    projectorLensChange.force = force;
+                    projectorCommand.newAspect = aspect;
+                    projectorCommand.force = force;
                 }
                 else
                 {
@@ -187,34 +190,65 @@ namespace BrodieTheatre
             }
         }
 
-        private void timerProjectorLensControl_Tick(object sender, EventArgs e)
+        private void timerProjectorControl_Tick(object sender, EventArgs e)
         {
-            timerProjectorLensControl.Enabled = false;
-            if (projectorLensChange.newAspect > 0)
+            timerProjectorControl.Enabled = false;
+            if (projectorCommand.powerCommand != null)
+            {
+                if (projectorCommand.powerCommand == "001")
+                {
+                    projectorPowerOn();
+                }
+                else if (projectorCommand.powerCommand == "000")
+                {
+                    projectorPowerOff();
+                }
+            }
+            else if (projectorCommand.newAspect > 0)
             {
                 // A queued projector lens aspect ratio change is waiting
-                projectorQueueChangeAspect(projectorLensChange.newAspect, projectorLensChange.force);
-                projectorLensChange.newAspect = 0;
-                projectorLensChange.force = false;
+                projectorQueueChangeAspect(projectorCommand.newAspect, projectorCommand.force);
             }
-            else
+            else if (projectorCommand.newAspect == 0)
             {
                 buttonProjectorChangeAspect.Enabled = true;
             }
+
+            // Reset commands
+            projectorCommand.powerCommand = null;
+            projectorCommand.newAspect = 0;
+            projectorCommand.force = false;
         }
 
         private void projectorPowerOn()
         {
-            projectorSendCommand("PON");
-            labelProjectorPower.Text = "Powering On";
             writeLog("Projector:  Powering On");
+            labelProjectorPower.Text = "Powering On";
+            if (timerProjectorControl.Enabled == true)
+            {
+                projectorCommand.powerCommand = "001";
+            }
+            else
+            {
+                projectorSendCommand("PON");
+                timerProjectorControl.Enabled = true;
+            }
         }
 
         private void projectorPowerOff()
         {
-            projectorSendCommand("POF");
             labelProjectorPower.Text = "Powering Off";
             writeLog("Projector:  Powering Off");
+            if (timerProjectorControl.Enabled == true)
+            {
+                projectorCommand.powerCommand = "000";
+            }
+            else
+            {
+                projectorSendCommand("POF");
+                timerProjectorControl.Enabled = true;
+            }
+            
         }
 
         private void labelLensAspect_TextChanged(object sender, EventArgs e)

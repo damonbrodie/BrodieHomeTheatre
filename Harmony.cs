@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HarmonyHub;
@@ -59,13 +60,23 @@ namespace BrodieTheatre
                     formMain.harmonyUpdateActivities(currentActivityID);
                 }
                 ));
-                await doDelay(30000);
-                formMain.BeginInvoke(new Action(() =>
-                {
-                    formMain.timerHarmonyPoll.Enabled = true;
-                }
-                ));
+                Thread thread = new Thread(harmonyStartTimer);
+                thread.Start();
+                
             }
+        }
+
+        private async void harmonyStartTimer()
+        {
+            // Wait 30 seconds - this offsets some of the tasks that otherwise would
+            // happen at the same time.  Makes the status bar text prettier to space them
+            // out a bit
+            await doDelay(30000);
+            formMain.BeginInvoke(new Action(() =>
+            {
+                formMain.timerHarmonyPoll.Enabled = true;
+            }
+            ));
         }
 
         private async void harmonyClient_OnActivityChanged(object sender, string e)

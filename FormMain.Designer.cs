@@ -96,7 +96,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.timerCheckProjector = new System.Windows.Forms.Timer(this.components);
-            this.timerProjectorLensControl = new System.Windows.Forms.Timer(this.components);
+            this.timerProjectorControl = new System.Windows.Forms.Timer(this.components);
             this.timerSetLights = new System.Windows.Forms.Timer(this.components);
             this.timerKodiConnect = new System.Windows.Forms.Timer(this.components);
             this.timerKodiStartPlayback = new System.Windows.Forms.Timer(this.components);
@@ -733,10 +733,10 @@
             this.timerCheckProjector.Interval = 5000;
             this.timerCheckProjector.Tick += new System.EventHandler(this.timerCheckProjector_Tick);
             // 
-            // timerProjectorLensControl
+            // timerProjectorControl
             // 
-            this.timerProjectorLensControl.Interval = 10000;
-            this.timerProjectorLensControl.Tick += new System.EventHandler(this.timerProjectorLensControl_Tick);
+            this.timerProjectorControl.Interval = 10000;
+            this.timerProjectorControl.Tick += new System.EventHandler(this.timerProjectorControl_Tick);
             // 
             // timerSetLights
             // 
@@ -885,7 +885,7 @@
         private System.Windows.Forms.Label labelProjectorPower;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Timer timerCheckProjector;
-        private System.Windows.Forms.Timer timerProjectorLensControl;
+        private System.Windows.Forms.Timer timerProjectorControl;
         private System.Windows.Forms.Timer timerSetLights;
         private System.Windows.Forms.Label labelKodiStatus;
         private System.Windows.Forms.Label label15;

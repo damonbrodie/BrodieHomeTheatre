@@ -101,12 +101,6 @@ namespace BrodieTheatre
             }
             ));
 
-            await harmonyConnectAsync(true);
-            if (Program.Client != null)
-            {
-                Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
-            }
-
             currentPLMport = Properties.Settings.Default.plmPort;
             insteonConnectPLM();
             projectorConnect();
@@ -134,6 +128,11 @@ namespace BrodieTheatre
                 lights[Properties.Settings.Default.trayAddress] = -1;
             }
 
+            await harmonyConnectAsync(true);
+            if (Program.Client != null)
+            {
+                Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
+            }
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
             if (Program.Client!= null && Program.Client.Token != string.Empty)
             {
@@ -331,7 +330,5 @@ namespace BrodieTheatre
                 writeLog("Occupancy:  Overriding Room to Occupied");
             }
         }
-
-
     }
 }
