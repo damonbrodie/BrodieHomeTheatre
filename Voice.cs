@@ -300,8 +300,7 @@ namespace BrodieTheatre
                 {
                     formMain.writeLog("Voice:  Recognized Speech '" + e.Result.Text + "' Confidence " + confidence + "%");
                     formMain.toolStripStatus.Text = "Heard:  '" + e.Result.Text + "' (" + confidence + "%)";
-                }
-                ));
+                }));
                 RecognizedPhrase phrase = e.Result.Alternates[0];
 
                 if (e.Result.Semantics.ContainsKey("Check Movie") && labelKodiPlaybackStatus.Text != "Playing")
@@ -325,8 +324,7 @@ namespace BrodieTheatre
                                 speakText(foundMovie[r] + " " + movieEntry.name);
                             }
                         }
-                    }
-                    ));
+                    }));
                 }
                 else if (e.Result.Semantics.ContainsKey("Play Movie") && labelKodiPlaybackStatus.Text != "Playing")
                 {
@@ -377,8 +375,7 @@ namespace BrodieTheatre
                             formMain.speakText(unableToStart[r]);
                             formMain.writeLog("Voice:  Unable to start movie playback for '" + kodiMovieFile + "'");
                         }
-                    }
-                    ));
+                    }));
                 }
                 else if (e.Result.Semantics.ContainsKey("Turn on Theatre"))
                 {
@@ -390,8 +387,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Turn on theatre";
                             formMain.voiceStartTheatre();
                             formMain.writeLog("Voice:  Processed 'Turn on theatre'");
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Transparent Screen"))
@@ -403,8 +399,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Make screen transparent";
                             formMain.kodiShowBehindScreen();
                             formMain.writeLog("Voice:  Processed 'Make screen transparent'");
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Turn off Theatre"))
@@ -417,8 +412,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Turn off theatre";
                             formMain.harmonyStartActivityByName("PowerOff");
                             formMain.writeLog("Voice:  Processed 'Turn off theatre'");
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Show Application"))
@@ -433,8 +427,7 @@ namespace BrodieTheatre
                                 formMain.WindowState = FormWindowState.Normal;
                                 formMain.writeLog("Voice:  Processed 'Show application'");
                             }
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Hide Application"))
@@ -449,8 +442,7 @@ namespace BrodieTheatre
                                 formMain.WindowState = FormWindowState.Minimized;
                                 formMain.writeLog("Voice:  Processed 'Hide application'");
                             }
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Greeting"))
@@ -462,8 +454,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Greeting";
                             formMain.sayGreeting();
                             formMain.writeLog("Voice:  Processed 'Greeting'");
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Presense"))
@@ -475,8 +466,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Presense";
                             formMain.sayPresense();
                             formMain.writeLog("Voice:  Processed 'Presense'");
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Pause Playback"))
@@ -486,8 +476,7 @@ namespace BrodieTheatre
                         formMain.labelLastVoiceCommand.Text = "Pause playback";
                         formMain.kodiPlaybackControl("Pause");
                         formMain.writeLog("Voice:  Processed 'Pause playback'");
-                    }
-                    ));
+                    }));
                 }
                 else if (e.Result.Semantics.ContainsKey("Resume Playback"))
                 {
@@ -498,8 +487,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Resume playback";
                             formMain.kodiPlaybackControl("Play");
                             formMain.writeLog("Voice:  Processed 'Resume playback'");
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Stop Playback"))
@@ -509,8 +497,7 @@ namespace BrodieTheatre
                         formMain.labelLastVoiceCommand.Text = "Stop Playback";
                         formMain.kodiPlaybackControl("Stop");
                         formMain.writeLog("Voice:  Processed 'Stop playback'");
-                    }
-                    ));
+                    }));
                 }
                 else if (e.Result.Semantics.ContainsKey("Cancel Playback"))
                 {
@@ -526,8 +513,7 @@ namespace BrodieTheatre
                             }
                             formMain.labelLastVoiceCommand.Text = "Cancel playback";
                             formMain.writeLog("Voice:  Processed 'Cancel playback'");
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Dim Lights"))
@@ -539,8 +525,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Dim lights";
                             formMain.lightsToStoppedLevel();
                             formMain.writeLog("Voice:  Processed 'Dim lights'");
-                        }
-                        ));
+                        }));
                     }
                 }
                 else if (e.Result.Semantics.ContainsKey("Lights On"))
@@ -552,8 +537,7 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Lights on";
                             formMain.lightsToEnteringLevel();
                             formMain.writeLog("Voice:  Processed 'Lights on'");
-                        }
-                        ));
+                        }));
                     }
                 }
             }
@@ -563,8 +547,7 @@ namespace BrodieTheatre
                 {
                     formMain.writeLog("Voice:  (Not Processed) Recognized Speech '" + e.Result.Text + "' Confidence " + confidence + "%");
                     formMain.toolStripStatus.Text = "Heard:  (Not Processed) '" + e.Result.Text + "' (" + confidence + "%)";
-                }
-                ));
+                }));
             }
         }
     }

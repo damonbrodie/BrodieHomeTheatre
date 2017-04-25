@@ -108,8 +108,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.kodiFindJson();
-                    }
-                    ));
+                    }));
                 }
                 catch
                 {
@@ -119,8 +118,7 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.writeLog("Kodi:  Exiting JSON read thread");
-            }
-            ));
+            }));
         }
 
         public void kodiFindJson()

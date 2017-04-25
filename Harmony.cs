@@ -30,8 +30,7 @@ namespace BrodieTheatre
             {
                 formMain.timerHarmonyPoll.Enabled = false;
                 formMain.writeLog("Harmony:  Connecting to Hub");
-            }
-            ));
+            }));
             try
             {
                 Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
@@ -40,16 +39,14 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.writeLog("Harmony:  Connected to Hub");
-                }
-                ));
+                }));
             }
             catch
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.writeLog("Harmony:  Cannot connect to Harmony Hub");
-                }
-                ));
+                }));
                 error = true;
             }
             if (!error && shouldUpdate)
@@ -58,8 +55,7 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 { 
                     formMain.harmonyUpdateActivities(currentActivityID);
-                }
-                ));
+                }));
                 Thread thread = new Thread(harmonyStartTimer);
                 thread.Start();
                 
@@ -75,8 +71,7 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerHarmonyPoll.Enabled = true;
-            }
-            ));
+            }));
         }
 
         private async void harmonyClient_OnActivityChanged(object sender, string e)
@@ -95,8 +90,7 @@ namespace BrodieTheatre
                 {
                     formMain.projectorPowerOn();
                 }
-            }
-            ));
+            }));
         }
 
         private async void harmonyUpdateActivities(string currentActivityID)
@@ -131,16 +125,14 @@ namespace BrodieTheatre
                             }
                         }
                         finished = true;
-                    }
-                    ));
+                    }));
                 }
                 catch
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.writeLog("Harmony:  Cannot update Harmony Activities");
-                    }
-                    ));
+                    }));
                     counter += 1;
                 }
             }
@@ -178,8 +170,7 @@ namespace BrodieTheatre
                                         formMain.BeginInvoke(new Action(() =>
                                         {
                                             formMain.writeLog("Harmony:  Sent Command '" + function.Name + "' to Id '" + currDevice.Id + "'");
-                                        }
-                                        ));
+                                        }));
                                         success = true;
                                     }
                                 }
@@ -192,8 +183,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.writeLog("Harmony:  Failed to send Harmony Command");
-                    }
-                    ));
+                    }));
                     Program.Client.Dispose();
                     await harmonyConnectAsync(false);
                     counter += 1;
@@ -228,8 +218,7 @@ namespace BrodieTheatre
                             formMain.lightsToEnteringLevel();
                             formMain.projectorPowerOff();
                         }
-                    }
-                    ));
+                    }));
                     success = true;
                 }
                 catch
@@ -238,8 +227,7 @@ namespace BrodieTheatre
                     {
                         formMain.toolStripStatus.Text = "Harmony Timeout - reconnecting";
                         formMain.writeLog("Harmony:  Error starting activity");
-                    }
-                    ));
+                    }));
                     Program.Client.Dispose();
                     await harmonyConnectAsync(false);
                     counter += 1;
@@ -286,8 +274,7 @@ namespace BrodieTheatre
                     formMain.toolStripStatus.Text = "Poll Harmony Hub for updated Activities";
                     formMain.harmonyUpdateActivities(currentActivityID);
                 }
-            }
-            ));
+            }));
         }
     }
 }

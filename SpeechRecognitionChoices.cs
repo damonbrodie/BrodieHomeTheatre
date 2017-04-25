@@ -35,7 +35,6 @@ namespace BrodieTheatre
         public Choices choicesTransparentScreen = new Choices(new String[]
         {
             "make the screen transparent",
-            "make the screen tranparent",
             "make screen tranparent"
         });
 

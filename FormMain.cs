@@ -99,8 +99,7 @@ namespace BrodieTheatre
                     formMain.writeLog("Voice:  Unable to load Speech Recognition Engine.  Shutting Down.");
                     Application.Exit();
                 }
-            }
-            ));
+            }));
 
             currentPLMport = Properties.Settings.Default.plmPort;
             insteonConnectPLM();
@@ -111,8 +110,7 @@ namespace BrodieTheatre
                 formMain.speechSynthesizer = new SpeechSynthesizer();
                 formMain.speechSynthesizer.TtsVolume = 100;
                 formMain.setVoice();
-            }
-            ));
+            }));
 
             if (labelProjectorStatus.Text == "Connected")
             {
@@ -141,8 +139,7 @@ namespace BrodieTheatre
                 {
                     formMain.labelHarmonyStatus.Text = "Connected";
                     formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.ForestGreen;
-                }
-                ));
+                }));
             }
             else
             {
@@ -150,8 +147,7 @@ namespace BrodieTheatre
                 {
                     formMain.labelHarmonyStatus.Text = "Disconnected";
                     formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
-                }
-                ));
+                }));
             }
         }
 

@@ -75,8 +75,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelProjectorPower.Text = "On";
                             formMain.buttonProjectorPower.Text = "Power Off";
-                                                    }
-                        ));
+                        }));
                     }
                     //  Projector is in Power off State
                     else if (response.Contains("000"))
@@ -85,8 +84,7 @@ namespace BrodieTheatre
                         {
                             formMain.labelProjectorPower.Text = "Off";
                             formMain.buttonProjectorPower.Text = "Power On";
-                        }
-                        ));
+                        }));
                     }
                     break;
                 case "Lens":
@@ -94,8 +92,7 @@ namespace BrodieTheatre
                     {
                         formMain.toolStripStatus.Text = "Lens change - received: " + response;
                         formMain.writeLog("Projector:  Received lens change response '" + response + "'");
-                    }
-                    ));
+                    }));
                     break;
             }
         }
