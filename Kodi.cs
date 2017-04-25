@@ -13,6 +13,9 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+
+        public string kodiBehindScreen = @"smb://10.0.0.7/Pictures/ht_0.jpg";
+
         public int kodiConnectAttempts = 0;
         public string currentKodiIP = "";
         public int currentKodiPort = 0;
@@ -461,6 +464,11 @@ namespace BrodieTheatre
                 writeLog("Kodi:  Starting movie: " + kodiPlayNext.name + " " + kodiPlayNext.file);
                 kodiPlayNext = null;
             }
+        }
+
+        private void kodiShowBehindScreen()
+        {
+            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiBehindScreen + "\" }}, \"id\": \"1\"}");
         }
 
         private void timerKodiPoll_Tick(object sender, EventArgs e)

@@ -139,6 +139,11 @@ namespace BrodieTheatre
             return buildCommand("Turn on Theatre", choicesStartTheatre);
         }
 
+        private GrammarBuilder commandTranparentScreen()
+        {
+            return buildCommand("Transparent Screen", choicesTransparentScreen);
+        }
+
         private GrammarBuilder commandShutdownTheatre()
         {
             return buildCommand("Turn off Theatre", choicesShutdownTheatre);
@@ -236,6 +241,7 @@ namespace BrodieTheatre
                 {
                     commandGreeting(),
                     commandStartTheatre(),
+                    commandTranparentScreen(),
                     commandShutdownTheatre(),
                     commandShowApplication(),
                     commandHideApplication(),
@@ -395,6 +401,19 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Turn on theatre";
                             formMain.voiceStartTheatre();
                             formMain.writeLog("Voice:  Processed 'Turn on theatre'");
+                        }
+                        ));
+                    }
+                }
+                else if (e.Result.Semantics.ContainsKey("Transparent Screen"))
+                {
+                    if (labelKodiPlaybackStatus.Text != "Playing" && harmonyIsActivityStarted())
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.labelLastVoiceCommand.Text = "Make screen transparent";
+                            formMain.kodiShowBehindScreen();
+                            formMain.writeLog("Voice:  Processed 'Make screen transparent'");
                         }
                         ));
                     }

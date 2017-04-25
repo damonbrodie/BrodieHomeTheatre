@@ -32,6 +32,13 @@ namespace BrodieTheatre
             "turn on lights"
         });
 
+        public Choices choicesTransparentScreen = new Choices(new String[]
+        {
+            "make the screen transparent",
+            "make the screen tranparent",
+            "make screen tranparent"
+        });
+
         public Choices choicesCheckMovie = new Choices(new String[]
         {
             "do we have the movie",
