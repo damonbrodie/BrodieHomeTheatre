@@ -322,7 +322,7 @@ namespace BrodieTheatre
                             {
                                 formMain.writeLog("Voice: Checking for movie '" + movieEntry.name + "'");
                                 int r = random.Next(foundMovie.Count);
-                                speakText(foundMovie[r] + movieEntry.name);
+                                speakText(foundMovie[r] + " " + movieEntry.name);
                             }
                         }
                     }
@@ -352,7 +352,7 @@ namespace BrodieTheatre
                         if (kodiPlayNext != null)
                         {
                             int r = random.Next(startMovie.Count);
-                            formMain.speakText(startMovie[r] + kodiPlayNext.name);
+                            formMain.speakText(startMovie[r] + " " + kodiPlayNext.name);
                             formMain.timerKodiStartPlayback.Enabled = false;
                             formMain.timerKodiStartPlayback.Enabled = true;
 

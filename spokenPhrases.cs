@@ -15,7 +15,7 @@ namespace BrodieTheatre
             "hello there",
             "Welcome",
             "Hello",
-            "Welcome Back"
+            "Welcome back"
         });
         List<string> presense = new List<string>(new string[] 
         {
@@ -28,23 +28,23 @@ namespace BrodieTheatre
         List<string> ack = new List<string>(new string[] {
             "Okay",
             "Doing that now",
-            "One Moment"
+            "One moment"
         });
         List<string> foundMovie = new List<string>(new string[]
         {
-            "I found ",
-            "We have "
+            "I found",
+            "We have"
         });
         List<string> startMovie = new List<string>(new string[]
         {
-            "Starting Movie ",
-            "Queuing up "
+            "Starting movie",
+            "Queuing up"
         });
         List<string> cancel = new List<string>(new string[] 
         {
-            "Cancelling Playback",
-            "Playback Aborted",
-            "Ok"
+            "Cancelling playback",
+            "Playback aborted",
+            "Ok cancelling that"
         });
         List<string> unableToStart = new List<string>(new string[] 
         {
