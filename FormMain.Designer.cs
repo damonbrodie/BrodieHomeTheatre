@@ -392,7 +392,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(13, 101);
+            this.label16.Location = new System.Drawing.Point(13, 93);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(82, 13);
             this.label16.TabIndex = 16;
@@ -401,7 +401,7 @@
             // labelKodiMediaAvailable
             // 
             this.labelKodiMediaAvailable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelKodiMediaAvailable.Location = new System.Drawing.Point(101, 98);
+            this.labelKodiMediaAvailable.Location = new System.Drawing.Point(103, 90);
             this.labelKodiMediaAvailable.Name = "labelKodiMediaAvailable";
             this.labelKodiMediaAvailable.Size = new System.Drawing.Size(120, 19);
             this.labelKodiMediaAvailable.TabIndex = 15;
@@ -413,7 +413,7 @@
             // 
             this.labelKodiStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelKodiStatus.ForeColor = System.Drawing.Color.Maroon;
-            this.labelKodiStatus.Location = new System.Drawing.Point(102, 33);
+            this.labelKodiStatus.Location = new System.Drawing.Point(103, 33);
             this.labelKodiStatus.Name = "labelKodiStatus";
             this.labelKodiStatus.Size = new System.Drawing.Size(120, 19);
             this.labelKodiStatus.TabIndex = 14;
@@ -432,7 +432,7 @@
             // labelKodiPlaybackStatus
             // 
             this.labelKodiPlaybackStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelKodiPlaybackStatus.Location = new System.Drawing.Point(102, 65);
+            this.labelKodiPlaybackStatus.Location = new System.Drawing.Point(103, 61);
             this.labelKodiPlaybackStatus.Name = "labelKodiPlaybackStatus";
             this.labelKodiPlaybackStatus.Size = new System.Drawing.Size(120, 19);
             this.labelKodiPlaybackStatus.TabIndex = 12;
@@ -442,7 +442,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(45, 68);
+            this.label6.Location = new System.Drawing.Point(45, 64);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 11;
@@ -487,7 +487,7 @@
             // labelProjectorPower
             // 
             this.labelProjectorPower.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelProjectorPower.Location = new System.Drawing.Point(103, 72);
+            this.labelProjectorPower.Location = new System.Drawing.Point(103, 70);
             this.labelProjectorPower.Name = "labelProjectorPower";
             this.labelProjectorPower.Size = new System.Drawing.Size(120, 19);
             this.labelProjectorPower.TabIndex = 22;
@@ -517,7 +517,7 @@
             // labelProjectorLensAspect
             // 
             this.labelProjectorLensAspect.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelProjectorLensAspect.Location = new System.Drawing.Point(103, 106);
+            this.labelProjectorLensAspect.Location = new System.Drawing.Point(103, 102);
             this.labelProjectorLensAspect.Name = "labelProjectorLensAspect";
             this.labelProjectorLensAspect.Size = new System.Drawing.Size(120, 19);
             this.labelProjectorLensAspect.TabIndex = 19;
@@ -529,7 +529,7 @@
             // 
             this.labelProjectorStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.labelProjectorStatus.ForeColor = System.Drawing.Color.Maroon;
-            this.labelProjectorStatus.Location = new System.Drawing.Point(102, 39);
+            this.labelProjectorStatus.Location = new System.Drawing.Point(103, 39);
             this.labelProjectorStatus.Name = "labelProjectorStatus";
             this.labelProjectorStatus.Size = new System.Drawing.Size(120, 19);
             this.labelProjectorStatus.TabIndex = 18;
@@ -539,7 +539,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(20, 109);
+            this.label8.Location = new System.Drawing.Point(20, 105);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 13);
             this.label8.TabIndex = 17;
@@ -548,7 +548,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(27, 75);
+            this.label7.Location = new System.Drawing.Point(27, 73);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(70, 13);
             this.label7.TabIndex = 16;
