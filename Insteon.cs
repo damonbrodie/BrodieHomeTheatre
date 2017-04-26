@@ -174,7 +174,6 @@ namespace BrodieTheatre
                     {
                         formMain.writeLog("Insteon:  Door Opened");
                         formMain.toolStripStatus.Text = "Door Opened";
-
                     }
                     ));
                 }

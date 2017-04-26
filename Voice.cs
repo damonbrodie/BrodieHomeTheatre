@@ -357,7 +357,6 @@ namespace BrodieTheatre
                             if (!formMain.harmonyIsActivityStarted())
                             {
                                 formMain.writeLog("Voice: Starting delay timer for movie to 30 seconds");
-
                                 // Wait for the projector to warm up.
                                 formMain.timerKodiStartPlayback.Interval = 30000;
                                 formMain.voiceStartTheatre();
