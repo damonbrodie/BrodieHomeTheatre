@@ -48,9 +48,10 @@ Several different components make up this part of the solution:
  Additionally Microsoft has "Microsoft.Speech" and I've chosen to use that for this project.  System.Speech 
  works well for dictation and headset microphones - it is fully trainable on a per user basis.  Microsoft.Speech 
  isn't trainable, but it is specifically tuned for distant speech - it works best when you tell the speech 
- engine all of available phrases and it will listen only for those.
+ engine all of available phrases and it will listen only for those.  My application builds a specific "grammar" 
+ that the voice engine uses to listen for the specific commands for the home theatre.
  - Microphone.  I'm using a beamforming microphone combined with a Sound Blaster Z sound card.  The card can 
- use the beam forming microphone to pick up speech from the seating area in front, and it does a reasonable 
+ use the beam forming microphone to pick up speech from the seating area about 10 feet away.  It does a reasonable 
  job filtering out the sounds that might be coming from the movie playback.  I've experimented with all
  of the microphone settings for Noise Cancellation, Focus Width and Microphone and Microphone boost levels 
  to come up with the combination that works best for my room setup.
@@ -58,10 +59,11 @@ Several different components make up this part of the solution:
  it "hears" one of the key phrases.  Background conversations, the movie soundtrack, etc, are all supplying 
  stimulus that may be confusing to the engine.  To mitigate this, the application tries to be as contextually
  aware as possible.  If the room is vacant (no motion recorded by the motion sensor), stop listening for voice
- commands.  I the movie is playing, then limit the key phrases to just pause/stop playback.  Create lots of
+ commands.  If the movie is playing, then limit the key phrases to just pause/stop playback.  I've also created lots of
  variations on the key phrases so it is natural to a wider audience:  "Let's watch the movie Rogue One" or
  "Play movie Rogue One", etc.
 
  Combining each of these facets of the approach has resulted in a surprisingly responsive voice recognition
- system.  Of course to limit user frustration there should be other manual ways to control the homer theatre
- (for example with a remote control).
+ system for my home theatre purposes.  Of course, to limit user frustration there are be other manual ways to control 
+ the homer theatre (for example with a remote control), but the voice interface makes it genuinely easier to interact 
+ with the room.
