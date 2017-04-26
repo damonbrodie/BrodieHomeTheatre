@@ -41,7 +41,7 @@ namespace BrodieTheatre
 
         public int insteonProcessMotionSensorMessage(string message, string address)
         {
-            writeLog("Insteon:  Process motion sensor from address '" + address + "' message '" + message + "'");
+            //writeLog("Insteon:  Process motion sensor from address '" + address + "' message '" + message + "'");
             int state = -1;
             if (message == string.Empty)
             {
@@ -296,7 +296,7 @@ namespace BrodieTheatre
                     labelMotionSensorStatus.Text = "No Motion";
                     vacancyWarning = false;
                 }
-                else if (insteonMotionLatchExpires.AddMinutes(1) < rightNow && ! vacancyWarning && labelKodiPlaybackStatus.Text == "Stopped")
+                else if (insteonMotionLatchExpires.AddMinutes(-1) < rightNow && ! vacancyWarning && labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     writeLog("Insteon:  One minute warning to vacancy");
                     vacancyWarning = true;
