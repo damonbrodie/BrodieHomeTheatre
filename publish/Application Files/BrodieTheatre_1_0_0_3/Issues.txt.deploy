@@ -1,0 +1,12 @@
+﻿This project is not necessarily meant to be usable by everyone.  I've published the code
+so that it serves as a reference for others that may want to try something themselves.
+
+Someday this may change and become something that is more widely useful.
+
+In the meantime the following issues are known to exist:
+
+- Projector code is specific to Panasonic
+- Only two Insteon lights can be supported.  This should be made more generic so that
+  it can support a configurable number
+- The voice recognition and text-to-speech only work if the Language in Windows is set
+  to US English.  This probably should have better error handling.

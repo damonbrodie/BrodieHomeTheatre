@@ -42,12 +42,12 @@ namespace BrodieTheatre
 
         public int insteonProcessMotionSensorMessage(string message, string address)
         {
+            writeLog("Insteon:  Process motion sensor from address '" + address + "' message '" + message + "'");
             int state = -1;
             if (message == string.Empty)
             {
                 return state;
             }
-            //writeLog("Insteon:  Process motion sensor from address '" + address + "' message '" + message + "'");
             switch (message)
             {
                 case "Turn On":
@@ -164,7 +164,12 @@ namespace BrodieTheatre
             else if (address == Properties.Settings.Default.doorSensorAddress)
             {
                 int state = insteonProcessMotionSensorMessage(desc, address);
-                if (state == 1)
+
+                if (state == -1)
+                {
+                    return;
+                }
+                else if (state == 1)
                 { //Door Open Detected
                     formMain.BeginInvoke(new Action(() =>
                     {
