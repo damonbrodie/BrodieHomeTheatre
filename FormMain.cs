@@ -78,7 +78,8 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.writeLog("------ Brodie Theatre Starting Up ------");
-                formMain.timerSetLights.Enabled = true; 
+                formMain.timerSetLights.Enabled = true;
+                formMain.resetGlobalTimer();
             }));
 
             currentPLMport = Properties.Settings.Default.plmPort;
@@ -190,7 +191,7 @@ namespace BrodieTheatre
             // - The Harmony Activity is Off
             // - The Room is vacant
 
-            if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text == "Vacant")
+            if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text != "Occupied")
             {
                 if (GlobalShutdown > now)
                 {
