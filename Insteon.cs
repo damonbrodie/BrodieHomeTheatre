@@ -298,9 +298,10 @@ namespace BrodieTheatre
                 }
                 else if (insteonMotionLatchExpires.AddMinutes(1) < rightNow && ! vacancyWarning && labelKodiPlaybackStatus.Text == "Stopped")
                 {
+                    writeLog("Insteon:  One minute warning to vacancy");
                     vacancyWarning = true;
-                    int r = random.Next(warning.Count);
-                    speakText(warning[r]);
+                    int r = random.Next(ttsWarningPhrases.Count);
+                    speakText(ttsWarningPhrases[r]);
                 }
                 else
                 {

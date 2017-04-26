@@ -68,7 +68,7 @@ namespace BrodieTheatre
                 timeGreeting = "good evening";
             }
             writeLog("Voice:  Speak greeting");
-            List<string> allGreetings = greetings;
+            List<string> allGreetings = ttsGreetingPhrases;
             allGreetings.Add(timeGreeting);
             int r = random.Next(allGreetings.Count);
             speakText(allGreetings[r]);
@@ -77,15 +77,15 @@ namespace BrodieTheatre
         private void sayPresense()
         {
             writeLog("Voice:  Speak presense acknowledgement");
-            int r = random.Next(presense.Count);
-            speakText(presense[r]);
+            int r = random.Next(ttsPresensePhrases.Count);
+            speakText(ttsPresensePhrases[r]);
         }
 
         private void sayAcknowledgement()
         {
             writeLog("Voice:  Speak acknowledgement");
-            int r = random.Next(ack.Count);
-            speakText(ack[r]);
+            int r = random.Next(ttsAcknowledgementPhrases.Count);
+            speakText(ttsAcknowledgementPhrases[r]);
         }
 
         private GrammarBuilder commandGreeting ()
@@ -320,8 +320,8 @@ namespace BrodieTheatre
                             if (movieEntry.file == kodiMovieFile)
                             {
                                 formMain.writeLog("Voice: Checking for movie '" + movieEntry.name + "'");
-                                int r = random.Next(foundMovie.Count);
-                                speakText(foundMovie[r] + " " + movieEntry.name);
+                                int r = random.Next(ttsFoundMoviePhrases.Count);
+                                speakText(ttsFoundMoviePhrases[r] + " " + movieEntry.name);
                             }
                         }
                     }));
@@ -349,8 +349,8 @@ namespace BrodieTheatre
 
                         if (kodiPlayNext != null)
                         {
-                            int r = random.Next(startMovie.Count);
-                            formMain.speakText(startMovie[r] + " " + kodiPlayNext.name);
+                            int r = random.Next(ttsStartMoviePhrases.Count);
+                            formMain.speakText(ttsStartMoviePhrases[r] + " " + kodiPlayNext.name);
                             formMain.timerKodiStartPlayback.Enabled = false;
                             formMain.timerKodiStartPlayback.Enabled = true;
 
@@ -370,8 +370,8 @@ namespace BrodieTheatre
                         }
                         else
                         {
-                            int r = random.Next(unableToStart.Count);
-                            formMain.speakText(unableToStart[r]);
+                            int r = random.Next(ttsUnableToStartPhrases.Count);
+                            formMain.speakText(ttsUnableToStartPhrases[r]);
                             formMain.writeLog("Voice:  Unable to start movie playback for '" + kodiMovieFile + "'");
                         }
                     }));
@@ -507,8 +507,8 @@ namespace BrodieTheatre
                             if (kodiPlayNext != null)
                             {
                                 formMain.kodiPlayNext = null;
-                                int r = random.Next(cancel.Count);
-                                speakText(cancel[r]);
+                                int r = random.Next(ttsCancelPlaybackPhrases.Count);
+                                speakText(ttsCancelPlaybackPhrases[r]);
                             }
                             formMain.labelLastVoiceCommand.Text = "Cancel playback";
                             formMain.writeLog("Voice:  Processed 'Cancel playback'");

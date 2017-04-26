@@ -739,7 +739,7 @@
             // 
             // timerSetLights
             // 
-            this.timerSetLights.Interval = 500;
+            this.timerSetLights.Interval = 250;
             this.timerSetLights.Tick += new System.EventHandler(this.timerSetLights_Tick);
             // 
             // timerKodiConnect
