@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows.Forms;
 using SoapBox.FluentDwelling;
 using SoapBox.FluentDwelling.Devices;
@@ -175,6 +174,7 @@ namespace BrodieTheatre
                     {
                         formMain.writeLog("Insteon:  Door Opened");
                         formMain.toolStripStatus.Text = "Door Opened";
+
                     }
                     ));
                 }
@@ -193,7 +193,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.lightsToEnteringLevel();
+                        formMain.insteonDoMotion();
                     }
                     ));
                 }
