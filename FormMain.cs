@@ -174,24 +174,21 @@ namespace BrodieTheatre
 
         private void timerGlobal_Tick(object sender, EventArgs e)
         {
-            // Evaluate the conditions to determine if we should be counting down or not
-            // for shutting down the theatre
+            /* Reasons the timer should be ticking down if either of these is TRUE
+               - A light is on
+               - A Harmony Activity is active
+
+               The timer should not be active if the following are all TRUE:
+               - The lights are Off
+               - The Harmony Activity is Off
+               - The Room is vacant
+            */
             DateTime now = DateTime.Now;
-
-            // Calculate when the shutdown timer was initiated based on when it will end.
-
             DateTime globalShutdownStart = globalShutdown.AddHours(Properties.Settings.Default.globalShutdown * -1);
             var totalSeconds = (globalShutdown - globalShutdownStart).TotalSeconds;
             var progress = (now - globalShutdownStart).TotalSeconds;
 
-            // Reasons the timer should be ticking down if either of these is TRUE
-            // - A light is on
-            // - A Harmony Activity is active
 
-            // The timer should not be active if the following are all TRUE:
-            // - The lights are Off
-            // - The Harmony Activity is Off
-            // - The Room is vacant
 
             if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text != "Occupied")
             {
