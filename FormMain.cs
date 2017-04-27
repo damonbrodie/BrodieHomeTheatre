@@ -201,12 +201,12 @@ namespace BrodieTheatre
                 }
                 else
                 {
-                    writeLog("Global Timer:  Sending Harmony 'PowerOff', turning off lights");
+                    writeLog("Global Timer:  Shutting down theatre");
                     if (harmonyIsActivityStarted())
                     {
                         harmonyStartActivityByName("PowerOff");
                     }
-                    toolStripProgressBarGlobal.Value = 0;
+                    toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
                     lightsOff();
                     return;
                 }
