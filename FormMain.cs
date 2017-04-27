@@ -187,8 +187,6 @@ namespace BrodieTheatre
             var totalSeconds = (globalShutdown - globalShutdownStart).TotalSeconds;
             var progress = (now - globalShutdownStart).TotalSeconds;
 
-
-
             if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text != "Occupied")
             {
                 if (globalShutdown.AddMinutes(-1) <= now && ! globalShutdownWarning)
@@ -197,6 +195,7 @@ namespace BrodieTheatre
                     int r = random.Next(ttsWarningPhrases.Count);
                     speakText(ttsWarningPhrases[r]);           
                     globalShutdownWarning = true;
+                    return;
                 }
                 else if (globalShutdown > now)
                 {
@@ -207,13 +206,13 @@ namespace BrodieTheatre
                         writeLog("Global Timer:  Timer active");
                     }
                     globalShutdownActive = true;
-                    globalShutdownWarning = false;
                     return;
                 }
                 else
                 {
                     writeLog("Global Timer:  Shutting down theatre");
                     globalShutdownActive = false;
+                    globalShutdownWarning = false;
                     if (harmonyIsActivityStarted())
                     {
                         harmonyStartActivityByName("PowerOff", false);
@@ -319,6 +318,7 @@ namespace BrodieTheatre
         private void resetGlobalTimer()
         {
             globalShutdown = DateTime.Now.AddHours(Properties.Settings.Default.globalShutdown);
+            globalShutdownWarning = false;
             //writeLog("Global Timer:  Resetting shutdown timer");
         }
 
