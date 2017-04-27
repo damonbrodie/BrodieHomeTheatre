@@ -191,7 +191,7 @@ namespace BrodieTheatre
 
             if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text != "Occupied")
             {
-                if (globalShutdown.AddMinutes(1) <= now && ! globalShutdownWarning)
+                if (globalShutdown.AddMinutes(-1) <= now && ! globalShutdownWarning)
                 {      
                     writeLog("Global Timer:  One minute warning for global shutdown");
                     int r = random.Next(ttsWarningPhrases.Count);
