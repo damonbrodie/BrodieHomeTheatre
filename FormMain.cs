@@ -204,7 +204,7 @@ namespace BrodieTheatre
                     writeLog("Global Timer:  Shutting down theatre");
                     if (harmonyIsActivityStarted())
                     {
-                        harmonyStartActivityByName("PowerOff");
+                        harmonyStartActivityByName("PowerOff", false);
                     }
                     toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
                     lightsOff();

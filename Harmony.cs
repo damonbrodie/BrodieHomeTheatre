@@ -192,7 +192,7 @@ namespace BrodieTheatre
         }
 
         // Start Harmony Activity
-        private async void harmonyStartActivity(string activityName, string activityId)
+        private async void harmonyStartActivity(string activityName, string activityId, bool affectLights = true)
         {
             bool success = false;
             int counter = 0;
@@ -210,12 +210,18 @@ namespace BrodieTheatre
                         {
                             formMain.projectorPowerOn();
                             //An activity is starting wait for Projector to power up then dim the lights
-                            formMain.timerStartLights.Enabled = true;
+                            if (affectLights)
+                            {
+                                formMain.timerStartLights.Enabled = true;
+                            }
                         }
                         else //Power Off
                         {
                             //Turn up the ligths so occupants can find their way out
-                            formMain.lightsToEnteringLevel();
+                            if (affectLights)
+                            {
+                                formMain.lightsToEnteringLevel();
+                            }
                             formMain.projectorPowerOff();
                         }
                     }));
@@ -235,11 +241,11 @@ namespace BrodieTheatre
             }
         }
 
-        private void harmonyStartActivityByName(string activityName)
+        private void harmonyStartActivityByName(string activityName, bool affectLights = true)
         {
             if (activityName == "PowerOff")
             {
-                harmonyStartActivity("PowerOff", "-1");
+                harmonyStartActivity("PowerOff", "-1", affectLights);
                 return;
             }
             for (int i = 0; i < listBoxActivities.Items.Count; i++)
@@ -247,7 +253,7 @@ namespace BrodieTheatre
                 Activities currItem = (Activities)listBoxActivities.Items[i];
                 if (currItem.Text == activityName)
                 {      
-                    harmonyStartActivity(activityName, currItem.Id);
+                    harmonyStartActivity(activityName, currItem.Id, affectLights);
                     return;
                 }
             }
