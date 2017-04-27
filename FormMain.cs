@@ -71,7 +71,6 @@ namespace BrodieTheatre
                 currentKodiPort = Properties.Settings.Default.kodiJSONPort;
                 kodiStatusDisconnect();
             }
-
             setVoice();
         }
 

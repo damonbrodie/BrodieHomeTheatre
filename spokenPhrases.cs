@@ -9,7 +9,8 @@ namespace BrodieTheatre
         List<string> ttsWarningPhrases = new List<string>(new string[] 
         {
             "Turning off lights in one minutes",
-            "Shutting down lights in a minute"
+            "Shutting down lights in a minute",
+            "One minute until shutdown"
         });
         List<string> ttsGreetingPhrases = new List<string>(new string[] 
         {
@@ -29,17 +30,20 @@ namespace BrodieTheatre
         List<string> ttsAcknowledgementPhrases = new List<string>(new string[] {
             "Okay",
             "Doing that now",
-            "One moment"
+            "One moment",
+            "Give me a moment",
         });
         List<string> ttsFoundMoviePhrases = new List<string>(new string[]
         {
             "I found",
-            "We have"
+            "We have",
+            "I found the movie",
         });
         List<string> ttsStartMoviePhrases = new List<string>(new string[]
         {
             "Starting movie",
-            "Queuing up"
+            "Queuing up",
+            "Playing the movie"
         });
         List<string> ttsCancelPlaybackPhrases = new List<string>(new string[] 
         {
