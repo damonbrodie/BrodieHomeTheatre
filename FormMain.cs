@@ -17,7 +17,8 @@ namespace BrodieTheatre
         // Insteon on COM1
 
         static FormMain formMain;
-        public DateTime GlobalShutdown;
+        public DateTime globalShutdown;
+        public bool globalShutdownActive = false;
         public int statusTickCounter = 0;
         public Random random = new Random();
         public bool vacancyWarning = false;
@@ -178,8 +179,8 @@ namespace BrodieTheatre
 
             // Calculate when the shutdown timer was initiated based on when it will end.
 
-            DateTime globalShutdownStart = GlobalShutdown.AddHours(Properties.Settings.Default.globalShutdown * -1);
-            var totalSeconds = (GlobalShutdown - globalShutdownStart).TotalSeconds;
+            DateTime globalShutdownStart = globalShutdown.AddHours(Properties.Settings.Default.globalShutdown * -1);
+            var totalSeconds = (globalShutdown - globalShutdownStart).TotalSeconds;
             var progress = (now - globalShutdownStart).TotalSeconds;
 
             // Reasons the timer should be ticking down if either of these is TRUE
@@ -193,15 +194,21 @@ namespace BrodieTheatre
 
             if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text != "Occupied")
             {
-                if (GlobalShutdown > now)
+                if (globalShutdown > now)
                 {
                     int percentage = Math.Abs(100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
                     toolStripProgressBarGlobal.Value = percentage;
+                    if (! globalShutdownActive)
+                    {
+                        writeLog("GlobalTimer:  Timer active");
+                    }
+                    globalShutdownActive = true;
                     return;
                 }
                 else
                 {
                     writeLog("Global Timer:  Shutting down theatre");
+                    globalShutdownActive = false;
                     if (harmonyIsActivityStarted())
                     {
                         harmonyStartActivityByName("PowerOff", false);
@@ -210,6 +217,11 @@ namespace BrodieTheatre
                     lightsOff();
                     return;
                 }
+            }
+            if (globalShutdownActive)
+            {
+                writeLog("Global Timer:  Disabling timer");
+                globalShutdownActive = false;
             }
             toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
         }
@@ -301,8 +313,8 @@ namespace BrodieTheatre
 
         private void resetGlobalTimer()
         {
-            GlobalShutdown = DateTime.Now.AddHours(Properties.Settings.Default.globalShutdown);
-            writeLog("Global Timer:  Resetting shutdown timer");
+            globalShutdown = DateTime.Now.AddHours(Properties.Settings.Default.globalShutdown);
+            //writeLog("Global Timer:  Resetting shutdown timer");
         }
 
         private void labelProjectorPower_TextChanged(object sender, EventArgs e)
