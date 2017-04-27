@@ -19,6 +19,7 @@ namespace BrodieTheatre
         static FormMain formMain;
         public DateTime globalShutdown;
         public bool globalShutdownActive = false;
+        public bool globalShutdownWarning = false;
         public int statusTickCounter = 0;
         public Random random = new Random();
         public bool vacancyWarning = false;
@@ -194,15 +195,23 @@ namespace BrodieTheatre
 
             if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelRoomOccupancy.Text != "Occupied")
             {
-                if (globalShutdown > now)
+                if (globalShutdown.AddMinutes(1) <= now && ! globalShutdownWarning)
+                {      
+                    writeLog("Global Timer:  One minute warning for global shutdown");
+                    int r = random.Next(ttsWarningPhrases.Count);
+                    speakText(ttsWarningPhrases[r]);           
+                    globalShutdownWarning = true;
+                }
+                else if (globalShutdown > now)
                 {
                     int percentage = Math.Abs(100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
                     toolStripProgressBarGlobal.Value = percentage;
                     if (! globalShutdownActive)
                     {
-                        writeLog("GlobalTimer:  Timer active");
+                        writeLog("Global Timer:  Timer active");
                     }
                     globalShutdownActive = true;
+                    globalShutdownWarning = false;
                     return;
                 }
                 else
