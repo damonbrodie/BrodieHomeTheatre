@@ -95,7 +95,8 @@ namespace BrodieTheatre
             {
                 "hello " + Properties.Settings.Default.computerName,
                 "ok "    + Properties.Settings.Default.computerName,
-                "hey "   + Properties.Settings.Default.computerName
+                "hey "   + Properties.Settings.Default.computerName,
+                "hi "    + Properties.Settings.Default.computerName
             });
 
             grammarBuilder.Append(new SemanticResultKey("Greeting", choicesHello));
@@ -131,66 +132,6 @@ namespace BrodieTheatre
                 grammarBuilder.Append(choicesPolite);
             }
             return grammarBuilder;
-        }
-
-        private GrammarBuilder commandStartTheatre()
-        {
-            return buildCommand("Turn on Theatre", choicesStartTheatre);
-        }
-
-        private GrammarBuilder commandTranparentScreen()
-        {
-            return buildCommand("Transparent Screen", choicesTransparentScreen);
-        }
-
-        private GrammarBuilder commandShutdownTheatre()
-        {
-            return buildCommand("Turn off Theatre", choicesShutdownTheatre);
-        }
-
-        private GrammarBuilder commandShowApplication()
-        {
-            return buildCommand("Show Application", choicesShowApplication);
-        }
-
-        private GrammarBuilder commandHideApplication()
-        {
-            return buildCommand("Hide Application", choicesHideApplication);
-        }
-
-        private GrammarBuilder commandPresense()
-        {
-            return buildCommand("Presense", choicesPresense);
-        }
-
-        private GrammarBuilder commandDimLights()
-        {
-            return buildCommand("Dim Lights", choicesDimLights);
-        }
-
-        private GrammarBuilder commandLightsOn()
-        {
-            return buildCommand("Lights On", choicesLightsOn);
-        }
-
-        private GrammarBuilder commandPausePlayback()
-        {
-            return buildCommand("Pause Playback", choicesPausePlayback);
-        }
-
-        private GrammarBuilder commandResumePlayback()
-        {
-            return buildCommand("Resume Playback", choicesResumePlayback);
-        }
-
-        private GrammarBuilder commandStopPlayback()
-        {
-            return buildCommand("Stop Playback", choicesStopPlayback);
-        }
-
-        private GrammarBuilder commandCancelPlayback()
-        {
-            return buildCommand("Cancel Playback", choicesCancelPlayback);
         }
 
         private Tuple<GrammarBuilder, GrammarBuilder> commandMovies()
@@ -239,18 +180,18 @@ namespace BrodieTheatre
                 Choices commands = new Choices(new GrammarBuilder[]
                 {
                     commandGreeting(),
-                    commandStartTheatre(),
-                    commandTranparentScreen(),
-                    commandShutdownTheatre(),
-                    commandShowApplication(),
-                    commandHideApplication(),
-                    commandPresense(),
-                    commandDimLights(),
-                    commandLightsOn(),
-                    commandPausePlayback(),
-                    commandResumePlayback(),
-                    commandStopPlayback(),
-                    commandCancelPlayback()
+                    buildCommand("Turn on Theatre", choicesStartTheatre),
+                    buildCommand("Transparent Screen", choicesTransparentScreen),
+                    buildCommand("Turn off Theatre", choicesShutdownTheatre),
+                    buildCommand("Show Application", choicesShowApplication),
+                    buildCommand("Hide Application", choicesHideApplication),
+                    buildCommand("Presense", choicesPresense),
+                    buildCommand("Dim Lights", choicesDimLights),
+                    buildCommand("Lights On", choicesLightsOn),
+                    buildCommand("Pause Playback", choicesPausePlayback),
+                    buildCommand("Resume Playback", choicesResumePlayback),
+                    buildCommand("Stop Playback", choicesStopPlayback),
+                    buildCommand("Cancel Playback", choicesCancelPlayback)
                 });
 
                 if (kodiLoadingMovies)
