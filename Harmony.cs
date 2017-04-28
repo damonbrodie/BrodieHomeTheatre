@@ -39,6 +39,11 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.writeLog("Harmony:  Connected to Hub");
+                    if (currentActivityID != "-1")
+                    {
+                        formMain.writeLog("Harmony:  Harmony is active - assume room is occupied");
+                        formMain.insteonDoMotion();
+                    }
                 }));
             }
             catch
