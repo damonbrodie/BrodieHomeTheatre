@@ -208,6 +208,10 @@ namespace BrodieTheatre
 
         private void projectorPowerOn()
         {
+            if (labelProjectorPower.Text == "On" || labelProjectorPower.Text == "Powering On")
+            {
+                return;
+            }
             writeLog("Projector:  Powering On");
             labelProjectorPower.Text = "Powering On";
             // Set the Projector to the currently AR in the UI to ensure we are in sync.
@@ -227,6 +231,10 @@ namespace BrodieTheatre
 
         private void projectorPowerOff()
         {
+            if (labelProjectorPower.Text == "Off" || labelProjectorPower.Text == "Powering Off")
+            { 
+                return;
+            }
             labelProjectorPower.Text = "Powering Off";
             writeLog("Projector:  Powering Off");
             if (timerProjectorControl.Enabled == true)
