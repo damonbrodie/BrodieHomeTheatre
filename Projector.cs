@@ -208,6 +208,7 @@ namespace BrodieTheatre
 
         private void projectorPowerOn()
         {
+            
             if (labelProjectorPower.Text == "On" || labelProjectorPower.Text == "Powering On")
             {
                 return;

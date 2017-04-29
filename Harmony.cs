@@ -86,16 +86,23 @@ namespace BrodieTheatre
             {
                 formMain.writeLog("Harmony:  Hub message received");
                 formMain.harmonyUpdateActivities(activity);
-                if (activity == "-1")
+            }));
+            if (activity == "-1")
+            {
+                formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.projectorPowerOff();
                     formMain.lightsToEnteringLevel();
-                }
-                else
+                }));
+            }
+            else
+            {
+                await doDelay(3000);
+                formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.projectorPowerOn();
-                }
-            }));
+                }));
+            }
         }
 
         private async void harmonyUpdateActivities(string currentActivityID)
@@ -205,22 +212,35 @@ namespace BrodieTheatre
             {
                 try
                 {
-                    await Program.Client.StartActivityAsync(activityId);
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.writeLog("Harmony:  Starting Activity '" + activityName + "' Id '" + activityId + "'");
                         formMain.toolStripStatus.Text = "Starting Harmony activity - " + activityName;
-                        // Activities > 0 are those that are user driven. -1 means poweroff
-                        if (Convert.ToInt32(activityId) >= 0)
+                    }));
+                    // Activities > 0 are those that are user driven. -1 means poweroff
+                    if (Convert.ToInt32(activityId) >= 0)
+                    {
+                        formMain.BeginInvoke(new Action(() =>
                         {
                             formMain.projectorPowerOn();
+                        
                             //An activity is starting wait for Projector to power up then dim the lights
                             if (affectLights)
                             {
                                 formMain.timerStartLights.Enabled = true;
                             }
-                        }
-                        else //Power Off
+                        }));
+
+                        // Delay the harmony activity to let the projector start.  Having the Amp and projector start
+                        // at the same time sometimes causes the Intel graphics to go crazy
+                        await doDelay(5000);
+                        await Program.Client.StartActivityAsync(activityId);
+                    }
+                    else //Power Off
+                    {
+                        await Program.Client.StartActivityAsync(activityId);
+                        await doDelay(1000);
+                        formMain.BeginInvoke(new Action(() =>
                         {
                             //Turn up the ligths so occupants can find their way out
                             if (affectLights)
@@ -228,8 +248,8 @@ namespace BrodieTheatre
                                 formMain.lightsToEnteringLevel();
                             }
                             formMain.projectorPowerOff();
-                        }
-                    }));
+                        }));
+                    }
                     success = true;
                 }
                 catch
