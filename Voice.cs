@@ -212,7 +212,15 @@ namespace BrodieTheatre
                 
                 Grammar grammar = new Grammar(commands);
                 grammar.Name = "commands";
-                recognitionEngine.LoadGrammarAsync(grammar);
+                try
+                {
+                    recognitionEngine.LoadGrammarAsync(grammar);
+                }
+                catch
+                {
+                    writeLog("Voice:  Unable to load grammars");
+                    return;
+                }
                 toolStripStatus.Text = "Speech recognition grammars loaded";
                 writeLog("Voice:  Grammar entries loaded");
             }

@@ -211,6 +211,7 @@
     <Content Include="Brodie-HomeTheatre.ico" />
     <Content Include="Issues.txt" />
     <Content Include="Process Flow.txt" />
+    <Content Include="Windows HTPC Guide.txt" />
     <None Include="Resources\alert.wav" />
     <None Include="Resources\Icon2.ico" />
     <None Include="Resources\Icon1.ico" />

@@ -266,7 +266,7 @@ namespace BrodieTheatre
                     }
                     else
                     {
-                        writeLog("Voice:  Unable to load Speech Recognition Engine.  Shutting Down.");
+                        writeLog("Voice:  No Recognizers found - Do you need to install a Speech Recognition Language (TELE)?");
                         Application.Exit();
                     }
                     loadVoiceCommands();
@@ -277,7 +277,7 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    labelLastVoiceCommand.Text = "Can't turn speech recognizer on";
+                    labelLastVoiceCommand.Text = "Cannot enable speech recognizer";
                     writeLog("Voice:  Can't start Speech Recognizer");
                 }
 
