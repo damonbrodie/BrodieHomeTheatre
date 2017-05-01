@@ -745,7 +745,7 @@
             // timerKodiConnect
             // 
             this.timerKodiConnect.Enabled = true;
-            this.timerKodiConnect.Interval = 1000;
+            this.timerKodiConnect.Interval = 2000;
             this.timerKodiConnect.Tick += new System.EventHandler(this.timerKodiConnect_Tick);
             // 
             // timerKodiStartPlayback

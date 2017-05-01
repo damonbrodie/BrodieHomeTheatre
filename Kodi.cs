@@ -70,7 +70,7 @@ namespace BrodieTheatre
                         labelKodiStatus.ForeColor = System.Drawing.Color.ForestGreen;
                         kodiSendGetMoviesRequest();
                         kodiConnectAttempts = 0;
-                        timerKodiConnect.Interval = 1000;
+                        timerKodiConnect.Interval = 2000;
                         return;
                     }
                 }
@@ -95,6 +95,7 @@ namespace BrodieTheatre
             char[] buffer = new char[100000];
             //int bytesRead = 0;
             bool ended = false;
+            bool gotSome = false;
             while (!ended)
             {
                 try
@@ -102,6 +103,14 @@ namespace BrodieTheatre
                     int bytesRead = await kodiStreamReader.ReadAsync(buffer, 0, 100000);
                     Array.Copy(buffer, 0, kodiReadBuffer, kodiReadBufferPos, bytesRead);
                     kodiReadBufferPos += bytesRead;
+                    if (bytesRead > 0)
+                    {
+                        gotSome = true;
+                    }
+                    else
+                    {
+                        gotSome = false;
+                    }
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.kodiFindJson();
@@ -110,6 +119,14 @@ namespace BrodieTheatre
                 catch
                 {
                     ended = true;
+                }
+                if (gotSome)
+                {
+                    await doDelay(100);
+                }
+                else
+                {
+                    await doDelay(1000);
                 }
             }
             formMain.BeginInvoke(new Action(() =>
@@ -348,6 +365,7 @@ namespace BrodieTheatre
                 writeLog("Kodi:  Received unknown JSON:  " + jsonText);
             }
         }
+
         public bool searchMovieList(List<PartialMovieEntry> theList, string searchTerm)
         {
             bool found = false;
@@ -360,6 +378,7 @@ namespace BrodieTheatre
             }
             return found;
         }
+
         public List<string> getShortMovieTitles(string name)
         {
             List<string> nameList = new List<string>();
