@@ -79,13 +79,13 @@ namespace BrodieTheatre
 
             // Back-off the connection attempt rate
             kodiConnectAttempts += 1;
-            if (kodiConnectAttempts > 15)
-            {
-                timerKodiConnect.Interval = 15000;
-            }
-            else if (kodiConnectAttempts > 30)
+            if (kodiConnectAttempts > 30)
             {
                 timerKodiConnect.Interval = 60000;
+            }
+            else if (kodiConnectAttempts > 15)
+            {
+                timerKodiConnect.Interval = 15000;
             }
             kodiStatusDisconnect(); 
         }
@@ -250,7 +250,6 @@ namespace BrodieTheatre
                         break;
                     case "System.OnQuit":
                         writeLog("Kodi:  Kodi is exiting");
-                        kodiStatusDisconnect();
                         break;
                     case "VideoLibrary:OnScanStarted":
                         writeLog("Kodi:  Kodi library updated");
@@ -435,7 +434,10 @@ namespace BrodieTheatre
 
         public void kodiStatusDisconnect(bool enableTimer = true)
         {
-            writeLog("Kodi:  Connection closed to Kodi JSON port");
+            if (enableTimer)
+            {
+                writeLog("Kodi:  Connection closed to Kodi JSON port");
+            }
             labelKodiStatus.Text = "Disconnected";
             labelKodiStatus.ForeColor = System.Drawing.Color.Maroon;
             timerKodiConnect.Enabled = enableTimer;
