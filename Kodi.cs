@@ -398,7 +398,6 @@ namespace BrodieTheatre
                 }
                 firstOne = false;
             }
-
             return nameList;
         }
 

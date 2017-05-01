@@ -18,7 +18,7 @@ namespace BrodieTheatre
             {
                 try
                 {
-                    using (StreamWriter file = File.AppendText("logging.txt"))
+                    using (StreamWriter file = File.AppendText("brodietheatre_log.txt"))
                     {
                         file.WriteLine(now.ToString("yyyy-MM-dd HH:mm:ss") + " " + Message);
                         success = true;

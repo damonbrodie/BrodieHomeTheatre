@@ -62,8 +62,7 @@ namespace BrodieTheatre
                     formMain.harmonyUpdateActivities(currentActivityID);
                 }));
                 Thread thread = new Thread(harmonyStartTimer);
-                thread.Start();
-                
+                thread.Start();             
             }
         }
 
