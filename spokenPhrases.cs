@@ -14,7 +14,7 @@ namespace BrodieTheatre
         });
         List<string> ttsGreetingPhrases = new List<string>(new string[] 
         {
-            "hello there",
+            "Hello there",
             "Welcome",
             "Hello",
             "Welcome back"
@@ -25,7 +25,9 @@ namespace BrodieTheatre
             "Standing by",
             "Yes",
             "At your service",
-            "Ready"
+            "Ready",
+            "I'm ready",
+            "How can I help"
         });
         List<string> ttsAcknowledgementPhrases = new List<string>(new string[] {
             "Okay",
@@ -38,6 +40,8 @@ namespace BrodieTheatre
             "I found",
             "We have",
             "I found the movie",
+            "Okay, I found the movie",
+            "Okay, I found"
         });
         List<string> ttsStartMoviePhrases = new List<string>(new string[]
         {
