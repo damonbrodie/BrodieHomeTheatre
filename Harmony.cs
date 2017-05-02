@@ -46,8 +46,7 @@ namespace BrodieTheatre
                     {
                         if (formMain.labelRoomOccupancy.Text != "Occupied")
                         {
-                            formMain.writeLog("Harmony:  Harmony is active - assume room is occupied");
-                            formMain.insteonDoMotion();
+                            formMain.insteonDoMotion(false);
                         }
                     }));
                 }
@@ -107,8 +106,7 @@ namespace BrodieTheatre
                 {
                     if (formMain.labelRoomOccupancy.Text != "Occupied")
                     {
-                        formMain.writeLog("Harmony:  Harmony is active - assume room is occupied");
-                        formMain.insteonDoMotion();
+                        formMain.insteonDoMotion(false);
                     }
                     formMain.projectorPowerOn();
                 }));

@@ -140,7 +140,7 @@ namespace BrodieTheatre
                 { //Motion Detected
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.insteonDoMotion();
+                        formMain.insteonDoMotion(true);
                     }
                     ));
                 }
@@ -192,7 +192,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.insteonDoMotion();
+                        formMain.insteonDoMotion(true);
                     }
                     ));
                 }
@@ -315,17 +315,23 @@ namespace BrodieTheatre
             progressBarInsteonMotionLatch.Value = progressBarInsteonMotionLatch.Minimum;
         }
 
-        private void insteonDoMotion()
+        private void insteonDoMotion(bool explicitMotion = true)
         {
-            if (labelMotionSensorStatus.Text != "Motion Detected")
+            if (! explicitMotion)
             {
-                writeLog("Insteon:  Motion Sensor reported 'Motion Detected'");
-                vacancyWarning = false;
-                labelMotionSensorStatus.Text = "Motion Detected";
-                labelRoomOccupancy.Text = "Occupied";
-                resetGlobalTimer();
-                insteonMotionLatchActive = false;
+                writeLog("Insteon:  Implied room occupancy detected'");
             }
+
+            else if (labelMotionSensorStatus.Text != "Motion Detected")
+            {              
+                writeLog("Insteon:  Motion Sensor reported 'Motion Detected'");
+                labelMotionSensorStatus.Text = "Motion Detected";               
+                writeLog("Insteon:  Implied room occupancy detected'");
+            }
+            vacancyWarning = false;
+            labelRoomOccupancy.Text = "Occupied";
+            resetGlobalTimer();
+            insteonMotionLatchActive = false;
         }
 
         private async void insteonPollLights()

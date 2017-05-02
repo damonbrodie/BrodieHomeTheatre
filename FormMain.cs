@@ -345,7 +345,7 @@ namespace BrodieTheatre
             else
             {
                 labelRoomOccupancy.Text = "Occupied";
-                insteonDoMotion();
+                insteonDoMotion(false);
                 writeLog("Occupancy:  Overriding Room to Occupied");
             }
         }
