@@ -20,18 +20,16 @@ to the events and uses them as decision points to signal events.
 This project aims to provide very specific automation to both enhance the *cool* factor of the 
 room as well as make it easier to use the theatre.  The following high level use cases are 
 supported by this application:
-- Upon entering the room (Insteon Motion Sensor/door sensor), bring up the room lights (Insteon 
-Dimmer).
+- Upon entering the room using the Insteon motion and door sensors, bring up the room lights with the Insteon 
+Dimmer.
 - Use speech recognition (Microsoft Speech Engine) to listen for voice requests to turn on or 
 off the theatre. This signals a Harmony Hub activity to power on the AV Amplifier and the
 projector.  Once the projector is powered up the lights are automatically dimmed to a comfortable 
 lighting preset.
-- The user can, using voice recognition, turn on the theatre "Turn on Theatre".  They can also 
-say "Let's watch Star Wars".  In this example if the theatre isn't on, then it is powered on and 
-then the media playback will begin.
-- When the media playback starts (Kodi JSON), the lighting is dimmed further.
-- Either with the Harmony remote or via voice recognition, the user can pause or stop media playback.
-- When media playback is paused the lighting is brought up a bit so people can navigate the room etc.
+- Using the Kodi JSON feed to stay current with playback status (pause/stop/start), alter the lighting, dimming
+it further during playback, raising it during pause and then stopped.
+- Either with the Harmony remote or via voice recognition, the user can pause/stop/start media playback as well as
+raise/lower the room lighting.
 - When the user powers off the system via the remote control, the AV equipment is powered off, and 
 the lighting is brought up to full.
 - The application will power down the system and lighting when there is no media playback happening 
@@ -49,7 +47,9 @@ Several different components make up this part of the solution:
  works well for dictation and headset microphones - it is fully trainable on a per user basis.  Microsoft.Speech 
  isn't trainable, but it is specifically tuned for distant speech - it works best when you tell the speech 
  engine all of available phrases and it will listen only for those.  My application builds a specific "grammar" 
- that the voice engine uses to listen for the specific commands for the home theatre.
+ that the voice engine uses to listen for the specific commands for the home theatre.  Other online speech recognition
+ engines like the ones provided by Bing and Google are not really suitable for this task because you cannot load them
+ with a specific grammar.
  - Microphone.  I'm using a beamforming microphone combined with a Sound Blaster Z sound card.  The card can 
  use the beam forming microphone to pick up speech from the seating area about 10 feet away.  It does a reasonable 
  job filtering out the sounds that might be coming from the movie playback.  I've experimented with all
