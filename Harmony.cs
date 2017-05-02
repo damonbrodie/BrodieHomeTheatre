@@ -38,7 +38,7 @@ namespace BrodieTheatre
                 currentActivityID = await Program.Client.GetCurrentActivityAsync();
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Harmony:  Connected to Hub");
+                    formMain.writeLog("Harmony:  Connected to Hub, current activity ID is '" + currentActivityID + "'");
                     if (currentActivityID != "-1")
                     {
                         formMain.writeLog("Harmony:  Harmony is active - assume room is occupied");
@@ -79,15 +79,14 @@ namespace BrodieTheatre
             }));
         }
 
-        private async void harmonyClient_OnActivityChanged(object sender, string e)
+        private async void harmonyClient_OnActivityChanged(object sender, string activityID)
         {
-            var activity = await Program.Client.GetCurrentActivityAsync();
             formMain.BeginInvoke(new Action(() =>
             {
-                formMain.writeLog("Harmony:  Hub message received");
-                formMain.harmonyUpdateActivities(activity);
+                formMain.writeLog("Harmony:  Hub message received with current activity ID '" + activityID + "'");
+                formMain.harmonyUpdateActivities(activityID);
             }));
-            if (activity == "-1")
+            if (activityID == "-1")
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
@@ -114,30 +113,38 @@ namespace BrodieTheatre
                 try
                 { 
                     var harmonyConfig = await Program.Client.GetConfigAsync();
-
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.listBoxActivities.Items.Clear();
-                        foreach (var activity in harmonyConfig.Activities)
+                    }));
+                    foreach (var activity in harmonyConfig.Activities)
+                    {
+                        if (activity.Id == currentActivityID)
                         {
-                            if (activity.Id == currentActivityID)
+                            formMain.BeginInvoke(new Action(() =>
                             {
                                 formMain.labelCurrentActivity.Text = activity.Label;
-                                if (Convert.ToInt32(activity.Id) >= 0)
+                            }));
+                            if (Convert.ToInt32(activity.Id) >= 0)
+                            {
+                                formMain.BeginInvoke(new Action(() =>
                                 {
                                     formMain.resetGlobalTimer();
-                                }
-                            }
-                            else
-                            {
-                                Activities item = new Activities();
-                                item.Id = activity.Id;
-                                item.Text = activity.Label;
-                                formMain.listBoxActivities.Items.Add(item);
+                                }));
                             }
                         }
-                        finished = true;
-                    }));
+                        else
+                        {
+                            Activities item = new Activities();
+                            item.Id = activity.Id;
+                            item.Text = activity.Label;
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                formMain.listBoxActivities.Items.Add(item);
+                            }));
+                        }
+                    }
+                    finished = true;
                 }
                 catch
                 {
@@ -238,7 +245,8 @@ namespace BrodieTheatre
                     }
                     else //Power Off
                     {
-                        await Program.Client.StartActivityAsync(activityId);
+                        //await Program.Client.StartActivityAsync(activityId);
+                        await Program.Client.TurnOffAsync();
                         await doDelay(1000);
                         formMain.BeginInvoke(new Action(() =>
                         {
