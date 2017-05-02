@@ -217,50 +217,7 @@ namespace BrodieTheatre
                     writeLog("Kodi:  Playback status incorrect - Player is paused");
                 }
             }
-            else if (result.ContainsKey("method"))
-            {
-                switch (result["method"])
-                {
-                    case "Player.OnPause":
-                        writeLog("Kodi:  Kodi status changed to 'Paused'");
-                        labelKodiPlaybackStatus.Text = "Paused";
-                        lightsToPausedLevel();
-                        resetGlobalTimer();
-                        break;
-                    case "Player.OnPlay":
-                        writeLog("Kodi:  Kodi status changed to 'Playing'");
-                        labelKodiPlaybackStatus.Text = "Playing";
-                        lightsToPlaybackLevel();
-                        resetGlobalTimer();
-                        break;
-                    case "Player.OnStop":
-                        writeLog("Kodi:  Kodi status changed to 'Stopped'");
-                        labelKodiPlaybackStatus.Text = "Stopped";
-                        lightsToStoppedLevel();
-                        resetGlobalTimer();
-                        break;
-                    case "System.OnQuit":
-                        writeLog("Kodi:  Kodi is exiting");
-                        kodiStatusDisconnect();
-                        break;
-                    case "VideoLibrary:OnScanStarted":
-                        writeLog("Kodi:  Kodi library updated");
-                        kodiSendGetMoviesRequest();
-                        break;
-                    case "Other.aspectratio":
-                        if (result["params"]["sender"] == "brodietheatre")
-                        {
-                            string kodiAspectRatio = result["params"]["data"];
-                            projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
-                        }
-                        break;
-                }
-            }
-            else if (result.ContainsKey("result") && result["result"].GetType() == typeof(string))
-            {
-                writeLog("Kodi:  Received JSON " + jsonText);
-            }
-            else if (result.ContainsKey("result") && result["result"]["movies"] != null)
+            else if (result.ContainsKey("id") && result["id"] == "98")
             {
                 //writeLog("Kodi:  Received list of movies");
                 kodiLoadingMovies = true;
@@ -351,6 +308,45 @@ namespace BrodieTheatre
                 }
                 kodiLoadingMovies = false;
             }
+            else if (result.ContainsKey("method"))
+            {
+                switch (result["method"])
+                {
+                    case "Player.OnPause":
+                        writeLog("Kodi:  Kodi status changed to 'Paused'");
+                        labelKodiPlaybackStatus.Text = "Paused";
+                        lightsToPausedLevel();
+                        resetGlobalTimer();
+                        break;
+                    case "Player.OnPlay":
+                        writeLog("Kodi:  Kodi status changed to 'Playing'");
+                        labelKodiPlaybackStatus.Text = "Playing";
+                        lightsToPlaybackLevel();
+                        resetGlobalTimer();
+                        break;
+                    case "Player.OnStop":
+                        writeLog("Kodi:  Kodi status changed to 'Stopped'");
+                        labelKodiPlaybackStatus.Text = "Stopped";
+                        lightsToStoppedLevel();
+                        resetGlobalTimer();
+                        break;
+                    case "System.OnQuit":
+                        writeLog("Kodi:  Kodi is exiting");
+                        kodiStatusDisconnect();
+                        break;
+                    case "VideoLibrary:OnScanStarted":
+                        writeLog("Kodi:  Kodi library updated");
+                        kodiSendGetMoviesRequest();
+                        break;
+                    case "Other.aspectratio":
+                        if (result["params"]["sender"] == "brodietheatre")
+                        {
+                            string kodiAspectRatio = result["params"]["data"];
+                            projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
+                        }
+                        break;
+                }
+            }
             else
             {
                 writeLog("Kodi:  Received unknown JSON:  " + jsonText);
@@ -437,7 +433,7 @@ namespace BrodieTheatre
 
         public void kodiSendGetMoviesRequest()
         {
-            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"file\"] }, \"id\": \"1\"}");
+            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"file\"] }, \"id\": \"98\"}");
         }
 
         private void kodiPlaybackControl(string command, string media=null)
