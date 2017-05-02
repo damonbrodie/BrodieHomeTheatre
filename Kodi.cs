@@ -183,7 +183,7 @@ namespace BrodieTheatre
 
         public void kodiProcessJson(string jsonText)
         {
-            //writeLog("Kodi:  Received JSON:  " + jsonText);
+            writeLog("Kodi:  Received JSON:  " + jsonText);
             Dictionary<string, dynamic> result = null;
             try
             {
@@ -206,12 +206,12 @@ namespace BrodieTheatre
                     labelKodiPlaybackStatus.Text = "Stopped";
                     writeLog("Kodi:  Playback status incorrect - No players active");
                 }
-                else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["currentvideostream"]["speed"] != 0 && labelKodiPlaybackStatus.Text != "Playing")
+                else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["speed"] != 0 && labelKodiPlaybackStatus.Text != "Playing")
                 {
                     labelKodiPlaybackStatus.Text = "Playing";
                     writeLog("Kodi:  Playback status incorrect - Player is running");
                 }
-                else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["currentvideostream"]["speed"] == 0 && labelKodiPlaybackStatus.Text != "Paused")
+                else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["speed"] == 0 && labelKodiPlaybackStatus.Text != "Paused")
                 {
                     labelKodiPlaybackStatus.Text = "Paused";
                     writeLog("Kodi:  Playback status incorrect - Player is paused");
