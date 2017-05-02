@@ -321,12 +321,10 @@ namespace BrodieTheatre
             {
                 writeLog("Insteon:  Implied room occupancy detected'");
             }
-
             else if (labelMotionSensorStatus.Text != "Motion Detected")
             {              
                 writeLog("Insteon:  Motion Sensor reported 'Motion Detected'");
                 labelMotionSensorStatus.Text = "Motion Detected";               
-                writeLog("Insteon:  Implied room occupancy detected'");
             }
             vacancyWarning = false;
             labelRoomOccupancy.Text = "Occupied";
