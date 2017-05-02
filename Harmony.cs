@@ -71,6 +71,7 @@ namespace BrodieTheatre
             // Wait 30 seconds - this offsets some of the tasks that otherwise would
             // happen at the same time.  Makes the status bar text prettier to space them
             // out a bit
+            
             await doDelay(30000);
             formMain.BeginInvoke(new Action(() =>
             {
@@ -297,14 +298,15 @@ namespace BrodieTheatre
                 error = true;
             }
             await doDelay(3000);
-            formMain.BeginInvoke(new Action(() =>
+            MessageBox.Show("current harmony " + currentActivityID);
+            if (!error)
             {
-                if (!error)
-                { 
+                formMain.BeginInvoke(new Action(() =>
+                {
                     formMain.toolStripStatus.Text = "Poll Harmony Hub for updated Activities";
                     formMain.harmonyUpdateActivities(currentActivityID);
-                }
-            }));
+                }));
+            }
         }
     }
 }

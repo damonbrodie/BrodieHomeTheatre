@@ -62,7 +62,7 @@ namespace BrodieTheatre
             if (currentHarmonyIP != Properties.Settings.Default.harmonyHubIP)
             {
                 currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
-                await harmonyConnectAsync();
+                await harmonyConnectAsync(true);
             }
 
             if (currentKodiIP != Properties.Settings.Default.kodiIP || currentKodiPort != Properties.Settings.Default.kodiJSONPort)

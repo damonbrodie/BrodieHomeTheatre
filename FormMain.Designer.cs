@@ -773,7 +773,7 @@
             // 
             // timerHarmonyPoll
             // 
-            this.timerHarmonyPoll.Interval = 600000;
+            this.timerHarmonyPoll.Interval = 60000;
             this.timerHarmonyPoll.Tick += new System.EventHandler(this.timerHarmonyPoll_Tick);
             // 
             // FormMain

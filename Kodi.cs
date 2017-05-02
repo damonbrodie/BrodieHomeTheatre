@@ -183,7 +183,7 @@ namespace BrodieTheatre
 
         public void kodiProcessJson(string jsonText)
         {
-            writeLog("Kodi:  Received JSON:  " + jsonText);
+            //writeLog("Kodi:  Received JSON:  " + jsonText);
             Dictionary<string, dynamic> result = null;
             try
             {
