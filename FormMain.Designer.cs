@@ -756,7 +756,7 @@
             // timerKodiPoll
             // 
             this.timerKodiPoll.Enabled = true;
-            this.timerKodiPoll.Interval = 10000;
+            this.timerKodiPoll.Interval = 60000;
             this.timerKodiPoll.Tick += new System.EventHandler(this.timerKodiPoll_Tick);
             // 
             // timerInsteonMotionLatch

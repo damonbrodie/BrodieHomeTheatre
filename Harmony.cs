@@ -72,7 +72,7 @@ namespace BrodieTheatre
             // happen at the same time.  Makes the status bar text prettier to space them
             // out a bit
             
-            await doDelay(15000);
+            await doDelay(30000);
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerHarmonyPoll.Enabled = true;
