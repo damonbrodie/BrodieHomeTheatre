@@ -29,7 +29,7 @@ namespace BrodieTheatre
             hookID = SetHook(proc);
             formMain = this;
             InitializeComponent();
-
+            writeLog("------ Brodie Theatre Starting Up ------");
             if (Properties.Settings.Default.startMinimized)
             {
                 this.WindowState = FormWindowState.Minimized;
@@ -78,7 +78,6 @@ namespace BrodieTheatre
         {
             formMain.BeginInvoke(new Action(() =>
             {
-                formMain.writeLog("------ Brodie Theatre Starting Up ------");
                 formMain.timerSetLights.Enabled = true;
                 formMain.resetGlobalTimer();
             }));
