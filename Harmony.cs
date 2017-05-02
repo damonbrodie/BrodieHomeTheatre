@@ -39,12 +39,18 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 {
                     formMain.writeLog("Harmony:  Connected to Hub, current activity ID is '" + currentActivityID + "'");
-                    if (currentActivityID != "-1")
-                    {
-                        formMain.writeLog("Harmony:  Harmony is active - assume room is occupied");
-                        formMain.insteonDoMotion();
-                    }
                 }));
+                if (currentActivityID != "-1")
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        if (formMain.labelRoomOccupancy.Text != "Occupied")
+                        {
+                            formMain.writeLog("Harmony:  Harmony is active - assume room is occupied");
+                            formMain.insteonDoMotion();
+                        }
+                    }));
+                }
             }
             catch
             {
@@ -99,6 +105,11 @@ namespace BrodieTheatre
                 await doDelay(3000);
                 formMain.BeginInvoke(new Action(() =>
                 {
+                    if (formMain.labelRoomOccupancy.Text != "Occupied")
+                    {
+                        formMain.writeLog("Harmony:  Harmony is active - assume room is occupied");
+                        formMain.insteonDoMotion();
+                    }
                     formMain.projectorPowerOn();
                 }));
             }
