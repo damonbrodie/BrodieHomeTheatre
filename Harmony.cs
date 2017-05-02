@@ -107,8 +107,7 @@ namespace BrodieTheatre
         private async void harmonyUpdateActivities(string currentActivityID)
         {
             int counter = 0;
-            bool finished = false;
-            while (counter < 3 && ! finished)
+            while (counter < 3)
             {
                 try
                 { 
@@ -144,7 +143,7 @@ namespace BrodieTheatre
                             }));
                         }
                     }
-                    finished = true;
+                    return;
                 }
                 catch
                 {
@@ -168,9 +167,8 @@ namespace BrodieTheatre
 
         private async void harmonySendCommand(string device, string deviceFunction)
         {
-            bool success = false;
             int counter = 0;
-            while (! success && counter < 3)
+            while (counter < 3)
             {
                 try
                 {
@@ -188,9 +186,9 @@ namespace BrodieTheatre
                                         await Program.Client.SendCommandAsync(currDevice.Id, function.Name);
                                         formMain.BeginInvoke(new Action(() =>
                                         {
-                                            formMain.writeLog("Harmony:  Sent Command '" + function.Name + "' to Id '" + currDevice.Id + "'");
+                                            formMain.writeLog("Harmony:  Sent Command '" + function.Name + "' to ID '" + currDevice.Id + "'");
                                         }));
-                                        success = true;
+                                        return;
                                     }
                                 }
                             }
@@ -213,9 +211,8 @@ namespace BrodieTheatre
         // Start Harmony Activity
         private async void harmonyStartActivity(string activityName, string activityId, bool affectLights = true)
         {
-            bool success = false;
             int counter = 0;
-            while (! success && counter < 3)
+            while (counter < 3)
             {
                 try
                 {
@@ -258,7 +255,7 @@ namespace BrodieTheatre
                             formMain.projectorPowerOff();
                         }));
                     }
-                    success = true;
+                    return;
                 }
                 catch
                 {
