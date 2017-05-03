@@ -68,14 +68,18 @@ namespace BrodieTheatre
 
         public Choices choicesShowTHXDemo = new Choices(new String[]
         {
-            "Show T H X Demo",
+            "Show T H X demo",
             "Show the T H X demo",
+            "Play the T H X demo",
+            "Play T H X demo",
         });
 
         public Choices choicesShowDolbyDemo = new Choices(new String[]
         {
             "Show dolby demo",
             "Show the dolby demo",
+            "Play the dolby demo",
+            "Play dolby demo"
         });
 
         public Choices choicesShutdownTheatre = new Choices(new String[]

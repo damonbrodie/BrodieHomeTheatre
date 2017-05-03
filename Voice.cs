@@ -289,12 +289,12 @@ namespace BrodieTheatre
                                 kodiMovieFile = items.Key;
                             }
                         }
-                        kodiPlayNext = null;
+                        formMain.kodiPlayNext = new MovieEntry();
                         foreach (MovieEntry movieEntry in kodiMovies)
                         {
                             if (movieEntry.file == kodiMovieFile)
                             {
-                                kodiPlayNext = movieEntry;
+                                formMain.kodiPlayNext = movieEntry;
                             }
                         }
 
@@ -344,9 +344,10 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        kodiPlayNext.cleanName = "THX Demo";
-                        kodiPlayNext.name = "THX Demo";
-                        kodiPlayNext.file = mediaTHXDemo;
+                        formMain.kodiPlayNext = new MovieEntry();
+                        formMain.kodiPlayNext.cleanName = "THX Demo";
+                        formMain.kodiPlayNext.name = "THX Demo";
+                        formMain.kodiPlayNext.file = mediaTHXDemo;
 
                         int r = random.Next(ttsTHXDemoPhrases.Count);
                         formMain.speakText(ttsTHXDemoPhrases[r]);
@@ -371,9 +372,10 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        kodiPlayNext.cleanName = "Dolby Demo";
-                        kodiPlayNext.name = "Dolby Demo";
-                        kodiPlayNext.file = mediaDolbyDemo;
+                        formMain.kodiPlayNext = new MovieEntry();
+                        formMain.kodiPlayNext.cleanName = "Dolby Demo";
+                        formMain.kodiPlayNext.name = "Dolby Demo";
+                        formMain.kodiPlayNext.file = mediaDolbyDemo;
 
                         int r = random.Next(ttsDolbyDemoPhrases.Count);
                         formMain.speakText(ttsDolbyDemoPhrases[r]);

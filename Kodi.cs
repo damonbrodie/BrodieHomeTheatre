@@ -13,7 +13,10 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        public string kodiBehindScreen = @"smb://10.0.0.7/Pictures/ht_0.jpg";
+        public string kodiBehindScreen  = @"smb://10.0.0.7/Pictures/ht_0.jpg";
+        public string mediaDolbyDemo      = @"smb://10.0.0.7/Demos/Intros/Dolby Atmos - Amaze.m2ts";
+        public string mediaTHXDemo    = @"smb://10.0.0.7/Demos/Intros/THX - Amazing Life.mkv";
+
         public bool kodiIsConnected = false;
         public string currentKodiIP = "";
         public int currentKodiPort = 0;
@@ -32,20 +35,15 @@ namespace BrodieTheatre
             public List<string> shortNames = new List<string>();
         }
         public List<MovieEntry> kodiMovies = new List<MovieEntry>();
-
         public class PartialMovieEntry
         {
             public string file { get; set; }
             public string name { get; set; }
-        }
-
-        public string mediaTHXDemo = @"smb://10.0.0.7/Demos/Intros/Dolby Atmos - Amaze.m2ts";
-        public string mediaDolbyDemo = @"smb://10.0.0.7/Demos/Intros/THX - Amazing Life.mkv";    
-
-        public List<PartialMovieEntry> moviesFullNames = new List<PartialMovieEntry>();
-        public List<PartialMovieEntry> moviesAfterColonNames = new List<PartialMovieEntry>();
-        public List<PartialMovieEntry> moviesPartialNames = new List<PartialMovieEntry>();
-        public List<PartialMovieEntry> moviesDuplicateNames = new List<PartialMovieEntry>();
+        }      
+        public List<PartialMovieEntry> moviesFullNames          = new List<PartialMovieEntry>();
+        public List<PartialMovieEntry> moviesAfterColonNames    = new List<PartialMovieEntry>();
+        public List<PartialMovieEntry> moviesPartialNames       = new List<PartialMovieEntry>();
+        public List<PartialMovieEntry> moviesDuplicateNames     = new List<PartialMovieEntry>();
         public bool kodiLoadingMovies = false;
 
         private void kodiConnect()
