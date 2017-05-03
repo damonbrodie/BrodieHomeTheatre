@@ -181,6 +181,8 @@ namespace BrodieTheatre
                 {
                     commandGreeting(),
                     buildCommand("Turn on Theatre", choicesStartTheatre),
+                    buildCommand("Show THX Demo", choicesShowTHXDemo),
+                    buildCommand("Show Dolby Demo", choicesShowDolbyDemo),
                     buildCommand("Transparent Screen", choicesTransparentScreen),
                     buildCommand("Turn off Theatre", choicesShutdownTheatre),
                     buildCommand("Show Application", choicesShowApplication),
@@ -322,6 +324,73 @@ namespace BrodieTheatre
                             int r = random.Next(ttsUnableToStartPhrases.Count);
                             formMain.speakText(ttsUnableToStartPhrases[r]);
                             formMain.writeLog("Voice:  Unable to start movie playback for '" + kodiMovieFile + "'");
+                        }
+                    }));
+                }
+                else if (e.Result.Semantics.ContainsKey("Turn on Theatre"))
+                {
+                    if (labelKodiPlaybackStatus.Text != "Playing" && !harmonyIsActivityStarted())
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.sayAcknowledgement();
+                            formMain.labelLastVoiceCommand.Text = "Turn on theatre";
+                            formMain.voiceStartTheatre();
+                            formMain.writeLog("Voice:  Processed 'Turn on theatre'");
+                        }));
+                    }
+                }
+                else if (e.Result.Semantics.ContainsKey("Show THX Demo") && labelKodiPlaybackStatus.Text != "Playing")
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        kodiPlayNext.cleanName = "THX Demo";
+                        kodiPlayNext.name = "THX Demo";
+                        kodiPlayNext.file = mediaTHXDemo;
+
+                        int r = random.Next(ttsTHXDemoPhrases.Count);
+                        formMain.speakText(ttsTHXDemoPhrases[r]);
+                        formMain.timerKodiStartPlayback.Enabled = false;
+                        formMain.timerKodiStartPlayback.Enabled = true;
+
+                        if (!formMain.harmonyIsActivityStarted())
+                        {
+                            formMain.writeLog("Voice: Starting delay timer for THX Demo to 30 seconds");
+                            // Wait for the projector to warm up.
+                            formMain.timerKodiStartPlayback.Interval = 30000;
+                            formMain.voiceStartTheatre();
+                        }
+                        else
+                        {
+                            formMain.writeLog("Voice: Starting delay timer for THX Demo to 5 seconds");
+                            formMain.timerKodiStartPlayback.Interval = 5000;
+                        }
+                    }));
+                }
+                else if (e.Result.Semantics.ContainsKey("Show Dolby Demo") && labelKodiPlaybackStatus.Text != "Playing")
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        kodiPlayNext.cleanName = "Dolby Demo";
+                        kodiPlayNext.name = "Dolby Demo";
+                        kodiPlayNext.file = mediaDolbyDemo;
+
+                        int r = random.Next(ttsDolbyDemoPhrases.Count);
+                        formMain.speakText(ttsDolbyDemoPhrases[r]);
+                        formMain.timerKodiStartPlayback.Enabled = false;
+                        formMain.timerKodiStartPlayback.Enabled = true;
+
+                        if (!formMain.harmonyIsActivityStarted())
+                        {
+                            formMain.writeLog("Voice: Starting delay timer for Dolby Demo to 30 seconds");
+                            // Wait for the projector to warm up.
+                            formMain.timerKodiStartPlayback.Interval = 30000;
+                            formMain.voiceStartTheatre();
+                        }
+                        else
+                        {
+                            formMain.writeLog("Voice: Starting delay timer for Dolby Demo to 5 seconds");
+                            formMain.timerKodiStartPlayback.Interval = 5000;
                         }
                     }));
                 }

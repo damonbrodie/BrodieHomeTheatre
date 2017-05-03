@@ -19,6 +19,18 @@ namespace BrodieTheatre
             "Hello",
             "Welcome back"
         });
+        List<string> ttsDolbyDemoPhrases = new List<string>(new string[]
+        {
+            "Queueing up the dolby demo",
+            "Getting the dolby demo ready",
+            "Starting up the dolby demo"
+        });
+        List<string> ttsTHXDemoPhrases = new List<string>(new string[]
+        {
+            "Queueing up the T H X demo",
+            "Getting the T H X demo ready",
+            "Starting up the T H X demo"
+        });
         List<string> ttsPresensePhrases = new List<string>(new string[] 
         {
             "I'm here",

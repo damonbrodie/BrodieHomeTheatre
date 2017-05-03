@@ -39,6 +39,9 @@ namespace BrodieTheatre
             public string name { get; set; }
         }
 
+        public string mediaTHXDemo = @"smb://10.0.0.7/Demos/Intros/Dolby Atmos - Amaze.m2ts";
+        public string mediaDolbyDemo = @"smb://10.0.0.7/Demos/Intros/THX - Amazing Life.mkv";    
+
         public List<PartialMovieEntry> moviesFullNames = new List<PartialMovieEntry>();
         public List<PartialMovieEntry> moviesAfterColonNames = new List<PartialMovieEntry>();
         public List<PartialMovieEntry> moviesPartialNames = new List<PartialMovieEntry>();

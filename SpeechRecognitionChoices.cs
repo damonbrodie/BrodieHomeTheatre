@@ -66,6 +66,18 @@ namespace BrodieTheatre
             "power on the theatre"
         });
 
+        public Choices choicesShowTHXDemo = new Choices(new String[]
+        {
+            "Show T H X Demo",
+            "Show the T H X demo",
+        });
+
+        public Choices choicesShowDolbyDemo = new Choices(new String[]
+        {
+            "Show dolby demo",
+            "Show the dolby demo",
+        });
+
         public Choices choicesShutdownTheatre = new Choices(new String[]
         {
             "turn off theatre",
