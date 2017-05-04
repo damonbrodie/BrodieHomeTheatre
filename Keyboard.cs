@@ -74,6 +74,13 @@ namespace BrodieTheatre
                             formMain.lightsToPlaybackLevel();
                         }));
                         break;
+                    case "F5":
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.writeLog("Keyboard:  Caught keypress 'F5'");
+                            formMain.projectorQueueChangeAspect((float)1.85);
+                        }));
+                        break;
                     case "F4":
                         formMain.BeginInvoke(new Action(() =>
                         {
@@ -81,11 +88,11 @@ namespace BrodieTheatre
                             formMain.projectorQueueChangeAspect((float)2.0);
                         }));
                         break;
-                    case "F5":
+                    case "F2":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.writeLog("Keyboard:  Caught keypress 'F5'");
-                            formMain.projectorQueueChangeAspect((float)1.85);
+                            formMain.writeLog("Keyboard:  Caught keypress 'F2'");
+                            formMain.toggleVoicePlaybackControl();
                         }));
                         break;
                 }

@@ -31,6 +31,17 @@ namespace BrodieTheatre
             "Getting the T H X demo ready",
             "Starting up the T H X demo"
         });
+        List<string> ttsVoiceControlsEnabled = new List<string>(new string[]
+        {
+            "Voice controls enabled",
+            "Voice playback controls enabled",
+        });
+        List<string> ttsVoiceControlsDisabled = new List<string>(new string[]
+        {
+            "Voice controls disabled",
+            "Voice playback controls disabled",
+            "Disabling voice controls"
+        });
         List<string> ttsPresensePhrases = new List<string>(new string[] 
         {
             "I'm here",

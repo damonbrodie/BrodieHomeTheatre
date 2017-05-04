@@ -38,6 +38,22 @@ namespace BrodieTheatre
             "make screen tranparent"
         });
 
+        public Choices choicesEnableVoicePlayback = new Choices(new String[]
+        {
+            "enable voice playback controls",
+            "enable voice controls",
+            "enable voice playback control",
+            "enable voice control",
+        });
+
+        public Choices choicesDisableVoicePlayback = new Choices(new String[]
+        {
+            "disable voice playback controls",
+            "disable voice controls",
+            "disable voice playback control",
+            "disable voice control"
+        });
+
         public Choices choicesCheckMovie = new Choices(new String[]
         {
             "do we have the movie",
@@ -68,18 +84,18 @@ namespace BrodieTheatre
 
         public Choices choicesShowTHXDemo = new Choices(new String[]
         {
-            "Show T H X demo",
-            "Show the T H X demo",
-            "Play the T H X demo",
-            "Play T H X demo",
+            "show T H X demo",
+            "show the T H X demo",
+            "play the T H X demo",
+            "play T H X demo",
         });
 
         public Choices choicesShowDolbyDemo = new Choices(new String[]
         {
-            "Show dolby demo",
-            "Show the dolby demo",
-            "Play the dolby demo",
-            "Play dolby demo"
+            "show dolby demo",
+            "show the dolby demo",
+            "play the dolby demo",
+            "play dolby demo"
         });
 
         public Choices choicesShutdownTheatre = new Choices(new String[]

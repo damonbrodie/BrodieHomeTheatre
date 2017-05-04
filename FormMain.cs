@@ -8,13 +8,23 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        //42.22.B8 Pot
-        //42.20.F8 Tray
-        //41.66.88 Motion Sensor
-        //41.58.FC Door Sensor
+        /* Insteon addresses
+           42.22.B8 Pot
+           42.20.F8 Tray
+           41.66.88 Motion Sensor
+           41.58.FC Door Sensor
 
-        // Projector on COM3
-        // Insteon on COM1
+          Mapped keypresses
+           F12 - Lights to Entering level
+           F11 - Lights Off
+           F9  - Lights to Sopped level
+           F7  - Lights to Playback level
+           F6  - Projector Lens Kodi Menu (Not captured by App)
+           F5  - Projector Lens to Narrow aspect ratio
+           F4  - Projector Lens to Wide aspect ratio
+           F3  - Kodi next audio languuage (Not captured by App)
+           F2  - Toggle Voice playback control
+        */
 
         static FormMain formMain;
         public DateTime globalShutdown;

@@ -11,6 +11,7 @@ namespace BrodieTheatre
     {
         public SpeechRecognitionEngine recognitionEngine;
         public SpeechSynthesizer speechSynthesizer;
+        public bool voicePlaybackControlDisabled = false;
 
         private void setVoice()
         {
@@ -193,7 +194,9 @@ namespace BrodieTheatre
                     buildCommand("Pause Playback", choicesPausePlayback),
                     buildCommand("Resume Playback", choicesResumePlayback),
                     buildCommand("Stop Playback", choicesStopPlayback),
-                    buildCommand("Cancel Playback", choicesCancelPlayback)
+                    buildCommand("Cancel Playback", choicesCancelPlayback),
+                    buildCommand("Enable Voice Playback Control", choicesEnableVoicePlayback),
+                    buildCommand("Disable Voice Playback Control", choicesDisableVoicePlayback)
                 });
 
                 if (kodiLoadingMovies)
@@ -238,6 +241,42 @@ namespace BrodieTheatre
             writeLog("Voice:  Starting 'Watch Movie' Harmony Activity");
             harmonyStartActivityByName(Properties.Settings.Default.voiceActivity);
             timerStartLights.Enabled = true;
+        }
+
+        public void toggleVoicePlaybackControl()
+        {
+            if (voicePlaybackControlDisabled)
+            {
+                writeLog("Voice:  Toggling voice playback control to Off");
+                voicePlaybackControlDisabled = false;
+            }
+            else
+            {
+                writeLog("Voice:  Toggling voice playback control to On");
+                voicePlaybackControlDisabled = true;
+            }
+        }
+
+        public bool enableVoicePlaybackControl()
+        {
+            if (voicePlaybackControlDisabled)
+            {
+                writeLog("Voice:  Enabling voice playback control");
+                voicePlaybackControlDisabled = false;
+                return true;
+            }
+            return false;
+        }
+
+        public bool disableVoicePlaybackControl()
+        {
+            if (! voicePlaybackControlDisabled)
+            {
+                writeLog("Voice:  Disabling voice playback control");
+                voicePlaybackControlDisabled = true;
+                return true;
+            }
+            return false;
         }
 
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
@@ -490,12 +529,22 @@ namespace BrodieTheatre
                 }
                 else if (e.Result.Semantics.ContainsKey("Pause Playback"))
                 {
-                    formMain.BeginInvoke(new Action(() =>
+                    if (labelKodiPlaybackStatus.Text == "Playing")
                     {
-                        formMain.labelLastVoiceCommand.Text = "Pause playback";
-                        formMain.kodiPlaybackControl("Pause");
-                        formMain.writeLog("Voice:  Processed 'Pause playback'");
-                    }));
+                        if (voicePlaybackControlDisabled)
+                        {
+                            formMain.writeLog("Voice:  Voice playback controls disabled - Not processing 'Pause'");
+                        }
+                        else
+                        {
+                            formMain.BeginInvoke(new Action(() =>
+                            {
+                                formMain.labelLastVoiceCommand.Text = "Pause playback";
+                                formMain.kodiPlaybackControl("Pause");
+                                formMain.writeLog("Voice:  Processed 'Pause playback'");
+                            }));
+                        }
+                    }
                 }
                 else if (e.Result.Semantics.ContainsKey("Resume Playback"))
                 {
@@ -511,12 +560,28 @@ namespace BrodieTheatre
                 }
                 else if (e.Result.Semantics.ContainsKey("Stop Playback"))
                 {
-                    formMain.BeginInvoke(new Action(() =>
+                    if (labelKodiPlaybackStatus.Text == "Playing")
                     {
-                        formMain.labelLastVoiceCommand.Text = "Stop Playback";
-                        formMain.kodiPlaybackControl("Stop");
-                        formMain.writeLog("Voice:  Processed 'Stop playback'");
-                    }));
+                        if (voicePlaybackControlDisabled)
+                        {
+                            formMain.writeLog("Voice:  Voice playback controls disabled - Not processing 'Stop'");
+                        }
+                        else
+                        {
+                            formMain.labelLastVoiceCommand.Text = "Stop Playback";
+                            formMain.kodiPlaybackControl("Stop");
+                            formMain.writeLog("Voice:  Processed 'Stop playback'");
+                        }
+                    }
+                    else if (labelKodiPlaybackStatus.Text == "Paused")
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.labelLastVoiceCommand.Text = "Stop Playback";
+                            formMain.kodiPlaybackControl("Stop");
+                            formMain.writeLog("Voice:  Processed 'Stop playback'");
+                        }));
+                    }
                 }
                 else if (e.Result.Semantics.ContainsKey("Cancel Playback"))
                 {
@@ -556,6 +621,35 @@ namespace BrodieTheatre
                             formMain.labelLastVoiceCommand.Text = "Lights on";
                             formMain.lightsToEnteringLevel();
                             formMain.writeLog("Voice:  Processed 'Lights on'");
+                        }));
+                    }
+                }
+                else if (e.Result.Semantics.ContainsKey("Enable Voice Playback Control"))
+                {
+                    if (labelKodiPlaybackStatus.Text != "Playing")
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            int r = random.Next(ttsVoiceControlsEnabled.Count);
+                            formMain.speakText(ttsVoiceControlsEnabled[r]);
+                            formMain.labelLastVoiceCommand.Text = "Enabling voice playback controls";
+                            formMain.voicePlaybackControlDisabled = false;
+                            formMain.writeLog("Voice:  Processed 'Enable voice playback controls'");
+                        }));
+                    }
+                }
+                else if (e.Result.Semantics.ContainsKey("Disable Voice Playback Control"))
+                {
+                    if (labelKodiPlaybackStatus.Text != "Playing")
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            int r = random.Next(ttsVoiceControlsDisabled.Count);
+                            formMain.speakText(ttsVoiceControlsDisabled[r]);
+
+                            formMain.labelLastVoiceCommand.Text = "Disabling voice playback controls";
+                            formMain.voicePlaybackControlDisabled = true;
+                            formMain.writeLog("Voice:  Processed 'Disable voice playback controls'");
                         }));
                     }
                 }
