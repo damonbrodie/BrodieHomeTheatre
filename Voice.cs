@@ -247,12 +247,12 @@ namespace BrodieTheatre
         {
             if (voicePlaybackControlDisabled)
             {
-                writeLog("Voice:  Toggling voice playback control to Off");
+                writeLog("Voice:  Toggling voice playback control to On");
                 voicePlaybackControlDisabled = false;
             }
             else
             {
-                writeLog("Voice:  Toggling voice playback control to On");
+                writeLog("Voice:  Toggling voice playback control to Off");
                 voicePlaybackControlDisabled = true;
             }
         }

@@ -9,8 +9,8 @@ namespace BrodieTheatre
 
         public Choices choicesPolite = new Choices(new string[]
         {
-            "Would you please",
-            "Please",
+            "would you please",
+            "please",
             " " // This makes the please optional
         });
 
