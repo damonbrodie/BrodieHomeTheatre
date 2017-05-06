@@ -138,7 +138,7 @@ namespace BrodieTheatre
 
                                     if (labelProjectorPower.Text == "On" && ! harmonyIsActivityStarted())
                                     {
-                                        formMain.writeLog("Harmony:  Projector being turned off - Harmony activity discovered disabled");
+                                        formMain.writeLog("Harmony:  Activity discovered disabled - Powering off projector");
                                         formMain.projectorPowerOff();
                                     }
                                 }

@@ -11,7 +11,7 @@ namespace BrodieTheatre
     {
         public SpeechRecognitionEngine recognitionEngine;
         public SpeechSynthesizer speechSynthesizer;
-        public bool voicePlaybackControlDisabled = false;
+        public bool voicePlaybackControlDisabled = true;
 
         private void setVoice()
         {
@@ -243,17 +243,19 @@ namespace BrodieTheatre
             timerStartLights.Enabled = true;
         }
 
-        public void toggleVoicePlaybackControl()
+        public bool toggleVoicePlaybackControl()
         {
             if (voicePlaybackControlDisabled)
             {
                 writeLog("Voice:  Toggling voice playback control to On");
                 voicePlaybackControlDisabled = false;
+                return false;
             }
             else
             {
                 writeLog("Voice:  Toggling voice playback control to Off");
                 voicePlaybackControlDisabled = true;
+                return true;
             }
         }
 

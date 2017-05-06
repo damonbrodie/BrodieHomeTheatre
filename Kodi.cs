@@ -471,6 +471,11 @@ namespace BrodieTheatre
             }
         }
 
+        private void kodiShowNotification(string title, string message, int displaytime = 5000)
+        {
+            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"GUI.ShowNotification\", \"params\": { \"title\" : \"" + title + "\", \"message\" : \"" + message + "\", \"displaytime\" : " + displaytime.ToString() + "}, \"id\": \"1\"}");
+        }
+
         private void kodiShowBehindScreen()
         {
             kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiBehindScreen + "\" }}, \"id\": \"1\"}");
