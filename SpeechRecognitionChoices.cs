@@ -72,6 +72,12 @@ namespace BrodieTheatre
             "let's watch the movie"
         });
 
+        public Choices choicesResumeMovie = new Choices(new String[]
+       {
+            "resume the movie",
+            "resume movie"
+       });
+
         public Choices choicesStartTheatre = new Choices(new String[]
         {
             "turn on theatre",

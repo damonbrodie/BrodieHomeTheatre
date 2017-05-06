@@ -135,7 +135,7 @@ namespace BrodieTheatre
             return grammarBuilder;
         }
 
-        private Tuple<GrammarBuilder, GrammarBuilder> commandMovies()
+        private Tuple<GrammarBuilder, GrammarBuilder, GrammarBuilder> commandMovies()
         {
             Choices movies = new Choices();
             foreach (MovieEntry movieEntry in kodiMovies)
@@ -149,7 +149,6 @@ namespace BrodieTheatre
                     movies.Add(new SemanticResultKey(entry.file, entry.name));
                 }
             }
-
             foreach (PartialMovieEntry entry in formMain.moviesPartialNames)
             {
                 if (!formMain.searchMovieList(formMain.moviesDuplicateNames, entry.name))
@@ -157,7 +156,7 @@ namespace BrodieTheatre
                     movies.Add(new SemanticResultKey(entry.file, entry.name));
                 }
             }
-            GrammarBuilder grammarBuilderPlay = new GrammarBuilder();      
+            GrammarBuilder grammarBuilderPlay = new GrammarBuilder();
             grammarBuilderPlay.Append(choicesComputerName());
             grammarBuilderPlay.Append(choicesPolite);
             grammarBuilderPlay.Append(new SemanticResultKey("Play Movie", choicesPlayMovie));
@@ -170,7 +169,15 @@ namespace BrodieTheatre
             grammarBuilderCheck.Append(new SemanticResultKey("Check Movie", choicesCheckMovie));
             grammarBuilderCheck.Append(movies);
             grammarBuilderCheck.Append(choicesPolite);
-            return Tuple.Create(grammarBuilderPlay, grammarBuilderCheck);
+
+            GrammarBuilder grammarBuilderResume = new GrammarBuilder();
+            grammarBuilderResume.Append(choicesComputerName());
+            grammarBuilderResume.Append(choicesPolite);
+            grammarBuilderResume.Append(new SemanticResultKey("Resume Movie", choicesResumeMovie));
+            grammarBuilderResume.Append(movies);
+            grammarBuilderResume.Append(choicesPolite);
+
+            return Tuple.Create(grammarBuilderPlay, grammarBuilderCheck, grammarBuilderResume);
         }
 
         private void loadVoiceCommands()
@@ -209,9 +216,10 @@ namespace BrodieTheatre
                 }
                 else
                 {
-                    Tuple<GrammarBuilder, GrammarBuilder> commandsTuple = commandMovies();
+                    Tuple<GrammarBuilder, GrammarBuilder, GrammarBuilder> commandsTuple = commandMovies();
                     commands.Add(commandsTuple.Item1);
                     commands.Add(commandsTuple.Item2);
+                    commands.Add(commandsTuple.Item3);
                     writeLog("Voice:  Adding movie grammars");
                 }
                 
@@ -318,7 +326,7 @@ namespace BrodieTheatre
                         }
                     }));
                 }
-                else if (e.Result.Semantics.ContainsKey("Play Movie") && labelKodiPlaybackStatus.Text != "Playing")
+                else if ((e.Result.Semantics.ContainsKey("Play Movie") || e.Result.Semantics.ContainsKey("Resume Movie")) && labelKodiPlaybackStatus.Text != "Playing")
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
@@ -341,8 +349,19 @@ namespace BrodieTheatre
 
                         if (kodiPlayNext != null)
                         {
-                            int r = random.Next(ttsStartMoviePhrases.Count);
-                            formMain.speakText(ttsStartMoviePhrases[r] + " " + kodiPlayNext.name);
+                            
+                            if (e.Result.Semantics.ContainsKey("Resume Movie"))
+                            {
+                                int r = random.Next(ttsResumeMoviePhrases.Count);
+                                formMain.speakText(ttsResumeMoviePhrases[r] + " " + kodiPlayNext.name);
+                                kodiPlayNext.resume = true;
+                            }
+                            else
+                            {
+                                int r = random.Next(ttsStartMoviePhrases.Count);
+                                formMain.speakText(ttsStartMoviePhrases[r] + " " + kodiPlayNext.name);
+                                kodiPlayNext.resume = false;
+                            }
                             formMain.timerKodiStartPlayback.Enabled = false;
                             formMain.timerKodiStartPlayback.Enabled = true;
 
@@ -389,6 +408,7 @@ namespace BrodieTheatre
                         formMain.kodiPlayNext.cleanName = "THX Demo";
                         formMain.kodiPlayNext.name = "THX Demo";
                         formMain.kodiPlayNext.file = mediaTHXDemo;
+                        formMain.kodiPlayNext.resume = false;
 
                         int r = random.Next(ttsTHXDemoPhrases.Count);
                         formMain.speakText(ttsTHXDemoPhrases[r]);
@@ -417,6 +437,7 @@ namespace BrodieTheatre
                         formMain.kodiPlayNext.cleanName = "Dolby Demo";
                         formMain.kodiPlayNext.name = "Dolby Demo";
                         formMain.kodiPlayNext.file = mediaDolbyDemo;
+                        formMain.kodiPlayNext.resume = false;
 
                         int r = random.Next(ttsDolbyDemoPhrases.Count);
                         formMain.speakText(ttsDolbyDemoPhrases[r]);

@@ -72,6 +72,11 @@ namespace BrodieTheatre
             "Queuing up",
             "Playing the movie"
         });
+        List<string> ttsResumeMoviePhrases = new List<string>(new string[]
+        {
+            "Resume movie",
+            "Resuming the movie"
+        });
         List<string> ttsCancelPlaybackPhrases = new List<string>(new string[] 
         {
             "Cancelling playback",

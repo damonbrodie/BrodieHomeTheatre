@@ -33,6 +33,7 @@ namespace BrodieTheatre
             public string name { get; set; }
             public string cleanName { get; set; }
             public List<string> shortNames = new List<string>();
+            public bool resume { get; set; } = false;
         }
         public List<MovieEntry> kodiMovies = new List<MovieEntry>();
         public class PartialMovieEntry
@@ -465,7 +466,12 @@ namespace BrodieTheatre
             timerKodiStartPlayback.Enabled = false;
             if (kodiPlayNext != null)
             {
-                kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiPlayNext.file + "\" }}, \"id\": \"1\"}");
+                string resume = "";
+                if (kodiPlayNext.resume)
+                {
+                    resume = ", \"options\": {\"resume\": true }";
+                }
+                kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiPlayNext.file + "\" } " + resume + "}, \"id\": \"1\"}");
                 writeLog("Kodi:  Starting movie: " + kodiPlayNext.name + " " + kodiPlayNext.file);
                 kodiPlayNext = null;
             }
