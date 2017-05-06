@@ -462,6 +462,13 @@ namespace BrodieTheatre
                 }
                 else if (e.Result.Semantics.ContainsKey("Turn off Theatre"))
                 {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.writeLog("Voice:  Debug - in turn off theatre, playback status is '" +
+                            labelKodiPlaybackStatus.Text + "' harmony status is '" +
+                            harmonyIsActivityStarted() + "'"
+                            );
+                    }));
                     if (labelKodiPlaybackStatus.Text != "Playing" && harmonyIsActivityStarted())
                     {
                         formMain.BeginInvoke(new Action(() =>

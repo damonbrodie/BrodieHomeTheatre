@@ -131,7 +131,17 @@ namespace BrodieTheatre
                         {
                             formMain.BeginInvoke(new Action(() =>
                             {
-                                formMain.labelCurrentActivity.Text = activity.Label;
+                                if (formMain.labelCurrentActivity.Text != activity.Label)
+                                { 
+                                    formMain.writeLog("Harmony:  Current Activity out of sync - updating to be '" + activity.Label + "'");
+                                    formMain.labelCurrentActivity.Text = activity.Label;
+
+                                    if (labelProjectorPower.Text == "On" && ! harmonyIsActivityStarted())
+                                    {
+                                        formMain.writeLog("Harmony:  Projector being turned off - Harmony activity discovered disabled");
+                                        formMain.projectorPowerOff();
+                                    }
+                                }
                             }));
                             if (Convert.ToInt32(activity.Id) >= 0)
                             {
