@@ -206,7 +206,7 @@ namespace BrodieTheatre
                     buildCommand("Disable Voice Playback Control", choicesDisableVoicePlayback)
                 });
 
-                if (kodiLoadingMovies)
+                if (kodiLoadingMedia)
                 {
                     writeLog("Voice:  Skipping movie grammar - movie loading underway");
                 }

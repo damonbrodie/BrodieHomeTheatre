@@ -40,12 +40,26 @@ namespace BrodieTheatre
         {
             public string file { get; set; }
             public string name { get; set; }
-        }      
+        } 
+        
+        public class tvShowEntry
+        {
+            public string name { get; set; }
+            public string cleanName { get; set; }
+            public int id { get; set; }
+            public string file { get; set; }
+        }
+
         public List<PartialMovieEntry> moviesFullNames          = new List<PartialMovieEntry>();
         public List<PartialMovieEntry> moviesAfterColonNames    = new List<PartialMovieEntry>();
         public List<PartialMovieEntry> moviesPartialNames       = new List<PartialMovieEntry>();
         public List<PartialMovieEntry> moviesDuplicateNames     = new List<PartialMovieEntry>();
-        public bool kodiLoadingMovies = false;
+
+        public List<tvShowEntry> kodiTVShows            = new List<tvShowEntry>();
+        public List<tvShowEntry> tvshowPartialNames     = new List<tvShowEntry>();
+        public List<tvShowEntry> tvhowDuplicateNames    = new List<tvShowEntry>();
+
+        public bool kodiLoadingMedia = false;
 
         private void kodiConnect()
         {
@@ -74,6 +88,7 @@ namespace BrodieTheatre
                         labelKodiStatus.Text = "Connected";
                         labelKodiStatus.ForeColor = System.Drawing.Color.ForestGreen;
                         kodiSendGetMoviesRequest();
+                        kodiSendGetTVShowsRequest();
                         timerKodiConnect.Interval = 2000;
                         return;
                     }
@@ -222,7 +237,7 @@ namespace BrodieTheatre
             else if (result.ContainsKey("id") && result["id"] == "98")
             {
                 //writeLog("Kodi:  Received list of movies");
-                kodiLoadingMovies = true;
+                kodiLoadingMedia = true;
                 kodiMovies.Clear();
                 int movieCounter = 0;
 
@@ -271,7 +286,7 @@ namespace BrodieTheatre
                                     }
                                 }
                             }
-                            List<string> cutNames = getShortMovieTitles(cleanName);
+                            List<string> cutNames = getShortTitles(cleanName);
                             foreach (string partName in cutNames)
                             {
                                 PartialMovieEntry tempPrefixEntry = new PartialMovieEntry();
@@ -296,19 +311,83 @@ namespace BrodieTheatre
                     if (!error)
                     {
                         toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
-                        kodiLoadingMovies = false;
-                        labelKodiMediaAvailable.Text = movieCounter.ToString() + " movies";
+                        kodiLoadingMedia = false;
+                        labelKodiMediaAvailable.Text = kodiMovies.Count.ToString() + " movies && " + kodiTVShows.Count.ToString() + " shows";
                     }
                     else
                     {
-                        writeLog("Kodi:  There was an error decoding the Kodi library JSON");
+                        writeLog("Kodi:  There was an error decoding the Kodi movie library JSON");
                     }
                 }
                 catch
                 {
                     writeLog("Kodi:  Failed to process Movie JSON");
                 }
-                kodiLoadingMovies = false;
+                kodiLoadingMedia = false;
+            }
+            else if (result.ContainsKey("id") && result["id"] == "97")
+            {
+                //writeLog("Kodi:  Received list of tv shows");
+
+                writeLog("Kodi:  " + jsonText);
+                kodiLoadingMedia = true;
+                kodiTVShows.Clear();
+
+                tvhowDuplicateNames.Clear();
+                tvshowPartialNames.Clear();
+                bool error = false;
+                try
+                {
+                    foreach (JObject tvshow in result["result"]["tvshows"])
+                    {
+                        tvShowEntry tvShowEntry = new tvShowEntry();
+                        if (tvshow["tvshowid"] != null && tvshow["title"] != null)
+                        {
+                            tvShowEntry.name = tvshow["title"].ToString();
+                            tvShowEntry.id = (int)tvshow["tvshowid"];
+                            //writeLog("Kodi:  Processing '" + tvShowEntry.name + "'");
+                            string cleanName = cleanString(tvShowEntry.name);
+                            tvShowEntry.cleanName = cleanName;
+                            kodiTVShows.Add(tvShowEntry);
+
+                           
+                            List<string> cutNames = getShortTitles(cleanName);
+                            foreach (string partName in cutNames)
+                            {
+                                tvShowEntry tempPrefixEntry = new tvShowEntry();
+                                tempPrefixEntry.id = tvShowEntry.id;
+                                tempPrefixEntry.name = partName;
+                                if (searchTVShowList(tvshowPartialNames, partName))
+                                {
+                                    tvhowDuplicateNames.Add(tempPrefixEntry);
+                                }
+                                else
+                                {
+                                    tvshowPartialNames.Add(tempPrefixEntry);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            error = true;
+                        }
+                    }
+                    if (!error)
+                    {
+                        toolStripStatus.Text = "Kodi tv show list updated: " + kodiTVShows.Count.ToString() + " shows";
+                        kodiLoadingMedia = false;
+                        labelKodiMediaAvailable.Text = kodiMovies.Count.ToString() + " movies && " + kodiTVShows.Count.ToString() + " shows";
+                    }
+                    else
+                    {
+                        writeLog("Kodi:  There was an error decoding the Kodi tv show library JSON");
+                    }
+                }
+                catch
+                {
+                    writeLog("Kodi:  Failed to process TV show JSON");
+                }
+                kodiLoadingMedia = false;
             }
             else if (result.ContainsKey("method"))
             {
@@ -339,6 +418,7 @@ namespace BrodieTheatre
                     case "VideoLibrary:OnScanStarted":
                         writeLog("Kodi:  Kodi library updated");
                         kodiSendGetMoviesRequest();
+                        kodiSendGetTVShowsRequest();
                         break;
                     case "Other.aspectratio":
                         if (result["params"]["sender"] == "brodietheatre")
@@ -368,7 +448,20 @@ namespace BrodieTheatre
             return found;
         }
 
-        public List<string> getShortMovieTitles(string name)
+        public bool searchTVShowList(List<tvShowEntry> theList, string searchTerm)
+        {
+            bool found = false;
+            foreach (tvShowEntry entry in theList)
+            {
+                if (entry.name == searchTerm)
+                {
+                    return true;
+                }
+            }
+            return found;
+        }
+
+        public List<string> getShortTitles(string name)
         {
             List<string> nameList = new List<string>();
             bool ended = false;
@@ -438,6 +531,11 @@ namespace BrodieTheatre
             kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"file\"] }, \"id\": \"98\"}");
         }
 
+        public void kodiSendGetTVShowsRequest()
+        {
+            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": {\"properties\": [\"title\"] }, \"id\": \"97\"}");
+        }
+
         private void kodiPlaybackControl(string command, string media=null)
         {
             // It seems the Active Player is always "1".  Use this if we need to query it.
@@ -496,6 +594,7 @@ namespace BrodieTheatre
             {
                 kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetProperties\", \"params\": {\"playerid\": 1, \"properties\" : [\"type\", \"currentvideostream\", \"speed\"]}, \"id\": \"99\"}");
                 kodiSendGetMoviesRequest();
+                kodiSendGetTVShowsRequest();
             }
         }
     }
