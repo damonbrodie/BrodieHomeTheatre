@@ -152,7 +152,7 @@ namespace BrodieTheatre
                         {
                             formMain.writeLog("Insteon:  Motion Sensor reported 'No Motion Detected'");
                             formMain.progressBarInsteonMotionLatch.Value = formMain.progressBarInsteonMotionLatch.Maximum;
-                            formMain.insteonMotionLatchExpires = DateTime.Now.AddMinutes(Properties.Settings.Default.InsteonMotionLatch);
+                            formMain.insteonMotionLatchExpires = DateTime.Now.AddMinutes(Properties.Settings.Default.insteonMotionLatch);
                             formMain.insteonMotionLatchActive = true;
                             formMain.labelMotionSensorStatus.Text = "No Motion";
                         }
@@ -306,7 +306,7 @@ namespace BrodieTheatre
                 else
                 {
                     float secondsDiff = (float)(insteonMotionLatchExpires - rightNow).TotalSeconds;
-                    float totalSecs = Properties.Settings.Default.InsteonMotionLatch * 60;
+                    float totalSecs = Properties.Settings.Default.insteonMotionLatch * 60;
                     float percentage = (secondsDiff / totalSecs) * 100;
                     progressBarInsteonMotionLatch.Value = Convert.ToInt32(percentage);
                     return;

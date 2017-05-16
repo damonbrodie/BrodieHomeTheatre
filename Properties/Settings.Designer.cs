@@ -302,12 +302,24 @@ namespace BrodieTheatre.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("5")]
-        public int InsteonMotionLatch {
+        public int insteonMotionLatch {
             get {
-                return ((int)(this["InsteonMotionLatch"]));
+                return ((int)(this["insteonMotionLatch"]));
             }
             set {
-                this["InsteonMotionLatch"] = value;
+                this["insteonMotionLatch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string speechDevice {
+            get {
+                return ((string)(this["speechDevice"]));
+            }
+            set {
+                this["speechDevice"] = value;
             }
         }
     }

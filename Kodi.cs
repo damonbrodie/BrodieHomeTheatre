@@ -329,7 +329,7 @@ namespace BrodieTheatre
             {
                 //writeLog("Kodi:  Received list of tv shows");
 
-                writeLog("Kodi:  " + jsonText);
+                //writeLog("Kodi:  " + jsonText);
                 kodiLoadingMedia = true;
                 kodiTVShows.Clear();
 

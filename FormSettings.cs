@@ -1,8 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
 using Microsoft.Speech.Synthesis;
-
+using CSCore;
+using CSCore.MediaFoundation;
+using CSCore.SoundOut;
 
 namespace BrodieTheatre
 {
@@ -41,7 +44,8 @@ namespace BrodieTheatre
             Properties.Settings.Default.kodiJSONPort            = (int)numericUpDownKodiPort.Value;
             Properties.Settings.Default.kodiIP                  = textBoxKodiIP.Text;
             Properties.Settings.Default.speechVoice             = comboBoxTextToSpeechVoice.Text;
-            Properties.Settings.Default.InsteonMotionLatch      = trackBarInsteonMotionMinimumTime.Value;
+            Properties.Settings.Default.insteonMotionLatch      = trackBarInsteonMotionMinimumTime.Value;
+            Properties.Settings.Default.speechDevice            = comboBoxTextToSpeechDevice.Text;
 
             Properties.Settings.Default.Save();
             this.Close();
@@ -59,6 +63,17 @@ namespace BrodieTheatre
             textBoxTrayAddress.Text = Properties.Settings.Default.trayAddress;
             textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
             textBoxDoorSensorAddress.Text = Properties.Settings.Default.doorSensorAddress;
+
+            comboBoxTextToSpeechDevice.Items.Add("Default Audio Device");
+            comboBoxTextToSpeechDevice.SelectedItem = "Default Audio Device";
+            foreach (var device in WaveOutDevice.EnumerateDevices())
+            {
+                comboBoxTextToSpeechDevice.Items.Add(device.Name);
+                if (Properties.Settings.Default.speechDevice == device.Name)
+                {
+                    comboBoxTextToSpeechDevice.SelectedItem = device.Name;
+                }
+            }
 
             try
             {
@@ -182,7 +197,7 @@ namespace BrodieTheatre
 
             try
             {
-                trackBarInsteonMotionMinimumTime.Value = Properties.Settings.Default.InsteonMotionLatch;
+                trackBarInsteonMotionMinimumTime.Value = Properties.Settings.Default.insteonMotionLatch;
             }
             catch (Exception ex)
             {
@@ -290,6 +305,7 @@ namespace BrodieTheatre
 
         private void buttonPreviewVoice_Click(object sender, EventArgs e)
         {
+            string ttsText = "Maybe we should watch the movie Rogue One";
             try
             {
                 foreach (InstalledVoice voice in speechSynthesizer.GetInstalledVoices())
@@ -301,8 +317,36 @@ namespace BrodieTheatre
                         speechSynthesizer.SelectVoice(info.Name);
                     }
                 }
-                speechSynthesizer.SetOutputToDefaultAudioDevice();
-                speechSynthesizer.SpeakAsync("Maybe we should watch the movie Rogue One");
+                if (comboBoxTextToSpeechDevice.Text == "Default Audio Device")
+                {
+                    speechSynthesizer.SetOutputToDefaultAudioDevice();
+                    speechSynthesizer.SpeakAsync(ttsText);
+                }
+                else
+                {
+                    using (var stream = new MemoryStream())
+                    {
+                        int deviceID = -1;
+                        foreach (var device in WaveOutDevice.EnumerateDevices())
+                        {
+                            if (device.Name == comboBoxTextToSpeechDevice.Text)
+                            {
+                                deviceID = device.DeviceId;
+                            }
+
+                        }
+                        speechSynthesizer.SetOutputToWaveStream(stream);
+                        speechSynthesizer.Speak(ttsText);
+
+                        using (var waveOut = new WaveOut { Device = new WaveOutDevice(deviceID) })
+                        using (var waveSource = new MediaFoundationDecoder(stream))
+                        {
+                            waveOut.Initialize(waveSource);
+                            waveOut.Play();
+                            waveOut.WaitForStopped();
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
