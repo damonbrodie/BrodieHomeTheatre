@@ -131,18 +131,24 @@ namespace BrodieTheatre
                         {
                             formMain.BeginInvoke(new Action(() =>
                             {
-                                if (formMain.labelCurrentActivity.Text != activity.Label)
-                                { 
-                                    formMain.writeLog("Harmony:  Current Activity out of sync - updating to be '" + activity.Label + "'");
-                                    formMain.labelCurrentActivity.Text = activity.Label;
-
-                                    if (labelProjectorPower.Text == "On" && ! harmonyIsActivityStarted())
-                                    {
-                                        formMain.writeLog("Harmony:  Activity discovered disabled - Powering off projector");
-                                        formMain.projectorPowerOff();
-                                    }
-                                }
+                                formMain.labelCurrentActivity.Text = activity.Label;
                             }));
+                            if (labelProjectorPower.Text == "On" && activity.Id == "-1")
+                            {
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.writeLog("Harmony:  Activity disabled - Powering off projector");
+                                    formMain.projectorPowerOff();
+                                }));
+                            }
+                            else if (labelProjectorPower.Text == "Off" && activity.Id != "-1")
+                            {
+                                formMain.BeginInvoke(new Action(() =>
+                                {
+                                    formMain.writeLog("Harmony:  Activity enabled - Powering on projector");
+                                    formMain.projectorPowerOn();
+                                }));
+                            }
                             if (Convert.ToInt32(activity.Id) >= 0)
                             {
                                 formMain.BeginInvoke(new Action(() =>
@@ -311,24 +317,31 @@ namespace BrodieTheatre
 
         private async void timerHarmonyPoll_Tick(object sender, EventArgs e)
         {
-            var currentActivityID = "";
-            bool error = false;
-            try
+            if (labelHarmonyStatus.Text == "Connected")
             {
-                currentActivityID = await Program.Client.GetCurrentActivityAsync();
-            }
-            catch
-            {
-                error = true;
-            }
-            await doDelay(3000);
-            if (!error)
-            {
-                formMain.BeginInvoke(new Action(() =>
+                var currentActivityID = "";
+                bool error = false;
+                try
                 {
-                    formMain.toolStripStatus.Text = "Poll Harmony Hub for updated Activities";
-                    formMain.harmonyUpdateActivities(currentActivityID);
-                }));
+                    currentActivityID = await Program.Client.GetCurrentActivityAsync();
+                }
+                catch
+                {
+                    error = true;
+                }
+                await doDelay(3000);
+                if (!error)
+                {
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.toolStripStatus.Text = "Poll Harmony Hub for updated Activities";
+                        formMain.harmonyUpdateActivities(currentActivityID);
+                    }));
+                }
+            }
+            else
+            {
+                await harmonyConnectAsync(true);
             }
         }
     }
