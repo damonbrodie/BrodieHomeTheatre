@@ -1,8 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using Microsoft.Speech.Synthesis;
 using Microsoft.Speech.Recognition;
+using CSCore;
+using CSCore.MediaFoundation;
+using CSCore.SoundOut;
 
 
 namespace BrodieTheatre
@@ -31,24 +35,52 @@ namespace BrodieTheatre
 
         private void speakText(string tts)
         {
-            try
+            if (Properties.Settings.Default.speechDevice == "Default Audio Device")
             {
-                if (speechSynthesizer != null)
+                try
                 {
-                    speechSynthesizer.SetOutputToDefaultAudioDevice();
+                    if (speechSynthesizer != null)
+                    {
+                        speechSynthesizer.SetOutputToDefaultAudioDevice();
+                    }
+                }
+                catch
+                {
+                    writeLog("Voice:  Unable to attach to default audio output device");
+                }
+                try
+                {
+                    speechSynthesizer.SpeakAsync(tts);
+                }
+                catch
+                {
+                    writeLog("Voice:  Unable to perform to TTS");
                 }
             }
-            catch
+            else
             {
-                writeLog("Voice:  Unable to attach to default audio output device");
-            }
-            try
-            {
-                speechSynthesizer.SpeakAsync(tts);
-            }
-            catch
-            {
-                writeLog("Voice:  Unable to perform to TTS");
+                using (var stream = new MemoryStream())
+                {
+                    int deviceID = -1;
+                    foreach (var device in WaveOutDevice.EnumerateDevices())
+                    {
+                        if (device.Name == Properties.Settings.Default.speechDevice)
+                        {
+                            deviceID = device.DeviceId;
+                        }
+
+                    }
+                    speechSynthesizer.SetOutputToWaveStream(stream);
+                    speechSynthesizer.Speak(tts);
+
+                    using (var waveOut = new WaveOut { Device = new WaveOutDevice(deviceID) })
+                    using (var waveSource = new MediaFoundationDecoder(stream))
+                    {
+                        waveOut.Initialize(waveSource);
+                        waveOut.Play();
+                        waveOut.WaitForStopped();
+                    }
+                }
             }
         }
 
