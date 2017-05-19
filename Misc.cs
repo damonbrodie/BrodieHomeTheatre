@@ -3,6 +3,9 @@ using System.IO;
 using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CSCore;
+using CSCore.MediaFoundation;
+using CSCore.SoundOut;
 
 
 namespace BrodieTheatre
@@ -40,8 +43,33 @@ namespace BrodieTheatre
         public void playAlert()
         {
             Stream str = Properties.Resources.alert;
-            SoundPlayer snd = new SoundPlayer(str);
-            snd.Play();
+            
+            if (Properties.Settings.Default.speechDevice == "Default Audio Device")
+            {
+                SoundPlayer snd = new SoundPlayer(str);
+                snd.Play();
+            }
+            else
+            {
+                
+                int deviceID = -1;
+                foreach (var device in WaveOutDevice.EnumerateDevices())
+                {
+                    if (device.Name == Properties.Settings.Default.speechDevice)
+                    {
+                        deviceID = device.DeviceId;
+                    }
+
+                }
+                using (var waveOut = new WaveOut { Device = new WaveOutDevice(deviceID) })
+                using (var waveSource = new MediaFoundationDecoder(str))
+                {
+                    waveOut.Initialize(waveSource);
+                    waveOut.Play();
+                    waveOut.WaitForStopped();
+                }
+                
+            }
         }
     }
 }

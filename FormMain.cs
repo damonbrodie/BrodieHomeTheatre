@@ -282,12 +282,16 @@ namespace BrodieTheatre
 
                     recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
                     labelListeningStatus.Text = "Listening";
-                    playAlert();
+                    if (labelKodiPlaybackStatus.Text == "Stopped")
+                    {
+                        playAlert();
+                    }
                 }
-                catch
+                catch (Exception ex)
                 {
                     labelLastVoiceCommand.Text = "Cannot enable speech recognizer";
                     writeLog("Voice:  Can't start Speech Recognizer");
+                    writeLog("Voice:  ex: " + ex.ToString());
                 }
 
                 toolStripStatus.Text = "Room is now occupied";
