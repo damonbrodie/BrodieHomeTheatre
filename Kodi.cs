@@ -395,18 +395,21 @@ namespace BrodieTheatre
                 {
                     case "Player.OnPause":
                         writeLog("Kodi:  Kodi status changed to 'Paused'");
+                        insteonDoMotion(false);
                         labelKodiPlaybackStatus.Text = "Paused";
                         lightsToPausedLevel();
                         resetGlobalTimer();
                         break;
                     case "Player.OnPlay":
                         writeLog("Kodi:  Kodi status changed to 'Playing'");
+                        insteonDoMotion(false);
                         labelKodiPlaybackStatus.Text = "Playing";
                         lightsToPlaybackLevel();
                         resetGlobalTimer();
                         break;
                     case "Player.OnStop":
                         writeLog("Kodi:  Kodi status changed to 'Stopped'");
+                        insteonDoMotion(false);
                         labelKodiPlaybackStatus.Text = "Stopped";
                         lightsToStoppedLevel();
                         resetGlobalTimer();

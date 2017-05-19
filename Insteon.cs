@@ -287,29 +287,32 @@ namespace BrodieTheatre
         {
             if (insteonMotionLatchActive)
             {
-                DateTime rightNow = DateTime.Now;
-                if (insteonMotionLatchExpires < rightNow)
-                {
-                    insteonMotionLatchActive = false;
-                    writeLog("Insteon:  Latch timer expired - setting room vacant");
-                    labelRoomOccupancy.Text = "Vacant";
-                    labelMotionSensorStatus.Text = "No Motion";
-                    vacancyWarning = false;
-                }
-                else if (insteonMotionLatchExpires.AddMinutes(-1) < rightNow && ! vacancyWarning && labelKodiPlaybackStatus.Text == "Stopped")
-                {
-                    writeLog("Insteon:  One minute warning to vacancy");
-                    vacancyWarning = true;
-                    int r = random.Next(ttsWarningPhrases.Count);
-                    speakText(ttsWarningPhrases[r]);
-                }
-                else
-                {
-                    float secondsDiff = (float)(insteonMotionLatchExpires - rightNow).TotalSeconds;
-                    float totalSecs = Properties.Settings.Default.insteonMotionLatch * 60;
-                    float percentage = (secondsDiff / totalSecs) * 100;
-                    progressBarInsteonMotionLatch.Value = Convert.ToInt32(percentage);
-                    return;
+                if (labelKodiPlaybackStatus.Text == "Stopped")
+                { 
+                    DateTime rightNow = DateTime.Now;
+                    if (insteonMotionLatchExpires < rightNow)
+                    {
+                        insteonMotionLatchActive = false;
+                        writeLog("Insteon:  Latch timer expired - setting room vacant");
+                        labelRoomOccupancy.Text = "Vacant";
+                        labelMotionSensorStatus.Text = "No Motion";
+                        vacancyWarning = false;
+                    }
+                    else if (insteonMotionLatchExpires.AddMinutes(-1) < rightNow && !vacancyWarning)
+                    {
+                        writeLog("Insteon:  One minute warning to vacancy");
+                        vacancyWarning = true;
+                        int r = random.Next(ttsWarningPhrases.Count);
+                        speakText(ttsWarningPhrases[r]);
+                    }
+                    else
+                    {
+                        float secondsDiff = (float)(insteonMotionLatchExpires - rightNow).TotalSeconds;
+                        float totalSecs = Properties.Settings.Default.insteonMotionLatch * 60;
+                        float percentage = (secondsDiff / totalSecs) * 100;
+                        progressBarInsteonMotionLatch.Value = Convert.ToInt32(percentage);
+                        return;
+                    }
                 }
             }
             progressBarInsteonMotionLatch.Value = progressBarInsteonMotionLatch.Minimum;
