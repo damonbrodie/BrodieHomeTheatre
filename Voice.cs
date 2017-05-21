@@ -54,32 +54,40 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    writeLog("Voice:  Unable to perform to TTS");
+                    writeLog("Voice:  Unable to text-to-speech - default audio");
+
                 }
             }
             else
             {
-                using (var stream = new MemoryStream())
+                try
                 {
-                    int deviceID = -1;
-                    foreach (var device in WaveOutDevice.EnumerateDevices())
+                    using (var stream = new MemoryStream())
                     {
-                        if (device.Name == Properties.Settings.Default.speechDevice)
+                        int deviceID = -1;
+                        foreach (var device in WaveOutDevice.EnumerateDevices())
                         {
-                            deviceID = device.DeviceId;
+                            if (device.Name == Properties.Settings.Default.speechDevice)
+                            {
+                                deviceID = device.DeviceId;
+                            }
+
                         }
+                        speechSynthesizer.SetOutputToWaveStream(stream);
+                        speechSynthesizer.Speak(tts);
 
+                        using (var waveOut = new WaveOut { Device = new WaveOutDevice(deviceID) })
+                        using (var waveSource = new MediaFoundationDecoder(stream))
+                        {
+                            waveOut.Initialize(waveSource);
+                            waveOut.Play();
+                            waveOut.WaitForStopped();
+                        }
                     }
-                    speechSynthesizer.SetOutputToWaveStream(stream);
-                    speechSynthesizer.Speak(tts);
-
-                    using (var waveOut = new WaveOut { Device = new WaveOutDevice(deviceID) })
-                    using (var waveSource = new MediaFoundationDecoder(stream))
-                    {
-                        waveOut.Initialize(waveSource);
-                        waveOut.Play();
-                        waveOut.WaitForStopped();
-                    }
+                }
+                catch
+                {
+                    writeLog("Voice:  Unable to text-to-speech - audio device '" + Properties.Settings.Default.speechDevice + "'");
                 }
             }
         }
@@ -150,7 +158,6 @@ namespace BrodieTheatre
         private GrammarBuilder buildCommand(string command, Choices choicesCommand, bool useName=true, bool bePolite=true)
         {
             GrammarBuilder grammarBuilder = new GrammarBuilder();
-
             if (useName)
             {
                 grammarBuilder.Append(choicesComputerName());
@@ -525,13 +532,6 @@ namespace BrodieTheatre
                 }
                 else if (e.Result.Semantics.ContainsKey("Turn off Theatre"))
                 {
-                    formMain.BeginInvoke(new Action(() =>
-                    {
-                        formMain.writeLog("Voice:  Debug - in turn off theatre, playback status is '" +
-                            labelKodiPlaybackStatus.Text + "' harmony status is '" +
-                            harmonyIsActivityStarted() + "'"
-                            );
-                    }));
                     if (labelKodiPlaybackStatus.Text != "Playing" && harmonyIsActivityStarted())
                     {
                         formMain.BeginInvoke(new Action(() =>

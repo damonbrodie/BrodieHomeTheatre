@@ -46,29 +46,40 @@ namespace BrodieTheatre
             
             if (Properties.Settings.Default.speechDevice == "Default Audio Device")
             {
-                SoundPlayer snd = new SoundPlayer(str);
-                snd.Play();
+                try
+                {
+                    SoundPlayer snd = new SoundPlayer(str);
+                    snd.Play();
+                }
+                catch
+                {
+                    writeLog("Misc:  Unable to play alert sound to default device");
+                }
             }
             else
             {
-                
                 int deviceID = -1;
-                foreach (var device in WaveOutDevice.EnumerateDevices())
+                try
                 {
-                    if (device.Name == Properties.Settings.Default.speechDevice)
+                    foreach (var device in WaveOutDevice.EnumerateDevices())
                     {
-                        deviceID = device.DeviceId;
+                        if (device.Name == Properties.Settings.Default.speechDevice)
+                        {
+                            deviceID = device.DeviceId;
+                        }
                     }
-
+                    using (var waveOut = new WaveOut { Device = new WaveOutDevice(deviceID) })
+                    using (var waveSource = new MediaFoundationDecoder(str))
+                    {
+                        waveOut.Initialize(waveSource);
+                        waveOut.Play();
+                        waveOut.WaitForStopped();
+                    }
                 }
-                using (var waveOut = new WaveOut { Device = new WaveOutDevice(deviceID) })
-                using (var waveSource = new MediaFoundationDecoder(str))
+                catch
                 {
-                    waveOut.Initialize(waveSource);
-                    waveOut.Play();
-                    waveOut.WaitForStopped();
+                    writeLog("Misc:  Unable to play alert sound to device '" + Properties.Settings.Default.speechDevice + "'");
                 }
-                
             }
         }
     }

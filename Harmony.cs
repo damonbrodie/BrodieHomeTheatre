@@ -229,6 +229,7 @@ namespace BrodieTheatre
                         formMain.writeLog("Harmony:  Starting Activity '" + activityName + "' Id '" + activityId + "'");
                         formMain.toolStripStatus.Text = "Starting Harmony activity - " + activityName;
                         formMain.labelCurrentActivity.Text = activityName;
+
                     }));
                     // Activities > 0 are those that are user driven. -1 means poweroff
                     if (Convert.ToInt32(activityId) >= 0)
@@ -301,9 +302,7 @@ namespace BrodieTheatre
 
         private async void timerHarmonyPoll_Tick(object sender, EventArgs e)
         {
-
-            timerHarmonyPoll.Interval = 60000;
-            
+            timerHarmonyPoll.Interval = 60000;          
             if (labelHarmonyStatus.Text == "Connected")
             {
                 var currentActivityID = "";
