@@ -13,9 +13,9 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        public string kodiBehindScreen  = @"smb://10.0.0.7/Pictures/ht_0.jpg";
-        public string mediaDolbyDemo      = @"smb://10.0.0.7/Demos/Intros/Dolby Atmos - Amaze.m2ts";
-        public string mediaTHXDemo    = @"smb://10.0.0.7/Demos/Intros/THX - Amazing Life.mkv";
+        public string kodiBehindScreen = @"smb://10.0.0.7/Pictures/ht_0.jpg";
+        public string mediaDolbyDemo   = @"smb://10.0.0.7/Demos/Intros/Dolby Atmos - Amaze.m2ts";
+        public string mediaTHXDemo     = @"smb://10.0.0.7/Demos/Intros/THX - Amazing Life.mkv";
 
         public bool kodiIsConnected = false;
         public string currentKodiIP = "";

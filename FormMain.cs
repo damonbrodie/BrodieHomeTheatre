@@ -34,6 +34,8 @@ namespace BrodieTheatre
         public Random random = new Random();
         public bool vacancyWarning = false;
 
+        public bool debugHarmony = false;
+
         public FormMain()
         {
             hookID = SetHook(proc);

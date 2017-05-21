@@ -322,5 +322,17 @@ namespace BrodieTheatre.Properties {
                 this["speechDevice"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int voiceConfidenceNoActivity {
+            get {
+                return ((int)(this["voiceConfidenceNoActivity"]));
+            }
+            set {
+                this["voiceConfidenceNoActivity"] = value;
+            }
+        }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using HarmonyHub;
@@ -33,7 +32,7 @@ namespace BrodieTheatre
             try
             {
                 Program.Client = await HarmonyClient.Create(Properties.Settings.Default.harmonyHubIP);
-                await doDelay(1000);
+                await doDelay(2000);
                 currentActivityID = await Program.Client.GetCurrentActivityAsync();
                 formMain.BeginInvoke(new Action(() =>
                 {
@@ -50,11 +49,11 @@ namespace BrodieTheatre
                     }));
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Harmony:  Cannot connect to Harmony Hub");
+                formMain.writeLog("Harmony:  Cannot connect to Harmony Hub '" + ex.ToString());
                 }));
                 error = true;
             }
@@ -301,7 +300,9 @@ namespace BrodieTheatre
 
         private async void timerHarmonyPoll_Tick(object sender, EventArgs e)
         {
+
             timerHarmonyPoll.Interval = 60000;
+            
             if (labelHarmonyStatus.Text == "Connected")
             {
                 var currentActivityID = "";
@@ -312,22 +313,36 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    error = true;
-                }
-                await doDelay(3000);
-                if (!error)
-                {
+                    if (debugHarmony)
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.writeLog("Harmony:  Error Polling Hub");
+                        }));
+                    }
                     formMain.BeginInvoke(new Action(() =>
                     {
+                        formMain.toolStripStatus.Text = "Error polling Harmony Hub";
+                    }));
+                    error = true;
+                }
+                
+                if (!error)
+                {
+                    await doDelay(3000);
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        if (debugHarmony)
+                        {
+                            formMain.writeLog("Harmony:  Poll Hub - current activity '" + currentActivityID + "'");
+                        }
                         formMain.toolStripStatus.Text = "Poll Harmony Hub for updated activities";
                         formMain.harmonyUpdateActivities(currentActivityID);
                     }));
+                    return;
                 }
             }
-            else
-            {
-                await harmonyConnectAsync(true);
-            }
+            await harmonyConnectAsync(true);
         }
     }
 }
