@@ -324,7 +324,15 @@ namespace BrodieTheatre
         private void RecognitionEngine_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             string confidence = Math.Round((e.Result.Confidence * 100), 2).ToString();
-            float minConfidence = (float)Properties.Settings.Default.voiceConfidence / (float)10.0;
+            float minConfidence;
+            if (harmonyIsActivityStarted())
+            {
+                minConfidence = (float)Properties.Settings.Default.voiceConfidence / (float)10.0;
+            }
+            else
+            {
+                minConfidence = (float)Properties.Settings.Default.voiceConfidenceNoActivity / (float)10.0;
+            }
 
             if (e.Result.Alternates != null && e.Result.Confidence > minConfidence)
             {

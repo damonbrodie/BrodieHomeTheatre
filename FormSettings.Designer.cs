@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.comboBoxTextToSpeechDevice = new System.Windows.Forms.ComboBox();
+            this.label30 = new System.Windows.Forms.Label();
             this.buttonPreviewVoice = new System.Windows.Forms.Button();
             this.comboBoxTextToSpeechVoice = new System.Windows.Forms.ComboBox();
             this.label29 = new System.Windows.Forms.Label();
@@ -108,8 +110,9 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.comboBoxTextToSpeechDevice = new System.Windows.Forms.ComboBox();
-            this.label30 = new System.Windows.Forms.Label();
+            this.labelVoiceConfidenceNoActivity = new System.Windows.Forms.Label();
+            this.trackBarVoiceConfidenceNoActivity = new System.Windows.Forms.TrackBar();
+            this.label36 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
@@ -129,6 +132,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidenceNoActivity)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -147,6 +151,9 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.labelVoiceConfidenceNoActivity);
+            this.tabPage6.Controls.Add(this.trackBarVoiceConfidenceNoActivity);
+            this.tabPage6.Controls.Add(this.label36);
             this.tabPage6.Controls.Add(this.comboBoxTextToSpeechDevice);
             this.tabPage6.Controls.Add(this.label30);
             this.tabPage6.Controls.Add(this.buttonPreviewVoice);
@@ -172,12 +179,29 @@
             this.tabPage6.Text = "Global";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // comboBoxTextToSpeechDevice
+            // 
+            this.comboBoxTextToSpeechDevice.FormattingEnabled = true;
+            this.comboBoxTextToSpeechDevice.Location = new System.Drawing.Point(107, 278);
+            this.comboBoxTextToSpeechDevice.Name = "comboBoxTextToSpeechDevice";
+            this.comboBoxTextToSpeechDevice.Size = new System.Drawing.Size(205, 21);
+            this.comboBoxTextToSpeechDevice.TabIndex = 56;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(57, 281);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(44, 13);
+            this.label30.TabIndex = 53;
+            this.label30.Text = "Device:";
+            // 
             // buttonPreviewVoice
             // 
-            this.buttonPreviewVoice.Location = new System.Drawing.Point(237, 327);
+            this.buttonPreviewVoice.Location = new System.Drawing.Point(237, 340);
             this.buttonPreviewVoice.Name = "buttonPreviewVoice";
             this.buttonPreviewVoice.Size = new System.Drawing.Size(75, 23);
-            this.buttonPreviewVoice.TabIndex = 7;
+            this.buttonPreviewVoice.TabIndex = 8;
             this.buttonPreviewVoice.Text = "Preview";
             this.buttonPreviewVoice.UseVisualStyleBackColor = true;
             this.buttonPreviewVoice.Click += new System.EventHandler(this.buttonPreviewVoice_Click);
@@ -185,15 +209,15 @@
             // comboBoxTextToSpeechVoice
             // 
             this.comboBoxTextToSpeechVoice.FormattingEnabled = true;
-            this.comboBoxTextToSpeechVoice.Location = new System.Drawing.Point(107, 296);
+            this.comboBoxTextToSpeechVoice.Location = new System.Drawing.Point(107, 312);
             this.comboBoxTextToSpeechVoice.Name = "comboBoxTextToSpeechVoice";
             this.comboBoxTextToSpeechVoice.Size = new System.Drawing.Size(205, 21);
-            this.comboBoxTextToSpeechVoice.TabIndex = 6;
+            this.comboBoxTextToSpeechVoice.TabIndex = 7;
             // 
             // label29
             // 
             this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(64, 299);
+            this.label29.Location = new System.Drawing.Point(64, 315);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(37, 13);
             this.label29.TabIndex = 51;
@@ -203,7 +227,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(11, 238);
+            this.label28.Location = new System.Drawing.Point(11, 252);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(98, 13);
             this.label28.TabIndex = 50;
@@ -267,7 +291,7 @@
             // labelVoiceConfidence
             // 
             this.labelVoiceConfidence.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelVoiceConfidence.Location = new System.Drawing.Point(277, 188);
+            this.labelVoiceConfidence.Location = new System.Drawing.Point(277, 179);
             this.labelVoiceConfidence.Name = "labelVoiceConfidence";
             this.labelVoiceConfidence.Size = new System.Drawing.Size(35, 23);
             this.labelVoiceConfidence.TabIndex = 44;
@@ -278,7 +302,7 @@
             // 
             this.trackBarVoiceConfidence.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarVoiceConfidence.LargeChange = 1;
-            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(100, 190);
+            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(100, 181);
             this.trackBarVoiceConfidence.Name = "trackBarVoiceConfidence";
             this.trackBarVoiceConfidence.Size = new System.Drawing.Size(177, 45);
             this.trackBarVoiceConfidence.TabIndex = 4;
@@ -287,11 +311,11 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(34, 193);
+            this.label20.Location = new System.Drawing.Point(16, 184);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(64, 13);
+            this.label20.Size = new System.Drawing.Size(78, 13);
             this.label20.TabIndex = 43;
-            this.label20.Text = "Confidence:";
+            this.label20.Text = "During Activity:";
             // 
             // label14
             // 
@@ -943,22 +967,34 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // comboBoxTextToSpeechDevice
+            // labelVoiceConfidenceNoActivity
             // 
-            this.comboBoxTextToSpeechDevice.FormattingEnabled = true;
-            this.comboBoxTextToSpeechDevice.Location = new System.Drawing.Point(107, 262);
-            this.comboBoxTextToSpeechDevice.Name = "comboBoxTextToSpeechDevice";
-            this.comboBoxTextToSpeechDevice.Size = new System.Drawing.Size(205, 21);
-            this.comboBoxTextToSpeechDevice.TabIndex = 5;
+            this.labelVoiceConfidenceNoActivity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelVoiceConfidenceNoActivity.Location = new System.Drawing.Point(277, 217);
+            this.labelVoiceConfidenceNoActivity.Name = "labelVoiceConfidenceNoActivity";
+            this.labelVoiceConfidenceNoActivity.Size = new System.Drawing.Size(35, 23);
+            this.labelVoiceConfidenceNoActivity.TabIndex = 56;
+            this.labelVoiceConfidenceNoActivity.Text = "0%";
+            this.labelVoiceConfidenceNoActivity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label30
+            // trackBarVoiceConfidenceNoActivity
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(57, 265);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(44, 13);
-            this.label30.TabIndex = 53;
-            this.label30.Text = "Device:";
+            this.trackBarVoiceConfidenceNoActivity.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarVoiceConfidenceNoActivity.LargeChange = 1;
+            this.trackBarVoiceConfidenceNoActivity.Location = new System.Drawing.Point(100, 219);
+            this.trackBarVoiceConfidenceNoActivity.Name = "trackBarVoiceConfidenceNoActivity";
+            this.trackBarVoiceConfidenceNoActivity.Size = new System.Drawing.Size(177, 45);
+            this.trackBarVoiceConfidenceNoActivity.TabIndex = 5;
+            this.trackBarVoiceConfidenceNoActivity.ValueChanged += new System.EventHandler(this.trackBarVoiceConfidenceNoActivity_ValueChanged);
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(33, 222);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(61, 13);
+            this.label36.TabIndex = 55;
+            this.label36.Text = "No Activity:";
             // 
             // FormSettings
             // 
@@ -999,6 +1035,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidenceNoActivity)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1086,5 +1123,8 @@
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.ComboBox comboBoxTextToSpeechDevice;
         private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label labelVoiceConfidenceNoActivity;
+        private System.Windows.Forms.TrackBar trackBarVoiceConfidenceNoActivity;
+        private System.Windows.Forms.Label label36;
     }
 }

@@ -21,32 +21,32 @@ namespace BrodieTheatre
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.harmonyHubIP            = textBoxHarmonyHubIP.Text;
-            Properties.Settings.Default.voiceActivity           = textBoxVoiceActivity.Text;
-            Properties.Settings.Default.plmPort                 = comboBoxInsteonPort.Text;
-            Properties.Settings.Default.projectorPort           = comboBoxProjectorPort.Text;
-            Properties.Settings.Default.potsAddress             = textBoxPotsAddress.Text;
-            Properties.Settings.Default.trayAddress             = textBoxTrayAddress.Text;
-            Properties.Settings.Default.trayPlaybackLevel       = trackBarTrayPlayback.Value;
-            Properties.Settings.Default.potsPlaybackLevel       = trackBarPotsPlayback.Value;
-            Properties.Settings.Default.trayPausedLevel         = trackBarTrayPaused.Value;
-            Properties.Settings.Default.potsPausedLevel         = trackBarPotsPaused.Value;
-            Properties.Settings.Default.trayStoppedLevel        = trackBarTrayStopped.Value;
-            Properties.Settings.Default.potsStoppedLevel        = trackBarPotsStopped.Value;
-            Properties.Settings.Default.trayEnteringLevel       = trackBarTrayEntering.Value;
-            Properties.Settings.Default.potsEnteringLevel       = trackBarPotsEntering.Value;
-            Properties.Settings.Default.globalShutdown          = trackBarGlobalShutdown.Value;
-            Properties.Settings.Default.motionSensorAddress     = textBoxMotionSensorAddress.Text;
-            Properties.Settings.Default.doorSensorAddress       = textBoxDoorSensorAddress.Text;
-            Properties.Settings.Default.voiceConfidence         = trackBarVoiceConfidence.Value;
-            Properties.Settings.Default.startMinimized          = checkBoxStartMinimized.Checked;
-            Properties.Settings.Default.computerName            = textBoxComputerName.Text;
-            Properties.Settings.Default.kodiJSONPort            = (int)numericUpDownKodiPort.Value;
-            Properties.Settings.Default.kodiIP                  = textBoxKodiIP.Text;
-            Properties.Settings.Default.speechVoice             = comboBoxTextToSpeechVoice.Text;
-            Properties.Settings.Default.insteonMotionLatch      = trackBarInsteonMotionMinimumTime.Value;
-            Properties.Settings.Default.speechDevice            = comboBoxTextToSpeechDevice.Text;
-
+            Properties.Settings.Default.harmonyHubIP                = textBoxHarmonyHubIP.Text;
+            Properties.Settings.Default.voiceActivity               = textBoxVoiceActivity.Text;
+            Properties.Settings.Default.plmPort                     = comboBoxInsteonPort.Text;
+            Properties.Settings.Default.projectorPort               = comboBoxProjectorPort.Text;
+            Properties.Settings.Default.potsAddress                 = textBoxPotsAddress.Text;
+            Properties.Settings.Default.trayAddress                 = textBoxTrayAddress.Text;
+            Properties.Settings.Default.trayPlaybackLevel           = trackBarTrayPlayback.Value;
+            Properties.Settings.Default.potsPlaybackLevel           = trackBarPotsPlayback.Value;
+            Properties.Settings.Default.trayPausedLevel             = trackBarTrayPaused.Value;
+            Properties.Settings.Default.potsPausedLevel             = trackBarPotsPaused.Value;
+            Properties.Settings.Default.trayStoppedLevel            = trackBarTrayStopped.Value;
+            Properties.Settings.Default.potsStoppedLevel            = trackBarPotsStopped.Value;
+            Properties.Settings.Default.trayEnteringLevel           = trackBarTrayEntering.Value;
+            Properties.Settings.Default.potsEnteringLevel           = trackBarPotsEntering.Value;
+            Properties.Settings.Default.globalShutdown              = trackBarGlobalShutdown.Value;
+            Properties.Settings.Default.motionSensorAddress         = textBoxMotionSensorAddress.Text;
+            Properties.Settings.Default.doorSensorAddress           = textBoxDoorSensorAddress.Text;
+            Properties.Settings.Default.voiceConfidence             = trackBarVoiceConfidence.Value;
+            Properties.Settings.Default.voiceConfidenceNoActivity   = trackBarVoiceConfidenceNoActivity.Value;
+            Properties.Settings.Default.startMinimized              = checkBoxStartMinimized.Checked;
+            Properties.Settings.Default.computerName                = textBoxComputerName.Text;
+            Properties.Settings.Default.kodiJSONPort                = (int)numericUpDownKodiPort.Value;
+            Properties.Settings.Default.kodiIP                      = textBoxKodiIP.Text;
+            Properties.Settings.Default.speechVoice                 = comboBoxTextToSpeechVoice.Text;
+            Properties.Settings.Default.insteonMotionLatch          = trackBarInsteonMotionMinimumTime.Value;
+            Properties.Settings.Default.speechDevice                = comboBoxTextToSpeechDevice.Text;
             Properties.Settings.Default.Save();
             this.Close();
         }
@@ -192,6 +192,18 @@ namespace BrodieTheatre
                 if (ex is ArgumentOutOfRangeException)
                 {
                     trackBarVoiceConfidence.Value = trackBarVoiceConfidence.Minimum;
+                }
+            }
+
+            try
+            {
+                trackBarVoiceConfidenceNoActivity.Value = Properties.Settings.Default.voiceConfidenceNoActivity;
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    trackBarVoiceConfidenceNoActivity.Value = trackBarVoiceConfidenceNoActivity.Minimum;
                 }
             }
 
@@ -357,6 +369,11 @@ namespace BrodieTheatre
         private void trackBarInsteonMotionMinimumTime_ValueChanged(object sender, EventArgs e)
         {
             labelInsteonMotionLatch.Text = trackBarInsteonMotionMinimumTime.Value.ToString();
+        }
+
+        private void trackBarVoiceConfidenceNoActivity_ValueChanged(object sender, EventArgs e)
+        {
+            labelVoiceConfidenceNoActivity.Text = (trackBarVoiceConfidenceNoActivity.Value * 10).ToString() + "%";
         }
     }
 }
