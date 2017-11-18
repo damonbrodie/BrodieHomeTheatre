@@ -337,7 +337,6 @@ namespace BrodieTheatre
                             formMain.writeLog("Harmony:  Poll Hub - current activity '" + currentActivityID + "'");
                         }
                         formMain.toolStripStatus.Text = "Poll Harmony Hub for updated activities";
-                        formMain.harmonyUpdateActivities(currentActivityID);
                     }));
                     return;
                 }

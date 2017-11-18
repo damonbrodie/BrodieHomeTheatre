@@ -43,11 +43,11 @@ namespace BrodieTheatre
             if (labelProjectorStatus.Text == "Connected")
             {
                 projectorLastCommand = "Power";
-                projectorSendCommand("QPW");
+                projectorSendCommand("", "QPW");
             }
         }
 
-        private void projectorSendCommand(string command)
+        private void projectorSendCommand(string logMessage, string command)
         {
             int startByte = 2;
             int endByte = 3;
@@ -58,6 +58,10 @@ namespace BrodieTheatre
             string full_command = start + command + end;
             if (serialPortProjector.IsOpen)
             {
+                if (logMessage != "")
+                {
+                    writeLog("Projector:  " + logMessage);
+                }
                 serialPortProjector.Write(full_command);
             }
         }
@@ -145,13 +149,13 @@ namespace BrodieTheatre
             projectorLastCommand = "Lens";
             if (aspect < 1.9 && (force || labelProjectorLensAspect.Text != "Narrow"))
             {
-                projectorSendCommand(pj_codes[0]);
+                projectorSendCommand("Change to narrow aspect", pj_codes[0]);
                 labelProjectorLensAspect.Text = "Narrow";
                 writeLog("Projector:  Changing lens aspect ratio to 'narrow'");
             }
             else if (aspect >= 1.9 && (force || labelProjectorLensAspect.Text != "Wide"))
             {
-                projectorSendCommand(pj_codes[1]);
+                projectorSendCommand("Change to wide aspect", pj_codes[1]);
                 labelProjectorLensAspect.Text = "Wide";
                 writeLog("Projector:  Changing lens aspect ratio to 'wide'");
             }
@@ -178,32 +182,33 @@ namespace BrodieTheatre
 
         private void timerProjectorControl_Tick(object sender, EventArgs e)
         {
-            timerProjectorControl.Enabled = false;
+            
             if (projectorCommand.powerCommand != null)
             {
                 if (projectorCommand.powerCommand == "001")
                 {
-                    projectorPowerOn();
+                    projectorSendCommand("Power On", "PON");
+                    projectorCommand.powerCommand = null;
                 }
                 else if (projectorCommand.powerCommand == "000")
                 {
-                    projectorPowerOff();
+                    projectorSendCommand("Power Off", "POF");
+                    projectorCommand.powerCommand = null;
                 }
             }
             else if (projectorCommand.newAspect > 0)
             {
                 // A queued projector lens aspect ratio change is waiting
-                projectorQueueChangeAspect(projectorCommand.newAspect, projectorCommand.force);
-            }
-            else if (projectorCommand.newAspect == 0)
-            {
+                projectorChangeAspect(projectorCommand.newAspect, projectorCommand.force);
+                projectorCommand.newAspect = 0;
+                projectorCommand.force = false;
                 buttonProjectorChangeAspect.Enabled = true;
             }
+            if (projectorCommand.powerCommand == null && projectorCommand.newAspect == 0)
+            {
+                timerProjectorControl.Enabled = false;
 
-            // Reset commands
-            projectorCommand.powerCommand = null;
-            projectorCommand.newAspect = 0;
-            projectorCommand.force = false;
+            }
         }
 
         private void projectorPowerOn()
@@ -213,18 +218,19 @@ namespace BrodieTheatre
             {
                 return;
             }
-            writeLog("Projector:  Powering On");
+            
             labelProjectorPower.Text = "Powering On";
             // Set the Projector to the currently AR in the UI to ensure we are in sync.
             projectorCommand.newAspect = 1;
             projectorCommand.force = true;
             if (timerProjectorControl.Enabled == true)
             {
+                writeLog("Projector:  Queueing Powering On");
                 projectorCommand.powerCommand = "001";
             }
             else
             {
-                projectorSendCommand("PON");
+                projectorSendCommand("Power On", "PON");
       
                 timerProjectorControl.Enabled = true;
             }
@@ -237,14 +243,15 @@ namespace BrodieTheatre
                 return;
             }
             labelProjectorPower.Text = "Powering Off";
-            writeLog("Projector:  Powering Off");
+            
             if (timerProjectorControl.Enabled == true)
             {
+                writeLog("Projector:  Queueing Powering Off");
                 projectorCommand.powerCommand = "000";
             }
             else
             {
-                projectorSendCommand("POF");
+                projectorSendCommand("Power Off", "POF");
                 timerProjectorControl.Enabled = true;
             }
             

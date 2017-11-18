@@ -217,21 +217,27 @@ namespace BrodieTheatre
                 // PLAYING {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"vc1","height":1080,"index":0,"language":"","name":"FraMeSToR VC-1 Video","width":1920},"speed":1,"type":"video"}}
                 // PAUSED  {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"vc1","height":1080,"index":0,"language":"","name":"FraMeSToR VC-1 Video","width":1920},"speed":0,"type":"video"}}
                 // STOPPED {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"","height":0,"index":0,"language":"","name":"","width":0},"speed":0,"type":"video"}}
-                
-                if (result["result"]["currentvideostream"]["codec"] == string.Empty && labelKodiPlaybackStatus.Text != "Stopped")
+                try
                 {
-                    labelKodiPlaybackStatus.Text = "Stopped";
-                    writeLog("Kodi:  Playback status incorrect - No players active");
+                    if (result["result"]["currentvideostream"]["codec"] == string.Empty && labelKodiPlaybackStatus.Text != "Stopped")
+                    {
+                        labelKodiPlaybackStatus.Text = "Stopped";
+                        writeLog("Kodi:  Playback status incorrect - No players active");
+                    }
+                    else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["speed"] != 0 && labelKodiPlaybackStatus.Text != "Playing")
+                    {
+                        labelKodiPlaybackStatus.Text = "Playing";
+                        writeLog("Kodi:  Playback status incorrect - Player is running");
+                    }
+                    else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["speed"] == 0 && labelKodiPlaybackStatus.Text != "Paused")
+                    {
+                        labelKodiPlaybackStatus.Text = "Paused";
+                        writeLog("Kodi:  Playback status incorrect - Player is paused");
+                    }
                 }
-                else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["speed"] != 0 && labelKodiPlaybackStatus.Text != "Playing")
+                catch
                 {
-                    labelKodiPlaybackStatus.Text = "Playing";
-                    writeLog("Kodi:  Playback status incorrect - Player is running");
-                }
-                else if (result["result"]["currentvideostream"]["codec"] != string.Empty && result["result"]["speed"] == 0 && labelKodiPlaybackStatus.Text != "Paused")
-                {
-                    labelKodiPlaybackStatus.Text = "Paused";
-                    writeLog("Kodi:  Playback status incorrect - Player is paused");
+                    writeLog("Kodi:  Error parsing Kodi JSON");
                 }
             }
             else if (result.ContainsKey("id") && result["id"] == "98")
