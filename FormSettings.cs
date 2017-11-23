@@ -47,6 +47,7 @@ namespace BrodieTheatre
             Properties.Settings.Default.speechVoice                 = comboBoxTextToSpeechVoice.Text;
             Properties.Settings.Default.insteonMotionLatch          = trackBarInsteonMotionMinimumTime.Value;
             Properties.Settings.Default.speechDevice                = comboBoxTextToSpeechDevice.Text;
+            Properties.Settings.Default.lightingDelayProjectorOn    = trackBarDelayLightingProjectorStart.Value;
             Properties.Settings.Default.Save();
             this.Close();
         }
@@ -72,6 +73,18 @@ namespace BrodieTheatre
                 if (Properties.Settings.Default.speechDevice == device.Name)
                 {
                     comboBoxTextToSpeechDevice.SelectedItem = device.Name;
+                }
+            }
+
+            try
+            {
+                trackBarDelayLightingProjectorStart.Value = Properties.Settings.Default.lightingDelayProjectorOn;
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentOutOfRangeException)
+                {
+                    trackBarDelayLightingProjectorStart.Value = trackBarDelayLightingProjectorStart.Minimum;
                 }
             }
 
@@ -374,6 +387,18 @@ namespace BrodieTheatre
         private void trackBarVoiceConfidenceNoActivity_ValueChanged(object sender, EventArgs e)
         {
             labelVoiceConfidenceNoActivity.Text = (trackBarVoiceConfidenceNoActivity.Value * 10).ToString() + "%";
+        }
+
+        private void trackBarDelayLightingProjectorStart_ValueChanged(object sender, EventArgs e)
+        {
+            if (trackBarDelayLightingProjectorStart.Value == trackBarDelayLightingProjectorStart.Minimum)
+            {
+                labelDelayLightingProjectorStart.Text = "Off";
+            }
+            else
+            {
+                labelDelayLightingProjectorStart.Text = trackBarDelayLightingProjectorStart.Value.ToString();
+            }
         }
     }
 }

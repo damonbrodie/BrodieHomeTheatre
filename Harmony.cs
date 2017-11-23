@@ -93,6 +93,14 @@ namespace BrodieTheatre
                     }
                     formMain.projectorPowerOn();
                 }));
+                if (Properties.Settings.Default.lightingDelayProjectorOn != 0)
+                {
+                    await doDelay(Properties.Settings.Default.lightingDelayProjectorOn * 1000);
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.lightsToStoppedLevel();
+                    }));
+                }
             }
         }
 
