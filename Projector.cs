@@ -207,7 +207,6 @@ namespace BrodieTheatre
             if (projectorCommand.powerCommand == null && projectorCommand.newAspect == 0)
             {
                 timerProjectorControl.Enabled = false;
-
             }
         }
 
@@ -230,8 +229,7 @@ namespace BrodieTheatre
             }
             else
             {
-                projectorSendCommand("Power On", "PON");
-      
+                projectorSendCommand("Power On", "PON");     
                 timerProjectorControl.Enabled = true;
             }
         }
