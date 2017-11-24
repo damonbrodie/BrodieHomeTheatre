@@ -395,8 +395,7 @@ namespace BrodieTheatre
                         }
 
                         if (kodiPlayNext != null)
-                        {
-                            
+                        {                           
                             if (e.Result.Semantics.ContainsKey("Resume Movie"))
                             {
                                 int r = random.Next(ttsResumeMoviePhrases.Count);
@@ -424,7 +423,6 @@ namespace BrodieTheatre
                                 formMain.writeLog("Voice: Starting delay timer for movie to 5 seconds");
                                 formMain.timerKodiStartPlayback.Interval = 5000;
                             }
-
                         }
                         else
                         {

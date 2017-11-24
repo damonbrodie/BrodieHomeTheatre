@@ -199,8 +199,7 @@ namespace BrodieTheatre
         }
 
         public void kodiProcessJson(string jsonText)
-        {
-            //writeLog("Kodi:  Received JSON:  " + jsonText);
+        {      
             Dictionary<string, dynamic> result = null;
             try
             {
@@ -208,7 +207,7 @@ namespace BrodieTheatre
             }
             catch
             {
-                writeLog("Kodi:  Unable to decode JSON");
+                writeLog("Kodi:  Unable to decode JSON:  " + jsonText);
                 return;
             }
             if (result.ContainsKey("id") && result["id"] == "99")
@@ -433,7 +432,14 @@ namespace BrodieTheatre
                         if (result["params"]["sender"] == "brodietheatre")
                         {
                             string kodiAspectRatio = result["params"]["data"];
-                            projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
+                            try
+                            {
+                                projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
+                            }
+                            catch (FormatException)
+                            {
+                                writeLog("Kodi:  Invalid Aspect Ratio: '" + kodiAspectRatio + "'");
+                            }
                         }
                         break;
                 }
