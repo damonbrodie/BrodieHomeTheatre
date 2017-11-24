@@ -181,8 +181,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.kodiProcessJson(currJson);
-                    }
-                    ));
+                    }));
                     startPos = curPos;
                 }
             }
@@ -330,6 +329,10 @@ namespace BrodieTheatre
                 }
                 kodiLoadingMedia = false;
             }
+            else if (result.ContainsKey("id") && result["id"] == "96")
+            {
+                // Don't process this any further at the moment
+            }
             else if (result.ContainsKey("id") && result["id"] == "97")
             {
                 //writeLog("Kodi:  Received list of tv shows");
@@ -354,8 +357,7 @@ namespace BrodieTheatre
                             string cleanName = cleanString(tvShowEntry.name);
                             tvShowEntry.cleanName = cleanName;
                             kodiTVShows.Add(tvShowEntry);
-
-                           
+                          
                             List<string> cutNames = getShortTitles(cleanName);
                             foreach (string partName in cutNames)
                             {
