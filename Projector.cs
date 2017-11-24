@@ -187,14 +187,13 @@ namespace BrodieTheatre
             {
                 if (projectorCommand.powerCommand == "001")
                 {
-                    projectorSendCommand("Power On", "PON");
-                    projectorCommand.powerCommand = null;
+                    projectorSendCommand("Power On", "PON");                   
                 }
                 else if (projectorCommand.powerCommand == "000")
                 {
                     projectorSendCommand("Power Off", "POF");
-                    projectorCommand.powerCommand = null;
                 }
+                projectorCommand.powerCommand = null;
             }
             else if (projectorCommand.newAspect > 0)
             {
@@ -212,14 +211,13 @@ namespace BrodieTheatre
 
         private void projectorPowerOn()
         {
-            
             if (labelProjectorPower.Text == "On" || labelProjectorPower.Text == "Powering On")
             {
                 return;
             }
             
             labelProjectorPower.Text = "Powering On";
-            // Set the Projector to the currently AR in the UI to ensure we are in sync.
+            // Set the Projector to the current AR in the UI to ensure we are in sync.
             projectorCommand.newAspect = 1;
             projectorCommand.force = true;
             if (timerProjectorControl.Enabled == true)
