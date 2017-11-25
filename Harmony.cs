@@ -248,21 +248,19 @@ namespace BrodieTheatre
                             }
                         }));
 
-                        // Delay the harmony activity to let the projector start.  Having the Amp and projector start
+                        // Delay the Harmony activity to let the projector start.  Having the amp and projector start
                         // at the same time sometimes causes the Intel graphics to go crazy
                         await doDelay(5000);
                         await Program.Client.StartActivityAsync(activityId);
                     }
                     else //Power Off
                     {
-                        //await Program.Client.StartActivityAsync(activityId);
                         await Program.Client.TurnOffAsync();
                         await doDelay(1000);
                         formMain.BeginInvoke(new Action(() =>
                         {
                             //Turn up the ligths so occupants can find their way out
                             formMain.lightsToEnteringLevel();
-
                             formMain.projectorPowerOff();
                         }));
                     }
