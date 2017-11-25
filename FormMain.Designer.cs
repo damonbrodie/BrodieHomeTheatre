@@ -734,7 +734,7 @@
             // 
             // timerProjectorControl
             // 
-            this.timerProjectorControl.Interval = 10000;
+            this.timerProjectorControl.Interval = 11000;
             this.timerProjectorControl.Tick += new System.EventHandler(this.timerProjectorControl_Tick);
             // 
             // timerSetLights
