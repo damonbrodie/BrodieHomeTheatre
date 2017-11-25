@@ -43,6 +43,14 @@ namespace BrodieTheatre
             timerPotTrack.Enabled = true;
         }
 
+        private void setDelayedLightTimer ()
+        {
+            if (Properties.Settings.Default.lightingDelayProjectorOn > 0 && timerStartLights.Enabled == false)
+            {
+                timerStartLights.Enabled = true;
+            }
+        }
+
         private void timerStartLights_Tick(object sender, EventArgs e)
         {
             timerStartLights.Enabled = false;

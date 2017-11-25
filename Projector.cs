@@ -181,8 +181,7 @@ namespace BrodieTheatre
         }
 
         private void timerProjectorControl_Tick(object sender, EventArgs e)
-        {
-            
+        {       
             if (projectorCommand.powerCommand != null)
             {
                 if (projectorCommand.powerCommand == "001")
@@ -249,8 +248,7 @@ namespace BrodieTheatre
             {
                 projectorSendCommand("Power Off", "POF");
                 timerProjectorControl.Enabled = true;
-            }
-            
+            }           
         }
 
         private void labelLensAspect_TextChanged(object sender, EventArgs e)

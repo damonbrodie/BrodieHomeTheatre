@@ -92,15 +92,8 @@ namespace BrodieTheatre
                         formMain.insteonDoMotion(false);
                     }
                     formMain.projectorPowerOn();
+                    formMain.setDelayedLightTimer();
                 }));
-                if (Properties.Settings.Default.lightingDelayProjectorOn != 0)
-                {
-                    await doDelay(Properties.Settings.Default.lightingDelayProjectorOn * 1000);
-                    formMain.BeginInvoke(new Action(() =>
-                    {
-                        formMain.lightsToStoppedLevel();
-                    }));
-                }
             }
         }
 
@@ -126,6 +119,7 @@ namespace BrodieTheatre
                             }));
                             if (labelProjectorPower.Text == "On" && activity.Id == "-1")
                             {
+                                // This is meant to be called only if we are in an out of sync state
                                 formMain.BeginInvoke(new Action(() =>
                                 {
                                     formMain.writeLog("Harmony:  Activity disabled - Powering off projector");
@@ -134,10 +128,12 @@ namespace BrodieTheatre
                             }
                             else if (labelProjectorPower.Text == "Off" && activity.Id != "-1")
                             {
+                                // This is meant to be called only if we are in an out of sync state
                                 formMain.BeginInvoke(new Action(() =>
                                 {
                                     formMain.writeLog("Harmony:  Activity enabled - Powering on projector");
                                     formMain.projectorPowerOn();
+                                    formMain.setDelayedLightTimer();
                                 }));
                             }
                             if (Convert.ToInt32(activity.Id) >= 0)
@@ -225,7 +221,7 @@ namespace BrodieTheatre
         }
 
         // Start Harmony Activity
-        private async void harmonyStartActivity(string activityName, string activityId, bool affectLights = true)
+        private async void harmonyStartActivity(string activityName, string activityId, bool forceLights=true)
         {
             int counter = 0;
             while (counter < 3)
@@ -245,11 +241,10 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             formMain.projectorPowerOn();
-                        
-                            //An activity is starting wait for Projector to power up then dim the lights
-                            if (affectLights)
+
+                            if (forceLights)
                             {
-                                formMain.timerStartLights.Enabled = true;
+                                formMain.setDelayedLightTimer();
                             }
                         }));
 
@@ -266,10 +261,8 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             //Turn up the ligths so occupants can find their way out
-                            if (affectLights)
-                            {
-                                formMain.lightsToEnteringLevel();
-                            }
+                            formMain.lightsToEnteringLevel();
+
                             formMain.projectorPowerOff();
                         }));
                     }
@@ -289,11 +282,11 @@ namespace BrodieTheatre
             }
         }
 
-        private void harmonyStartActivityByName(string activityName, bool affectLights = true)
+        private void harmonyStartActivityByName(string activityName, bool forceLights = true)
         {
             if (activityName == "PowerOff")
             {
-                harmonyStartActivity("PowerOff", "-1", affectLights);
+                harmonyStartActivity("PowerOff", "-1", false);
                 return;
             }
             for (int i = 0; i < listBoxActivities.Items.Count; i++)
@@ -301,7 +294,7 @@ namespace BrodieTheatre
                 Activities currItem = (Activities)listBoxActivities.Items[i];
                 if (currItem.Text == activityName)
                 {      
-                    harmonyStartActivity(activityName, currItem.Id, affectLights);
+                    harmonyStartActivity(activityName, currItem.Id, forceLights);
                     return;
                 }
             }

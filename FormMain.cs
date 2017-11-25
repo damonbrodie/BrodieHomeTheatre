@@ -83,6 +83,12 @@ namespace BrodieTheatre
                 currentKodiPort = Properties.Settings.Default.kodiJSONPort;
                 kodiStatusDisconnect();
             }
+
+            if (Properties.Settings.Default.lightingDelayProjectorOn > 0)
+            {
+                timerStartLights.Interval = Properties.Settings.Default.lightingDelayProjectorOn * 1000;
+            }
+
             setVoice();
         }
 
@@ -126,7 +132,7 @@ namespace BrodieTheatre
                 Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
             }
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
-            if (Program.Client!= null && Program.Client.Token != string.Empty)
+            if (Program.Client != null && Program.Client.Token != string.Empty)
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
@@ -142,6 +148,14 @@ namespace BrodieTheatre
                     formMain.labelHarmonyStatus.ForeColor = System.Drawing.Color.Maroon;
                 }));
             }
+
+            formMain.BeginInvoke(new Action(() =>
+            {
+                if (Properties.Settings.Default.lightingDelayProjectorOn > 0)
+                {
+                    formMain.timerStartLights.Interval = Properties.Settings.Default.lightingDelayProjectorOn * 1000;
+                }
+            }));
         }
 
         private void timerClearStatus_Tick(object sender, EventArgs e)
@@ -244,7 +258,7 @@ namespace BrodieTheatre
         private void listBoxActivities_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Activities activity = (Activities)listBoxActivities.SelectedItem;
-            harmonyStartActivity(activity.Text, activity.Id);
+            harmonyStartActivity(activity.Text, activity.Id, true);
         }
 
         private void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
