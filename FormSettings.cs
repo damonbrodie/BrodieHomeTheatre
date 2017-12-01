@@ -27,6 +27,7 @@ namespace BrodieTheatre
             Properties.Settings.Default.projectorPort               = comboBoxProjectorPort.Text;
             Properties.Settings.Default.potsAddress                 = textBoxPotsAddress.Text;
             Properties.Settings.Default.trayAddress                 = textBoxTrayAddress.Text;
+            Properties.Settings.Default.fanAddress                  = textBoxExhaustFanAddress.Text;
             Properties.Settings.Default.trayPlaybackLevel           = trackBarTrayPlayback.Value;
             Properties.Settings.Default.potsPlaybackLevel           = trackBarPotsPlayback.Value;
             Properties.Settings.Default.trayPausedLevel             = trackBarTrayPaused.Value;
@@ -62,6 +63,7 @@ namespace BrodieTheatre
             textBoxKodiIP.Text = Properties.Settings.Default.kodiIP;
             textBoxPotsAddress.Text = Properties.Settings.Default.potsAddress;
             textBoxTrayAddress.Text = Properties.Settings.Default.trayAddress;
+            textBoxExhaustFanAddress.Text = Properties.Settings.Default.fanAddress;
             textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
             textBoxDoorSensorAddress.Text = Properties.Settings.Default.doorSensorAddress;
 

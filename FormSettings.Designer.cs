@@ -78,6 +78,11 @@
             this.comboBoxProjectorPort = new System.Windows.Forms.ComboBox();
             this.label21 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.labelDelayLightingProjectorStart = new System.Windows.Forms.Label();
+            this.trackBarDelayLightingProjectorStart = new System.Windows.Forms.TrackBar();
+            this.label39 = new System.Windows.Forms.Label();
             this.labelPotsStopped = new System.Windows.Forms.Label();
             this.labelTrayStopped = new System.Windows.Forms.Label();
             this.labelPotsPaused = new System.Windows.Forms.Label();
@@ -113,11 +118,8 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label37 = new System.Windows.Forms.Label();
-            this.labelDelayLightingProjectorStart = new System.Windows.Forms.Label();
-            this.trackBarDelayLightingProjectorStart = new System.Windows.Forms.TrackBar();
-            this.label39 = new System.Windows.Forms.Label();
+            this.textBoxExhaustFanAddress = new System.Windows.Forms.TextBox();
+            this.label38 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidenceNoActivity)).BeginInit();
@@ -128,6 +130,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarInsteonMotionMinimumTime)).BeginInit();
             this.tabPage5.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarDelayLightingProjectorStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsStopped)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayStopped)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsPaused)).BeginInit();
@@ -138,7 +141,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarDelayLightingProjectorStart)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -437,6 +439,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.textBoxExhaustFanAddress);
+            this.tabPage2.Controls.Add(this.label38);
             this.tabPage2.Controls.Add(this.labelInsteonMotionLatchMinutes);
             this.tabPage2.Controls.Add(this.label34);
             this.tabPage2.Controls.Add(this.labelInsteonMotionLatch);
@@ -463,7 +467,7 @@
             // labelInsteonMotionLatchMinutes
             // 
             this.labelInsteonMotionLatchMinutes.AutoSize = true;
-            this.labelInsteonMotionLatchMinutes.Location = new System.Drawing.Point(287, 254);
+            this.labelInsteonMotionLatchMinutes.Location = new System.Drawing.Point(287, 280);
             this.labelInsteonMotionLatchMinutes.Name = "labelInsteonMotionLatchMinutes";
             this.labelInsteonMotionLatchMinutes.Size = new System.Drawing.Size(43, 13);
             this.labelInsteonMotionLatchMinutes.TabIndex = 23;
@@ -473,7 +477,7 @@
             // 
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label34.Location = new System.Drawing.Point(16, 216);
+            this.label34.Location = new System.Drawing.Point(16, 242);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(175, 13);
             this.label34.TabIndex = 22;
@@ -482,7 +486,7 @@
             // labelInsteonMotionLatch
             // 
             this.labelInsteonMotionLatch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelInsteonMotionLatch.Location = new System.Drawing.Point(250, 250);
+            this.labelInsteonMotionLatch.Location = new System.Drawing.Point(250, 276);
             this.labelInsteonMotionLatch.Name = "labelInsteonMotionLatch";
             this.labelInsteonMotionLatch.Size = new System.Drawing.Size(35, 23);
             this.labelInsteonMotionLatch.TabIndex = 21;
@@ -493,7 +497,7 @@
             // 
             this.trackBarInsteonMotionMinimumTime.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarInsteonMotionMinimumTime.LargeChange = 1;
-            this.trackBarInsteonMotionMinimumTime.Location = new System.Drawing.Point(74, 246);
+            this.trackBarInsteonMotionMinimumTime.Location = new System.Drawing.Point(74, 272);
             this.trackBarInsteonMotionMinimumTime.Maximum = 30;
             this.trackBarInsteonMotionMinimumTime.Minimum = 5;
             this.trackBarInsteonMotionMinimumTime.Name = "trackBarInsteonMotionMinimumTime";
@@ -505,7 +509,7 @@
             // label33
             // 
             this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(18, 250);
+            this.label33.Location = new System.Drawing.Point(18, 276);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(51, 13);
             this.label33.TabIndex = 20;
@@ -655,6 +659,56 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Kodi Lighting";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(279, 351);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(47, 13);
+            this.label35.TabIndex = 28;
+            this.label35.Text = "seconds";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label37.Location = new System.Drawing.Point(8, 313);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(230, 13);
+            this.label37.TabIndex = 27;
+            this.label37.Text = "Light Dimming Delay on Projector Start:";
+            // 
+            // labelDelayLightingProjectorStart
+            // 
+            this.labelDelayLightingProjectorStart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelDelayLightingProjectorStart.Location = new System.Drawing.Point(242, 347);
+            this.labelDelayLightingProjectorStart.Name = "labelDelayLightingProjectorStart";
+            this.labelDelayLightingProjectorStart.Size = new System.Drawing.Size(35, 23);
+            this.labelDelayLightingProjectorStart.TabIndex = 26;
+            this.labelDelayLightingProjectorStart.Text = "Off";
+            this.labelDelayLightingProjectorStart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // trackBarDelayLightingProjectorStart
+            // 
+            this.trackBarDelayLightingProjectorStart.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarDelayLightingProjectorStart.LargeChange = 1;
+            this.trackBarDelayLightingProjectorStart.Location = new System.Drawing.Point(66, 343);
+            this.trackBarDelayLightingProjectorStart.Maximum = 30;
+            this.trackBarDelayLightingProjectorStart.Name = "trackBarDelayLightingProjectorStart";
+            this.trackBarDelayLightingProjectorStart.Size = new System.Drawing.Size(177, 45);
+            this.trackBarDelayLightingProjectorStart.TabIndex = 11;
+            this.trackBarDelayLightingProjectorStart.Value = 5;
+            this.trackBarDelayLightingProjectorStart.ValueChanged += new System.EventHandler(this.trackBarDelayLightingProjectorStart_ValueChanged);
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(10, 347);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(37, 13);
+            this.label39.TabIndex = 25;
+            this.label39.Text = "Delay:";
             // 
             // labelPotsStopped
             // 
@@ -1007,55 +1061,21 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // label35
+            // textBoxExhaustFanAddress
             // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(279, 351);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(47, 13);
-            this.label35.TabIndex = 28;
-            this.label35.Text = "seconds";
+            this.textBoxExhaustFanAddress.Location = new System.Drawing.Point(141, 202);
+            this.textBoxExhaustFanAddress.Name = "textBoxExhaustFanAddress";
+            this.textBoxExhaustFanAddress.Size = new System.Drawing.Size(100, 20);
+            this.textBoxExhaustFanAddress.TabIndex = 24;
             // 
-            // label37
+            // label38
             // 
-            this.label37.AutoSize = true;
-            this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label37.Location = new System.Drawing.Point(8, 313);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(230, 13);
-            this.label37.TabIndex = 27;
-            this.label37.Text = "Light Dimming Delay on Projector Start:";
-            // 
-            // labelDelayLightingProjectorStart
-            // 
-            this.labelDelayLightingProjectorStart.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelDelayLightingProjectorStart.Location = new System.Drawing.Point(242, 347);
-            this.labelDelayLightingProjectorStart.Name = "labelDelayLightingProjectorStart";
-            this.labelDelayLightingProjectorStart.Size = new System.Drawing.Size(35, 23);
-            this.labelDelayLightingProjectorStart.TabIndex = 26;
-            this.labelDelayLightingProjectorStart.Text = "Off";
-            this.labelDelayLightingProjectorStart.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // trackBarDelayLightingProjectorStart
-            // 
-            this.trackBarDelayLightingProjectorStart.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarDelayLightingProjectorStart.LargeChange = 1;
-            this.trackBarDelayLightingProjectorStart.Location = new System.Drawing.Point(66, 343);
-            this.trackBarDelayLightingProjectorStart.Maximum = 30;
-            this.trackBarDelayLightingProjectorStart.Name = "trackBarDelayLightingProjectorStart";
-            this.trackBarDelayLightingProjectorStart.Size = new System.Drawing.Size(177, 45);
-            this.trackBarDelayLightingProjectorStart.TabIndex = 11;
-            this.trackBarDelayLightingProjectorStart.Value = 5;
-            this.trackBarDelayLightingProjectorStart.ValueChanged += new System.EventHandler(this.trackBarDelayLightingProjectorStart_ValueChanged);
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(10, 347);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(37, 13);
-            this.label39.TabIndex = 25;
-            this.label39.Text = "Delay:";
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(25, 205);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(110, 13);
+            this.label38.TabIndex = 25;
+            this.label38.Text = "Exhaust Fan Address:";
             // 
             // FormSettings
             // 
@@ -1086,6 +1106,7 @@
             this.tabPage5.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarDelayLightingProjectorStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsStopped)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayStopped)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsPaused)).EndInit();
@@ -1097,7 +1118,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarDelayLightingProjectorStart)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1193,5 +1213,7 @@
         private System.Windows.Forms.Label labelDelayLightingProjectorStart;
         private System.Windows.Forms.TrackBar trackBarDelayLightingProjectorStart;
         private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.TextBox textBoxExhaustFanAddress;
+        private System.Windows.Forms.Label label38;
     }
 }

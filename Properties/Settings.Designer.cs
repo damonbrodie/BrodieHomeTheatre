@@ -346,5 +346,17 @@ namespace BrodieTheatre.Properties {
                 this["lightingDelayProjectorOn"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("47.01.AC")]
+        public string fanAddress {
+            get {
+                return ((string)(this["fanAddress"]));
+            }
+            set {
+                this["fanAddress"] = value;
+            }
+        }
     }
 }

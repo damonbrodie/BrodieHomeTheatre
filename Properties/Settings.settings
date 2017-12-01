@@ -83,5 +83,8 @@
     <Setting Name="lightingDelayProjectorOn" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="fanAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">47.01.AC</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

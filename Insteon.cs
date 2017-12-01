@@ -84,14 +84,14 @@ namespace BrodieTheatre
         }
 
         private void Network_StandardMessageReceived(object sender, StandardMessageReceivedArgs e)
-        {                  
+        {
             string desc = e.Description;
             string address = e.PeerId.ToString();
             int level;
 
             if (address == Properties.Settings.Default.trayAddress)
             {
-                level = insteonProcessDimmerMessage(desc, address);     
+                level = insteonProcessDimmerMessage(desc, address);
                 if (level >= 0)
                 {
                     formMain.BeginInvoke(new Action(() =>
@@ -113,7 +113,7 @@ namespace BrodieTheatre
             }
             else if (address == Properties.Settings.Default.potsAddress)
             {
-                level = insteonProcessDimmerMessage(desc, address);            
+                level = insteonProcessDimmerMessage(desc, address);
                 if (level >= 0)
                 {
                     formMain.BeginInvoke(new Action(() =>
@@ -196,6 +196,10 @@ namespace BrodieTheatre
                     }
                     ));
                 }
+            }
+            else if (address == Properties.Settings.Default.fanAddress)
+            {
+                MessageBox.Show("Switch value: " + desc);
             }
         }
 
