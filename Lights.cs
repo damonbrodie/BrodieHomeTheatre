@@ -125,6 +125,7 @@ namespace BrodieTheatre
 
         private void timerSetLights_Tick(object sender, EventArgs e)
         {
+
             if (Properties.Settings.Default.potsAddress != string.Empty && lights.ContainsKey(Properties.Settings.Default.potsAddress) && lights[Properties.Settings.Default.potsAddress] != -1)
             {
                 insteonSetLightLevel(Properties.Settings.Default.potsAddress, lights[Properties.Settings.Default.potsAddress]);

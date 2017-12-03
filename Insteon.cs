@@ -89,6 +89,14 @@ namespace BrodieTheatre
             string address = e.PeerId.ToString();
             int level;
 
+            if (debugInsteon)
+            {
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    formMain.writeLog("Insteon:  Debug - received from '" + address + "' message '" + desc + "'");
+                }));
+            }
+
             if (address == Properties.Settings.Default.trayAddress)
             {
                 level = insteonProcessDimmerMessage(desc, address);
@@ -199,7 +207,11 @@ namespace BrodieTheatre
             }
             else if (address == Properties.Settings.Default.fanAddress)
             {
-                MessageBox.Show("Switch value: " + desc);
+                formMain.writeLog("Insteon:  Received exhaust fan update from PLM - '" + desc + "'");
+            }
+            else
+            {
+                formMain.writeLog("Insteon:  Received unknown device message from address '" + address + "' message '" + desc + "'");
             }
         }
 
@@ -222,6 +234,24 @@ namespace BrodieTheatre
                 //writeLog("Insteon:  Get light '" + address + "' at level '" + level.ToString() + "'");
             }
             return level;
+        }
+
+        public int insteonGetSwitchStatus(string address)
+        {
+            DeviceBase device;
+            if (address == string.Empty) return -1;
+            if (powerlineModem.Network.TryConnectToDevice(address, out device))
+            {
+                var switchControl = device as SwitchedLightingControl;
+                byte onLevel;
+
+                switchControl.TryGetOnLevel(out onLevel);
+                int integerLevel = Convert.ToInt32(onLevel);
+
+                return integerLevel;
+            }
+
+            return -1;
         }
 
         public void insteonSetLightLevel(string address, int level)
@@ -260,6 +290,42 @@ namespace BrodieTheatre
             writeLog("Insteon:  Error setting light '" + address + "' to level '" + level.ToString() + "'");
         }
 
+        public void insteonSetRelay(string address, bool turnOn)
+        {
+            DeviceBase device;
+            if (address == string.Empty) return;
+            if (powerlineModem != null && powerlineModem.Network.TryConnectToDevice(address, out device))
+            {
+                bool finished = false;
+                int counter = 0;
+
+                while (!finished && counter < 3)
+                {
+                    var relayControl = device as SwitchedLightingControl;
+                    if (turnOn)
+                    {
+                        finished = relayControl.TurnOn();
+                    }
+                    else
+                    {
+                        finished = relayControl.TurnOff();
+                    }
+                    if (!finished)
+                    {
+                        writeLog("Insteon:  Could not set relay '" + address + "' to '" + turnOn.ToString() + "'");
+                    }
+                    else
+                    {
+                        writeLog("Insteon:  Set relay '" + address + "' to '" + turnOn.ToString() + "'");
+                        return;
+                    }
+                    counter++;
+                }
+            }
+            toolStripStatus.Text = "Could not connect to relay '" + address + "'";
+            writeLog("Insteon:  Error setting relay '" + address + "' to '" + turnOn.ToString() + "'");
+        }
+
         private void PowerlineModem_OnError(object sender, EventArgs e)
         {
             if (powerlineModem.Exception.GetType() == typeof(TimeoutException))
@@ -284,7 +350,7 @@ namespace BrodieTheatre
             formMain.labelPLMstatus.Text = "Connected";
             formMain.writeLog("Insteon:  Connected to PLM");
             formMain.labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
-            formMain.insteonPollLights();
+            formMain.insteonPoll();
         }
 
         private void timerInsteonMotionLatch_Tick(object sender, EventArgs e)
@@ -292,7 +358,7 @@ namespace BrodieTheatre
             if (insteonMotionLatchActive)
             {
                 if (labelKodiPlaybackStatus.Text == "Stopped")
-                { 
+                {
                     DateTime rightNow = DateTime.Now;
                     if (insteonMotionLatchExpires < rightNow)
                     {
@@ -324,14 +390,14 @@ namespace BrodieTheatre
 
         private void insteonDoMotion(bool explicitMotion = true)
         {
-            if (! explicitMotion)
+            if (!explicitMotion)
             {
                 writeLog("Insteon:  Implied room occupancy detected");
             }
             else if (labelMotionSensorStatus.Text != "Motion Detected")
-            {              
+            {
                 writeLog("Insteon:  Motion Sensor reported 'Motion Detected'");
-                labelMotionSensorStatus.Text = "Motion Detected";               
+                labelMotionSensorStatus.Text = "Motion Detected";
             }
             vacancyWarning = false;
             labelRoomOccupancy.Text = "Occupied";
@@ -339,26 +405,41 @@ namespace BrodieTheatre
             insteonMotionLatchActive = false;
         }
 
-        private async void insteonPollLights()
+        private async void insteonPoll()
         {
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.trackBarTray.Value = insteonGetLightLevel(Properties.Settings.Default.trayAddress);
             }
-            ));   
+            ));
             await doDelay(1200);
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.trackBarPots.Value = insteonGetLightLevel(Properties.Settings.Default.potsAddress);
             }
             ));
+            await doDelay(1200);
+            formMain.BeginInvoke(new Action(() =>
+            {
+                int fanState = insteonGetSwitchStatus(Properties.Settings.Default.fanAddress);
+                if (fanState == 0)
+                {
+                    updateFanStatus(false);
+                }
+                else if (fanState > 0)
+                {
+                    updateFanStatus(true);
+                }
+            }
+            ));
         }
+
         private void timerInsteonPoll_Tick(object sender, EventArgs e)
         {
             if (labelPLMstatus.Text == "Connected")
             {
-                toolStripStatus.Text = "Polling for lights status";
-                insteonPollLights();
+                toolStripStatus.Text = "Polling for Insteon status";
+                insteonPoll();
             }
         }
     }

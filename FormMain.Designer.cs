@@ -43,6 +43,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.progressBarExhaustFan = new System.Windows.Forms.ProgressBar();
+            this.buttonFanPower = new System.Windows.Forms.Button();
+            this.labelFanStatus = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.progressBarInsteonMotionLatch = new System.Windows.Forms.ProgressBar();
             this.labelPots = new System.Windows.Forms.Label();
             this.labelTray = new System.Windows.Forms.Label();
@@ -104,6 +108,7 @@
             this.timerInsteonMotionLatch = new System.Windows.Forms.Timer(this.components);
             this.timerInsteonPoll = new System.Windows.Forms.Timer(this.components);
             this.timerHarmonyPoll = new System.Windows.Forms.Timer(this.components);
+            this.timerExhaustFanDelay = new System.Windows.Forms.Timer(this.components);
             this.menuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -239,6 +244,10 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.White;
+            this.groupBox2.Controls.Add(this.progressBarExhaustFan);
+            this.groupBox2.Controls.Add(this.buttonFanPower);
+            this.groupBox2.Controls.Add(this.labelFanStatus);
+            this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.progressBarInsteonMotionLatch);
             this.groupBox2.Controls.Add(this.labelPots);
             this.groupBox2.Controls.Add(this.labelTray);
@@ -259,17 +268,54 @@
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             // 
+            // progressBarExhaustFan
+            // 
+            this.progressBarExhaustFan.Location = new System.Drawing.Point(227, 148);
+            this.progressBarExhaustFan.Name = "progressBarExhaustFan";
+            this.progressBarExhaustFan.Size = new System.Drawing.Size(76, 18);
+            this.progressBarExhaustFan.TabIndex = 25;
+            // 
+            // buttonFanPower
+            // 
+            this.buttonFanPower.Location = new System.Drawing.Point(311, 146);
+            this.buttonFanPower.Name = "buttonFanPower";
+            this.buttonFanPower.Size = new System.Drawing.Size(65, 23);
+            this.buttonFanPower.TabIndex = 24;
+            this.buttonFanPower.Text = "Power On";
+            this.buttonFanPower.UseVisualStyleBackColor = true;
+            this.buttonFanPower.Click += new System.EventHandler(this.buttonFanPower_Click);
+            // 
+            // labelFanStatus
+            // 
+            this.labelFanStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelFanStatus.Location = new System.Drawing.Point(95, 148);
+            this.labelFanStatus.Name = "labelFanStatus";
+            this.labelFanStatus.Size = new System.Drawing.Size(120, 19);
+            this.labelFanStatus.TabIndex = 23;
+            this.labelFanStatus.Text = "Unknown";
+            this.labelFanStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label18.Location = new System.Drawing.Point(23, 151);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(66, 13);
+            this.label18.TabIndex = 24;
+            this.label18.Text = "Exhaust Fan";
+            // 
             // progressBarInsteonMotionLatch
             // 
             this.progressBarInsteonMotionLatch.Location = new System.Drawing.Point(227, 186);
             this.progressBarInsteonMotionLatch.Name = "progressBarInsteonMotionLatch";
-            this.progressBarInsteonMotionLatch.Size = new System.Drawing.Size(92, 18);
+            this.progressBarInsteonMotionLatch.Size = new System.Drawing.Size(76, 18);
             this.progressBarInsteonMotionLatch.TabIndex = 18;
             // 
             // labelPots
             // 
             this.labelPots.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelPots.Location = new System.Drawing.Point(335, 129);
+            this.labelPots.Location = new System.Drawing.Point(335, 108);
             this.labelPots.Name = "labelPots";
             this.labelPots.Size = new System.Drawing.Size(35, 23);
             this.labelPots.TabIndex = 22;
@@ -279,7 +325,7 @@
             // labelTray
             // 
             this.labelTray.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelTray.Location = new System.Drawing.Point(335, 85);
+            this.labelTray.Location = new System.Drawing.Point(335, 71);
             this.labelTray.Name = "labelTray";
             this.labelTray.Size = new System.Drawing.Size(35, 23);
             this.labelTray.TabIndex = 21;
@@ -300,7 +346,7 @@
             // 
             this.trackBarPots.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarPots.LargeChange = 1;
-            this.trackBarPots.Location = new System.Drawing.Point(90, 130);
+            this.trackBarPots.Location = new System.Drawing.Point(90, 109);
             this.trackBarPots.Name = "trackBarPots";
             this.trackBarPots.Size = new System.Drawing.Size(239, 45);
             this.trackBarPots.TabIndex = 20;
@@ -310,6 +356,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
+            this.label12.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.label12.Location = new System.Drawing.Point(14, 188);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(75, 13);
@@ -320,7 +367,7 @@
             // 
             this.trackBarTray.BackColor = System.Drawing.SystemColors.Window;
             this.trackBarTray.LargeChange = 1;
-            this.trackBarTray.Location = new System.Drawing.Point(90, 86);
+            this.trackBarTray.Location = new System.Drawing.Point(90, 72);
             this.trackBarTray.Name = "trackBarTray";
             this.trackBarTray.Size = new System.Drawing.Size(239, 45);
             this.trackBarTray.TabIndex = 19;
@@ -330,7 +377,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(35, 134);
+            this.label9.Location = new System.Drawing.Point(35, 113);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(54, 13);
             this.label9.TabIndex = 18;
@@ -339,7 +386,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(30, 90);
+            this.label4.Location = new System.Drawing.Point(30, 76);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 13);
             this.label4.TabIndex = 17;
@@ -776,6 +823,11 @@
             this.timerHarmonyPoll.Interval = 30000;
             this.timerHarmonyPoll.Tick += new System.EventHandler(this.timerHarmonyPoll_Tick);
             // 
+            // timerExhaustFanDelay
+            // 
+            this.timerExhaustFanDelay.Interval = 200;
+            this.timerExhaustFanDelay.Tick += new System.EventHandler(this.timerExhaustFanDelay_Tick);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -899,5 +951,10 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Timer timerInsteonPoll;
         private System.Windows.Forms.Timer timerHarmonyPoll;
+        private System.Windows.Forms.Button buttonFanPower;
+        private System.Windows.Forms.Label labelFanStatus;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ProgressBar progressBarExhaustFan;
+        private System.Windows.Forms.Timer timerExhaustFanDelay;
     }
 }

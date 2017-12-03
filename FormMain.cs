@@ -13,6 +13,7 @@ namespace BrodieTheatre
            42.20.F8 Tray
            41.66.88 Motion Sensor
            41.58.FC Door Sensor
+           47.01.AC Exhaust Fan Switch
 
           Mapped keypresses
            F12 - Lights to Entering level
@@ -34,6 +35,7 @@ namespace BrodieTheatre
         public Random random = new Random();
         public bool vacancyWarning = false;
 
+        public bool debugInsteon = false;
         public bool debugHarmony = false;
 
         public FormMain()
@@ -155,6 +157,8 @@ namespace BrodieTheatre
                 {
                     formMain.timerStartLights.Interval = Properties.Settings.Default.lightingDelayProjectorOn * 1000;
                 }
+
+                formMain.fanPowerOff();
             }));
         }
 

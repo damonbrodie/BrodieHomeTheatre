@@ -80,6 +80,7 @@ namespace BrodieTheatre
                 {
                     formMain.projectorPowerOff();
                     formMain.lightsToEnteringLevel();
+                    formMain.fanDelayPowerOff();
                 }));
             }
             else
@@ -93,6 +94,7 @@ namespace BrodieTheatre
                     }
                     formMain.projectorPowerOn();
                     formMain.setDelayedLightTimer();
+                    formMain.fanPowerOn();
                 }));
             }
         }
@@ -124,6 +126,7 @@ namespace BrodieTheatre
                                 {
                                     formMain.writeLog("Harmony:  Activity disabled - Powering off projector");
                                     formMain.projectorPowerOff();
+                                    formMain.fanDelayPowerOff();
                                 }));
                             }
                             else if (labelProjectorPower.Text == "Off" && activity.Id != "-1")
@@ -133,6 +136,7 @@ namespace BrodieTheatre
                                 {
                                     formMain.writeLog("Harmony:  Activity enabled - Powering on projector");
                                     formMain.projectorPowerOn();
+                                    formMain.fanPowerOn();
                                     formMain.setDelayedLightTimer();
                                 }));
                             }

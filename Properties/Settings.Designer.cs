@@ -358,5 +358,17 @@ namespace BrodieTheatre.Properties {
                 this["fanAddress"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int fanDelayOff {
+            get {
+                return ((int)(this["fanDelayOff"]));
+            }
+            set {
+                this["fanDelayOff"] = value;
+            }
+        }
     }
 }
