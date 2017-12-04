@@ -255,6 +255,10 @@ namespace BrodieTheatre
             {
                 writeLog("Global Timer:  Disabling timer");
                 globalShutdownActive = false;
+                if (labelRoomOccupancy.Text != "Vacant")
+                {
+                    labelRoomOccupancy.Text = "Vacant";
+                }
             }
             toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
         }
