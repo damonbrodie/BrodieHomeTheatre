@@ -39,6 +39,21 @@ namespace BrodieTheatre
             return level;
         }
 
+        public int insteonProcessSwitchMessage(string message, string address)
+        {
+            int level = -1;
+            switch (message)
+            {
+                case "Turn On":
+                    level = 10;
+                    break;
+                case "Turn Off":
+                    level = 0;
+                    break;
+            }
+            return level;
+        }
+
         public int insteonProcessMotionSensorMessage(string message, string address)
         {
             //writeLog("Insteon:  Process motion sensor from address '" + address + "' message '" + message + "'");
@@ -204,14 +219,33 @@ namespace BrodieTheatre
                     }
                     ));
                 }
-            }
-            else if (address == Properties.Settings.Default.fanAddress)
-            {
-                formMain.writeLog("Insteon:  Received exhaust fan update from PLM - '" + desc + "'");
-            }
-            else
-            {
-                formMain.writeLog("Insteon:  Received unknown device message from address '" + address + "' message '" + desc + "'");
+
+                else if (address == Properties.Settings.Default.fanAddress)
+                {
+                    level = insteonProcessSwitchMessage(desc, address);
+                    if (level > 0)
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.writeLog("Insteon:  Received Fan Switch update from PLM - 'On'");
+                            formMain.updateFanStatus(true);
+                        }
+                        ));
+                    }
+                    else if (level == 0)
+                    {
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.writeLog("Insteon:  Received Fan Switch update from PLM - 'Off'");
+                            formMain.updateFanStatus(false);
+                        }
+                        ));
+                    }
+                }
+                else
+                {
+                    formMain.writeLog("Insteon:  Received unknown device message from address '" + address + "' message '" + desc + "'");
+                }
             }
         }
 
