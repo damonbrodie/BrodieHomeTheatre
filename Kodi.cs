@@ -235,7 +235,7 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    writeLog("Kodi:  Error parsing Kodi JSON");
+                    writeLog("Kodi:  Error parsing Kodi JSON: '" + jsonText + "'");
                 }
             }
             else if (result.ContainsKey("id") && result["id"] == "98")
