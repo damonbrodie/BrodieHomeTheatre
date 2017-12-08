@@ -219,33 +219,32 @@ namespace BrodieTheatre
                     }
                     ));
                 }
-
-                else if (address == Properties.Settings.Default.fanAddress)
+            }
+            else if (address == Properties.Settings.Default.fanAddress)
+            {
+                level = insteonProcessSwitchMessage(desc, address);
+                if (level > 0)
                 {
-                    level = insteonProcessSwitchMessage(desc, address);
-                    if (level > 0)
+                    formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.writeLog("Insteon:  Received Fan Switch update from PLM - 'On'");
-                            formMain.updateFanStatus(true);
-                        }
-                        ));
+                        formMain.writeLog("Insteon:  Received Fan Switch update from PLM - 'On'");
+                        formMain.updateFanStatus(true);
                     }
-                    else if (level == 0)
-                    {
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.writeLog("Insteon:  Received Fan Switch update from PLM - 'Off'");
-                            formMain.updateFanStatus(false);
-                        }
-                        ));
-                    }
+                    ));
                 }
-                else
+                else if (level == 0)
                 {
-                    formMain.writeLog("Insteon:  Received unknown device message from address '" + address + "' message '" + desc + "'");
+                    formMain.BeginInvoke(new Action(() =>
+                    {
+                        formMain.writeLog("Insteon:  Received Fan Switch update from PLM - 'Off'");
+                        formMain.updateFanStatus(false);
+                    }
+                    ));
                 }
+            }
+            else
+            {
+                formMain.writeLog("Insteon:  Received unknown device message from address '" + address + "' message '" + desc + "'");
             }
         }
 
