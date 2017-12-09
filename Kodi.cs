@@ -437,7 +437,7 @@ namespace BrodieTheatre
                             try
                             {
                                 projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
-                            }
+                                writeLog("Kodi:  Received Aspect Ratio: '" + kodiAspectRatio + "'");                            }
                             catch (FormatException)
                             {
                                 writeLog("Kodi:  Invalid Aspect Ratio: '" + kodiAspectRatio + "'");

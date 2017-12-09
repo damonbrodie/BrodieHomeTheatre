@@ -162,6 +162,9 @@ namespace BrodieTheatre
             projectorCommand.force = false;
         }
 
+        // "force" is used to request a change even in the app believes the lens is already
+        // at that setting.  Used at startup time to ensure the lens isn't in the wrong state
+        // from the previous projector shutdown
         private void projectorQueueChangeAspect(float aspect, bool force=false)
         {
             if (labelProjectorPower.Text == "On")
