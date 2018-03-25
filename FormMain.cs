@@ -276,6 +276,8 @@ namespace BrodieTheatre
                 writeLog("Occupancy:  Room Occupied");
                 resetGlobalTimer();
 
+                kodiUpdateLibrary();
+
                 if (!harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     lightsToEnteringLevel();

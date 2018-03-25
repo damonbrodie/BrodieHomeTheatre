@@ -329,6 +329,10 @@ namespace BrodieTheatre
                 }
                 kodiLoadingMedia = false;
             }
+            else if (result.ContainsKey("id") && result["id"] == "95")
+            {
+                // Don't process this any further at the moment
+            }
             else if (result.ContainsKey("id") && result["id"] == "96")
             {
                 // Don't process this any further at the moment
@@ -541,6 +545,11 @@ namespace BrodieTheatre
             labelKodiStatus.Text = "Disconnected";
             labelKodiStatus.ForeColor = System.Drawing.Color.Maroon;
             timerKodiConnect.Enabled = enableTimer;
+        }
+
+        public void kodiUpdateLibrary()
+        {
+            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.Scan\", \"id\": \"95\"}");
         }
 
         public void kodiToggleFullscreen()
