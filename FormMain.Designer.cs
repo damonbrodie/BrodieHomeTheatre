@@ -75,8 +75,6 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.labelLastVoiceCommand = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
             this.timerPLMreceive = new System.Windows.Forms.Timer(this.components);
             this.timerTrayTrack = new System.Windows.Forms.Timer(this.components);
             this.timerPotTrack = new System.Windows.Forms.Timer(this.components);
@@ -92,8 +90,6 @@
             this.timerGlobal = new System.Windows.Forms.Timer(this.components);
             this.serialPortProjector = new System.IO.Ports.SerialPort(this.components);
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.labelListeningStatus = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.labelRoomOccupancy = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -161,7 +157,7 @@
             this.listBoxActivities.FormattingEnabled = true;
             this.listBoxActivities.Location = new System.Drawing.Point(227, 33);
             this.listBoxActivities.Name = "listBoxActivities";
-            this.listBoxActivities.Size = new System.Drawing.Size(149, 121);
+            this.listBoxActivities.Size = new System.Drawing.Size(149, 82);
             this.listBoxActivities.TabIndex = 1;
             this.listBoxActivities.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxActivities_MouseDoubleClick);
             // 
@@ -190,7 +186,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBox1.Location = new System.Drawing.Point(12, 42);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(392, 172);
+            this.groupBox1.Size = new System.Drawing.Size(392, 136);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             // 
@@ -260,7 +256,7 @@
             this.groupBox2.Controls.Add(this.labelPLMstatus);
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox2.Location = new System.Drawing.Point(12, 233);
+            this.groupBox2.Location = new System.Drawing.Point(12, 195);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(392, 224);
             this.groupBox2.TabIndex = 8;
@@ -428,7 +424,7 @@
             this.groupBox3.Controls.Add(this.pictureBox3);
             this.groupBox3.Location = new System.Drawing.Point(425, 42);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(239, 98);
+            this.groupBox3.Size = new System.Drawing.Size(238, 98);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             // 
@@ -587,25 +583,6 @@
             this.pictureBox4.TabIndex = 13;
             this.pictureBox4.TabStop = false;
             // 
-            // labelLastVoiceCommand
-            // 
-            this.labelLastVoiceCommand.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelLastVoiceCommand.Location = new System.Drawing.Point(103, 89);
-            this.labelLastVoiceCommand.Name = "labelLastVoiceCommand";
-            this.labelLastVoiceCommand.Size = new System.Drawing.Size(120, 19);
-            this.labelLastVoiceCommand.TabIndex = 16;
-            this.labelLastVoiceCommand.Text = "None";
-            this.labelLastVoiceCommand.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(20, 92);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(77, 13);
-            this.label14.TabIndex = 15;
-            this.label14.Text = "Last Command";
-            // 
             // timerPLMreceive
             // 
             this.timerPLMreceive.Interval = 350;
@@ -631,7 +608,7 @@
             this.toolStripProgressBarGlobal,
             this.toolStripStatusLabel2,
             this.toolStripStatus});
-            this.statusStrip.Location = new System.Drawing.Point(0, 473);
+            this.statusStrip.Location = new System.Drawing.Point(0, 431);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(675, 24);
             this.statusStrip.SizingGrip = false;
@@ -688,42 +665,19 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.labelListeningStatus);
-            this.groupBox5.Controls.Add(this.label17);
             this.groupBox5.Controls.Add(this.labelRoomOccupancy);
             this.groupBox5.Controls.Add(this.label10);
             this.groupBox5.Controls.Add(this.pictureBox5);
-            this.groupBox5.Controls.Add(this.label14);
-            this.groupBox5.Controls.Add(this.labelLastVoiceCommand);
             this.groupBox5.Location = new System.Drawing.Point(425, 335);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(239, 122);
+            this.groupBox5.Size = new System.Drawing.Size(238, 84);
             this.groupBox5.TabIndex = 17;
             this.groupBox5.TabStop = false;
-            // 
-            // labelListeningStatus
-            // 
-            this.labelListeningStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelListeningStatus.Location = new System.Drawing.Point(103, 60);
-            this.labelListeningStatus.Name = "labelListeningStatus";
-            this.labelListeningStatus.Size = new System.Drawing.Size(120, 19);
-            this.labelListeningStatus.TabIndex = 22;
-            this.labelListeningStatus.Text = "Not Listening";
-            this.labelListeningStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(15, 63);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(82, 13);
-            this.label17.TabIndex = 21;
-            this.label17.Text = "Listening Status";
             // 
             // labelRoomOccupancy
             // 
             this.labelRoomOccupancy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelRoomOccupancy.Location = new System.Drawing.Point(103, 31);
+            this.labelRoomOccupancy.Location = new System.Drawing.Point(103, 42);
             this.labelRoomOccupancy.Name = "labelRoomOccupancy";
             this.labelRoomOccupancy.Size = new System.Drawing.Size(120, 19);
             this.labelRoomOccupancy.TabIndex = 20;
@@ -735,7 +689,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(35, 34);
+            this.label10.Location = new System.Drawing.Point(35, 45);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(62, 13);
             this.label10.TabIndex = 19;
@@ -805,7 +759,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(675, 497);
+            this.ClientSize = new System.Drawing.Size(675, 455);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox4);
@@ -876,8 +830,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label labelLastVoiceCommand;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label labelMotionSensorStatus;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Timer timerPLMreceive;
@@ -917,8 +869,6 @@
         private System.Windows.Forms.Timer timerKodiPoll;
         private System.Windows.Forms.Timer timerInsteonMotionLatch;
         private System.Windows.Forms.ProgressBar progressBarInsteonMotionLatch;
-        private System.Windows.Forms.Label labelListeningStatus;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Timer timerInsteonPoll;
         private System.Windows.Forms.Timer timerHarmonyPoll;
         private System.Windows.Forms.Button buttonFanPower;
