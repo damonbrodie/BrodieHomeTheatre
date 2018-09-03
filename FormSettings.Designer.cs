@@ -31,34 +31,21 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.labelVoiceConfidenceNoActivity = new System.Windows.Forms.Label();
-            this.trackBarVoiceConfidenceNoActivity = new System.Windows.Forms.TrackBar();
-            this.label36 = new System.Windows.Forms.Label();
-            this.comboBoxTextToSpeechDevice = new System.Windows.Forms.ComboBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.buttonPreviewVoice = new System.Windows.Forms.Button();
-            this.comboBoxTextToSpeechVoice = new System.Windows.Forms.ComboBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
             this.textBoxKodiIP = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.numericUpDownKodiPort = new System.Windows.Forms.NumericUpDown();
             this.label31 = new System.Windows.Forms.Label();
             this.checkBoxStartMinimized = new System.Windows.Forms.CheckBox();
             this.label26 = new System.Windows.Forms.Label();
-            this.labelVoiceConfidence = new System.Windows.Forms.Label();
-            this.trackBarVoiceConfidence = new System.Windows.Forms.TrackBar();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.textBoxComputerName = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label27 = new System.Windows.Forms.Label();
-            this.textBoxVoiceActivity = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
             this.textBoxHarmonyHubIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.labelExhaustFanDelayOffMinutes = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.labelExhaustFanDelayOff = new System.Windows.Forms.Label();
+            this.trackBarExhaustFanDelayOff = new System.Windows.Forms.TrackBar();
+            this.label43 = new System.Windows.Forms.Label();
             this.textBoxExhaustFanAddress = new System.Windows.Forms.TextBox();
             this.label38 = new System.Windows.Forms.Label();
             this.labelInsteonMotionLatchMinutes = new System.Windows.Forms.Label();
@@ -120,18 +107,12 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.labelExhaustFanDelayOffMinutes = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
-            this.labelExhaustFanDelayOff = new System.Windows.Forms.Label();
-            this.trackBarExhaustFanDelayOff = new System.Windows.Forms.TrackBar();
-            this.label43 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidenceNoActivity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarExhaustFanDelayOff)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarInsteonMotionMinimumTime)).BeginInit();
             this.tabPage5.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -146,7 +127,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarExhaustFanDelayOff)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl
@@ -165,27 +145,12 @@
             // 
             // tabPage6
             // 
-            this.tabPage6.Controls.Add(this.labelVoiceConfidenceNoActivity);
-            this.tabPage6.Controls.Add(this.trackBarVoiceConfidenceNoActivity);
-            this.tabPage6.Controls.Add(this.label36);
-            this.tabPage6.Controls.Add(this.comboBoxTextToSpeechDevice);
-            this.tabPage6.Controls.Add(this.label30);
-            this.tabPage6.Controls.Add(this.buttonPreviewVoice);
-            this.tabPage6.Controls.Add(this.comboBoxTextToSpeechVoice);
-            this.tabPage6.Controls.Add(this.label29);
-            this.tabPage6.Controls.Add(this.label28);
             this.tabPage6.Controls.Add(this.textBoxKodiIP);
             this.tabPage6.Controls.Add(this.label32);
             this.tabPage6.Controls.Add(this.numericUpDownKodiPort);
             this.tabPage6.Controls.Add(this.label31);
             this.tabPage6.Controls.Add(this.checkBoxStartMinimized);
             this.tabPage6.Controls.Add(this.label26);
-            this.tabPage6.Controls.Add(this.labelVoiceConfidence);
-            this.tabPage6.Controls.Add(this.trackBarVoiceConfidence);
-            this.tabPage6.Controls.Add(this.label20);
-            this.tabPage6.Controls.Add(this.label14);
-            this.tabPage6.Controls.Add(this.textBoxComputerName);
-            this.tabPage6.Controls.Add(this.label15);
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Size = new System.Drawing.Size(345, 371);
@@ -193,92 +158,9 @@
             this.tabPage6.Text = "Global";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // labelVoiceConfidenceNoActivity
-            // 
-            this.labelVoiceConfidenceNoActivity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelVoiceConfidenceNoActivity.Location = new System.Drawing.Point(277, 217);
-            this.labelVoiceConfidenceNoActivity.Name = "labelVoiceConfidenceNoActivity";
-            this.labelVoiceConfidenceNoActivity.Size = new System.Drawing.Size(35, 23);
-            this.labelVoiceConfidenceNoActivity.TabIndex = 56;
-            this.labelVoiceConfidenceNoActivity.Text = "0%";
-            this.labelVoiceConfidenceNoActivity.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // trackBarVoiceConfidenceNoActivity
-            // 
-            this.trackBarVoiceConfidenceNoActivity.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarVoiceConfidenceNoActivity.LargeChange = 1;
-            this.trackBarVoiceConfidenceNoActivity.Location = new System.Drawing.Point(100, 219);
-            this.trackBarVoiceConfidenceNoActivity.Name = "trackBarVoiceConfidenceNoActivity";
-            this.trackBarVoiceConfidenceNoActivity.Size = new System.Drawing.Size(177, 45);
-            this.trackBarVoiceConfidenceNoActivity.TabIndex = 5;
-            this.trackBarVoiceConfidenceNoActivity.ValueChanged += new System.EventHandler(this.trackBarVoiceConfidenceNoActivity_ValueChanged);
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(33, 222);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(61, 13);
-            this.label36.TabIndex = 55;
-            this.label36.Text = "No Activity:";
-            // 
-            // comboBoxTextToSpeechDevice
-            // 
-            this.comboBoxTextToSpeechDevice.FormattingEnabled = true;
-            this.comboBoxTextToSpeechDevice.Location = new System.Drawing.Point(107, 278);
-            this.comboBoxTextToSpeechDevice.Name = "comboBoxTextToSpeechDevice";
-            this.comboBoxTextToSpeechDevice.Size = new System.Drawing.Size(205, 21);
-            this.comboBoxTextToSpeechDevice.TabIndex = 56;
-            // 
-            // label30
-            // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(57, 281);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(44, 13);
-            this.label30.TabIndex = 53;
-            this.label30.Text = "Device:";
-            // 
-            // buttonPreviewVoice
-            // 
-            this.buttonPreviewVoice.Location = new System.Drawing.Point(237, 340);
-            this.buttonPreviewVoice.Name = "buttonPreviewVoice";
-            this.buttonPreviewVoice.Size = new System.Drawing.Size(75, 23);
-            this.buttonPreviewVoice.TabIndex = 8;
-            this.buttonPreviewVoice.Text = "Preview";
-            this.buttonPreviewVoice.UseVisualStyleBackColor = true;
-            this.buttonPreviewVoice.Click += new System.EventHandler(this.buttonPreviewVoice_Click);
-            // 
-            // comboBoxTextToSpeechVoice
-            // 
-            this.comboBoxTextToSpeechVoice.FormattingEnabled = true;
-            this.comboBoxTextToSpeechVoice.Location = new System.Drawing.Point(107, 312);
-            this.comboBoxTextToSpeechVoice.Name = "comboBoxTextToSpeechVoice";
-            this.comboBoxTextToSpeechVoice.Size = new System.Drawing.Size(205, 21);
-            this.comboBoxTextToSpeechVoice.TabIndex = 7;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(64, 315);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(37, 13);
-            this.label29.TabIndex = 51;
-            this.label29.Text = "Voice:";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(11, 252);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(98, 13);
-            this.label28.TabIndex = 50;
-            this.label28.Text = "Text-to-Speech:";
-            // 
             // textBoxKodiIP
             // 
-            this.textBoxKodiIP.Location = new System.Drawing.Point(107, 85);
+            this.textBoxKodiIP.Location = new System.Drawing.Point(107, 46);
             this.textBoxKodiIP.Name = "textBoxKodiIP";
             this.textBoxKodiIP.Size = new System.Drawing.Size(124, 20);
             this.textBoxKodiIP.TabIndex = 2;
@@ -286,7 +168,7 @@
             // label32
             // 
             this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(57, 88);
+            this.label32.Location = new System.Drawing.Point(57, 49);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(44, 13);
             this.label32.TabIndex = 49;
@@ -294,7 +176,7 @@
             // 
             // numericUpDownKodiPort
             // 
-            this.numericUpDownKodiPort.Location = new System.Drawing.Point(107, 121);
+            this.numericUpDownKodiPort.Location = new System.Drawing.Point(107, 82);
             this.numericUpDownKodiPort.Maximum = new decimal(new int[] {
             99999,
             0,
@@ -307,7 +189,7 @@
             // label31
             // 
             this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(17, 123);
+            this.label31.Location = new System.Drawing.Point(17, 84);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(84, 13);
             this.label31.TabIndex = 47;
@@ -316,7 +198,7 @@
             // checkBoxStartMinimized
             // 
             this.checkBoxStartMinimized.AutoSize = true;
-            this.checkBoxStartMinimized.Location = new System.Drawing.Point(107, 55);
+            this.checkBoxStartMinimized.Location = new System.Drawing.Point(107, 16);
             this.checkBoxStartMinimized.Name = "checkBoxStartMinimized";
             this.checkBoxStartMinimized.Size = new System.Drawing.Size(15, 14);
             this.checkBoxStartMinimized.TabIndex = 1;
@@ -325,72 +207,14 @@
             // label26
             // 
             this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(20, 55);
+            this.label26.Location = new System.Drawing.Point(20, 16);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(81, 13);
             this.label26.TabIndex = 45;
             this.label26.Text = "Start Minimized:";
             // 
-            // labelVoiceConfidence
-            // 
-            this.labelVoiceConfidence.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelVoiceConfidence.Location = new System.Drawing.Point(277, 179);
-            this.labelVoiceConfidence.Name = "labelVoiceConfidence";
-            this.labelVoiceConfidence.Size = new System.Drawing.Size(35, 23);
-            this.labelVoiceConfidence.TabIndex = 44;
-            this.labelVoiceConfidence.Text = "0%";
-            this.labelVoiceConfidence.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // trackBarVoiceConfidence
-            // 
-            this.trackBarVoiceConfidence.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarVoiceConfidence.LargeChange = 1;
-            this.trackBarVoiceConfidence.Location = new System.Drawing.Point(100, 181);
-            this.trackBarVoiceConfidence.Name = "trackBarVoiceConfidence";
-            this.trackBarVoiceConfidence.Size = new System.Drawing.Size(177, 45);
-            this.trackBarVoiceConfidence.TabIndex = 4;
-            this.trackBarVoiceConfidence.ValueChanged += new System.EventHandler(this.trackBarVoiceConfidence_ValueChanged_1);
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(16, 184);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(78, 13);
-            this.label20.TabIndex = 43;
-            this.label20.Text = "During Activity:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(11, 165);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(163, 13);
-            this.label14.TabIndex = 41;
-            this.label14.Text = "Minimum Voice Confidence:";
-            // 
-            // textBoxComputerName
-            // 
-            this.textBoxComputerName.Location = new System.Drawing.Point(107, 17);
-            this.textBoxComputerName.Name = "textBoxComputerName";
-            this.textBoxComputerName.Size = new System.Drawing.Size(124, 20);
-            this.textBoxComputerName.TabIndex = 0;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(15, 20);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(86, 13);
-            this.label15.TabIndex = 4;
-            this.label15.Text = "Computer Name:";
-            // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.label27);
-            this.tabPage1.Controls.Add(this.textBoxVoiceActivity);
-            this.tabPage1.Controls.Add(this.label24);
             this.tabPage1.Controls.Add(this.textBoxHarmonyHubIP);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -400,32 +224,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Harmony";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(6, 62);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(147, 13);
-            this.label27.TabIndex = 7;
-            this.label27.Text = "Voice Command Activity:";
-            // 
-            // textBoxVoiceActivity
-            // 
-            this.textBoxVoiceActivity.Location = new System.Drawing.Point(101, 89);
-            this.textBoxVoiceActivity.Name = "textBoxVoiceActivity";
-            this.textBoxVoiceActivity.Size = new System.Drawing.Size(124, 20);
-            this.textBoxVoiceActivity.TabIndex = 4;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(51, 92);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(44, 13);
-            this.label24.TabIndex = 3;
-            this.label24.Text = "Activity:";
             // 
             // textBoxHarmonyHubIP
             // 
@@ -474,6 +272,56 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Insteon";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // labelExhaustFanDelayOffMinutes
+            // 
+            this.labelExhaustFanDelayOffMinutes.AutoSize = true;
+            this.labelExhaustFanDelayOffMinutes.Location = new System.Drawing.Point(287, 329);
+            this.labelExhaustFanDelayOffMinutes.Name = "labelExhaustFanDelayOffMinutes";
+            this.labelExhaustFanDelayOffMinutes.Size = new System.Drawing.Size(43, 13);
+            this.labelExhaustFanDelayOffMinutes.TabIndex = 30;
+            this.labelExhaustFanDelayOffMinutes.Text = "minutes";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label41.Location = new System.Drawing.Point(16, 300);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(169, 13);
+            this.label41.TabIndex = 29;
+            this.label41.Text = "Exhaust Fan Delay Off Time:";
+            // 
+            // labelExhaustFanDelayOff
+            // 
+            this.labelExhaustFanDelayOff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelExhaustFanDelayOff.Location = new System.Drawing.Point(250, 325);
+            this.labelExhaustFanDelayOff.Name = "labelExhaustFanDelayOff";
+            this.labelExhaustFanDelayOff.Size = new System.Drawing.Size(35, 26);
+            this.labelExhaustFanDelayOff.TabIndex = 28;
+            this.labelExhaustFanDelayOff.Text = "0";
+            this.labelExhaustFanDelayOff.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // trackBarExhaustFanDelayOff
+            // 
+            this.trackBarExhaustFanDelayOff.BackColor = System.Drawing.SystemColors.Window;
+            this.trackBarExhaustFanDelayOff.LargeChange = 1;
+            this.trackBarExhaustFanDelayOff.Location = new System.Drawing.Point(74, 321);
+            this.trackBarExhaustFanDelayOff.Maximum = 120;
+            this.trackBarExhaustFanDelayOff.Name = "trackBarExhaustFanDelayOff";
+            this.trackBarExhaustFanDelayOff.Size = new System.Drawing.Size(177, 45);
+            this.trackBarExhaustFanDelayOff.TabIndex = 26;
+            this.trackBarExhaustFanDelayOff.TickFrequency = 5;
+            this.trackBarExhaustFanDelayOff.ValueChanged += new System.EventHandler(this.trackBarExhaustFanDelayOff_ValueChanged);
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(18, 325);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(37, 13);
+            this.label43.TabIndex = 27;
+            this.label43.Text = "Delay:";
             // 
             // textBoxExhaustFanAddress
             // 
@@ -1088,56 +936,6 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // labelExhaustFanDelayOffMinutes
-            // 
-            this.labelExhaustFanDelayOffMinutes.AutoSize = true;
-            this.labelExhaustFanDelayOffMinutes.Location = new System.Drawing.Point(287, 329);
-            this.labelExhaustFanDelayOffMinutes.Name = "labelExhaustFanDelayOffMinutes";
-            this.labelExhaustFanDelayOffMinutes.Size = new System.Drawing.Size(43, 13);
-            this.labelExhaustFanDelayOffMinutes.TabIndex = 30;
-            this.labelExhaustFanDelayOffMinutes.Text = "minutes";
-            // 
-            // label41
-            // 
-            this.label41.AutoSize = true;
-            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label41.Location = new System.Drawing.Point(16, 300);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(169, 13);
-            this.label41.TabIndex = 29;
-            this.label41.Text = "Exhaust Fan Delay Off Time:";
-            // 
-            // labelExhaustFanDelayOff
-            // 
-            this.labelExhaustFanDelayOff.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelExhaustFanDelayOff.Location = new System.Drawing.Point(250, 325);
-            this.labelExhaustFanDelayOff.Name = "labelExhaustFanDelayOff";
-            this.labelExhaustFanDelayOff.Size = new System.Drawing.Size(35, 26);
-            this.labelExhaustFanDelayOff.TabIndex = 28;
-            this.labelExhaustFanDelayOff.Text = "0";
-            this.labelExhaustFanDelayOff.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // trackBarExhaustFanDelayOff
-            // 
-            this.trackBarExhaustFanDelayOff.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarExhaustFanDelayOff.LargeChange = 1;
-            this.trackBarExhaustFanDelayOff.Location = new System.Drawing.Point(74, 321);
-            this.trackBarExhaustFanDelayOff.Maximum = 120;
-            this.trackBarExhaustFanDelayOff.Name = "trackBarExhaustFanDelayOff";
-            this.trackBarExhaustFanDelayOff.Size = new System.Drawing.Size(177, 45);
-            this.trackBarExhaustFanDelayOff.TabIndex = 26;
-            this.trackBarExhaustFanDelayOff.TickFrequency = 5;
-            this.trackBarExhaustFanDelayOff.ValueChanged += new System.EventHandler(this.trackBarExhaustFanDelayOff_ValueChanged);
-            // 
-            // label43
-            // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(18, 325);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(37, 13);
-            this.label43.TabIndex = 27;
-            this.label43.Text = "Delay:";
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1155,13 +953,12 @@
             this.tabControl.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidenceNoActivity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarVoiceConfidence)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarExhaustFanDelayOff)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarInsteonMotionMinimumTime)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
@@ -1179,7 +976,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarGlobalShutdown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPotsEntering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarTrayEntering)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarExhaustFanDelayOff)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1237,39 +1033,21 @@
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TextBox textBoxMotionSensorAddress;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox textBoxVoiceActivity;
-        private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.TextBox textBoxComputerName;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.CheckBox checkBoxStartMinimized;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label labelVoiceConfidence;
-        private System.Windows.Forms.TrackBar trackBarVoiceConfidence;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.NumericUpDown numericUpDownKodiPort;
         private System.Windows.Forms.TextBox textBoxKodiIP;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.TextBox textBoxDoorSensorAddress;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.ComboBox comboBoxTextToSpeechVoice;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.Button buttonPreviewVoice;
         private System.Windows.Forms.Label labelInsteonMotionLatchMinutes;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.Label labelInsteonMotionLatch;
         private System.Windows.Forms.TrackBar trackBarInsteonMotionMinimumTime;
         private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.ComboBox comboBoxTextToSpeechDevice;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.Label labelVoiceConfidenceNoActivity;
-        private System.Windows.Forms.TrackBar trackBarVoiceConfidenceNoActivity;
-        private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label labelDelayLightingProjectorStart;

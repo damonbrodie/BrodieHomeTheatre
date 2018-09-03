@@ -60,8 +60,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.labelPLMstatus = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.labelKodiMediaAvailable = new System.Windows.Forms.Label();
             this.labelKodiStatus = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.labelKodiPlaybackStatus = new System.Windows.Forms.Label();
@@ -163,7 +161,7 @@
             this.listBoxActivities.FormattingEnabled = true;
             this.listBoxActivities.Location = new System.Drawing.Point(227, 33);
             this.listBoxActivities.Name = "listBoxActivities";
-            this.listBoxActivities.Size = new System.Drawing.Size(149, 147);
+            this.listBoxActivities.Size = new System.Drawing.Size(149, 121);
             this.listBoxActivities.TabIndex = 1;
             this.listBoxActivities.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxActivities_MouseDoubleClick);
             // 
@@ -192,7 +190,7 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.groupBox1.Location = new System.Drawing.Point(12, 42);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(392, 200);
+            this.groupBox1.Size = new System.Drawing.Size(392, 172);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             // 
@@ -262,7 +260,7 @@
             this.groupBox2.Controls.Add(this.labelPLMstatus);
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.groupBox2.Location = new System.Drawing.Point(12, 263);
+            this.groupBox2.Location = new System.Drawing.Point(12, 233);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(392, 224);
             this.groupBox2.TabIndex = 8;
@@ -423,8 +421,6 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.label16);
-            this.groupBox3.Controls.Add(this.labelKodiMediaAvailable);
             this.groupBox3.Controls.Add(this.labelKodiStatus);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.labelKodiPlaybackStatus);
@@ -432,28 +428,9 @@
             this.groupBox3.Controls.Add(this.pictureBox3);
             this.groupBox3.Location = new System.Drawing.Point(425, 42);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(239, 122);
+            this.groupBox3.Size = new System.Drawing.Size(239, 98);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(13, 93);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(82, 13);
-            this.label16.TabIndex = 16;
-            this.label16.Text = "Media Available";
-            // 
-            // labelKodiMediaAvailable
-            // 
-            this.labelKodiMediaAvailable.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.labelKodiMediaAvailable.Location = new System.Drawing.Point(103, 90);
-            this.labelKodiMediaAvailable.Name = "labelKodiMediaAvailable";
-            this.labelKodiMediaAvailable.Size = new System.Drawing.Size(120, 19);
-            this.labelKodiMediaAvailable.TabIndex = 15;
-            this.labelKodiMediaAvailable.Text = "0 movies";
-            this.labelKodiMediaAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelKodiStatus
             // 
@@ -514,7 +491,7 @@
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.pictureBox4);
-            this.groupBox4.Location = new System.Drawing.Point(425, 180);
+            this.groupBox4.Location = new System.Drawing.Point(425, 152);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(238, 169);
             this.groupBox4.TabIndex = 10;
@@ -654,7 +631,7 @@
             this.toolStripProgressBarGlobal,
             this.toolStripStatusLabel2,
             this.toolStripStatus});
-            this.statusStrip.Location = new System.Drawing.Point(0, 501);
+            this.statusStrip.Location = new System.Drawing.Point(0, 473);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(675, 24);
             this.statusStrip.SizingGrip = false;
@@ -718,7 +695,7 @@
             this.groupBox5.Controls.Add(this.pictureBox5);
             this.groupBox5.Controls.Add(this.label14);
             this.groupBox5.Controls.Add(this.labelLastVoiceCommand);
-            this.groupBox5.Location = new System.Drawing.Point(425, 365);
+            this.groupBox5.Location = new System.Drawing.Point(425, 335);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(239, 122);
             this.groupBox5.TabIndex = 17;
@@ -794,11 +771,6 @@
             this.timerKodiConnect.Enabled = true;
             this.timerKodiConnect.Tick += new System.EventHandler(this.timerKodiConnect_Tick);
             // 
-            // timerKodiStartPlayback
-            // 
-            this.timerKodiStartPlayback.Interval = 3000;
-            this.timerKodiStartPlayback.Tick += new System.EventHandler(this.timerKodiStartPlayback_Tick);
-            // 
             // timerKodiPoll
             // 
             this.timerKodiPoll.Enabled = true;
@@ -833,7 +805,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(675, 525);
+            this.ClientSize = new System.Drawing.Size(675, 497);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox4);
@@ -945,8 +917,6 @@
         private System.Windows.Forms.Timer timerKodiPoll;
         private System.Windows.Forms.Timer timerInsteonMotionLatch;
         private System.Windows.Forms.ProgressBar progressBarInsteonMotionLatch;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label labelKodiMediaAvailable;
         private System.Windows.Forms.Label labelListeningStatus;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Timer timerInsteonPoll;

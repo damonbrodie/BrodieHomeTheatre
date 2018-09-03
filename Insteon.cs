@@ -405,8 +405,6 @@ namespace BrodieTheatre
                     {
                         writeLog("Insteon:  One minute warning to vacancy");
                         vacancyWarning = true;
-                        int r = random.Next(ttsWarningPhrases.Count);
-                        speakText(ttsWarningPhrases[r]);
                     }
                     else
                     {

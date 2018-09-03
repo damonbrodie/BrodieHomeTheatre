@@ -1,19 +1,12 @@
 ﻿using System;
-using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
-using Microsoft.Speech.Synthesis;
-using CSCore;
-using CSCore.MediaFoundation;
-using CSCore.SoundOut;
+
 
 namespace BrodieTheatre
 {
     public partial class FormSettings : Form
     {
-
-        public SpeechSynthesizer speechSynthesizer;
-
         public FormSettings()
         {
             InitializeComponent();
@@ -22,7 +15,6 @@ namespace BrodieTheatre
         private void buttonSave_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.harmonyHubIP                = textBoxHarmonyHubIP.Text;
-            Properties.Settings.Default.voiceActivity               = textBoxVoiceActivity.Text;
             Properties.Settings.Default.plmPort                     = comboBoxInsteonPort.Text;
             Properties.Settings.Default.projectorPort               = comboBoxProjectorPort.Text;
             Properties.Settings.Default.potsAddress                 = textBoxPotsAddress.Text;
@@ -39,15 +31,10 @@ namespace BrodieTheatre
             Properties.Settings.Default.globalShutdown              = trackBarGlobalShutdown.Value;
             Properties.Settings.Default.motionSensorAddress         = textBoxMotionSensorAddress.Text;
             Properties.Settings.Default.doorSensorAddress           = textBoxDoorSensorAddress.Text;
-            Properties.Settings.Default.voiceConfidence             = trackBarVoiceConfidence.Value;
-            Properties.Settings.Default.voiceConfidenceNoActivity   = trackBarVoiceConfidenceNoActivity.Value;
             Properties.Settings.Default.startMinimized              = checkBoxStartMinimized.Checked;
-            Properties.Settings.Default.computerName                = textBoxComputerName.Text;
             Properties.Settings.Default.kodiJSONPort                = (int)numericUpDownKodiPort.Value;
             Properties.Settings.Default.kodiIP                      = textBoxKodiIP.Text;
-            Properties.Settings.Default.speechVoice                 = comboBoxTextToSpeechVoice.Text;
             Properties.Settings.Default.insteonMotionLatch          = trackBarInsteonMotionMinimumTime.Value;
-            Properties.Settings.Default.speechDevice                = comboBoxTextToSpeechDevice.Text;
             Properties.Settings.Default.lightingDelayProjectorOn    = trackBarDelayLightingProjectorStart.Value;
             Properties.Settings.Default.fanDelayOff                 = trackBarExhaustFanDelayOff.Value;
             Properties.Settings.Default.Save();
@@ -57,9 +44,7 @@ namespace BrodieTheatre
         private void FormSettings_Load(object sender, EventArgs e)
         {
             checkBoxStartMinimized.Checked = Properties.Settings.Default.startMinimized;
-            textBoxComputerName.Text = Properties.Settings.Default.computerName;
             textBoxHarmonyHubIP.Text = Properties.Settings.Default.harmonyHubIP;
-            textBoxVoiceActivity.Text = Properties.Settings.Default.voiceActivity;
             numericUpDownKodiPort.Value = (decimal)Properties.Settings.Default.kodiJSONPort;
             textBoxKodiIP.Text = Properties.Settings.Default.kodiIP;
             textBoxPotsAddress.Text = Properties.Settings.Default.potsAddress;
@@ -67,18 +52,6 @@ namespace BrodieTheatre
             textBoxExhaustFanAddress.Text = Properties.Settings.Default.fanAddress;
             textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
             textBoxDoorSensorAddress.Text = Properties.Settings.Default.doorSensorAddress;
-
-            comboBoxTextToSpeechDevice.Items.Add("Default Audio Device");
-            comboBoxTextToSpeechDevice.SelectedItem = "Default Audio Device";
-            foreach (var device in WaveOutDevice.EnumerateDevices())
-            {
-                comboBoxTextToSpeechDevice.Items.Add(device.Name);
-                if (Properties.Settings.Default.speechDevice == device.Name)
-                {
-                    comboBoxTextToSpeechDevice.SelectedItem = device.Name;
-                }
-            }
-
 
             try
             {
@@ -214,30 +187,6 @@ namespace BrodieTheatre
 
             try
             {
-                trackBarVoiceConfidence.Value = Properties.Settings.Default.voiceConfidence;
-            }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentOutOfRangeException)
-                {
-                    trackBarVoiceConfidence.Value = trackBarVoiceConfidence.Minimum;
-                }
-            }
-
-            try
-            {
-                trackBarVoiceConfidenceNoActivity.Value = Properties.Settings.Default.voiceConfidenceNoActivity;
-            }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentOutOfRangeException)
-                {
-                    trackBarVoiceConfidenceNoActivity.Value = trackBarVoiceConfidenceNoActivity.Minimum;
-                }
-            }
-
-            try
-            {
                 trackBarInsteonMotionMinimumTime.Value = Properties.Settings.Default.insteonMotionLatch;
             }
             catch (Exception ex)
@@ -262,23 +211,6 @@ namespace BrodieTheatre
                     comboBoxProjectorPort.SelectedItem = s;
                 }
             }
-
-            try
-            {
-                speechSynthesizer = new SpeechSynthesizer();
-
-                foreach (InstalledVoice voice in speechSynthesizer.GetInstalledVoices())
-                {
-                    VoiceInfo info = voice.VoiceInfo;
-                    comboBoxTextToSpeechVoice.Items.Add(info.Id);
-                    if (info.Id == Properties.Settings.Default.speechVoice)
-                    {
-                        comboBoxTextToSpeechVoice.SelectedItem = info.Id;
-                    }
-                }
-            }
-            catch
-            { }
         }
 
         private void trackBarTrayPlayback_ValueChanged(object sender, EventArgs e)
@@ -334,75 +266,9 @@ namespace BrodieTheatre
             labelGlobalShutdown.Text = trackBarGlobalShutdown.Value.ToString();
         }
 
-        private void trackBarVoiceConfidence_ValueChanged(object sender, EventArgs e)
-        {
-            labelVoiceConfidence.Text = (trackBarVoiceConfidence.Value * 10).ToString() + "%";
-        }
-
-        private void trackBarVoiceConfidence_ValueChanged_1(object sender, EventArgs e)
-        {
-            labelVoiceConfidence.Text = (trackBarVoiceConfidence.Value * 10).ToString() + "%";
-        }
-
-        private void buttonPreviewVoice_Click(object sender, EventArgs e)
-        {
-            string ttsText = "Maybe we should watch the movie Rogue One";
-            try
-            {
-                foreach (InstalledVoice voice in speechSynthesizer.GetInstalledVoices())
-                {
-                    VoiceInfo info = voice.VoiceInfo;
-
-                    if (info.Id == comboBoxTextToSpeechVoice.Text)
-                    {
-                        speechSynthesizer.SelectVoice(info.Name);
-                    }
-                }
-                if (comboBoxTextToSpeechDevice.Text == "Default Audio Device")
-                {
-                    speechSynthesizer.SetOutputToDefaultAudioDevice();
-                    speechSynthesizer.SpeakAsync(ttsText);
-                }
-                else
-                {
-                    using (var stream = new MemoryStream())
-                    {
-                        int deviceID = -1;
-                        foreach (var device in WaveOutDevice.EnumerateDevices())
-                        {
-                            if (device.Name == comboBoxTextToSpeechDevice.Text)
-                            {
-                                deviceID = device.DeviceId;
-                            }
-
-                        }
-                        speechSynthesizer.SetOutputToWaveStream(stream);
-                        speechSynthesizer.Speak(ttsText);
-
-                        using (var waveOut = new WaveOut { Device = new WaveOutDevice(deviceID) })
-                        using (var waveSource = new MediaFoundationDecoder(stream))
-                        {
-                            waveOut.Initialize(waveSource);
-                            waveOut.Play();
-                            waveOut.WaitForStopped();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error:  " + ex.ToString());
-            }
-        }
-
         private void trackBarInsteonMotionMinimumTime_ValueChanged(object sender, EventArgs e)
         {
             labelInsteonMotionLatch.Text = trackBarInsteonMotionMinimumTime.Value.ToString();
-        }
-
-        private void trackBarVoiceConfidenceNoActivity_ValueChanged(object sender, EventArgs e)
-        {
-            labelVoiceConfidenceNoActivity.Text = (trackBarVoiceConfidenceNoActivity.Value * 10).ToString() + "%";
         }
 
         private void trackBarDelayLightingProjectorStart_ValueChanged(object sender, EventArgs e)

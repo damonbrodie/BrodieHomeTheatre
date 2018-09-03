@@ -88,22 +88,7 @@ namespace BrodieTheatre
                             formMain.projectorQueueChangeAspect((float)2.0);
                         }));
                         break;
-                    case "F2":
-                        formMain.BeginInvoke(new Action(() =>
-                        {
-                            formMain.writeLog("Keyboard:  Caught keypress 'F2'");
-                            bool isDisabled = formMain.toggleVoicePlaybackControl();
-                            if (isDisabled)
-                            {
-                                formMain.kodiShowNotification("Playback Control", "Voice playback control disabled", 1500);
-                            }
-                            else
-                            {
-                                formMain.kodiShowNotification("Playback Control", "Voice playback control enabled", 1500);
-                            }
-                        }));
-                        break;
-                }
+                 }
             }
             return CallNextHookEx(hookID, nCode, wParam, lParam);
         }

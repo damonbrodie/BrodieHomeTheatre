@@ -20,47 +20,12 @@ namespace BrodieTheatre
         public bool kodiIsConnected = false;
         public string currentKodiIP = "";
         public int currentKodiPort = 0;
-        public MovieEntry kodiPlayNext = null;
         public TcpClient tcpClient;
         public NetworkStream kodiSocketStream;
         public StreamReader kodiStreamReader;
         public StreamWriter kodiStreamWriter;
         public char[] kodiReadBuffer = new char[1000000];
         public int kodiReadBufferPos = 0;
-        public class MovieEntry
-        {
-            public string file { get; set; }
-            public string name { get; set; }
-            public string cleanName { get; set; }
-            public List<string> shortNames = new List<string>();
-            public bool resume { get; set; } = false;
-        }
-        public List<MovieEntry> kodiMovies = new List<MovieEntry>();
-        public class PartialMovieEntry
-        {
-            public string file { get; set; }
-            public string name { get; set; }
-        } 
-        
-        public class tvShowEntry
-        {
-            public string name { get; set; }
-            public string cleanName { get; set; }
-            public int id { get; set; }
-            public string file { get; set; }
-        }
-
-        public List<PartialMovieEntry> moviesFullNames          = new List<PartialMovieEntry>();
-        public List<PartialMovieEntry> moviesAfterColonNames    = new List<PartialMovieEntry>();
-        public List<PartialMovieEntry> moviesPartialNames       = new List<PartialMovieEntry>();
-        public List<PartialMovieEntry> moviesDuplicateNames     = new List<PartialMovieEntry>();
-
-        public List<tvShowEntry> kodiTVShows            = new List<tvShowEntry>();
-        public List<tvShowEntry> tvshowPartialNames     = new List<tvShowEntry>();
-        public List<tvShowEntry> tvhowDuplicateNames    = new List<tvShowEntry>();
-
-        public bool kodiLoadingMedia = false;
-
         private void kodiConnect()
         {
             if (Properties.Settings.Default.kodiIP != String.Empty && Properties.Settings.Default.kodiJSONPort != 0)
@@ -238,97 +203,7 @@ namespace BrodieTheatre
                     writeLog("Kodi:  Error parsing Kodi JSON: '" + jsonText + "'");
                 }
             }
-            else if (result.ContainsKey("id") && result["id"] == "98")
-            {
-                //writeLog("Kodi:  Received list of movies");
-                kodiLoadingMedia = true;
-                kodiMovies.Clear();
-                int movieCounter = 0;
-
-                moviesFullNames.Clear();
-                moviesAfterColonNames.Clear();
-                moviesDuplicateNames.Clear();
-                moviesPartialNames.Clear();
-                bool error = false;
-                try
-                {
-                    foreach (JObject movie in result["result"]["movies"])
-                    {
-                        MovieEntry movieEntry = new MovieEntry();
-                        if (movie["file"] != null && movie["label"] != null)
-                        {
-                            movieEntry.file = movie["file"].ToString();
-                            movieEntry.name = movie["label"].ToString();
-                            //writeLog("Kodi:  Processing '" + movieEntry.name + "'");
-                            string cleanName = cleanString(movieEntry.name);
-                            movieEntry.cleanName = cleanName;
-                            kodiMovies.Add(movieEntry);
-                            PartialMovieEntry tempEntry = new PartialMovieEntry();
-                            tempEntry.file = movieEntry.file;
-                            tempEntry.name = cleanName;
-                            moviesFullNames.Add(tempEntry);
-
-                            // Some movies are more easily known by the part that comes after the : in a title
-                            // For Example:  The Lord of the Rings: The Fellowship of the Ring
-                            if (movieEntry.name.Contains(":"))
-                            {
-                                string[] splitted = movieEntry.name.Split(new char[] { ':' }, 2);
-                                string afterColon = cleanString(splitted[1]);
-
-                                if (!searchMovieList(moviesFullNames, afterColon))
-                                {
-                                    PartialMovieEntry tempColonEntry = new PartialMovieEntry();
-                                    tempColonEntry.file = movieEntry.file;
-                                    tempColonEntry.name = afterColon;
-                                    if (searchMovieList(moviesAfterColonNames, afterColon))
-                                    {
-                                        moviesDuplicateNames.Add(tempColonEntry);
-                                    }
-                                    else
-                                    {
-                                        moviesAfterColonNames.Add(tempColonEntry);
-                                    }
-                                }
-                            }
-                            List<string> cutNames = getShortTitles(cleanName);
-                            foreach (string partName in cutNames)
-                            {
-                                PartialMovieEntry tempPrefixEntry = new PartialMovieEntry();
-                                tempPrefixEntry.file = movieEntry.file;
-                                tempPrefixEntry.name = partName;
-                                if (searchMovieList(moviesPartialNames, partName))
-                                {
-                                    moviesDuplicateNames.Add(tempPrefixEntry);
-                                }
-                                else
-                                {
-                                    moviesPartialNames.Add(tempPrefixEntry);
-                                }
-                            }
-                            movieCounter += 1;
-                        }
-                        else
-                        {
-                            error = true;
-                        }
-                    }
-                    if (!error)
-                    {
-                        toolStripStatus.Text = "Kodi movie list updated: " + movieCounter.ToString() + " movies";
-                        kodiLoadingMedia = false;
-                        labelKodiMediaAvailable.Text = kodiMovies.Count.ToString() + " movies && " + kodiTVShows.Count.ToString() + " shows";
-                    }
-                    else
-                    {
-                        writeLog("Kodi:  There was an error decoding the Kodi movie library JSON");
-                    }
-                }
-                catch
-                {
-                    writeLog("Kodi:  Failed to process Movie JSON");
-                }
-                kodiLoadingMedia = false;
-            }
+            
             else if (result.ContainsKey("id") && result["id"] == "95")
             {
                 // Don't process this any further at the moment
@@ -337,69 +212,7 @@ namespace BrodieTheatre
             {
                 // Don't process this any further at the moment
             }
-            else if (result.ContainsKey("id") && result["id"] == "97")
-            {
-                //writeLog("Kodi:  Received list of tv shows");
-
-                //writeLog("Kodi:  " + jsonText);
-                kodiLoadingMedia = true;
-                kodiTVShows.Clear();
-
-                tvhowDuplicateNames.Clear();
-                tvshowPartialNames.Clear();
-                bool error = false;
-                try
-                {
-                    foreach (JObject tvshow in result["result"]["tvshows"])
-                    {
-                        tvShowEntry tvShowEntry = new tvShowEntry();
-                        if (tvshow["tvshowid"] != null && tvshow["title"] != null)
-                        {
-                            tvShowEntry.name = tvshow["title"].ToString();
-                            tvShowEntry.id = (int)tvshow["tvshowid"];
-                            //writeLog("Kodi:  Processing '" + tvShowEntry.name + "'");
-                            string cleanName = cleanString(tvShowEntry.name);
-                            tvShowEntry.cleanName = cleanName;
-                            kodiTVShows.Add(tvShowEntry);
-                          
-                            List<string> cutNames = getShortTitles(cleanName);
-                            foreach (string partName in cutNames)
-                            {
-                                tvShowEntry tempPrefixEntry = new tvShowEntry();
-                                tempPrefixEntry.id = tvShowEntry.id;
-                                tempPrefixEntry.name = partName;
-                                if (searchTVShowList(tvshowPartialNames, partName))
-                                {
-                                    tvhowDuplicateNames.Add(tempPrefixEntry);
-                                }
-                                else
-                                {
-                                    tvshowPartialNames.Add(tempPrefixEntry);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            error = true;
-                        }
-                    }
-                    if (!error)
-                    {
-                        toolStripStatus.Text = "Kodi tv show list updated: " + kodiTVShows.Count.ToString() + " shows";
-                        kodiLoadingMedia = false;
-                        labelKodiMediaAvailable.Text = kodiMovies.Count.ToString() + " movies && " + kodiTVShows.Count.ToString() + " shows";
-                    }
-                    else
-                    {
-                        writeLog("Kodi:  There was an error decoding the Kodi tv show library JSON");
-                    }
-                }
-                catch
-                {
-                    writeLog("Kodi:  Failed to process TV show JSON");
-                }
-                kodiLoadingMedia = false;
-            }
+  
             else if (result.ContainsKey("method"))
             {
                 switch (result["method"])
@@ -454,32 +267,6 @@ namespace BrodieTheatre
             {
                 writeLog("Kodi:  Received unknown JSON:  " + jsonText);
             }
-        }
-
-        public bool searchMovieList(List<PartialMovieEntry> theList, string searchTerm)
-        {
-            bool found = false;
-            foreach (PartialMovieEntry entry in theList)
-            {
-                if (entry.name == searchTerm)
-                {
-                    return true;
-                }
-            }
-            return found;
-        }
-
-        public bool searchTVShowList(List<tvShowEntry> theList, string searchTerm)
-        {
-            bool found = false;
-            foreach (tvShowEntry entry in theList)
-            {
-                if (entry.name == searchTerm)
-                {
-                    return true;
-                }
-            }
-            return found;
         }
 
         public List<string> getShortTitles(string name)
@@ -588,22 +375,6 @@ namespace BrodieTheatre
         private void timerKodiConnect_Tick(object sender, EventArgs e)
         {
             kodiConnect();
-        }
-
-        private void timerKodiStartPlayback_Tick(object sender, EventArgs e)
-        {
-            timerKodiStartPlayback.Enabled = false;
-            if (kodiPlayNext != null)
-            {
-                string resume = "";
-                if (kodiPlayNext.resume)
-                {
-                    resume = ", \"options\": {\"resume\": true }";
-                }
-                kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiPlayNext.file + "\" } " + resume + "}, \"id\": \"1\"}");
-                writeLog("Kodi:  Starting movie: " + kodiPlayNext.name + " " + kodiPlayNext.file);
-                kodiPlayNext = null;
-            }
         }
 
         private void kodiShowNotification(string title, string message, int displaytime = 5000)

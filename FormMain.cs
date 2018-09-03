@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using Microsoft.Speech.Synthesis;
-using Microsoft.Speech.Recognition;
 
 
 namespace BrodieTheatre
@@ -90,8 +88,6 @@ namespace BrodieTheatre
             {
                 timerStartLights.Interval = Properties.Settings.Default.lightingDelayProjectorOn * 1000;
             }
-
-            setVoice();
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
@@ -105,13 +101,6 @@ namespace BrodieTheatre
             currentPLMport = Properties.Settings.Default.plmPort;
             insteonConnectPLM();
             projectorConnect();
-
-            formMain.BeginInvoke(new Action(() =>
-            {
-                formMain.speechSynthesizer = new SpeechSynthesizer();
-                formMain.speechSynthesizer.TtsVolume = 100;
-                formMain.setVoice();
-            }));
 
             if (labelProjectorStatus.Text == "Connected")
             {
@@ -221,8 +210,8 @@ namespace BrodieTheatre
                 if (globalShutdown.AddMinutes(-1) <= now && ! globalShutdownWarning)
                 {      
                     writeLog("Global Timer:  One minute warning for global shutdown");
-                    int r = random.Next(ttsWarningPhrases.Count);
-                    speakText(ttsWarningPhrases[r]);           
+                    //int r = random.Next(ttsWarningPhrases.Count);
+                    //speakText(ttsWarningPhrases[r]);           
                     globalShutdownWarning = true;
                     return;
                 }
@@ -281,59 +270,11 @@ namespace BrodieTheatre
                     lightsToEnteringLevel();
                     kodiUpdateLibrary();
                 }
-                try
-                {
-                    RecognizerInfo info = null;
-                    foreach (RecognizerInfo ri in SpeechRecognitionEngine.InstalledRecognizers())
-                    {
-                        if (ri.Culture.TwoLetterISOLanguageName.Equals("en"))
-                        {
-                            info = ri;
-                            break;
-                        }
-                    }
-                    if (info != null)
-                    {
-                        recognitionEngine = new SpeechRecognitionEngine(info);
-                        recognitionEngine.SetInputToDefaultAudioDevice();
-                        recognitionEngine.SpeechRecognized += RecognitionEngine_SpeechRecognized;
-                    }
-                    else
-                    {
-                        writeLog("Voice:  No Recognizers found - Do you need to install a Speech Recognition Language (TELE)?");
-                        Application.Exit();
-                    }
-                    loadVoiceCommands();
-
-                    recognitionEngine.RecognizeAsync(RecognizeMode.Multiple);
-                    labelListeningStatus.Text = "Listening";
-                    if (labelKodiPlaybackStatus.Text == "Stopped")
-                    {
-                        playAlert();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    labelLastVoiceCommand.Text = "Cannot enable speech recognizer";
-                    writeLog("Voice:  Can't start Speech Recognizer");
-                    writeLog("Voice:  ex: " + ex.ToString());
-                }
 
                 toolStripStatus.Text = "Room is now occupied";
             }
             else if (labelRoomOccupancy.Text == "Vacant")
             {
-                try
-                {
-                    recognitionEngine.RecognizeAsyncStop();
-                    recognitionEngine.UnloadAllGrammars();
-                    labelListeningStatus.Text = "Stopped listening";
-                }
-                catch
-                {
-                    writeLog("Voice:  Failed to pause recognition engine");
-                }
-
                 if (labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     if (harmonyIsActivityStarted())
