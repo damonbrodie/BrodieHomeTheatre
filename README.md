@@ -24,24 +24,22 @@ Dimmer.
 projector and power it on.  Once the projector is powered up the lights are automatically dimmed to a comfortable 
 lighting preset.
 - Using the Kodi JSON feed to stay current with playback status (pause/stop/start), alter the lighting, dimming
-it further during playback, raising it during pause and then stopped.
-- Listen for button presses from the Harmony: the user can pause/stop/start media playback as well as
-raise/lower the room lighting.
-- When the user powers off the system via the remote control, the AV equipment is powered off, and 
-the lighting is brought up to full.
-- The application will power down the system and lighting when there is no media playback happening 
-and the room is vacant.
-- The application implements a watchdog timer to automatically power off the room after a configurable 
-timeout.  This is used as a backup in case the occupancy sensor is inaccurate. (Projector bulbs are 
-expensive! - do everything we can to make sure the projector isn't left on).
+it further during playback, raising when playback is paused or stopped.
+- Listen for custom button presses from the Harmony remote: the user.  Lighting changes, projector aspect ratio changes can be initiated by the remote control.  The app captures these  and actions them.
+- When the user powers off the system via the remote control (shuts down the Harmony Activity), the app will power down the AV equipment and the lighting is brought up to full.
+- The app monitors room vacancy and will power down the system and lighting when there is no media playback happening and the room is vacant.
+- The app implements a watchdog timer to automatically power off the room after a configurable timeout.  This is used as a backup in case the occupancy sensor is inaccurate. (Projector bulbs are expensive! - do everything we can to make sure the projector isn't left on).
 
 ## Speech Recognition
 
 I tried to make voice recognition work with the off the shelf libraries from Microsoft.  The recognition just wasn't good
-enough across the room to the microphone.  I tried several beam forming mics including the Kinect and a couple others.
+enough across the room to the microphone.  I think this was a combination of poor microphones and limitations in the software.  Off the shelf beam forming mics including the Kinect and others resulted in poor responsiveness.
 
 I have removed all of that code from the solution and I am now using a Google Home mini.  I've setup a node.js server using this solution:
 
 https://github.com/OmerTu/GoogleHomeKodi
 
-Voice recognition is now working quite well.
+Using this voice solution I can:
+- Turn on/off the projector. "Hey Google, turn on/off the projector".  This is mapped directly to the Harmony Activity.
+- Start movies or TV shows.  "Hey Google, theatre start movie Deadpool".  While the grammar is ackward, this will be captured by Google HomeKodi which performs media lookups and then if the media matches it fires the Kodi RPC apis and starts the media.
+- Pause/unpause media playback.  "Hey Google, theatre pause".  This is captured by GoogleHomeKodi which in turn fires the Kodi RPC apis.  My app notices changes in Kodi playback and will then further take action like altering lighting.
