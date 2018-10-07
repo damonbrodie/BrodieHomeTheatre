@@ -6,11 +6,9 @@ The project incorporates the following technologies:
  - Insteon light dimmers that provide a programmable lighting interface with a standard wall dimmer formfactor
  - Insteon motion sensor to detect room occupancy
  - Harmony Remote controls for media playback control, but also allow programmatic automation of certain functions
- - A beamforming array microphone for room scale "distant" voice recognition
  - Serial port integration to the Panasonic projector
  - Connection to the JSON port on the Kodi HTPC.  This is used to determine when media playback 
- pauses/plays/stops.  Additionally I read the entire media library so that I can use it for 
- voice recognition
+ pauses/plays/stops.
 
 This project forms an automation application that runs on the HTPC in the theatre that listens 
 to the events and uses them as decision points to signal events.
@@ -22,48 +20,26 @@ room as well as make it easier to use the theatre.  The following high level use
 supported by this application:
 - Upon entering the room using the Insteon motion and door sensors, bring up the room lights with the Insteon 
 Dimmer.
-- Use speech recognition (Microsoft Speech Engine) to listen for voice requests to turn on or 
-off the theatre. This signals a Harmony Hub activity to power on the AV Amplifier and the
-projector.  Once the projector is powered up the lights are automatically dimmed to a comfortable 
+- Listen for Harmony Hub activity changes to power on the AV Amplifier. Use this to send serial commands to the
+projector and power it on.  Once the projector is powered up the lights are automatically dimmed to a comfortable 
 lighting preset.
 - Using the Kodi JSON feed to stay current with playback status (pause/stop/start), alter the lighting, dimming
-it further during playback, raising it during pause and then stopped.
-- Either with the Harmony remote or via voice recognition, the user can pause/stop/start media playback as well as
-raise/lower the room lighting.
-- When the user powers off the system via the remote control, the AV equipment is powered off, and 
-the lighting is brought up to full.
-- The application will power down the system and lighting when there is no media playback happening 
-and the room is vacant.
-- The application implements a watchdog timer to automatically power off the room after a configurable 
-timeout.  This is used as a backup in case the occupancy sensor is inaccurate. (Projector bulbs are 
-expensive! - do everything we can to make sure the projector isn't left on).
+it further during playback, raising when playback is paused or stopped.
+- Listen for custom button presses from the Harmony remote: the user.  Lighting changes, projector aspect ratio changes can be initiated by the remote control.  The app captures these  and actions them.
+- When the user powers off the system via the remote control (shuts down the Harmony Activity), the app will power down the AV equipment and the lighting is brought up to full.
+- The app monitors room vacancy and will power down the system and lighting when there is no media playback happening and the room is vacant.
+- The app implements a watchdog timer to automatically power off the room after a configurable timeout.  This is used as a backup in case the occupancy sensor is inaccurate. (Projector bulbs are expensive! - do everything we can to make sure the projector isn't left on).
 
 ## Speech Recognition
-I've done a lot of experimentation with making the speech recognition as reliable as possible.  
-Several different components make up this part of the solution:
- - Speech Recognition Engine.  There are several different speech recognition engines available.  
- Microsoft provide two of them.  One is "System.Speech", and this is available natively within Windows.  
- Additionally Microsoft has "Microsoft.Speech" and I've chosen to use that for this project.  System.Speech 
- works well for dictation and headset microphones - it is fully trainable on a per user basis.  Microsoft.Speech 
- isn't trainable, but it is specifically tuned for distant speech - it works best when you tell the speech 
- engine all of available phrases and it will listen only for those.  My application builds a specific "grammar" 
- that the voice engine uses to listen for the specific commands for the home theatre.  Other online speech recognition
- engines like the ones provided by Bing and Google are not really suitable for this task because you cannot load them
- with a specific grammar.
- - Microphone.  I'm using a beamforming microphone combined with a Sound Blaster Z sound card.  The card can 
- use the beam forming microphone to pick up speech from the seating area about 10 feet away.  It does a reasonable 
- job filtering out the sounds that might be coming from the movie playback.  I've experimented with all
- of the microphone settings for Noise Cancellation, Focus Width and Microphone and Microphone boost levels 
- to come up with the combination that works best for my room setup.
- - Software.  Speech recognition is not perfect.  The recognition engine does it's best to identify when 
- it "hears" one of the key phrases.  Background conversations, the movie soundtrack, etc, are all supplying 
- stimulus that may be confusing to the engine.  To mitigate this, the application tries to be as contextually
- aware as possible.  If the room is vacant (no motion recorded by the motion sensor), stop listening for voice
- commands.  If the movie is playing, then limit the key phrases to just pause/stop playback.  I've also created lots of
- variations on the key phrases so it is natural to a wider audience:  "Let's watch the movie Rogue One" or
- "Play movie Rogue One", etc.
 
- Combining each of these facets of the approach has resulted in a surprisingly responsive voice recognition
- system for my home theatre purposes.  Of course, to limit user frustration there are be other manual ways to control 
- the homer theatre (for example with a remote control), but the voice interface makes it genuinely easier to interact 
- with the room.
+I tried to make voice recognition work with the off the shelf libraries from Microsoft.  The recognition just wasn't good
+enough across the room to the microphone.  I think this was a combination of poor microphones and limitations in the software.  Off the shelf beam forming mics including the Kinect and others resulted in poor responsiveness.
+
+I have removed all of that code from the solution and I am now using a Google Home mini.  I've setup a node.js server using this solution:
+
+https://github.com/OmerTu/GoogleHomeKodi
+
+Using this voice solution I can:
+- Turn on/off the projector. "Hey Google, turn on/off the projector".  This is mapped directly to the Harmony Activity.
+- Start movies or TV shows.  "Hey Google, theatre start movie Deadpool".  While the grammar is ackward, this will be captured by Google HomeKodi which performs media lookups and then if the media matches it fires the Kodi RPC apis and starts the media.
+- Pause/unpause media playback.  "Hey Google, theatre pause".  This is captured by GoogleHomeKodi which in turn fires the Kodi RPC apis.  My app notices changes in Kodi playback and will then further take action like altering lighting.
