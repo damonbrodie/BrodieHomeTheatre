@@ -52,8 +52,6 @@ namespace BrodieTheatre
                         kodiIsConnected = true;
                         labelKodiStatus.Text = "Connected";
                         labelKodiStatus.ForeColor = System.Drawing.Color.ForestGreen;
-                        kodiSendGetMoviesRequest();
-                        kodiSendGetTVShowsRequest();
                         timerKodiConnect.Interval = 2000;
                         return;
                     }
@@ -242,11 +240,6 @@ namespace BrodieTheatre
                         writeLog("Kodi:  Kodi is exiting");
                         kodiStatusDisconnect();
                         break;
-                    case "VideoLibrary:OnScanStarted":
-                        writeLog("Kodi:  Kodi library updated");
-                        kodiSendGetMoviesRequest();
-                        kodiSendGetTVShowsRequest();
-                        break;
                     case "Other.aspectratio":
                         if (result["params"]["sender"] == "brodietheatre")
                         {
@@ -344,16 +337,6 @@ namespace BrodieTheatre
             kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Input.ExecuteAction\", \"params\": { \"action\" : \"togglefullscreen\" }, \"id\": \"96\"}");
         }
 
-        public void kodiSendGetMoviesRequest()
-        {
-            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetMovies\", \"params\": { \"properties\" : [\"file\"] }, \"id\": \"98\"}");
-        }
-
-        public void kodiSendGetTVShowsRequest()
-        {
-            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.GetTVShows\", \"params\": {\"properties\": [\"title\"] }, \"id\": \"97\"}");
-        }
-
         private void kodiPlaybackControl(string command, string media=null)
         {
             // It seems the Active Player is always "1".  Use this if we need to query it.
@@ -395,8 +378,6 @@ namespace BrodieTheatre
             if (labelKodiStatus.Text == "Connected")
             {
                 kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetProperties\", \"params\": {\"playerid\": 1, \"properties\" : [\"type\", \"currentvideostream\", \"speed\"]}, \"id\": \"99\"}");
-                kodiSendGetMoviesRequest();
-                kodiSendGetTVShowsRequest();
             }
         }
     }
