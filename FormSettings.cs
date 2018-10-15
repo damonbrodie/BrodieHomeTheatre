@@ -41,26 +41,31 @@ namespace BrodieTheatre
             Properties.Settings.Default.insteonMotionLatch          = trackBarInsteonMotionMinimumTime.Value;
             Properties.Settings.Default.lightingDelayProjectorOn    = trackBarDelayLightingProjectorStart.Value;
             Properties.Settings.Default.fanDelayOff                 = trackBarExhaustFanDelayOff.Value;
+            Properties.Settings.Default.SmartSpeaker                = comboBoxSmartSpeakers.Text;
             Properties.Settings.Default.Save();
             this.Close();
         }
 
         private async void FormSettings_Load(object sender, EventArgs e)
         {
-            checkBoxStartMinimized.Checked = Properties.Settings.Default.startMinimized;
-            textBoxHarmonyHubIP.Text = Properties.Settings.Default.harmonyHubIP;
-            numericUpDownKodiPort.Value = (decimal)Properties.Settings.Default.kodiJSONPort;
-            textBoxKodiIP.Text = Properties.Settings.Default.kodiIP;
-            textBoxPotsAddress.Text = Properties.Settings.Default.potsAddress;
-            textBoxTrayAddress.Text = Properties.Settings.Default.trayAddress;
-            textBoxExhaustFanAddress.Text = Properties.Settings.Default.fanAddress;
+            checkBoxStartMinimized.Checked  = Properties.Settings.Default.startMinimized;
+            textBoxHarmonyHubIP.Text        = Properties.Settings.Default.harmonyHubIP;
+            numericUpDownKodiPort.Value     = (decimal)Properties.Settings.Default.kodiJSONPort;
+            textBoxKodiIP.Text              = Properties.Settings.Default.kodiIP;
+            textBoxPotsAddress.Text         = Properties.Settings.Default.potsAddress;
+            textBoxTrayAddress.Text         = Properties.Settings.Default.trayAddress;
+            textBoxExhaustFanAddress.Text   = Properties.Settings.Default.fanAddress;
             textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
-            textBoxDoorSensorAddress.Text = Properties.Settings.Default.doorSensorAddress;
+            textBoxDoorSensorAddress.Text   = Properties.Settings.Default.doorSensorAddress;
 
             receivers = await new DeviceLocator().FindReceiversAsync();
             foreach (var receiver in receivers)
             {
                 comboBoxSmartSpeakers.Items.Add(receiver.FriendlyName);
+                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
+                {
+                    comboBoxSmartSpeakers.SelectedItem = receiver.FriendlyName;
+                }
             }
 
             try
