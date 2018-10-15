@@ -2,32 +2,18 @@
 using System.IO.Ports;
 using System.Windows.Forms;
 using GoogleCast;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight.Threading;
-
+using System.Collections.Generic;
 
 
 namespace BrodieTheatre
 {
     public partial class FormSettings : Form
     {
-        private IDeviceLocator DeviceLocator { get; }
+        private IEnumerable<IReceiver> receivers;
+
         public FormSettings()
         {
             InitializeComponent();
-        }
-
-        private async Task RefreshGoogleHomesAsync()
-        {
-            await DispatcherHelper.RunAsync(async () =>
-            {
-                var receivers = await DeviceLocator.FindReceiversAsync();
-                foreach (var receiver in receivers)
-                {
-                    MessageBox.Show(receiver.FriendlyName);
-                }
-
-            });
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -71,10 +57,11 @@ namespace BrodieTheatre
             textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
             textBoxDoorSensorAddress.Text = Properties.Settings.Default.doorSensorAddress;
 
-
-
-            await new DeviceLocator().FindReceiversAsync();
-
+            receivers = await new DeviceLocator().FindReceiversAsync();
+            foreach (var receiver in receivers)
+            {
+                comboBoxSmartSpeakers.Items.Add(receiver.FriendlyName);
+            }
 
             try
             {

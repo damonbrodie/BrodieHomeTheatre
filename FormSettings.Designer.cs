@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.label14 = new System.Windows.Forms.Label();
+            this.comboBoxSmartSpeakers = new System.Windows.Forms.ComboBox();
             this.textBoxKodiIP = new System.Windows.Forms.TextBox();
             this.label32 = new System.Windows.Forms.Label();
             this.numericUpDownKodiPort = new System.Windows.Forms.NumericUpDown();
@@ -107,8 +109,6 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
@@ -148,7 +148,7 @@
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.label14);
-            this.tabPage6.Controls.Add(this.comboBox1);
+            this.tabPage6.Controls.Add(this.comboBoxSmartSpeakers);
             this.tabPage6.Controls.Add(this.textBoxKodiIP);
             this.tabPage6.Controls.Add(this.label32);
             this.tabPage6.Controls.Add(this.numericUpDownKodiPort);
@@ -161,6 +161,23 @@
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "Global";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(17, 123);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(80, 13);
+            this.label14.TabIndex = 51;
+            this.label14.Text = "Smart Speaker:";
+            // 
+            // comboBoxSmartSpeakers
+            // 
+            this.comboBoxSmartSpeakers.FormattingEnabled = true;
+            this.comboBoxSmartSpeakers.Location = new System.Drawing.Point(109, 120);
+            this.comboBoxSmartSpeakers.Name = "comboBoxSmartSpeakers";
+            this.comboBoxSmartSpeakers.Size = new System.Drawing.Size(225, 21);
+            this.comboBoxSmartSpeakers.TabIndex = 4;
             // 
             // textBoxKodiIP
             // 
@@ -943,23 +960,6 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(109, 120);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(225, 21);
-            this.comboBox1.TabIndex = 4;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(17, 123);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(80, 13);
-            this.label14.TabIndex = 51;
-            this.label14.Text = "Smart Speaker:";
-            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1085,6 +1085,6 @@
         private System.Windows.Forms.TrackBar trackBarExhaustFanDelayOff;
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxSmartSpeakers;
     }
 }
