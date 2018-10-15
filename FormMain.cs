@@ -6,7 +6,7 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        /* Insteon addresses
+        /* My Insteon addresses
            42.22.B8 Pot
            42.20.F8 Tray
            41.66.88 Motion Sensor
@@ -201,7 +201,7 @@ namespace BrodieTheatre
                - The Room is vacant
             */
             DateTime now = DateTime.Now;
-            DateTime globalShutdownStart = globalShutdown.AddHours(Properties.Settings.Default.globalShutdown * -1);
+            DateTime globalShutdownStart = globalShutdown.AddMinutes(Properties.Settings.Default.globalShutdown * -1);
             var totalSeconds = (globalShutdown - globalShutdownStart).TotalSeconds;
             var progress = (now - globalShutdownStart).TotalSeconds;
 
@@ -296,7 +296,7 @@ namespace BrodieTheatre
 
         private void resetGlobalTimer()
         {
-            globalShutdown = DateTime.Now.AddHours(Properties.Settings.Default.globalShutdown);
+            globalShutdown = DateTime.Now.AddMinutes(Properties.Settings.Default.globalShutdown);
             globalShutdownWarning = false;
             //writeLog("Global Timer:  Resetting shutdown timer");
         }

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BrodieTheatre</RootNamespace>
     <AssemblyName>BrodieTheatre</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -39,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,6 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Brodie-HomeTheatre.ico</ApplicationIcon>
@@ -90,21 +92,19 @@
   <ItemGroup>
     <Reference Include="agsXMPP, Version=1.3.1.0, Culture=neutral, PublicKeyToken=ff839b81f1debe86, processorArchitecture=MSIL">
       <HintPath>..\packages\Loamen.agsXMPP.1.3.1\lib\net45\agsXMPP.dll</HintPath>
-      <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SoapBox.FluentDwelling, Version=2013.7.9.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SoapBox.FluentDwelling.2013.7.9\lib\net40\SoapBox.FluentDwelling.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -128,6 +128,99 @@
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="GoogleCast\CastMessage.cs" />
+    <Compile Include="GoogleCast\Channels\Channel.cs" />
+    <Compile Include="GoogleCast\Channels\ConnectionChannel.cs" />
+    <Compile Include="GoogleCast\Channels\HeartbeatChannel.cs" />
+    <Compile Include="GoogleCast\Channels\IApplicationChannel.cs" />
+    <Compile Include="GoogleCast\Channels\IChannel.cs" />
+    <Compile Include="GoogleCast\Channels\IConnectionChannel.cs" />
+    <Compile Include="GoogleCast\Channels\IHeartbeatChannel.cs" />
+    <Compile Include="GoogleCast\Channels\IMediaChannel.cs" />
+    <Compile Include="GoogleCast\Channels\IReceiverChannel.cs" />
+    <Compile Include="GoogleCast\Channels\IStatusChannel.cs" />
+    <Compile Include="GoogleCast\Channels\MediaChannel.cs" />
+    <Compile Include="GoogleCast\Channels\ReceiverChannel.cs" />
+    <Compile Include="GoogleCast\Channels\StatusChannel.cs" />
+    <Compile Include="GoogleCast\ColorHelper.cs" />
+    <Compile Include="GoogleCast\DefaultIdentifiers.cs" />
+    <Compile Include="GoogleCast\DeviceLocator.cs" />
+    <Compile Include="GoogleCast\EnumHelper.cs" />
+    <Compile Include="GoogleCast\IDeviceLocator.cs" />
+    <Compile Include="GoogleCast\IMessageTypes.cs" />
+    <Compile Include="GoogleCast\IReceiver.cs" />
+    <Compile Include="GoogleCast\ISender.cs" />
+    <Compile Include="GoogleCast\JsonSerializer.cs" />
+    <Compile Include="GoogleCast\Messages\Connection\CloseMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Connection\ConnectMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\EditTracksInfoMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\GetStatusMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\InvalidRequestMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\LoadCancelledMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\LoadFailedMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\LoadMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\MediaSessionMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\MediaStatusMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\PauseMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\PlayMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\QueueLoadMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\SeekMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Hearbeat\StopMessage.cs" />
+    <Compile Include="GoogleCast\Messages\IMessage.cs" />
+    <Compile Include="GoogleCast\Messages\IMessageWithId.cs" />
+    <Compile Include="GoogleCast\Messages\IStatusMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\EditTracksInfoMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\GetStatusMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\InvalidRequestMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\LoadCancelledMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\LoadFailedMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\LoadMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\MediaSessionMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\MediaStatusMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\PauseMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\PlayMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\QueueLoadMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\SeekMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Media\StopMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Message.cs" />
+    <Compile Include="GoogleCast\Messages\MessageWithId.cs" />
+    <Compile Include="GoogleCast\Messages\Receiver\GetStatusMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Receiver\LaunchMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Receiver\ReceiverStatusMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Receiver\SetVolumeMessage.cs" />
+    <Compile Include="GoogleCast\Messages\Receiver\StopMessage.cs" />
+    <Compile Include="GoogleCast\Messages\ReceptionMessageAttribute.cs" />
+    <Compile Include="GoogleCast\Messages\SessionMessage.cs" />
+    <Compile Include="GoogleCast\Messages\StatusMessage.cs" />
+    <Compile Include="GoogleCast\MessageTypes.cs" />
+    <Compile Include="GoogleCast\Models\Image.cs" />
+    <Compile Include="GoogleCast\Models\Media\GenericMediaMetadata.cs" />
+    <Compile Include="GoogleCast\Models\Media\MediaInformation.cs" />
+    <Compile Include="GoogleCast\Models\Media\MediaStatus.cs" />
+    <Compile Include="GoogleCast\Models\Media\MetadataType.cs" />
+    <Compile Include="GoogleCast\Models\Media\MovieMetadata.cs" />
+    <Compile Include="GoogleCast\Models\Media\QueueItem.cs" />
+    <Compile Include="GoogleCast\Models\Media\RepeatMode.cs" />
+    <Compile Include="GoogleCast\Models\Media\StreamType.cs" />
+    <Compile Include="GoogleCast\Models\Media\TextTrackEdgeType.cs" />
+    <Compile Include="GoogleCast\Models\Media\TextTrackFontGenericFamily.cs" />
+    <Compile Include="GoogleCast\Models\Media\TextTrackFontStyle.cs" />
+    <Compile Include="GoogleCast\Models\Media\TextTrackStyle.cs" />
+    <Compile Include="GoogleCast\Models\Media\TextTrackType.cs" />
+    <Compile Include="GoogleCast\Models\Media\TextTrackWindowType.cs" />
+    <Compile Include="GoogleCast\Models\Media\Track.cs" />
+    <Compile Include="GoogleCast\Models\Media\TrackType.cs" />
+    <Compile Include="GoogleCast\Models\Receiver\Application.cs" />
+    <Compile Include="GoogleCast\Models\Receiver\Namespace.cs" />
+    <Compile Include="GoogleCast\Models\Receiver\ReceiverStatus.cs" />
+    <Compile Include="GoogleCast\Models\Volume.cs" />
+    <Compile Include="GoogleCast\PayloadType.cs" />
+    <Compile Include="GoogleCast\ProtocolVersion.cs" />
+    <Compile Include="GoogleCast\Receiver.cs" />
+    <Compile Include="GoogleCast\Sender.cs" />
+    <Compile Include="GoogleCast\ServiceCollectionExtensions.cs" />
+    <Compile Include="GoogleCast\StringExtensions.cs" />
+    <Compile Include="GoogleCast\TaskExtensions.cs" />
     <Compile Include="Harmony.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,6 +315,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

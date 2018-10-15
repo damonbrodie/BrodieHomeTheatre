@@ -257,11 +257,11 @@ namespace BrodieTheatre
         {
             if (trackBarGlobalShutdown.Value == 1)
             {
-                labelGlobalShutdownHours.Text = "hour";
+                labelGlobalShutdownHours.Text = "minute";
             }
             else
             {
-                labelGlobalShutdownHours.Text = "hours";
+                labelGlobalShutdownHours.Text = "minutes";
             }
             labelGlobalShutdown.Text = trackBarGlobalShutdown.Value.ToString();
         }

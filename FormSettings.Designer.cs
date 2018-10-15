@@ -107,6 +107,8 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
@@ -145,6 +147,8 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.label14);
+            this.tabPage6.Controls.Add(this.comboBox1);
             this.tabPage6.Controls.Add(this.textBoxKodiIP);
             this.tabPage6.Controls.Add(this.label32);
             this.tabPage6.Controls.Add(this.numericUpDownKodiPort);
@@ -824,9 +828,9 @@
             this.labelGlobalShutdownHours.AutoSize = true;
             this.labelGlobalShutdownHours.Location = new System.Drawing.Point(296, 162);
             this.labelGlobalShutdownHours.Name = "labelGlobalShutdownHours";
-            this.labelGlobalShutdownHours.Size = new System.Drawing.Size(33, 13);
+            this.labelGlobalShutdownHours.Size = new System.Drawing.Size(43, 13);
             this.labelGlobalShutdownHours.TabIndex = 35;
-            this.labelGlobalShutdownHours.Text = "hours";
+            this.labelGlobalShutdownHours.Text = "minutes";
             // 
             // labelGlobalShutdown
             // 
@@ -835,18 +839,21 @@
             this.labelGlobalShutdown.Name = "labelGlobalShutdown";
             this.labelGlobalShutdown.Size = new System.Drawing.Size(35, 23);
             this.labelGlobalShutdown.TabIndex = 34;
-            this.labelGlobalShutdown.Text = "0";
+            this.labelGlobalShutdown.Text = "5";
             this.labelGlobalShutdown.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // trackBarGlobalShutdown
             // 
             this.trackBarGlobalShutdown.BackColor = System.Drawing.SystemColors.Window;
-            this.trackBarGlobalShutdown.LargeChange = 1;
             this.trackBarGlobalShutdown.Location = new System.Drawing.Point(82, 155);
-            this.trackBarGlobalShutdown.Maximum = 5;
+            this.trackBarGlobalShutdown.Maximum = 120;
+            this.trackBarGlobalShutdown.Minimum = 5;
             this.trackBarGlobalShutdown.Name = "trackBarGlobalShutdown";
             this.trackBarGlobalShutdown.Size = new System.Drawing.Size(177, 45);
+            this.trackBarGlobalShutdown.SmallChange = 5;
             this.trackBarGlobalShutdown.TabIndex = 33;
+            this.trackBarGlobalShutdown.TickFrequency = 5;
+            this.trackBarGlobalShutdown.Value = 5;
             this.trackBarGlobalShutdown.ValueChanged += new System.EventHandler(this.trackBarGlobalShutdown_ValueChanged);
             // 
             // label23
@@ -935,6 +942,23 @@
             this.buttonSave.Text = "Save";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(109, 120);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(225, 21);
+            this.comboBox1.TabIndex = 4;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(17, 123);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(80, 13);
+            this.label14.TabIndex = 51;
+            this.label14.Text = "Smart Speaker:";
             // 
             // FormSettings
             // 
@@ -1060,5 +1084,7 @@
         private System.Windows.Forms.Label labelExhaustFanDelayOff;
         private System.Windows.Forms.TrackBar trackBarExhaustFanDelayOff;
         private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
