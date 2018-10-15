@@ -11,7 +11,6 @@ namespace BrodieTheatre
 {
     public partial class FormSettings : Form
     {
-        static FormSettings formSettings;
         private IDeviceLocator DeviceLocator { get; }
         public FormSettings()
         {
@@ -23,6 +22,10 @@ namespace BrodieTheatre
             await DispatcherHelper.RunAsync(async () =>
             {
                 var receivers = await DeviceLocator.FindReceiversAsync();
+                foreach (var receiver in receivers)
+                {
+                    MessageBox.Show(receiver.FriendlyName);
+                }
 
             });
         }
