@@ -1,15 +1,30 @@
 ﻿using System;
 using System.IO.Ports;
 using System.Windows.Forms;
+using GoogleCast;
+using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Threading;
+
 
 
 namespace BrodieTheatre
 {
     public partial class FormSettings : Form
     {
+        static FormSettings formSettings;
+        private IDeviceLocator DeviceLocator { get; }
         public FormSettings()
         {
             InitializeComponent();
+        }
+
+        private async Task RefreshGoogleHomesAsync()
+        {
+            await DispatcherHelper.RunAsync(async () =>
+            {
+                var receivers = await DeviceLocator.FindReceiversAsync();
+
+            });
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -41,7 +56,7 @@ namespace BrodieTheatre
             this.Close();
         }
 
-        private void FormSettings_Load(object sender, EventArgs e)
+        private async void FormSettings_Load(object sender, EventArgs e)
         {
             checkBoxStartMinimized.Checked = Properties.Settings.Default.startMinimized;
             textBoxHarmonyHubIP.Text = Properties.Settings.Default.harmonyHubIP;
@@ -52,6 +67,11 @@ namespace BrodieTheatre
             textBoxExhaustFanAddress.Text = Properties.Settings.Default.fanAddress;
             textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
             textBoxDoorSensorAddress.Text = Properties.Settings.Default.doorSensorAddress;
+
+
+
+            await new DeviceLocator().FindReceiversAsync();
+
 
             try
             {
