@@ -92,5 +92,14 @@
     <Setting Name="SmartSpeaker" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="webServerPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8001</Value>
+    </Setting>
+    <Setting Name="textToSpeechLanguage" Type="System.String" Scope="User">
+      <Value Profile="(Default)">en-US</Value>
+    </Setting>
+    <Setting Name="googleCloudCredentialsJSON" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

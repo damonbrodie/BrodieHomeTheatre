@@ -31,6 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSettings));
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.buttonSelectCredentials = new System.Windows.Forms.Button();
+            this.textBoxGoogleCredentialsFile = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.comboBoxSmartSpeakers = new System.Windows.Forms.ComboBox();
             this.textBoxKodiIP = new System.Windows.Forms.TextBox();
@@ -109,6 +113,7 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.openFileDialogGoogleCredentials = new System.Windows.Forms.OpenFileDialog();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
@@ -147,6 +152,10 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.buttonSelectCredentials);
+            this.tabPage6.Controls.Add(this.textBoxGoogleCredentialsFile);
+            this.tabPage6.Controls.Add(this.label20);
+            this.tabPage6.Controls.Add(this.label15);
             this.tabPage6.Controls.Add(this.label14);
             this.tabPage6.Controls.Add(this.comboBoxSmartSpeakers);
             this.tabPage6.Controls.Add(this.textBoxKodiIP);
@@ -162,10 +171,46 @@
             this.tabPage6.Text = "Global";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // buttonSelectCredentials
+            // 
+            this.buttonSelectCredentials.Location = new System.Drawing.Point(259, 216);
+            this.buttonSelectCredentials.Name = "buttonSelectCredentials";
+            this.buttonSelectCredentials.Size = new System.Drawing.Size(75, 23);
+            this.buttonSelectCredentials.TabIndex = 55;
+            this.buttonSelectCredentials.Text = "Select";
+            this.buttonSelectCredentials.UseVisualStyleBackColor = true;
+            this.buttonSelectCredentials.Click += new System.EventHandler(this.buttonSelectCredentials_Click);
+            // 
+            // textBoxGoogleCredentialsFile
+            // 
+            this.textBoxGoogleCredentialsFile.Location = new System.Drawing.Point(109, 190);
+            this.textBoxGoogleCredentialsFile.Name = "textBoxGoogleCredentialsFile";
+            this.textBoxGoogleCredentialsFile.Size = new System.Drawing.Size(225, 20);
+            this.textBoxGoogleCredentialsFile.TabIndex = 54;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(77, 193);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(26, 13);
+            this.label20.TabIndex = 53;
+            this.label20.Text = "File:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(17, 170);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(154, 13);
+            this.label15.TabIndex = 52;
+            this.label15.Text = "Google Cloud Credentials:";
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(17, 123);
+            this.label14.Location = new System.Drawing.Point(23, 123);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(80, 13);
             this.label14.TabIndex = 51;
@@ -960,6 +1005,13 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // openFileDialogGoogleCredentials
+            // 
+            this.openFileDialogGoogleCredentials.DefaultExt = "JSON";
+            this.openFileDialogGoogleCredentials.FileName = "credentials";
+            this.openFileDialogGoogleCredentials.Filter = "Credentials JSON |*.json";
+            this.openFileDialogGoogleCredentials.RestoreDirectory = true;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1086,5 +1138,10 @@
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox comboBoxSmartSpeakers;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.OpenFileDialog openFileDialogGoogleCredentials;
+        private System.Windows.Forms.Button buttonSelectCredentials;
+        private System.Windows.Forms.TextBox textBoxGoogleCredentialsFile;
     }
 }

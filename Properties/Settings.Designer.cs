@@ -382,5 +382,41 @@ namespace BrodieTheatre.Properties {
                 this["SmartSpeaker"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8001")]
+        public int webServerPort {
+            get {
+                return ((int)(this["webServerPort"]));
+            }
+            set {
+                this["webServerPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
+        public string textToSpeechLanguage {
+            get {
+                return ((string)(this["textToSpeechLanguage"]));
+            }
+            set {
+                this["textToSpeechLanguage"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string googleCloudCredentialsJSON {
+            get {
+                return ((string)(this["googleCloudCredentialsJSON"]));
+            }
+            set {
+                this["googleCloudCredentialsJSON"] = value;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.IO.Ports;
 using System.Windows.Forms;
 using GoogleCast;
@@ -42,6 +43,8 @@ namespace BrodieTheatre
             Properties.Settings.Default.lightingDelayProjectorOn    = trackBarDelayLightingProjectorStart.Value;
             Properties.Settings.Default.fanDelayOff                 = trackBarExhaustFanDelayOff.Value;
             Properties.Settings.Default.SmartSpeaker                = comboBoxSmartSpeakers.Text;
+            Properties.Settings.Default.googleCloudCredentialsJSON  = textBoxGoogleCredentialsFile.Text;
+
             Properties.Settings.Default.Save();
             this.Close();
         }
@@ -57,6 +60,11 @@ namespace BrodieTheatre
             textBoxExhaustFanAddress.Text   = Properties.Settings.Default.fanAddress;
             textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
             textBoxDoorSensorAddress.Text   = Properties.Settings.Default.doorSensorAddress;
+
+            if (File.Exists(Properties.Settings.Default.googleCloudCredentialsJSON))
+            {
+                textBoxGoogleCredentialsFile.Text = Properties.Settings.Default.googleCloudCredentialsJSON;
+            }
 
             receivers = await new DeviceLocator().FindReceiversAsync();
             foreach (var receiver in receivers)
@@ -309,6 +317,14 @@ namespace BrodieTheatre
             {
                 labelExhaustFanDelayOffMinutes.Text = "minutes";
                 labelExhaustFanDelayOff.Text = trackBarExhaustFanDelayOff.Value.ToString();
+            }
+        }
+
+        private void buttonSelectCredentials_Click(object sender, EventArgs e)
+        {
+            if(openFileDialogGoogleCredentials.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                textBoxGoogleCredentialsFile.Text = openFileDialogGoogleCredentials.FileName;
             }
         }
     }
