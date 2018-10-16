@@ -47,15 +47,6 @@
     <Setting Name="motionSensorAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)">41.66.88</Value>
     </Setting>
-    <Setting Name="voiceActivity" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Watch Movie</Value>
-    </Setting>
-    <Setting Name="voiceConfidence" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="computerName" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Ronda</Value>
-    </Setting>
     <Setting Name="startMinimized" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
@@ -68,14 +59,8 @@
     <Setting Name="doorSensorAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)">41.58.FC</Value>
     </Setting>
-    <Setting Name="speechVoice" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="insteonMotionLatch" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">5</Value>
-    </Setting>
-    <Setting Name="speechDevice" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="voiceConfidenceNoActivity" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>

@@ -205,42 +205,6 @@ namespace BrodieTheatre.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Watch Movie")]
-        public string voiceActivity {
-            get {
-                return ((string)(this["voiceActivity"]));
-            }
-            set {
-                this["voiceActivity"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int voiceConfidence {
-            get {
-                return ((int)(this["voiceConfidence"]));
-            }
-            set {
-                this["voiceConfidence"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Ronda")]
-        public string computerName {
-            get {
-                return ((string)(this["computerName"]));
-            }
-            set {
-                this["computerName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool startMinimized {
             get {
@@ -289,18 +253,6 @@ namespace BrodieTheatre.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string speechVoice {
-            get {
-                return ((string)(this["speechVoice"]));
-            }
-            set {
-                this["speechVoice"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public int insteonMotionLatch {
             get {
@@ -308,18 +260,6 @@ namespace BrodieTheatre.Properties {
             }
             set {
                 this["insteonMotionLatch"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string speechDevice {
-            get {
-                return ((string)(this["speechDevice"]));
-            }
-            set {
-                this["speechDevice"] = value;
             }
         }
         

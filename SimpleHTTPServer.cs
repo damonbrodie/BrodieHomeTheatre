@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using System.Net;
 using System.IO;
 using System.Threading;
@@ -163,7 +162,6 @@ class SimpleHTTPServer
                 context.Response.OutputStream.Flush();
 
                 // Dispose of the audio Stream
-
                 BrodieTheatre.FormMain.textToSpeechFiles.Remove(filename);
             }
             catch (Exception ex)

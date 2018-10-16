@@ -21,7 +21,7 @@ namespace BrodieTheatre
 
             var voiceSelection = new VoiceSelectionParams
             {
-                LanguageCode = "en-US",
+                LanguageCode = Properties.Settings.Default.textToSpeechLanguage,
                 SsmlGender = SsmlVoiceGender.Female
 
             };
