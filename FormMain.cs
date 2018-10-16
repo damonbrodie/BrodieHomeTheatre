@@ -1,5 +1,10 @@
 ﻿using System;
+using System.IO;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using Google.Apis.Auth.OAuth2;
+using Grpc.Auth;
+using Google.Cloud.TextToSpeech.V1;
 
 
 namespace BrodieTheatre
@@ -33,6 +38,9 @@ namespace BrodieTheatre
         public Random random = new Random();
         public bool vacancyWarning = false;
         private SimpleHTTPServer simpleHTTPServer;
+        Grpc.Core.Channel googleCloudChannel;
+
+        static public Dictionary<string, MemoryStream> textToSpeechFiles = new Dictionary<string, MemoryStream>();
 
         public bool debugInsteon = false;
         public bool debugHarmony = false;
@@ -94,7 +102,23 @@ namespace BrodieTheatre
         private async void FormMain_Load(object sender, EventArgs e)
         {
 
-            formMain.simpleHTTPServer = new SimpleHTTPServer(@"c:\Temp", 8001);
+            if (File.Exists(Properties.Settings.Default.googleCloudCredentialsJSON))
+            {
+                try
+                {
+                    GoogleCredential credential = GoogleCredential.FromFile(Properties.Settings.Default.googleCloudCredentialsJSON);
+
+                    googleCloudChannel = new Grpc.Core.Channel(TextToSpeechClient.DefaultEndpoint.ToString(), credential.ToChannelCredentials());
+                }
+                catch (Exception ex)
+                {
+                    Logging.writeLog("Error:  Unable to load Google Credentials for Cloud - Text-To-Speech:  " + ex.ToString());
+                }
+            }
+
+            
+            if (Properties.Settings.Default.webServerPort > 0 && Properties.Settings.Default.webServerPort <= 65535)
+            formMain.simpleHTTPServer = new SimpleHTTPServer(Properties.Settings.Default.webServerPort);
 
             formMain.BeginInvoke(new Action(() =>
             {
@@ -341,7 +365,7 @@ namespace BrodieTheatre
 
         private void button1_Click(object sender, EventArgs e)
         {
-            text_to_mp3("Hello Damon");
+            string temp = text_to_mp3("Hello Damon", googleCloudChannel);
         }
     }
 }

@@ -10,14 +10,7 @@ using System.Threading;
 
 
 class SimpleHTTPServer
-{
-    private readonly string[] _indexFiles = { 
-        "index.html", 
-        "index.htm", 
-        "default.html", 
-        "default.htm" 
-    };
-    
+{   
     private static IDictionary<string, string> _mimeTypeMappings = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
         #region extension to MIME type list
         {".asf", "video/x-ms-asf"},
@@ -87,7 +80,6 @@ class SimpleHTTPServer
         #endregion
     };
     private Thread _serverThread;
-    private string _rootDirectory;
     private HttpListener _listener;
     private int _port;
  
@@ -100,25 +92,10 @@ class SimpleHTTPServer
     /// <summary>
     /// Construct server with given port.
     /// </summary>
-    /// <param name="path">Directory path to serve.</param>
     /// <param name="port">Port of the server.</param>
-    public SimpleHTTPServer(string path, int port)
+    public SimpleHTTPServer(int port)
     {
-        this.Initialize(path, port);
-    }
- 
-    /// <summary>
-    /// Construct server with suitable port.
-    /// </summary>
-    /// <param name="path">Directory path to serve.</param>
-    public SimpleHTTPServer(string path)
-    {
-        //get an empty port
-        TcpListener l = new TcpListener(IPAddress.Loopback, 0);
-        l.Start();
-        int port = ((IPEndPoint)l.LocalEndpoint).Port;
-        l.Stop();
-        this.Initialize(path, port);
+        this.Initialize(port);
     }
  
     /// <summary>
@@ -135,6 +112,7 @@ class SimpleHTTPServer
         _listener = new HttpListener();
         _listener.Prefixes.Add("http://*:" + _port.ToString() + "/");
         _listener.Start();
+        BrodieTheatre.Logging.writeLog("Web server starting on port: " + _port.ToString());
         while (true)
         {
             try
@@ -144,9 +122,8 @@ class SimpleHTTPServer
             }
             catch (Exception ex)
             {
-                BrodieTheatre.Logging.writeLog("Can't start Web Server: " + ex.ToString());
+                BrodieTheatre.Logging.writeLog("Web Server Failed: " + ex.ToString());
             }
-            BrodieTheatre.Logging.writeLog("Web server started on port: " + _port.ToString());
         }
     }
  
@@ -157,46 +134,43 @@ class SimpleHTTPServer
  
         if (string.IsNullOrEmpty(filename))
         {
-            foreach (string indexFile in _indexFiles)
-            {
-                if (File.Exists(Path.Combine(_rootDirectory, indexFile)))
-                {
-                    filename = indexFile;
-                    break;
-                }
-            }
+            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
         }
  
-        filename = Path.Combine(_rootDirectory, filename);
- 
-        if (File.Exists(filename))
+        if (BrodieTheatre.FormMain.textToSpeechFiles.ContainsKey(filename))
         {
             try
             {
-                Stream input = new FileStream(filename, FileMode.Open);
+                MemoryStream input = BrodieTheatre.FormMain.textToSpeechFiles[filename];
                 
                 //Adding permanent http response headers
-                string mime;
-                context.Response.ContentType = _mimeTypeMappings.TryGetValue(Path.GetExtension(filename), out mime) ? mime : "application/octet-stream";
+
+                context.Response.ContentType = "audio/mpeg3";
                 context.Response.ContentLength64 = input.Length;
                 context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
-                context.Response.AddHeader("Last-Modified", System.IO.File.GetLastWriteTime(filename).ToString("r"));
+                context.Response.AddHeader("Last-Modified", DateTime.Now.ToString("r"));
  
                 byte[] buffer = new byte[1024 * 16];
                 int nbytes;
+
+                input.Seek(0,0);
+
                 while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
                     context.Response.OutputStream.Write(buffer, 0, nbytes);
                 input.Close();
                 
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
                 context.Response.OutputStream.Flush();
+
+                // Dispose of the audio Stream
+
+                BrodieTheatre.FormMain.textToSpeechFiles.Remove(filename);
             }
             catch (Exception ex)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 BrodieTheatre.Logging.writeLog("Can't Process message for web server: " + ex.ToString());
             }
- 
         }
         else
         {
@@ -206,13 +180,10 @@ class SimpleHTTPServer
         context.Response.OutputStream.Close();
     }
  
-    private void Initialize(string path, int port)
+    private void Initialize(int port)
     {
-        this._rootDirectory = path;
         this._port = port;
         _serverThread = new Thread(this.Listen);
         _serverThread.Start();
     }
- 
- 
 }
