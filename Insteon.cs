@@ -85,7 +85,7 @@ namespace BrodieTheatre
             {
                 plmConnected = false;
                 labelPLMstatus.Text = "Connecting";
-                writeLog("Insteon:  Connecting to PLM");
+                Logging.writeLog("Insteon:  Connecting to PLM");
                 labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
 
                 powerlineModem = new Plm(Properties.Settings.Default.plmPort);
@@ -108,7 +108,7 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Insteon:  Debug - received from '" + address + "' message '" + desc + "'");
+                    Logging.writeLog("Insteon:  Debug - received from '" + address + "' message '" + desc + "'");
                 }));
             }
 
@@ -119,7 +119,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Insteon:  Received Tray dimmer update from PLM - level '" + level.ToString() + "'");
+                        Logging.writeLog("Insteon:  Received Tray dimmer update from PLM - level '" + level.ToString() + "'");
                         formMain.trackBarTray.Value = level;
                     }
                     ));
@@ -141,7 +141,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Insteon:  Received Pots dimmer update from PLM - level '" + level.ToString() + "'");
+                        Logging.writeLog("Insteon:  Received Pots dimmer update from PLM - level '" + level.ToString() + "'");
                         formMain.trackBarPots.Value = level;
                     }
                     ));
@@ -173,7 +173,7 @@ namespace BrodieTheatre
                     {
                         if (formMain.labelMotionSensorStatus.Text != "No Motion")
                         {
-                            formMain.writeLog("Insteon:  Motion Sensor reported 'No Motion Detected'");
+                            Logging.writeLog("Insteon:  Motion Sensor reported 'No Motion Detected'");
                             formMain.progressBarInsteonMotionLatch.Value = formMain.progressBarInsteonMotionLatch.Maximum;
                             formMain.insteonMotionLatchExpires = DateTime.Now.AddMinutes(Properties.Settings.Default.insteonMotionLatch);
                             formMain.insteonMotionLatchActive = true;
@@ -195,7 +195,7 @@ namespace BrodieTheatre
                 { //Door Open Detected
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Insteon:  Door Opened");
+                        Logging.writeLog("Insteon:  Door Opened");
                         formMain.toolStripStatus.Text = "Door Opened";
                     }
                     ));
@@ -204,7 +204,7 @@ namespace BrodieTheatre
                 { //Door Closed
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Insteon:  Door Closed");
+                        Logging.writeLog("Insteon:  Door Closed");
                         formMain.toolStripStatus.Text = "Door Closed";
                     }
                     ));
@@ -227,7 +227,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Insteon:  Received Fan Switch update from PLM - 'On'");
+                        Logging.writeLog("Insteon:  Received Fan Switch update from PLM - 'On'");
                         formMain.updateFanStatus(true);
                     }
                     ));
@@ -236,7 +236,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Insteon:  Received Fan Switch update from PLM - 'Off'");
+                        Logging.writeLog("Insteon:  Received Fan Switch update from PLM - 'Off'");
                         formMain.updateFanStatus(false);
                     }
                     ));
@@ -244,7 +244,7 @@ namespace BrodieTheatre
             }
             else
             {
-                formMain.writeLog("Insteon:  Received unknown device message from address '" + address + "' message '" + desc + "'");
+                Logging.writeLog("Insteon:  Received unknown device message from address '" + address + "' message '" + desc + "'");
             }
         }
 
@@ -304,12 +304,12 @@ namespace BrodieTheatre
                     finished = lightingControl.RampOn((byte)toInt);
                     if (!finished)
                     {
-                        writeLog("Insteon:  Could not set light '" + address + "' to level '" + level.ToString() + "'");
+                        Logging.writeLog("Insteon:  Could not set light '" + address + "' to level '" + level.ToString() + "'");
                     }
                     else
                     {
                         lights[address] = -1;
-                        writeLog("Insteon:  Set light '" + address + "' to level '" + level.ToString() + "'");
+                        Logging.writeLog("Insteon:  Set light '" + address + "' to level '" + level.ToString() + "'");
                         if (toInt > 0)
                         {
                             resetGlobalTimer();
@@ -320,7 +320,7 @@ namespace BrodieTheatre
                 }
             }
             toolStripStatus.Text = "Could not connect to light '" + address + "'";
-            writeLog("Insteon:  Error setting light '" + address + "' to level '" + level.ToString() + "'");
+            Logging.writeLog("Insteon:  Error setting light '" + address + "' to level '" + level.ToString() + "'");
         }
 
         public void insteonSetRelay(string address, bool turnOn)
@@ -345,18 +345,18 @@ namespace BrodieTheatre
                     }
                     if (!finished)
                     {
-                        writeLog("Insteon:  Could not set relay '" + address + "' to '" + turnOn.ToString() + "'");
+                        Logging.writeLog("Insteon:  Could not set relay '" + address + "' to '" + turnOn.ToString() + "'");
                     }
                     else
                     {
-                        writeLog("Insteon:  Set relay '" + address + "' to '" + turnOn.ToString() + "'");
+                        Logging.writeLog("Insteon:  Set relay '" + address + "' to '" + turnOn.ToString() + "'");
                         return;
                     }
                     counter++;
                 }
             }
             toolStripStatus.Text = "Could not connect to relay '" + address + "'";
-            writeLog("Insteon:  Error setting relay '" + address + "' to '" + turnOn.ToString() + "'");
+            Logging.writeLog("Insteon:  Error setting relay '" + address + "' to '" + turnOn.ToString() + "'");
         }
 
         private void PowerlineModem_OnError(object sender, EventArgs e)
@@ -367,7 +367,7 @@ namespace BrodieTheatre
                 formMain.BeginInvoke(new Action(() =>
                 {
                     labelPLMstatus.Text = "Disconnected";
-                    writeLog("Insteon:  Error connecting to PLM");
+                    Logging.writeLog("Insteon:  Error connecting to PLM");
                     labelPLMstatus.ForeColor = System.Drawing.Color.Maroon;
                     timerPLMreceive.Enabled = false;
                     timerCheckPLM.Enabled = true;
@@ -381,7 +381,7 @@ namespace BrodieTheatre
             plmConnected = true;
             timerCheckPLM.Enabled = false;
             formMain.labelPLMstatus.Text = "Connected";
-            formMain.writeLog("Insteon:  Connected to PLM");
+            Logging.writeLog("Insteon:  Connected to PLM");
             formMain.labelPLMstatus.ForeColor = System.Drawing.Color.ForestGreen;
             formMain.insteonPoll();
         }
@@ -396,14 +396,14 @@ namespace BrodieTheatre
                     if (insteonMotionLatchExpires < rightNow)
                     {
                         insteonMotionLatchActive = false;
-                        writeLog("Insteon:  Latch timer expired - setting room vacant");
+                        Logging.writeLog("Insteon:  Latch timer expired - setting room vacant");
                         labelRoomOccupancy.Text = "Vacant";
                         labelMotionSensorStatus.Text = "No Motion";
                         vacancyWarning = false;
                     }
                     else if (insteonMotionLatchExpires.AddMinutes(-1) < rightNow && !vacancyWarning)
                     {
-                        writeLog("Insteon:  One minute warning to vacancy");
+                        Logging.writeLog("Insteon:  One minute warning to vacancy");
                         vacancyWarning = true;
                     }
                     else
@@ -423,11 +423,11 @@ namespace BrodieTheatre
         {
             if (!explicitMotion)
             {
-                writeLog("Insteon:  Implied room occupancy detected");
+                Logging.writeLog("Insteon:  Implied room occupancy detected");
             }
             else if (labelMotionSensorStatus.Text != "Motion Detected")
             {
-                writeLog("Insteon:  Motion Sensor reported 'Motion Detected'");
+                Logging.writeLog("Insteon:  Motion Sensor reported 'Motion Detected'");
                 labelMotionSensorStatus.Text = "Motion Detected";
             }
             vacancyWarning = false;

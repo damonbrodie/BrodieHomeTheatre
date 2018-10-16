@@ -59,7 +59,7 @@ namespace BrodieTheatre
 
         private void lightsToStoppedLevel()
         {
-            writeLog("Lighting:  Setting lights to Stopped Level");
+            Logging.writeLog("Lighting:  Setting lights to Stopped Level");
             toolStripStatus.Text = "Setting lights to Stopped Level";
             queueLightLevel(Properties.Settings.Default.potsAddress, Properties.Settings.Default.potsStoppedLevel);
             trackBarPots.Value = Properties.Settings.Default.potsStoppedLevel;
@@ -70,7 +70,7 @@ namespace BrodieTheatre
 
         private void lightsOn()
         {
-            writeLog("Lighting:  Setting lights to On");
+            Logging.writeLog("Lighting:  Setting lights to On");
             toolStripStatus.Text = "Turning lights on";
             queueLightLevel(Properties.Settings.Default.potsAddress, 100);
             trackBarPots.Value = trackBarPots.Maximum;
@@ -81,7 +81,7 @@ namespace BrodieTheatre
 
         private void lightsToEnteringLevel()
         {
-            writeLog("Lighting:  Setting lights to Occupancy Level");
+            Logging.writeLog("Lighting:  Setting lights to Occupancy Level");
             toolStripStatus.Text = "Turning on lights to Occupancy Level";
             queueLightLevel(Properties.Settings.Default.potsAddress, Properties.Settings.Default.potsEnteringLevel);
             trackBarPots.Value = Properties.Settings.Default.potsEnteringLevel;
@@ -92,7 +92,7 @@ namespace BrodieTheatre
 
         private void lightsOff()
         {
-            writeLog("Lighting:  Setting lights to Off");
+            Logging.writeLog("Lighting:  Setting lights to Off");
             toolStripStatus.Text = "Turning lights off";
             queueLightLevel(Properties.Settings.Default.potsAddress, 0);
             trackBarPots.Value = trackBarPots.Minimum;
@@ -103,7 +103,7 @@ namespace BrodieTheatre
 
         private void lightsToPlaybackLevel()
         {
-            writeLog("Lighting:  Setting lights to Playback Level");
+            Logging.writeLog("Lighting:  Setting lights to Playback Level");
             toolStripStatus.Text = "Dimming lights to Playback Level";
             queueLightLevel(Properties.Settings.Default.potsAddress, Properties.Settings.Default.potsPlaybackLevel);
             trackBarPots.Value = Properties.Settings.Default.potsPlaybackLevel;
@@ -114,7 +114,7 @@ namespace BrodieTheatre
 
         private void lightsToPausedLevel()
         {
-            writeLog("Lighting:  Setting lights to Paused Level");
+            Logging.writeLog("Lighting:  Setting lights to Paused Level");
             toolStripStatus.Text = "Setting lights to Paused Level";
             queueLightLevel(Properties.Settings.Default.potsAddress, Properties.Settings.Default.potsPausedLevel);
             trackBarPots.Value = Properties.Settings.Default.potsPausedLevel;
@@ -138,7 +138,7 @@ namespace BrodieTheatre
 
         public void queueLightLevel(string address, int level)
         {
-            writeLog("Lighting:  Queuing light '" + address + "' to level '" + level.ToString() + "'");
+            Logging.writeLog("Lighting:  Queuing light '" + address + "' to level '" + level.ToString() + "'");
             lights[address] = level;
         }
     }

@@ -60,7 +60,7 @@ namespace BrodieTheatre
             {
                 if (logMessage != "")
                 {
-                    writeLog("Projector:  " + logMessage);
+                    Logging.writeLog("Projector:  " + logMessage);
                 }
                 serialPortProjector.Write(full_command);
             }
@@ -95,7 +95,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.toolStripStatus.Text = "Lens change - received: " + response;
-                        formMain.writeLog("Projector:  Received lens change response '" + response + "'");
+                        Logging.writeLog("Projector:  Received lens change response '" + response + "'");
                     }));
                     break;
             }
@@ -151,13 +151,13 @@ namespace BrodieTheatre
             {
                 projectorSendCommand("Change to narrow aspect", pj_codes[0]);
                 labelProjectorLensAspect.Text = "Narrow";
-                writeLog("Projector:  Changing lens aspect ratio to 'narrow'");
+                Logging.writeLog("Projector:  Changing lens aspect ratio to 'narrow'");
             }
             else if (aspect >= 1.9 && (force || labelProjectorLensAspect.Text != "Wide"))
             {
                 projectorSendCommand("Change to wide aspect", pj_codes[1]);
                 labelProjectorLensAspect.Text = "Wide";
-                writeLog("Projector:  Changing lens aspect ratio to 'wide'");
+                Logging.writeLog("Projector:  Changing lens aspect ratio to 'wide'");
             }
             projectorCommand.force = false;
         }
@@ -172,7 +172,7 @@ namespace BrodieTheatre
                 if (timerProjectorControl.Enabled == true)
                 {
                     // Wait for the last Aspect change to finish
-                    writeLog("Projector:  Queueing Aspect Ratio change - " + aspect.ToString());
+                    Logging.writeLog("Projector:  Queueing Aspect Ratio change - " + aspect.ToString());
                     projectorCommand.newAspect = aspect;
                     projectorCommand.force = force;
                 }
@@ -224,7 +224,7 @@ namespace BrodieTheatre
             projectorCommand.force = true;
             if (timerProjectorControl.Enabled == true)
             {
-                writeLog("Projector:  Queueing Powering On");
+                Logging.writeLog("Projector:  Queueing Powering On");
                 projectorCommand.powerCommand = "001";
             }
             else
@@ -244,7 +244,7 @@ namespace BrodieTheatre
             
             if (timerProjectorControl.Enabled == true)
             {
-                writeLog("Projector:  Queueing Powering Off");
+                Logging.writeLog("Projector:  Queueing Powering Off");
                 projectorCommand.powerCommand = "000";
             }
             else

@@ -49,42 +49,42 @@ namespace BrodieTheatre
                     case "F12":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.writeLog("Keyboard:  Caught keypress 'F12'");
+                            Logging.writeLog("Keyboard:  Caught keypress 'F12'");
                             formMain.lightsToEnteringLevel();
                         }));
                         break;
                     case "F11":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.writeLog("Keyboard:  Caught keypress 'F11'");
+                            Logging.writeLog("Keyboard:  Caught keypress 'F11'");
                             formMain.lightsOff();
                         }));
                         break;
                     case "F9":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.writeLog("Keyboard:  Caught keypress 'F9'");
+                            Logging.writeLog("Keyboard:  Caught keypress 'F9'");
                             formMain.lightsToStoppedLevel();
                         }));
                         break;
                     case "F7":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.writeLog("Keyboard:  Caught keypress 'F7'");
+                            Logging.writeLog("Keyboard:  Caught keypress 'F7'");
                             formMain.lightsToPlaybackLevel();
                         }));
                         break;
                     case "F5":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.writeLog("Keyboard:  Caught keypress 'F5'");
+                            Logging.writeLog("Keyboard:  Caught keypress 'F5'");
                             formMain.projectorQueueChangeAspect((float)1.85);
                         }));
                         break;
                     case "F4":
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.writeLog("Keyboard:  Caught keypress 'F4'");
+                            Logging.writeLog("Keyboard:  Caught keypress 'F4'");
                             formMain.projectorQueueChangeAspect((float)2.0);
                         }));
                         break;

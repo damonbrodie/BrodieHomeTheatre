@@ -32,6 +32,7 @@ namespace BrodieTheatre
         public int statusTickCounter = 0;
         public Random random = new Random();
         public bool vacancyWarning = false;
+        private SimpleHTTPServer simpleHTTPServer;
 
         public bool debugInsteon = false;
         public bool debugHarmony = false;
@@ -41,7 +42,7 @@ namespace BrodieTheatre
             hookID = SetHook(proc);
             formMain = this;
             InitializeComponent();
-            writeLog("------ Brodie Theatre Starting Up ------");
+            Logging.writeLog("------ Brodie Theatre Starting Up ------");
             if (Properties.Settings.Default.startMinimized)
             {
                 this.WindowState = FormWindowState.Minimized;
@@ -92,6 +93,9 @@ namespace BrodieTheatre
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
+
+            formMain.simpleHTTPServer = new SimpleHTTPServer(@"c:\Temp", 8001);
+
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerSetLights.Enabled = true;
@@ -185,8 +189,14 @@ namespace BrodieTheatre
             {
                 powerlineModem.Dispose();
             }
+            try
+            {
+                simpleHTTPServer.Stop();
+            }
+            catch { };
+
             UnhookWindowsHookEx(hookID);
-            writeLog("------ Brodie Theatre Shutting Down ------");
+            Logging.writeLog("------ Brodie Theatre Shutting Down ------");
         }
 
         private void timerGlobal_Tick(object sender, EventArgs e)
@@ -208,8 +218,8 @@ namespace BrodieTheatre
             if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelKodiPlaybackStatus.Text != "Playing")
             {
                 if (globalShutdown.AddMinutes(-1) <= now && ! globalShutdownWarning)
-                {      
-                    writeLog("Global Timer:  One minute warning for global shutdown");
+                {
+                    Logging.writeLog("Global Timer:  One minute warning for global shutdown");
                     //int r = random.Next(ttsWarningPhrases.Count);
                     //speakText(ttsWarningPhrases[r]);           
                     globalShutdownWarning = true;
@@ -221,14 +231,14 @@ namespace BrodieTheatre
                     toolStripProgressBarGlobal.Value = percentage;
                     if (! globalShutdownActive)
                     {
-                        writeLog("Global Timer:  Timer active");
+                        Logging.writeLog("Global Timer:  Timer active");
                     }
                     globalShutdownActive = true;
                     return;
                 }
                 else
                 {
-                    writeLog("Global Timer:  Shutting down theatre");
+                    Logging.writeLog("Global Timer:  Shutting down theatre");
                     globalShutdownActive = false;
                     globalShutdownWarning = false;
                     if (harmonyIsActivityStarted())
@@ -242,7 +252,7 @@ namespace BrodieTheatre
             }
             if (globalShutdownActive)
             {
-                writeLog("Global Timer:  Disabling timer");
+                Logging.writeLog("Global Timer:  Disabling timer");
                 globalShutdownActive = false;
                 if (labelRoomOccupancy.Text != "Vacant")
                 {
@@ -262,7 +272,7 @@ namespace BrodieTheatre
         {
             if (labelRoomOccupancy.Text == "Occupied")
             {
-                writeLog("Occupancy:  Room Occupied");
+                Logging.writeLog("Occupancy:  Room Occupied");
                 resetGlobalTimer();
 
                 if (!harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
@@ -283,7 +293,7 @@ namespace BrodieTheatre
                         harmonyStartActivityByName("PowerOff");
                     }
 
-                    writeLog("Occupancy:  Room vacant");
+                    Logging.writeLog("Occupancy:  Room vacant");
                     toolStripStatus.Text = "Room is now vacant";
                     lightsOff();
                 }
@@ -318,15 +328,20 @@ namespace BrodieTheatre
             if (labelRoomOccupancy.Text == "Occupied")
             {
                 labelRoomOccupancy.Text = "Vacant";
-                writeLog("Occupancy:  Overriding Room to Vacant");
+                Logging.writeLog("Occupancy:  Overriding Room to Vacant");
                 insteonMotionLatchActive = false;
             }
             else
             {
                 labelRoomOccupancy.Text = "Occupied";
                 insteonDoMotion(false);
-                writeLog("Occupancy:  Overriding Room to Occupied");
+                Logging.writeLog("Occupancy:  Overriding Room to Occupied");
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            text_to_mp3("Hello Damon");
         }
     }
 }

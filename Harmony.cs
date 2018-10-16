@@ -27,7 +27,7 @@ namespace BrodieTheatre
             var currentActivityID = "";
             formMain.BeginInvoke(new Action(() =>
             {
-                formMain.writeLog("Harmony:  Connecting to Hub");
+                Logging.writeLog("Harmony:  Connecting to Hub");
             }));
             try
             {
@@ -36,7 +36,7 @@ namespace BrodieTheatre
                 currentActivityID = await Program.Client.GetCurrentActivityAsync();
                 formMain.BeginInvoke(new Action(() =>
                 {
-                    formMain.writeLog("Harmony:  Connected to Hub, current activity ID is '" + currentActivityID + "'");
+                    Logging.writeLog("Harmony:  Connected to Hub, current activity ID is '" + currentActivityID + "'");
                 }));
                 if (currentActivityID != "-1")
                 {
@@ -53,7 +53,7 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                formMain.writeLog("Harmony:  Cannot connect to Harmony Hub '" + ex.ToString());
+                Logging.writeLog("Harmony:  Cannot connect to Harmony Hub '" + ex.ToString());
                 }));
                 error = true;
             }
@@ -71,7 +71,7 @@ namespace BrodieTheatre
         {
             formMain.BeginInvoke(new Action(() =>
             {
-                formMain.writeLog("Harmony:  Hub message received with current activity ID '" + activityID + "'");
+                Logging.writeLog("Harmony:  Hub message received with current activity ID '" + activityID + "'");
                 formMain.harmonyUpdateActivities(activityID);
             }));
             if (activityID == "-1")
@@ -124,7 +124,7 @@ namespace BrodieTheatre
                                 // This is meant to be called only if we are in an out of sync state
                                 formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.writeLog("Harmony:  Activity disabled - Powering off projector");
+                                    Logging.writeLog("Harmony:  Activity disabled - Powering off projector");
                                     formMain.projectorPowerOff();
                                     formMain.fanDelayPowerOff();
                                 }));
@@ -134,7 +134,7 @@ namespace BrodieTheatre
                                 // This is meant to be called only if we are in an out of sync state
                                 formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.writeLog("Harmony:  Activity enabled - Powering on projector");
+                                    Logging.writeLog("Harmony:  Activity enabled - Powering on projector");
                                     formMain.projectorPowerOn();
                                     formMain.fanPowerOn();
                                     formMain.setDelayedLightTimer();
@@ -165,7 +165,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Harmony:  Cannot update Harmony Activities");
+                        Logging.writeLog("Harmony:  Cannot update Harmony Activities");
                     }));
                     counter += 1;
                 }
@@ -202,7 +202,7 @@ namespace BrodieTheatre
                                         await Program.Client.SendCommandAsync(currDevice.Id, function.Name);
                                         formMain.BeginInvoke(new Action(() =>
                                         {
-                                            formMain.writeLog("Harmony:  Sent Command '" + function.Name + "' to ID '" + currDevice.Id + "'");
+                                            Logging.writeLog("Harmony:  Sent Command '" + function.Name + "' to ID '" + currDevice.Id + "'");
                                         }));
                                         return;
                                     }
@@ -215,7 +215,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Harmony:  Failed to send Harmony Command");
+                        Logging.writeLog("Harmony:  Failed to send Harmony Command");
                     }));
                     Program.Client.Dispose();
                     await harmonyConnectAsync(false);
@@ -234,7 +234,7 @@ namespace BrodieTheatre
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
-                        formMain.writeLog("Harmony:  Starting Activity '" + activityName + "' Id '" + activityId + "'");
+                        Logging.writeLog("Harmony:  Starting Activity '" + activityName + "' Id '" + activityId + "'");
                         formMain.toolStripStatus.Text = "Starting Harmony activity - " + activityName;
                         formMain.labelCurrentActivity.Text = activityName;
 
@@ -275,7 +275,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.toolStripStatus.Text = "Harmony Timeout - reconnecting";
-                        formMain.writeLog("Harmony:  Error starting activity");
+                        Logging.writeLog("Harmony:  Error starting activity");
                     }));
                     Program.Client.Dispose();
                     await harmonyConnectAsync(false);
@@ -300,7 +300,7 @@ namespace BrodieTheatre
                     return;
                 }
             }
-            writeLog("Harmony:  Unknown Activity - cound not start by Name");
+            Logging.writeLog("Harmony:  Unknown Activity - cound not start by Name");
         }
 
         private async void timerHarmonyPoll_Tick(object sender, EventArgs e)
@@ -320,7 +320,7 @@ namespace BrodieTheatre
                     {
                         formMain.BeginInvoke(new Action(() =>
                         {
-                            formMain.writeLog("Harmony:  Error Polling Hub");
+                            Logging.writeLog("Harmony:  Error Polling Hub");
                         }));
                     }
                     formMain.BeginInvoke(new Action(() =>
@@ -337,7 +337,7 @@ namespace BrodieTheatre
                     {
                         if (debugHarmony)
                         {
-                            formMain.writeLog("Harmony:  Poll Hub - current activity '" + currentActivityID + "'");
+                            Logging.writeLog("Harmony:  Poll Hub - current activity '" + currentActivityID + "'");
                         }
                         formMain.toolStripStatus.Text = "Poll Harmony Hub for updated activities";
                     }));

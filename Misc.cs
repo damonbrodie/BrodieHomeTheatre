@@ -1,15 +1,14 @@
 ﻿using System;
 using System.IO;
-using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
 namespace BrodieTheatre
 {
-    public partial class FormMain : Form
+    public class Logging
     {
-        public async void writeLog(string Message)
+        public static void writeLog(string Message)
         {
             DateTime now = DateTime.Now;
             int counter = 0;
@@ -26,12 +25,14 @@ namespace BrodieTheatre
                 }
                 catch
                 {
-                    counter += 1;
-                    await doDelay(50);
+
                 }
             }
         }
+    }
 
+    public partial class FormMain : Form
+    {
         async Task doDelay(int ms)
         {
             await Task.Delay(ms);

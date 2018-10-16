@@ -50,13 +50,13 @@ namespace BrodieTheatre
                 fanDelayShutoffTime = DateTime.Now.AddMinutes(Properties.Settings.Default.fanDelayOff);
                 formMain.progressBarExhaustFan.Value = formMain.progressBarExhaustFan.Maximum;
                 formMain.timerExhaustFanDelay.Enabled = true;
-                formMain.writeLog("Fan:  Queueing Exhaust Fan power off");
+                Logging.writeLog("Fan:  Queueing Exhaust Fan power off");
             }
         }
         private void fanPowerOn()
         {
             insteonSetRelay(Properties.Settings.Default.fanAddress, true);
-            formMain.writeLog("Fan:  Powering on Exhaust Fan");
+            Logging.writeLog("Fan:  Powering on Exhaust Fan");
             updateFanStatus(true);
 
         }
@@ -66,7 +66,7 @@ namespace BrodieTheatre
             insteonSetRelay(Properties.Settings.Default.fanAddress, false);
             formMain.timerExhaustFanDelay.Enabled = false;
             formMain.progressBarExhaustFan.Value = formMain.progressBarExhaustFan.Minimum;
-            formMain.writeLog("Fan:  Powering off Exhaust Fan");
+            Logging.writeLog("Fan:  Powering off Exhaust Fan");
 
             updateFanStatus(false);
 
