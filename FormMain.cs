@@ -43,6 +43,8 @@ namespace BrodieTheatre
         private SimpleHTTPServer simpleHTTPServer;
         Grpc.Core.Channel googleCloudChannel;
 
+        private IReceiver googleHomeReceiver;
+
         static public Dictionary<string, MemoryStream> textToSpeechFiles = new Dictionary<string, MemoryStream>();
 
         public bool debugInsteon = false;
@@ -100,6 +102,16 @@ namespace BrodieTheatre
             {
                 timerStartLights.Interval = Properties.Settings.Default.lightingDelayProjectorOn * 1000;
             }
+
+            var receivers = await new DeviceLocator().FindReceiversAsync();
+
+            foreach (var receiver in receivers)
+            {
+                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
+                {
+                    googleHomeReceiver = receiver;
+                }
+            }
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
@@ -118,8 +130,17 @@ namespace BrodieTheatre
                 }
             }
 
-            
-            if (Properties.Settings.Default.webServerPort > 0 && Properties.Settings.Default.webServerPort <= 65535)
+            var receivers = await new DeviceLocator().FindReceiversAsync();
+
+            foreach (var receiver in receivers)
+            {
+                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
+                {
+                    googleHomeReceiver = receiver;
+                }
+            }
+
+                    if (Properties.Settings.Default.webServerPort > 0 && Properties.Settings.Default.webServerPort <= 65535)
             formMain.simpleHTTPServer = new SimpleHTTPServer(Properties.Settings.Default.webServerPort);
 
             formMain.BeginInvoke(new Action(() =>
@@ -368,25 +389,16 @@ namespace BrodieTheatre
         private async void button1_Click(object sender, EventArgs e)
         {
             string speechAudioFile = text_to_mp3("Welcome to da swamp", googleCloudChannel);
-
-            var receivers = await new DeviceLocator().FindReceiversAsync();
-
             var tempSender = new Sender();
 
-            foreach (var receiver in receivers)
-            {
-                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
-                {            
-                    await tempSender.ConnectAsync(receiver);
-                    var mediaChannel = tempSender.GetChannel<IMediaChannel>();
-                    await tempSender.LaunchAsync(mediaChannel);
-                    string url = "http://10.0.0.5:8001/" + speechAudioFile;
-                    Logging.writeLog("Serving: " + url);
+            await tempSender.ConnectAsync(googleHomeReceiver);
+            var mediaChannel = tempSender.GetChannel<IMediaChannel>();
+            await tempSender.LaunchAsync(mediaChannel);
+            string url = "http://10.0.0.5:8001/" + speechAudioFile;
+            Logging.writeLog("Serving: " + url);
 
-                    var mediaStatus = await mediaChannel.LoadAsync(new MediaInformation() { ContentId = url });
+            var mediaStatus = await mediaChannel.LoadAsync(new MediaInformation() { ContentId = url });
 
-                }
-            }
         }
     }
 }
