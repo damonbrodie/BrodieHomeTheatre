@@ -45,6 +45,8 @@ namespace BrodieTheatre
 
         private IReceiver googleHomeReceiver;
 
+        private string localIP;
+
         static public Dictionary<string, MemoryStream> textToSpeechFiles = new Dictionary<string, MemoryStream>();
 
         public bool debugInsteon = false;
@@ -129,6 +131,8 @@ namespace BrodieTheatre
                     Logging.writeLog("Error:  Unable to load Google Credentials for Cloud - Text-To-Speech:  " + ex.ToString());
                 }
             }
+
+            localIP = GetLocalIPAddress();
 
             var receivers = await new DeviceLocator().FindReceiversAsync();
 
@@ -394,7 +398,7 @@ namespace BrodieTheatre
             await tempSender.ConnectAsync(googleHomeReceiver);
             var mediaChannel = tempSender.GetChannel<IMediaChannel>();
             await tempSender.LaunchAsync(mediaChannel);
-            string url = "http://10.0.0.5:8001/" + speechAudioFile;
+            string url = "http://" + localIP +  ":" + Properties.Settings.Default.webServerPort + "/" + speechAudioFile;
             Logging.writeLog("Serving: " + url);
 
             var mediaStatus = await mediaChannel.LoadAsync(new MediaInformation() { ContentId = url });
