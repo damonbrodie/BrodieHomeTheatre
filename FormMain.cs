@@ -24,13 +24,12 @@ namespace BrodieTheatre
           Mapped keypresses
            F12 - Lights to Entering level
            F11 - Lights Off
-           F9  - Lights to Sopped level
+           F9  - Lights to Stopped level
            F7  - Lights to Playback level
            F6  - Projector Lens Kodi Menu (Not captured by App)
            F5  - Projector Lens to Narrow aspect ratio
            F4  - Projector Lens to Wide aspect ratio
            F3  - Kodi next audio languuage (Not captured by App)
-           F2  - Toggle Voice playback control
         */
 
         static FormMain formMain;
@@ -254,7 +253,7 @@ namespace BrodieTheatre
         {
             /* Reasons the timer should be ticking down if either of these is TRUE
                - A light is on
-               - A Harmony Activity is active
+               - A Harmony Activity is active, but playback is not playing
 
                The timer should not be active if the following are all TRUE:
                - The lights are Off
@@ -271,7 +270,6 @@ namespace BrodieTheatre
                 if (globalShutdown.AddMinutes(-1) <= now && ! globalShutdownWarning)
                 {
                     Logging.writeLog("Global Timer:  One minute warning for global shutdown");
-                    //int r = random.Next(ttsWarningPhrases.Count);
                     //speakText(ttsWarningPhrases[r]);           
                     globalShutdownWarning = true;
                     return;
@@ -388,21 +386,6 @@ namespace BrodieTheatre
                 insteonDoMotion(false);
                 Logging.writeLog("Occupancy:  Overriding Room to Occupied");
             }
-        }
-
-        private async void button1_Click(object sender, EventArgs e)
-        {
-            string speechAudioFile = text_to_mp3("Welcome to da swamp", googleCloudChannel);
-            var tempSender = new Sender();
-
-            await tempSender.ConnectAsync(googleHomeReceiver);
-            var mediaChannel = tempSender.GetChannel<IMediaChannel>();
-            await tempSender.LaunchAsync(mediaChannel);
-            string url = "http://" + localIP +  ":" + Properties.Settings.Default.webServerPort + "/" + speechAudioFile;
-            Logging.writeLog("Serving: " + url);
-
-            var mediaStatus = await mediaChannel.LoadAsync(new MediaInformation() { ContentId = url });
-
         }
     }
 }
