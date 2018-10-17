@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using Google.Cloud.TextToSpeech.V1;
 
 
@@ -10,7 +11,6 @@ namespace BrodieTheatre
     {
         public string text_to_mp3(string text, Grpc.Core.Channel channel)
         {
-
             TextToSpeechClient client = TextToSpeechClient.Create(channel);
 
             var input = new SynthesisInput
@@ -32,17 +32,15 @@ namespace BrodieTheatre
 
             var response = client.SynthesizeSpeech(input, voiceSelection, audioConfig);
 
-            MemoryStream tempStream = new MemoryStream();
-            response.AudioContent.WriteTo(tempStream);
-
             string filename = Guid.NewGuid().ToString() + ".mp3";
-
             Logging.writeLog("Google:  Text-To-Speech for '" + text + "' at:  " + filename);
 
-            FormMain.textToSpeechFiles[filename] = tempStream;
+            MemoryStream newTextToSpeech = new MemoryStream();
+            response.AudioContent.WriteTo(newTextToSpeech);
+
+            textToSpeechFiles[filename] = newTextToSpeech;
 
             return filename;
         }
     }
-
 }

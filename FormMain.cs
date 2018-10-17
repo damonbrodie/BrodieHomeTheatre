@@ -5,6 +5,9 @@ using System.Windows.Forms;
 using Google.Apis.Auth.OAuth2;
 using Grpc.Auth;
 using Google.Cloud.TextToSpeech.V1;
+using GoogleCast;
+using GoogleCast.Models.Media;
+using GoogleCast.Channels;
 
 
 namespace BrodieTheatre
@@ -101,7 +104,6 @@ namespace BrodieTheatre
 
         private async void FormMain_Load(object sender, EventArgs e)
         {
-
             if (File.Exists(Properties.Settings.Default.googleCloudCredentialsJSON))
             {
                 try
@@ -363,9 +365,28 @@ namespace BrodieTheatre
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
-            string temp = text_to_mp3("Hello Damon", googleCloudChannel);
+            string speechAudioFile = text_to_mp3("Welcome to da swamp", googleCloudChannel);
+
+            var receivers = await new DeviceLocator().FindReceiversAsync();
+
+            var tempSender = new Sender();
+
+            foreach (var receiver in receivers)
+            {
+                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
+                {            
+                    await tempSender.ConnectAsync(receiver);
+                    var mediaChannel = tempSender.GetChannel<IMediaChannel>();
+                    await tempSender.LaunchAsync(mediaChannel);
+                    string url = "http://10.0.0.5:8001/" + speechAudioFile;
+                    Logging.writeLog("Serving: " + url);
+
+                    var mediaStatus = await mediaChannel.LoadAsync(new MediaInformation() { ContentId = url });
+
+                }
+            }
         }
     }
 }

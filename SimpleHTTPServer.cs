@@ -135,24 +135,23 @@ class SimpleHTTPServer
         {
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
         }
- 
+        BrodieTheatre.Logging.writeLog("Received web request for:  " + filename);
         if (BrodieTheatre.FormMain.textToSpeechFiles.ContainsKey(filename))
         {
             try
             {
-                MemoryStream input = BrodieTheatre.FormMain.textToSpeechFiles[filename];
-                
-                //Adding permanent http response headers
+                Stream input = BrodieTheatre.FormMain.textToSpeechFiles[filename];
 
-                context.Response.ContentType = "audio/mpeg3";
+                input.Seek(0, 0);
+
+                //Adding permanent http response headers
+                context.Response.ContentType = "audio/mpeg";
                 context.Response.ContentLength64 = input.Length;
                 context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
                 context.Response.AddHeader("Last-Modified", DateTime.Now.ToString("r"));
  
                 byte[] buffer = new byte[1024 * 16];
                 int nbytes;
-
-                input.Seek(0,0);
 
                 while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
                     context.Response.OutputStream.Write(buffer, 0, nbytes);
