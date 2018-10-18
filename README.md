@@ -52,11 +52,11 @@ https://github.com/OmerTu/GoogleHomeKodi
 Using this voice solution I can:
 - Turn on/off the projector. "Hey Google, turn on/off the projector".  This is mapped directly to the Harmony 
 Activity.
-- Start movies or TV shows.  "Hey Google, theatre start movie Deadpool".  While the grammar is ackward, this 
-will be captured by Google HomeKodi which performs media lookups and then if the media matches it fires the Kodi 
-RPC apis and starts the media.
+- Start movies or TV shows.  "Hey Google, theatre start movie Deadpool".  While the grammar is awkward, this 
+will be captured by GoogleHomeKodi which performs media lookups and then if the media matches it fires the Kodi 
+RPC APIs to start the media.
 - Pause/unpause media playback.  "Hey Google, theatre pause".  This is captured by GoogleHomeKodi which in turn 
-fires the Kodi RPC apis.  My app notices changes in Kodi playback and will then further take action like altering 
+fires the Kodi RPC APIs.  My app notices changes in Kodi playback and will then further take action like altering 
 lighting.
 
 ## Internal Web Server
