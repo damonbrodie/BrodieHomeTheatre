@@ -321,10 +321,10 @@ namespace BrodieTheatre
 
         private void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
         {
+            resetGlobalTimer();
             if (labelRoomOccupancy.Text == "Occupied")
             {
                 Logging.writeLog("Occupancy:  Room Occupied");
-                resetGlobalTimer();
 
                 if (!harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
                 {
@@ -335,22 +335,8 @@ namespace BrodieTheatre
             }
             else if (labelRoomOccupancy.Text == "Vacant")
             {
-                if (labelKodiPlaybackStatus.Text == "Stopped")
-                {
-                    if (harmonyIsActivityStarted())
-                    {
-                        // Turn off active Harmony Activity
-                        harmonyStartActivityByName("PowerOff");
-                    }
-
-                    Logging.writeLog("Occupancy:  Room vacant");
-                    toolStripStatus.Text = "Room is now vacant";
-                    lightsOff();
-                }
-                else // There is playback or it is paused.  Start the timer to shut this off after configured time
-                {
-                    resetGlobalTimer();
-                }
+                Logging.writeLog("Occupancy:  Room vacant");
+                toolStripStatus.Text = "Room is now vacant";
             }
         }
 
