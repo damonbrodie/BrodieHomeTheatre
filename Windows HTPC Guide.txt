@@ -36,10 +36,8 @@ After Install completes:
 
 
 Personal Config:
-- Install Sound Blaster Z Software
-- Install Chrome
 - Install BrodieTheatre App, add to RestartonCrash
-- Install Vantech 2 port Serial port driver
+- Install Vantech 2 port Serial port driver (if not installed by Windows)
 - Create Documents\Shared and then Enable the File Sharing for that folder
 - Set desktop background to black
 - Remove Recycle bin icon:  Taskbar Settings > Turn system icons on or off
