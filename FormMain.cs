@@ -270,7 +270,7 @@ namespace BrodieTheatre
                 if (globalShutdown.AddMinutes(-1) <= now && ! globalShutdownWarning)
                 {
                     Logging.writeLog("Global Timer:  One minute warning for global shutdown");
-                    //speakText(ttsWarningPhrases[r]);           
+                    announce("Shutting down lights and projector in one minute");
                     globalShutdownWarning = true;
                     return;
                 }
@@ -299,6 +299,7 @@ namespace BrodieTheatre
                     return;
                 }
             }
+            /*  Comment this out for now - causing problems?
             if (globalShutdownActive)
             {
                 Logging.writeLog("Global Timer:  Disabling timer");
@@ -308,6 +309,7 @@ namespace BrodieTheatre
                     labelRoomOccupancy.Text = "Vacant";
                 }
             }
+            */
             toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
         }
 
