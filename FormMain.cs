@@ -329,7 +329,6 @@ namespace BrodieTheatre
                 if (!harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     lightsToEnteringLevel();
-                    kodiUpdateLibrary();
                 }
 
                 toolStripStatus.Text = "Room is now occupied";

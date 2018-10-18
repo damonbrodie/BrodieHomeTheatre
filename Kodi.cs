@@ -327,11 +327,6 @@ namespace BrodieTheatre
             timerKodiConnect.Enabled = enableTimer;
         }
 
-        public void kodiUpdateLibrary()
-        {
-            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"VideoLibrary.Scan\", \"id\": \"95\"}");
-        }
-
         public void kodiToggleFullscreen()
         {
             kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Input.ExecuteAction\", \"params\": { \"action\" : \"togglefullscreen\" }, \"id\": \"96\"}");
