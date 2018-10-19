@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using Google.Cloud.TextToSpeech.V1;
 
 

@@ -6,8 +6,6 @@ using Google.Apis.Auth.OAuth2;
 using Grpc.Auth;
 using Google.Cloud.TextToSpeech.V1;
 using GoogleCast;
-using GoogleCast.Models.Media;
-using GoogleCast.Channels;
 
 
 namespace BrodieTheatre
