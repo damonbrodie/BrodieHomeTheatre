@@ -35,7 +35,6 @@ namespace BrodieTheatre
         public bool globalShutdownActive = false;
         public bool globalShutdownWarning = false;
         public int statusTickCounter = 0;
-        public Random random = new Random();
         public bool vacancyWarning = false;
         private SimpleHTTPServer simpleHTTPServer;
         Grpc.Core.Channel googleCloudChannel;
