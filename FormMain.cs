@@ -101,15 +101,7 @@ namespace BrodieTheatre
                 timerStartLights.Interval = Properties.Settings.Default.lightingDelayProjectorOn * 1000;
             }
 
-            var receivers = await new DeviceLocator().FindReceiversAsync();
 
-            foreach (var receiver in receivers)
-            {
-                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
-                {
-                    googleHomeReceiver = receiver;
-                }
-            }
         }
 
         private async void FormMain_Load(object sender, EventArgs e)

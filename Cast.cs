@@ -9,6 +9,19 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
+        private async void connectReceiver()
+        {
+            var receivers = await new DeviceLocator().FindReceiversAsync();
+
+            foreach (var receiver in receivers)
+            {
+                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
+                {
+                    googleHomeReceiver = receiver;
+                }
+            }
+        }
+
         private async void announce(string text)
         {
             string speechAudioFile = text_to_mp3(text, googleCloudChannel);
