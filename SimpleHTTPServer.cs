@@ -110,9 +110,19 @@ class SimpleHTTPServer
     {
         _listener = new HttpListener();
         _listener.Prefixes.Add("http://*:" + _port.ToString() + "/");
-        _listener.Start();
-        BrodieTheatre.Logging.writeLog("Web server starting on port: " + _port.ToString());
-        while (true)
+        bool serverStarted = false;
+        try
+        {
+            _listener.Start();
+            serverStarted = true;
+            BrodieTheatre.Logging.writeLog("Web server starting on port: " + _port.ToString());
+        }
+        catch (Exception ex)
+        {
+            BrodieTheatre.Logging.writeLog("Error:  Unable to start web server on port: " + _port.ToString() + " Netsh acl rule missing?");
+            BrodieTheatre.Logging.writeLog(ex.ToString());
+        }
+        while (serverStarted)
         {
             try
             {
