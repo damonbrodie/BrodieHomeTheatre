@@ -100,8 +100,7 @@ namespace BrodieTheatre
             {
                 timerStartLights.Interval = Properties.Settings.Default.lightingDelayProjectorOn * 1000;
             }
-
-
+            connectReceiver();
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
@@ -121,20 +120,12 @@ namespace BrodieTheatre
             }
 
             localIP = GetLocalIPAddress();
+            connectReceiver();
 
-            var receivers = await new DeviceLocator().FindReceiversAsync();
-
-            foreach (var receiver in receivers)
+            if (Properties.Settings.Default.webServerPort > 0 && Properties.Settings.Default.webServerPort <= 65535)
             {
-                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
-                {
-                    googleHomeReceiver = receiver;
-                }
+                formMain.simpleHTTPServer = new SimpleHTTPServer(Properties.Settings.Default.webServerPort);
             }
-
-                    if (Properties.Settings.Default.webServerPort > 0 && Properties.Settings.Default.webServerPort <= 65535)
-            formMain.simpleHTTPServer = new SimpleHTTPServer(Properties.Settings.Default.webServerPort);
-
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerSetLights.Enabled = true;
