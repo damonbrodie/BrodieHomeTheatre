@@ -760,7 +760,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(675, 455);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.groupBox4);
@@ -877,6 +876,5 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ProgressBar progressBarExhaustFan;
         private System.Windows.Forms.Timer timerExhaustFanDelay;
-        private System.Windows.Forms.Button button1;
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Forms;
-using System.Collections.Generic;
 using GoogleCast;
 using GoogleCast.Channels;
 using GoogleCast.Models.Media;
@@ -17,8 +15,8 @@ namespace BrodieTheatre
             var castSender = new Sender();
 
             await castSender.ConnectAsync(googleHomeReceiver);
-            var mediaChannel = castSSender.GetChannel<IMediaChannel>();
-            await tempSender.LaunchAsync(mediaChannel);
+            var mediaChannel = castSender.GetChannel<IMediaChannel>();
+            await castSender.LaunchAsync(mediaChannel);
             string url = "http://" + localIP +  ":" + Properties.Settings.Default.webServerPort + "/" + speechAudioFile;
             Logging.writeLog("Serving announcement '" + text + "' at: " + url);
 
@@ -28,7 +26,7 @@ namespace BrodieTheatre
             }
             catch (Exception ex)
             {
-                Logging.writelog("Google Cast:  Timeout casting");
+                Logging.writeLog("Google Cast:  Timeout casting: " + ex.ToString());
             }
         }
     }

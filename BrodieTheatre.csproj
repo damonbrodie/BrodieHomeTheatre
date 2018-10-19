@@ -227,6 +227,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cast.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Fan.cs">
       <SubType>Form</SubType>
     </Compile>
