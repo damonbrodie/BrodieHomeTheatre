@@ -8,5 +8,3 @@ In the meantime the following issues are known to exist:
 - Projector code is specific to Panasonic
 - Only two Insteon lights can be supported.  This should be made more generic so that
   it can support a configurable number
-- The voice recognition and text-to-speech only work if the Language in Windows is set
-  to US English.  This probably should have better error handling.
