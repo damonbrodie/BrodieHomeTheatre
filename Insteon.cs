@@ -128,7 +128,7 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             //Only need to reset the timer if it is on
-                            formMain.resetGlobalTimer();
+                            formMain.ResetGlobalTimer();
                         }
                         ));
                     }
@@ -150,7 +150,7 @@ namespace BrodieTheatre
                         formMain.BeginInvoke(new Action(() =>
                         {
                             //Only need to reset the timer if it is on
-                            formMain.resetGlobalTimer();
+                            formMain.ResetGlobalTimer();
                         }
                         ));
                     }
@@ -211,7 +211,7 @@ namespace BrodieTheatre
                 }
                 // No matter if the door is opened or closed, we turn on the lights if the room is idle.
 
-                if (!harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped" && labelRoomOccupancy.Text != "Occupied")
+                if (!HarmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped" && labelRoomOccupancy.Text != "Occupied")
                 {
                     formMain.BeginInvoke(new Action(() =>
                     {
@@ -312,7 +312,7 @@ namespace BrodieTheatre
                         Logging.writeLog("Insteon:  Set light '" + address + "' to level '" + level.ToString() + "'");
                         if (toInt > 0)
                         {
-                            resetGlobalTimer();
+                            ResetGlobalTimer();
                         }
                         return;
                     }
@@ -432,7 +432,7 @@ namespace BrodieTheatre
             }
             vacancyWarning = false;
             labelRoomOccupancy.Text = "Occupied";
-            resetGlobalTimer();
+            ResetGlobalTimer();
             insteonMotionLatchActive = false;
         }
 

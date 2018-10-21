@@ -143,14 +143,14 @@
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.SettingsToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // listBoxActivities
             // 
@@ -159,7 +159,7 @@
             this.listBoxActivities.Name = "listBoxActivities";
             this.listBoxActivities.Size = new System.Drawing.Size(149, 82);
             this.listBoxActivities.TabIndex = 1;
-            this.listBoxActivities.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listBoxActivities_MouseDoubleClick);
+            this.listBoxActivities.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListBoxActivities_MouseDoubleClick);
             // 
             // labelHarmonyStatus
             // 
@@ -512,7 +512,7 @@
             this.labelProjectorPower.TabIndex = 22;
             this.labelProjectorPower.Text = "Unknown";
             this.labelProjectorPower.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelProjectorPower.TextChanged += new System.EventHandler(this.labelProjectorPower_TextChanged);
+            this.labelProjectorPower.TextChanged += new System.EventHandler(this.LabelProjectorPower_TextChanged);
             // 
             // label11
             // 
@@ -639,13 +639,13 @@
             this.toolStripStatus.Name = "toolStripStatus";
             this.toolStripStatus.Size = new System.Drawing.Size(14, 19);
             this.toolStripStatus.Text = " ";
-            this.toolStripStatus.TextChanged += new System.EventHandler(this.toolStripStatus_TextChanged);
+            this.toolStripStatus.TextChanged += new System.EventHandler(this.ToolStripStatus_TextChanged);
             // 
             // timerClearStatus
             // 
             this.timerClearStatus.Enabled = true;
             this.timerClearStatus.Interval = 5000;
-            this.timerClearStatus.Tick += new System.EventHandler(this.timerClearStatus_Tick);
+            this.timerClearStatus.Tick += new System.EventHandler(this.TimerClearStatus_Tick);
             // 
             // timerStartLights
             // 
@@ -661,7 +661,7 @@
             // 
             this.timerGlobal.Enabled = true;
             this.timerGlobal.Interval = 1000;
-            this.timerGlobal.Tick += new System.EventHandler(this.timerGlobal_Tick);
+            this.timerGlobal.Tick += new System.EventHandler(this.TimerGlobal_Tick);
             // 
             // groupBox5
             // 
@@ -683,8 +683,8 @@
             this.labelRoomOccupancy.TabIndex = 20;
             this.labelRoomOccupancy.Text = "Unknown";
             this.labelRoomOccupancy.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelRoomOccupancy.TextChanged += new System.EventHandler(this.labelRoomOccupancy_TextChanged);
-            this.labelRoomOccupancy.Click += new System.EventHandler(this.labelRoomOccupancy_Click);
+            this.labelRoomOccupancy.TextChanged += new System.EventHandler(this.LabelRoomOccupancy_TextChanged);
+            this.labelRoomOccupancy.Click += new System.EventHandler(this.LabelRoomOccupancy_Click);
             // 
             // label10
             // 
@@ -747,7 +747,7 @@
             // 
             this.timerHarmonyPoll.Enabled = true;
             this.timerHarmonyPoll.Interval = 30000;
-            this.timerHarmonyPoll.Tick += new System.EventHandler(this.timerHarmonyPoll_Tick);
+            this.timerHarmonyPoll.Tick += new System.EventHandler(this.TimerHarmonyPoll_Tick);
             // 
             // timerExhaustFanDelay
             // 

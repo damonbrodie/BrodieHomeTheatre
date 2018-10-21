@@ -63,15 +63,15 @@ namespace BrodieTheatre
                 this.WindowState = FormWindowState.Normal;
             }
 
-            resetGlobalTimer();
+            ResetGlobalTimer();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
-        private async void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form formSettings = new FormSettings();
             formSettings.ShowDialog();
@@ -86,7 +86,7 @@ namespace BrodieTheatre
             if (currentHarmonyIP != Properties.Settings.Default.harmonyHubIP)
             {
                 currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
-                await harmonyConnectAsync(true);
+                await HarmonyConnectAsync(true);
             }
 
             if (currentKodiIP != Properties.Settings.Default.kodiIP || currentKodiPort != Properties.Settings.Default.kodiJSONPort)
@@ -100,7 +100,7 @@ namespace BrodieTheatre
             {
                 timerStartLights.Interval = Properties.Settings.Default.lightingDelayProjectorOn * 1000;
             }
-            connectReceiver();
+            ConnectReceiver();
         }
 
         private async void FormMain_Load(object sender, EventArgs e)
@@ -120,7 +120,7 @@ namespace BrodieTheatre
             }
 
             localIP = GetLocalIPAddress();
-            connectReceiver();
+            ConnectReceiver();
 
             if (Properties.Settings.Default.webServerPort > 0 && Properties.Settings.Default.webServerPort <= 65535)
             {
@@ -129,7 +129,7 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.timerSetLights.Enabled = true;
-                formMain.resetGlobalTimer();
+                formMain.ResetGlobalTimer();
             }));
 
             currentPLMport = Properties.Settings.Default.plmPort;
@@ -151,10 +151,10 @@ namespace BrodieTheatre
                 lights[Properties.Settings.Default.trayAddress] = -1;
             }
 
-            await harmonyConnectAsync(true);
+            await HarmonyConnectAsync(true);
             if (Program.Client != null)
             {
-                Program.Client.OnActivityChanged += harmonyClient_OnActivityChanged;
+                Program.Client.OnActivityChanged += HarmonyClient_OnActivityChanged;
             }
             currentHarmonyIP = Properties.Settings.Default.harmonyHubIP;
             if (Program.Client != null && Program.Client.Token != string.Empty)
@@ -185,7 +185,7 @@ namespace BrodieTheatre
             }));
         }
 
-        private void timerClearStatus_Tick(object sender, EventArgs e)
+        private void TimerClearStatus_Tick(object sender, EventArgs e)
         {
             if (statusTickCounter > 0)
             {
@@ -197,7 +197,7 @@ namespace BrodieTheatre
             }
         }
 
-        private void toolStripStatus_TextChanged(object sender, EventArgs e)
+        private void ToolStripStatus_TextChanged(object sender, EventArgs e)
         {
             if (toolStripStatus.Text != string.Empty)
             {
@@ -229,7 +229,7 @@ namespace BrodieTheatre
             Logging.writeLog("------ Brodie Theatre Shutting Down ------");
         }
 
-        private void timerGlobal_Tick(object sender, EventArgs e)
+        private void TimerGlobal_Tick(object sender, EventArgs e)
         {
             /* Reasons the timer should be ticking down if either of these is TRUE
                - A light is on
@@ -245,12 +245,12 @@ namespace BrodieTheatre
             var totalSeconds = (globalShutdown - globalShutdownStart).TotalSeconds;
             var progress = (now - globalShutdownStart).TotalSeconds;
 
-            if ((harmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelKodiPlaybackStatus.Text != "Playing")
+            if ((HarmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelKodiPlaybackStatus.Text != "Playing")
             {
                 if (globalShutdown.AddMinutes(-1) <= now && ! globalShutdownWarning)
                 {
                     Logging.writeLog("Global Timer:  One minute warning for global shutdown");
-                    announce("Shutting down lights and projector in one minute");
+                    Announce("Shutting down lights and projector in one minute");
                     globalShutdownWarning = true;
                     return;
                 }
@@ -270,9 +270,9 @@ namespace BrodieTheatre
                     Logging.writeLog("Global Timer:  Shutting down theatre");
                     globalShutdownActive = false;
                     globalShutdownWarning = false;
-                    if (harmonyIsActivityStarted())
+                    if (HarmonyIsActivityStarted())
                     {
-                        harmonyStartActivityByName("PowerOff", false);
+                        HarmonyStartActivityByName("PowerOff", false);
                     }
                     toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
                     lightsOff();
@@ -293,20 +293,20 @@ namespace BrodieTheatre
             toolStripProgressBarGlobal.Value = toolStripProgressBarGlobal.Minimum;
         }
 
-        private void listBoxActivities_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void ListBoxActivities_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Activities activity = (Activities)listBoxActivities.SelectedItem;
-            harmonyStartActivity(activity.Text, activity.Id, true);
+            HarmonyStartActivity(activity.Text, activity.Id, true);
         }
 
-        private void labelRoomOccupancy_TextChanged(object sender, EventArgs e)
+        private void LabelRoomOccupancy_TextChanged(object sender, EventArgs e)
         {
-            resetGlobalTimer();
+            ResetGlobalTimer();
             if (labelRoomOccupancy.Text == "Occupied")
             {
                 Logging.writeLog("Occupancy:  Room Occupied");
 
-                if (!harmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
+                if (!HarmonyIsActivityStarted() && labelKodiPlaybackStatus.Text == "Stopped")
                 {
                     lightsToEnteringLevel();
                 }
@@ -320,14 +320,14 @@ namespace BrodieTheatre
             }
         }
 
-        private void resetGlobalTimer()
+        private void ResetGlobalTimer()
         {
             globalShutdown = DateTime.Now.AddMinutes(Properties.Settings.Default.globalShutdown);
             globalShutdownWarning = false;
             //writeLog("Global Timer:  Resetting shutdown timer");
         }
 
-        private void labelProjectorPower_TextChanged(object sender, EventArgs e)
+        private void LabelProjectorPower_TextChanged(object sender, EventArgs e)
         {
             if (labelProjectorPower.Text == "On")
             {
@@ -339,7 +339,7 @@ namespace BrodieTheatre
             }
         }
 
-        private void labelRoomOccupancy_Click(object sender, EventArgs e)
+        private void LabelRoomOccupancy_Click(object sender, EventArgs e)
         {
             if (labelRoomOccupancy.Text == "Occupied")
             {

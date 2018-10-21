@@ -21,7 +21,7 @@ namespace BrodieTheatre
         }
         public string currentHarmonyIP;
 
-        private async Task harmonyConnectAsync(bool shouldUpdate = true)
+        private async Task HarmonyConnectAsync(bool shouldUpdate = true)
         {
             bool error = false;
             var currentActivityID = "";
@@ -62,17 +62,17 @@ namespace BrodieTheatre
                 await doDelay(3000);
                 formMain.BeginInvoke(new Action(() =>
                 { 
-                    formMain.harmonyUpdateActivities(currentActivityID);
+                    formMain.HarmonyUpdateActivities(currentActivityID);
                 }));           
             }
         }
 
-        private async void harmonyClient_OnActivityChanged(object sender, string activityID)
+        private async void HarmonyClient_OnActivityChanged(object sender, string activityID)
         {
             formMain.BeginInvoke(new Action(() =>
             {
                 Logging.writeLog("Harmony:  Hub message received with current activity ID '" + activityID + "'");
-                formMain.harmonyUpdateActivities(activityID);
+                formMain.HarmonyUpdateActivities(activityID);
             }));
             if (activityID == "-1")
             {
@@ -99,7 +99,7 @@ namespace BrodieTheatre
             }
         }
 
-        private async void harmonyUpdateActivities(string currentActivityID)
+        private async void HarmonyUpdateActivities(string currentActivityID)
         {
             int counter = 0;
             while (counter < 3)
@@ -144,15 +144,17 @@ namespace BrodieTheatre
                             {
                                 formMain.BeginInvoke(new Action(() =>
                                 {
-                                    formMain.resetGlobalTimer();
+                                    formMain.ResetGlobalTimer();
                                 }));
                             }
                         }
                         else
                         {
-                            Activities item = new Activities();
-                            item.Id = activity.Id;
-                            item.Text = activity.Label;
+                            Activities item = new Activities
+                            {
+                                Id = activity.Id,
+                                Text = activity.Label
+                            };
                             formMain.BeginInvoke(new Action(() =>
                             {
                                 formMain.listBoxActivities.Items.Add(item);
@@ -172,7 +174,7 @@ namespace BrodieTheatre
             }
         }
 
-        public bool harmonyIsActivityStarted()
+        public bool HarmonyIsActivityStarted()
         {
             if (labelCurrentActivity.Text == "PowerOff" || labelCurrentActivity.Text == String.Empty)
             {
@@ -181,7 +183,7 @@ namespace BrodieTheatre
             return true;
         }
 
-        private async void harmonySendCommand(string device, string deviceFunction)
+        private async void HarmonySendCommand(string device, string deviceFunction)
         {
             int counter = 0;
             while (counter < 3)
@@ -218,14 +220,14 @@ namespace BrodieTheatre
                         Logging.writeLog("Harmony:  Failed to send Harmony Command");
                     }));
                     Program.Client.Dispose();
-                    await harmonyConnectAsync(false);
+                    await HarmonyConnectAsync(false);
                     counter += 1;
                 }
             }
         }
 
         // Start Harmony Activity
-        private async void harmonyStartActivity(string activityName, string activityId, bool forceLights=true)
+        private async void HarmonyStartActivity(string activityName, string activityId, bool forceLights=true)
         {
             int counter = 0;
             while (counter < 3)
@@ -278,17 +280,17 @@ namespace BrodieTheatre
                         Logging.writeLog("Harmony:  Error starting activity");
                     }));
                     Program.Client.Dispose();
-                    await harmonyConnectAsync(false);
+                    await HarmonyConnectAsync(false);
                     counter += 1;
                 }
             }
         }
 
-        private void harmonyStartActivityByName(string activityName, bool forceLights = true)
+        private void HarmonyStartActivityByName(string activityName, bool forceLights = true)
         {
             if (activityName == "PowerOff")
             {
-                harmonyStartActivity("PowerOff", "-1", false);
+                HarmonyStartActivity("PowerOff", "-1", false);
                 return;
             }
             for (int i = 0; i < listBoxActivities.Items.Count; i++)
@@ -296,14 +298,14 @@ namespace BrodieTheatre
                 Activities currItem = (Activities)listBoxActivities.Items[i];
                 if (currItem.Text == activityName)
                 {      
-                    harmonyStartActivity(activityName, currItem.Id, forceLights);
+                    HarmonyStartActivity(activityName, currItem.Id, forceLights);
                     return;
                 }
             }
             Logging.writeLog("Harmony:  Unknown Activity - cound not start by Name");
         }
 
-        private async void timerHarmonyPoll_Tick(object sender, EventArgs e)
+        private async void TimerHarmonyPoll_Tick(object sender, EventArgs e)
         {
             timerHarmonyPoll.Interval = 60000;          
             if (labelHarmonyStatus.Text == "Connected")
@@ -344,7 +346,7 @@ namespace BrodieTheatre
                     return;
                 }
             }
-            await harmonyConnectAsync(true);
+            await HarmonyConnectAsync(true);
         }
     }
 }

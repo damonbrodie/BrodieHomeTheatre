@@ -9,7 +9,7 @@ namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        private async void connectReceiver()
+        private async void ConnectReceiver()
         {
             var receivers = await new DeviceLocator().FindReceiversAsync();
 
@@ -22,7 +22,7 @@ namespace BrodieTheatre
             }
         }
 
-        private async void announce(string text)
+        private async void Announce(string text)
         {
             string speechAudioFile = text_to_mp3(text, googleCloudChannel);
             var castSender = new Sender();
