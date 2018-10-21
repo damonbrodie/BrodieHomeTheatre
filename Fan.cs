@@ -19,23 +19,30 @@ namespace BrodieTheatre
                 formMain.labelFanStatus.Text = "Powered On";
                 formMain.buttonFanPower.Text = "Power Off";
             }
-
         }
 
         private void timerExhaustFanDelay_Tick(object sender, EventArgs e)
         {
-            DateTime now = DateTime.Now;
-            DateTime exhaustDelayStart = fanDelayShutoffTime.AddMinutes(Properties.Settings.Default.fanDelayOff * -1);
-            var totalSeconds = (fanDelayShutoffTime - exhaustDelayStart).TotalSeconds;
-            var progress = (now - exhaustDelayStart).TotalSeconds;
-            int percentage = Math.Abs(100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
-            formMain.progressBarExhaustFan.Value = percentage;
-
-            if (fanDelayShutoffTime < now)
+            if (HarmonyIsActivityStarted())
             {
+                DateTime now = DateTime.Now;
+                DateTime exhaustDelayStart = fanDelayShutoffTime.AddMinutes(Properties.Settings.Default.fanDelayOff * -1);
+                var totalSeconds = (fanDelayShutoffTime - exhaustDelayStart).TotalSeconds;
+                var progress = (now - exhaustDelayStart).TotalSeconds;
+                int percentage = Math.Abs(100 - (Convert.ToInt32((progress / totalSeconds) * 100) + 1));
+                formMain.progressBarExhaustFan.Value = percentage;
+    
+                if (fanDelayShutoffTime < now)
+                {
+                    formMain.progressBarExhaustFan.Value = progressBarExhaustFan.Minimum;
+                    formMain.timerExhaustFanDelay.Enabled = false;
+                    fanPowerOff();
+                }
+            }
+            else
+            {
+                // While the AV gear is on, don't count down.
                 formMain.progressBarExhaustFan.Value = progressBarExhaustFan.Minimum;
-                formMain.timerExhaustFanDelay.Enabled = false;
-                fanPowerOff();
             }
         }
 
@@ -53,6 +60,7 @@ namespace BrodieTheatre
                 Logging.writeLog("Fan:  Queueing Exhaust Fan power off");
             }
         }
+
         private void fanPowerOn()
         {
             insteonSetRelay(Properties.Settings.Default.fanAddress, true);
