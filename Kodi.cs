@@ -5,17 +5,12 @@ using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 
 namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        public string kodiBehindScreen = @"smb://10.0.0.7/Pictures/ht_0.jpg";
-        public string mediaDolbyDemo   = @"smb://10.0.0.7/Demos/Intros/Dolby Atmos - Amaze.m2ts";
-        public string mediaTHXDemo     = @"smb://10.0.0.7/Demos/Intros/THX - Amazing Life.mkv";
-
         public bool kodiIsConnected = false;
         public string currentKodiIP = "";
         public int currentKodiPort = 0;
@@ -236,7 +231,8 @@ namespace BrodieTheatre
                             try
                             {
                                 projectorQueueChangeAspect(float.Parse(kodiAspectRatio));
-                                Logging.writeLog("Kodi:  Received Aspect Ratio: '" + kodiAspectRatio + "'");                            }
+                                Logging.writeLog("Kodi:  Received Aspect Ratio: '" + kodiAspectRatio + "'");
+                            }
                             catch (FormatException)
                             {
                                 Logging.writeLog("Kodi:  Invalid Aspect Ratio: '" + kodiAspectRatio + "'");
@@ -249,45 +245,6 @@ namespace BrodieTheatre
             {
                 Logging.writeLog("Kodi:  Received unknown JSON:  " + jsonText);
             }
-        }
-
-        public List<string> getShortTitles(string name)
-        {
-            List<string> nameList = new List<string>();
-            bool ended = false;
-            bool firstOne = true;
-            int startPos = 0;
-            while (! ended)
-            {
-                int firstPos = name.IndexOf(" ", startPos);
-                startPos = firstPos + 1;
-                if (!firstOne)
-                {
-                    if (firstPos > 0)
-                    {
-                        string cut = name.Substring(0, firstPos);
-                        nameList.Add(cut);
-                    }
-                    else
-                    {
-                        ended = true;
-                    }
-                }
-                if (startPos >= name.Length)
-                {
-                    ended = true;
-                }
-                firstOne = false;
-            }
-            return nameList;
-        }
-
-        public string cleanString(string name)
-        {
-            string newName = Regex.Replace(name, @"\&", " and ");
-            newName = Regex.Replace(newName, @"[^a-zA-Z0-9\s\']", " ");
-            newName = Regex.Replace(newName, @"\s+", " ");
-            return newName;
         }
 
         public void kodiSendJson(string command)
@@ -337,16 +294,6 @@ namespace BrodieTheatre
         private void timerKodiConnect_Tick(object sender, EventArgs e)
         {
             kodiConnect();
-        }
-
-        private void kodiShowNotification(string title, string message, int displaytime = 5000)
-        {
-            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"GUI.ShowNotification\", \"params\": { \"title\" : \"" + title + "\", \"message\" : \"" + message + "\", \"displaytime\" : " + displaytime.ToString() + "}, \"id\": \"1\"}");
-        }
-
-        private void kodiShowBehindScreen()
-        {
-            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiBehindScreen + "\" }}, \"id\": \"1\"}");
         }
 
         private void timerKodiPoll_Tick(object sender, EventArgs e)
