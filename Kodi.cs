@@ -174,7 +174,7 @@ namespace BrodieTheatre
             }
             if (result.ContainsKey("id") && result["id"] == "99")
             {
-                // Our submitted request for Player Get Properties
+                // Our submitted request for Player Get Properties.  Examples:
                 // PLAYING {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"vc1","height":1080,"index":0,"language":"","name":"FraMeSToR VC-1 Video","width":1920},"speed":1,"type":"video"}}
                 // PAUSED  {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"vc1","height":1080,"index":0,"language":"","name":"FraMeSToR VC-1 Video","width":1920},"speed":0,"type":"video"}}
                 // STOPPED {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"","height":0,"index":0,"language":"","name":"","width":0},"speed":0,"type":"video"}}
@@ -325,11 +325,6 @@ namespace BrodieTheatre
             labelKodiStatus.Text = "Disconnected";
             labelKodiStatus.ForeColor = System.Drawing.Color.Maroon;
             timerKodiConnect.Enabled = enableTimer;
-        }
-
-        public void kodiToggleFullscreen()
-        {
-            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Input.ExecuteAction\", \"params\": { \"action\" : \"togglefullscreen\" }, \"id\": \"96\"}");
         }
 
         private void kodiPlaybackControl(string command, string media=null)

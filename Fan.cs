@@ -66,7 +66,6 @@ namespace BrodieTheatre
             insteonSetRelay(Properties.Settings.Default.fanAddress, true);
             Logging.writeLog("Fan:  Powering on Exhaust Fan");
             updateFanStatus(true);
-
         }
 
         private void fanPowerOff()
@@ -77,7 +76,6 @@ namespace BrodieTheatre
             Logging.writeLog("Fan:  Powering off Exhaust Fan");
 
             updateFanStatus(false);
-
         }
 
         private void buttonFanPower_Click(object sender, EventArgs e)
@@ -85,7 +83,6 @@ namespace BrodieTheatre
             if (formMain.buttonFanPower.Text == "Power On")
             {
                 fanPowerOn();
-                
             }
             else
             {

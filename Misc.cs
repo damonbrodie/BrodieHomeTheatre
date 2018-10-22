@@ -25,10 +25,7 @@ namespace BrodieTheatre
                         success = true;
                     }
                 }
-                catch
-                {
-
-                }
+                catch { }
             }
         }
     }

@@ -214,7 +214,7 @@ namespace BrodieTheatre
                     Program.Client.Dispose();
                 }
             }
-            catch { };
+            catch { }
             if (powerlineModem != null)
             {
                 powerlineModem.Dispose();
@@ -223,7 +223,7 @@ namespace BrodieTheatre
             {
                 simpleHTTPServer.Stop();
             }
-            catch { };
+            catch { }
 
             UnhookWindowsHookEx(hookID);
             Logging.writeLog("------ Brodie Theatre Shutting Down ------");

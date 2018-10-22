@@ -121,16 +121,14 @@ namespace BrodieTheatre
                     {
                         Logging.writeLog("Insteon:  Received Tray dimmer update from PLM - level '" + level.ToString() + "'");
                         formMain.trackBarTray.Value = level;
-                    }
-                    ));
+                    }));
                     if (level > 0)
                     {
                         formMain.BeginInvoke(new Action(() =>
                         {
                             //Only need to reset the timer if it is on
                             formMain.ResetGlobalTimer();
-                        }
-                        ));
+                        }));
                     }
                 }
             }
@@ -143,16 +141,14 @@ namespace BrodieTheatre
                     {
                         Logging.writeLog("Insteon:  Received Pots dimmer update from PLM - level '" + level.ToString() + "'");
                         formMain.trackBarPots.Value = level;
-                    }
-                    ));
+                    }));
                     if (level > 0)
                     {
                         formMain.BeginInvoke(new Action(() =>
                         {
                             //Only need to reset the timer if it is on
                             formMain.ResetGlobalTimer();
-                        }
-                        ));
+                        }));
                     }
                 }
             }
@@ -164,8 +160,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.insteonDoMotion(true);
-                    }
-                    ));
+                    }));
                 }
                 else if (state == 0)
                 { //No Motion Detected
@@ -179,8 +174,7 @@ namespace BrodieTheatre
                             formMain.insteonMotionLatchActive = true;
                             formMain.labelMotionSensorStatus.Text = "No Motion";
                         }
-                    }
-                    ));
+                    }));
                 }
             }
             else if (address == Properties.Settings.Default.doorSensorAddress)
@@ -197,8 +191,7 @@ namespace BrodieTheatre
                     {
                         Logging.writeLog("Insteon:  Door Opened");
                         formMain.toolStripStatus.Text = "Door Opened";
-                    }
-                    ));
+                    }));
                 }
                 else if (state == 0)
                 { //Door Closed
@@ -206,8 +199,7 @@ namespace BrodieTheatre
                     {
                         Logging.writeLog("Insteon:  Door Closed");
                         formMain.toolStripStatus.Text = "Door Closed";
-                    }
-                    ));
+                    }));
                 }
                 // No matter if the door is opened or closed, we turn on the lights if the room is idle.
 
@@ -216,8 +208,7 @@ namespace BrodieTheatre
                     formMain.BeginInvoke(new Action(() =>
                     {
                         formMain.insteonDoMotion(true);
-                    }
-                    ));
+                    }));
                 }
             }
             else if (address == Properties.Settings.Default.fanAddress)
@@ -229,8 +220,7 @@ namespace BrodieTheatre
                     {
                         Logging.writeLog("Insteon:  Received Fan Switch update from PLM - 'On'");
                         formMain.updateFanStatus(true);
-                    }
-                    ));
+                    }));
                 }
                 else if (level == 0)
                 {
@@ -238,8 +228,7 @@ namespace BrodieTheatre
                     {
                         Logging.writeLog("Insteon:  Received Fan Switch update from PLM - 'Off'");
                         formMain.updateFanStatus(false);
-                    }
-                    ));
+                    }));
                 }
             }
             else
@@ -371,8 +360,7 @@ namespace BrodieTheatre
                     labelPLMstatus.ForeColor = System.Drawing.Color.Maroon;
                     timerPLMreceive.Enabled = false;
                     timerCheckPLM.Enabled = true;
-                }
-                ));
+                }));
             }
         }
 
@@ -441,14 +429,12 @@ namespace BrodieTheatre
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.trackBarTray.Value = insteonGetLightLevel(Properties.Settings.Default.trayAddress);
-            }
-            ));
+            }));
             await doDelay(1200);
             formMain.BeginInvoke(new Action(() =>
             {
                 formMain.trackBarPots.Value = insteonGetLightLevel(Properties.Settings.Default.potsAddress);
-            }
-            ));
+            }));
             await doDelay(1200);
             formMain.BeginInvoke(new Action(() =>
             {
@@ -461,8 +447,7 @@ namespace BrodieTheatre
                 {
                     updateFanStatus(true);
                 }
-            }
-            ));
+            }));
         }
 
         private void timerInsteonPoll_Tick(object sender, EventArgs e)
