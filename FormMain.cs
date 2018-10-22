@@ -56,7 +56,7 @@ namespace BrodieTheatre
             Logging.writeLog("------ Brodie Theatre Starting Up ------");
             if (Properties.Settings.Default.startMinimized)
             {
-              //  this.WindowState = FormWindowState.Minimized;
+                this.WindowState = FormWindowState.Minimized;
             }
             else
             {
