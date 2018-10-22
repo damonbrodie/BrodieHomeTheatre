@@ -144,8 +144,8 @@
     <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
-    <Reference Include="GoogleCast, Version=1.6.6.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GoogleCast.1.6.6\lib\netstandard2.0\GoogleCast.dll</HintPath>
+    <Reference Include="GoogleCast, Version=1.6.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GoogleCast.1.6.7\lib\netstandard2.0\GoogleCast.dll</HintPath>
     </Reference>
     <Reference Include="Grpc.Auth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d754f35622e28bad, processorArchitecture=MSIL">
       <HintPath>..\packages\Grpc.Auth.1.16.0-pre1\lib\net45\Grpc.Auth.dll</HintPath>
