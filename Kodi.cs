@@ -4,7 +4,6 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -201,16 +200,6 @@ namespace BrodieTheatre
                     Logging.writeLog("Kodi:  Error parsing Kodi JSON: '" + jsonText + "'");
                 }
             }
-            
-            else if (result.ContainsKey("id") && result["id"] == "95")
-            {
-                // Don't process this any further at the moment
-            }
-            else if (result.ContainsKey("id") && result["id"] == "96")
-            {
-                // Don't process this any further at the moment
-            }
-  
             else if (result.ContainsKey("method"))
             {
                 switch (result["method"])
