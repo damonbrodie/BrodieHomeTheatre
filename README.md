@@ -63,6 +63,6 @@ lighting.
 
 The solution runs an internal webserver running on port 8001.  This must be added to the Windows ACL:
 
-netsh http add urlacl url=http://*:8001/ user=everyone
+**netsh http add urlacl url=http://*:8001/ user=everyone**
 
-It must also be added as an permitted inbound port in the Windows Firewall.
+It must also be added as a permitted inbound port in the **Windows Firewall**.
