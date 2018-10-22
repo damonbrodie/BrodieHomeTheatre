@@ -18,10 +18,6 @@
                 components.Dispose();
             }
             base.Dispose(disposing);
-            kodiStreamReader.Dispose();
-            kodiStreamWriter.Dispose();
-            powerlineModem.Dispose();
-            tcpClient.Dispose();
         }
 
         #region Windows Form Designer generated code

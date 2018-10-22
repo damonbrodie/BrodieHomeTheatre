@@ -17,6 +17,17 @@ namespace BrodieTheatre
             InitializeComponent();
         }
 
+        public class ComboboxSmartSpeakerItem
+        {
+            public string Text { get; set; }
+            public string Id { get; set; }
+
+            public override string ToString()
+            {
+                return Text;
+            }
+        }
+
         private void buttonSave_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.harmonyHubIP                = textBoxHarmonyHubIP.Text;
@@ -42,8 +53,10 @@ namespace BrodieTheatre
             Properties.Settings.Default.insteonMotionLatch          = trackBarInsteonMotionMinimumTime.Value;
             Properties.Settings.Default.lightingDelayProjectorOn    = trackBarDelayLightingProjectorStart.Value;
             Properties.Settings.Default.fanDelayOff                 = trackBarExhaustFanDelayOff.Value;
-            Properties.Settings.Default.SmartSpeaker                = comboBoxSmartSpeakers.Text;
             Properties.Settings.Default.googleCloudCredentialsJSON  = textBoxGoogleCredentialsFile.Text;
+
+            ComboboxSmartSpeakerItem item = comboBoxSmartSpeakers.SelectedItem as ComboboxSmartSpeakerItem;
+            Properties.Settings.Default.SmartSpeaker = item.Id.ToString();
 
             Properties.Settings.Default.Save();
             this.Close();
@@ -69,10 +82,15 @@ namespace BrodieTheatre
             receivers = await new DeviceLocator().FindReceiversAsync();
             foreach (var receiver in receivers)
             {
-                comboBoxSmartSpeakers.Items.Add(receiver.FriendlyName);
-                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
+                ComboboxSmartSpeakerItem item = new ComboboxSmartSpeakerItem
                 {
-                    comboBoxSmartSpeakers.SelectedItem = receiver.FriendlyName;
+                    Text = receiver.FriendlyName,
+                    Id = receiver.Id
+                };
+                int index = comboBoxSmartSpeakers.Items.Add(item);
+                if (receiver.Id == Properties.Settings.Default.SmartSpeaker)
+                {
+                    comboBoxSmartSpeakers.SelectedIndex = index;
                 }
             }
 

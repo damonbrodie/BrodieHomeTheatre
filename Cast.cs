@@ -15,7 +15,7 @@ namespace BrodieTheatre
 
             foreach (var receiver in receivers)
             {
-                if (receiver.FriendlyName == Properties.Settings.Default.SmartSpeaker)
+                if (receiver.Id == Properties.Settings.Default.SmartSpeaker)
                 {
                     googleHomeReceiver = receiver;
                 }
