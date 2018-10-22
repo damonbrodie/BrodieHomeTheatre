@@ -245,7 +245,7 @@ namespace BrodieTheatre
             var totalSeconds = (globalShutdown - globalShutdownStart).TotalSeconds;
             var progress = (now - globalShutdownStart).TotalSeconds;
 
-            if ((HarmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelKodiPlaybackStatus.Text != "Playing" && labelMotionSensorStatus.Text != "Motion Detected")
+            if ((HarmonyIsActivityStarted() || trackBarPots.Value > 0 || trackBarTray.Value > 0) && labelKodiPlaybackStatus.Text != "Playing" && labelRoomOccupancy.Text != "Occupied")
             {
                 if (globalShutdown.AddMinutes(-1) <= now && ! globalShutdownWarning)
                 {
