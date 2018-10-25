@@ -49,7 +49,7 @@ namespace BrodieTheatre
             {
                 _listener.Start();
                 serverStarted = true;
-                Logging.writeLog("Web server starting on port: " + _port.ToString());
+                Logging.writeLog("Web Server: Starting on port '" + _port.ToString() + "'");
             }
             catch (Exception ex)
             {
@@ -98,6 +98,7 @@ namespace BrodieTheatre
         {
             // Knock off the initial slash
             string url = context.Request.Url.AbsolutePath.Substring(1);
+            // The first part of the remaining path tells us if this is a cast call or a command.   Split on that.
             if (url.Contains("/"))
             {
                 string[] parts = url.Split(new char[] { '/' }, 2);
@@ -108,7 +109,7 @@ namespace BrodieTheatre
                         {
                             case "transparent":
                                 var body = new StreamReader(context.Request.InputStream).ReadToEnd();
-                                Logging.writeLog("Received web request for showing behind the screen");
+                                Logging.writeLog("Web Server:  Received request for showing behind the screen");
                                 if (IsAuthorizedToken(body))
                                 {
                                     FormMain.kodiShowBehindScreen();
@@ -139,7 +140,7 @@ namespace BrodieTheatre
                         }
 
 
-                        Logging.writeLog("Received web request for casting:  " + filename);
+                        Logging.writeLog("Web Server:  Received request for casting:  " + filename);
                         if (FormMain.textToSpeechFiles.ContainsKey(filename))
                         {
                             try
@@ -172,7 +173,7 @@ namespace BrodieTheatre
                             catch (Exception ex)
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                                Logging.writeLog("Can't Process message for web server: " + ex.ToString());
+                                Logging.writeLog("Web Server:  Can't Process message: " + ex.ToString());
                             }
                         }
                         break;
