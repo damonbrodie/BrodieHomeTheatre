@@ -30,7 +30,7 @@ namespace BrodieTheatre
             await castSender.ConnectAsync(googleHomeReceiver);
             var mediaChannel = castSender.GetChannel<IMediaChannel>();
             await castSender.LaunchAsync(mediaChannel);
-            string url = "http://" + localIP +  ":" + Properties.Settings.Default.webServerPort + "/" + speechAudioFile;
+            string url = "http://" + localIP +  ":" + Properties.Settings.Default.webServerPort + "/cast/" + speechAudioFile;
             Logging.writeLog("Google Cast:  Serving announcement '" + text + "' at: " + url);
 
             try

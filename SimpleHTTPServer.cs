@@ -69,45 +69,56 @@ class SimpleHTTPServer
  
     private void Process(HttpListenerContext context)
     {
-        string filename = context.Request.Url.AbsolutePath;
-        filename = filename.Substring(1);
+        string url = context.Request.Url.AbsolutePath;
+        BrodieTheatre.Logging.writeLog("HTTP Received:  " + filename);
+        string filename = url.Substring(1);
  
         if (string.IsNullOrEmpty(filename))
         {
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
         }
-        BrodieTheatre.Logging.writeLog("Received web request for:  " + filename);
-        if (BrodieTheatre.FormMain.textToSpeechFiles.ContainsKey(filename))
+
+        if (url.Contains("command"))
         {
-            try
+            BrodieTheatre.Logging.writeLog("Received web request for command:  " + filename);
+        }
+        else if (url.Contains("cast"))
+        {
+            BrodieTheatre.Logging.writeLog("Received web request for casting:  " + filename);
+            if (BrodieTheatre.FormMain.textToSpeechFiles.ContainsKey(filename))
             {
-                Stream input = BrodieTheatre.FormMain.textToSpeechFiles[filename];
-
-                input.Seek(0, 0);
-
-                //Adding permanent http response headers
-                context.Response.ContentType = "audio/mpeg";
-                context.Response.ContentLength64 = input.Length;
-                context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
-                context.Response.AddHeader("Last-Modified", DateTime.Now.ToString("r"));
- 
-                byte[] buffer = new byte[1024 * 16];
-                int nbytes;
-
-                while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                    context.Response.OutputStream.Write(buffer, 0, nbytes);
-                input.Close();
-                
-                context.Response.StatusCode = (int)HttpStatusCode.OK;
-                context.Response.OutputStream.Flush();
-
-                // Dispose of the audio Stream
-                BrodieTheatre.FormMain.textToSpeechFiles.Remove(filename);
-            }
-            catch (Exception ex)
-            {
-                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                BrodieTheatre.Logging.writeLog("Can't Process message for web server: " + ex.ToString());
+                try
+                {
+                    Stream input = BrodieTheatre.FormMain.textToSpeechFiles[filename];
+    
+                    input.Seek(0, 0);
+    
+                    //Adding permanent http response headers
+                    context.Response.ContentType = "audio/mpeg";
+                    context.Response.ContentLength64 = input.Length;
+                    context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
+                    context.Response.AddHeader("Last-Modified", DateTime.Now.ToString("r"));
+     
+                    byte[] buffer = new byte[1024 * 16];
+                    int nbytes;
+    
+                    while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                    {
+                        context.Response.OutputStream.Write(buffer, 0, nbytes);
+                    }
+                    input.Close();
+                    
+                    context.Response.StatusCode = (int)HttpStatusCode.OK;
+                    context.Response.OutputStream.Flush();
+    
+                    // Dispose of the audio Stream
+                    BrodieTheatre.FormMain.textToSpeechFiles.Remove(filename);
+                }
+                catch (Exception ex)
+                {
+                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    BrodieTheatre.Logging.writeLog("Can't Process message for web server: " + ex.ToString());
+                }
             }
         }
         else
