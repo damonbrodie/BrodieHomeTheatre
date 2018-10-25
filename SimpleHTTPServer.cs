@@ -69,56 +69,66 @@ class SimpleHTTPServer
  
     private void Process(HttpListenerContext context)
     {
-        string url = context.Request.Url.AbsolutePath;
-        BrodieTheatre.Logging.writeLog("HTTP Received:  " + filename);
-        string filename = url.Substring(1);
- 
-        if (string.IsNullOrEmpty(filename))
+        // Knock off the initial slash
+        string url = context.Request.Url.AbsolutePath.Substring(1);
+        BrodieTheatre.Logging.writeLog("HTTP Received:  " + url);
+        
+        if (url.Contains("/"))
         {
-            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
-        }
 
-        if (url.Contains("command"))
-        {
-            BrodieTheatre.Logging.writeLog("Received web request for command:  " + filename);
-        }
-        else if (url.Contains("cast"))
-        {
-            BrodieTheatre.Logging.writeLog("Received web request for casting:  " + filename);
-            if (BrodieTheatre.FormMain.textToSpeechFiles.ContainsKey(filename))
+            string[] parts = url.Split(new char[] { '/' }, 2);
+            switch (parts[0])
             {
-                try
-                {
-                    Stream input = BrodieTheatre.FormMain.textToSpeechFiles[filename];
-    
-                    input.Seek(0, 0);
-    
-                    //Adding permanent http response headers
-                    context.Response.ContentType = "audio/mpeg";
-                    context.Response.ContentLength64 = input.Length;
-                    context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
-                    context.Response.AddHeader("Last-Modified", DateTime.Now.ToString("r"));
-     
-                    byte[] buffer = new byte[1024 * 16];
-                    int nbytes;
-    
-                    while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                case "command":
+                    BrodieTheatre.Logging.writeLog("Received web request for command:  " + parts[1]);
+                    break;
+                case "cast":
+                    string filename = parts[1];
+ 
+                    if (string.IsNullOrEmpty(filename))
                     {
-                        context.Response.OutputStream.Write(buffer, 0, nbytes);
+                        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                     }
-                    input.Close();
-                    
-                    context.Response.StatusCode = (int)HttpStatusCode.OK;
-                    context.Response.OutputStream.Flush();
-    
-                    // Dispose of the audio Stream
-                    BrodieTheatre.FormMain.textToSpeechFiles.Remove(filename);
-                }
-                catch (Exception ex)
-                {
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    BrodieTheatre.Logging.writeLog("Can't Process message for web server: " + ex.ToString());
-                }
+
+           
+                    BrodieTheatre.Logging.writeLog("Received web request for casting:  " + filename);
+                    if (BrodieTheatre.FormMain.textToSpeechFiles.ContainsKey(filename))
+                    {
+                        try
+                        {
+                            Stream input = BrodieTheatre.FormMain.textToSpeechFiles[filename];
+
+                            input.Seek(0, 0);
+
+                            //Adding permanent http response headers
+                            context.Response.ContentType = "audio/mpeg";
+                            context.Response.ContentLength64 = input.Length;
+                            context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
+                            context.Response.AddHeader("Last-Modified", DateTime.Now.ToString("r"));
+
+                            byte[] buffer = new byte[1024 * 16];
+                            int nbytes;
+
+                            while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                            {
+                                context.Response.OutputStream.Write(buffer, 0, nbytes);
+                            }
+                            input.Close();
+
+                            context.Response.StatusCode = (int)HttpStatusCode.OK;
+                            context.Response.OutputStream.Flush();
+
+                            // Dispose of the audio Stream
+                            BrodieTheatre.FormMain.textToSpeechFiles.Remove(filename);
+                        }
+                        catch (Exception ex)
+                        {
+                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                            BrodieTheatre.Logging.writeLog("Can't Process message for web server: " + ex.ToString());
+                        }
+                    }
+                    break;
+            
             }
         }
         else

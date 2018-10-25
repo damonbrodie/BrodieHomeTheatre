@@ -354,5 +354,10 @@ namespace BrodieTheatre
                 Logging.writeLog("Occupancy:  Overriding Room to Occupied");
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Announce("Hey there");
+        }
     }
 }
