@@ -5,6 +5,8 @@ using System;
 using System.Net;
 using System.IO;
 using System.Threading;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace BrodieTheatre
 {
@@ -72,37 +74,59 @@ namespace BrodieTheatre
             }
         }
 
+        private bool IsAuthorizedToken(string body)
+        {
+            Dictionary<string, dynamic> result = null;
+            try
+            {
+                result = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(body);
+            }
+            catch
+            {
+                Logging.writeLog("Web Server:  Unable to decode request body for authorization token:  " + body);
+                return false;
+            }
+            if (result != null && result.ContainsKey("token") && result["token"] == Properties.Settings.Default.webServerAuthToken)
+            {
+                return true;
+            }
+            Logging.writeLog("Web Server:  Unauthorized command token");
+            return false;
+        }
+
         private void Process(HttpListenerContext context)
         {
             // Knock off the initial slash
             string url = context.Request.Url.AbsolutePath.Substring(1);
-            Logging.writeLog("HTTP Received:  " + url);
-
             if (url.Contains("/"))
             {
                 string[] parts = url.Split(new char[] { '/' }, 2);
                 switch (parts[0])
                 {
                     case "command":
-                        Logging.writeLog("Received web request for command:  " + parts[1]);
                         switch (parts[1])
                         {
                             case "transparent":
                                 var body = new StreamReader(context.Request.InputStream).ReadToEnd();
-
-                                Logging.writeLog(body.ToString());
                                 Logging.writeLog("Received web request for showing behind the screen");
-                                FormMain.kodiShowBehindScreen();
-                                context.Response.ContentType = "text/html";
-                                context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
-                                context.Response.AddHeader("Last-Modified", DateTime.Now.ToString("r"));
-                                context.Response.StatusCode = (int)HttpStatusCode.OK;
+                                if (IsAuthorizedToken(body))
+                                {
+                                    FormMain.kodiShowBehindScreen();
+                                    context.Response.ContentType = "text/html";
+                                    context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
+                                    context.Response.AddHeader("Last-Modified", DateTime.Now.ToString("r"));
+                                    context.Response.StatusCode = (int)HttpStatusCode.OK;
 
-                                string text = "Ok";
-                                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(text);
+                                    string text = "Ok";
+                                    byte[] bytes = System.Text.Encoding.UTF8.GetBytes(text);
 
-                                context.Response.OutputStream.Write(bytes, 0, bytes.Length);
-                                context.Response.OutputStream.Flush();
+                                    context.Response.OutputStream.Write(bytes, 0, bytes.Length);
+                                    context.Response.OutputStream.Flush();
+                                }
+                                else
+                                {
+                                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                                }
                                 break;
                         }
                         break;
