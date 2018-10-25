@@ -61,6 +61,10 @@ namespace BrodieTheatre
                     HttpListenerContext context = _listener.GetContext();
                     Process(context);
                 }
+                catch (ThreadAbortException)
+                {
+                    // Web server is shutting down - don't bother to log this specifically
+                }
                 catch (Exception ex)
                 {
                     Logging.writeLog("Web Server Failed: " + ex.ToString());
@@ -80,12 +84,22 @@ namespace BrodieTheatre
                 switch (parts[0])
                 {
                     case "command":
-                        BrodieTheatre.Logging.writeLog("Received web request for command:  " + parts[1]);
+                        Logging.writeLog("Received web request for command:  " + parts[1]);
                         switch (parts[1])
                         {
                             case "transparent":
                                 Logging.writeLog("Received web request for showing behind the screen");
                                 FormMain.kodiShowBehindScreen();
+                                context.Response.ContentType = "text/html";
+                                context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
+                                context.Response.AddHeader("Last-Modified", DateTime.Now.ToString("r"));
+                                context.Response.StatusCode = (int)HttpStatusCode.OK;
+
+                                string text = "Ok";
+                                byte[] bytes = System.Text.Encoding.UTF8.GetBytes(text);
+
+                                context.Response.OutputStream.Write(bytes, 0, bytes.Length);
+                                context.Response.OutputStream.Flush();
                                 break;
                         }
                         break;
