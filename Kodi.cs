@@ -7,20 +7,30 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 
 
+/*
+ *  Numbering for JSON Messages
+ * 
+ *  99 - GetPlayer
+ *  98 - Show Image of behing projector
+ * 
+ */
+
 namespace BrodieTheatre
 {
     public partial class FormMain : Form
     {
-        public bool kodiIsConnected = false;
-        public string currentKodiIP = "";
-        public int currentKodiPort = 0;
-        public TcpClient tcpClient;
-        public NetworkStream kodiSocketStream;
-        public StreamReader kodiStreamReader;
-        public StreamWriter kodiStreamWriter;
-        public char[] kodiReadBuffer = new char[1000000];
-        public int kodiReadBufferPos = 0;
-        private void kodiConnect()
+        public static string kodiBehindScreen = @"smb://10.0.0.7/Pictures/ht_0.jpg";
+        public static bool kodiIsConnected = false;
+        public static string currentKodiIP = "";
+        public static int currentKodiPort = 0;
+        public static TcpClient tcpClient;
+        public static NetworkStream kodiSocketStream;
+        public static StreamReader kodiStreamReader;
+        public static StreamWriter kodiStreamWriter;
+        public static char[] kodiReadBuffer = new char[1000000];
+        public static int kodiReadBufferPos = 0;
+
+        private static void kodiConnect()
         {
             if (Properties.Settings.Default.kodiIP != String.Empty && Properties.Settings.Default.kodiJSONPort != 0)
             {
@@ -44,9 +54,12 @@ namespace BrodieTheatre
                             Logging.writeLog("Kodi:  Connected to Kodi JSON port");
                         }
                         kodiIsConnected = true;
-                        labelKodiStatus.Text = "Connected";
-                        labelKodiStatus.ForeColor = System.Drawing.Color.ForestGreen;
-                        timerKodiConnect.Interval = 2000;
+                        formMain.BeginInvoke(new Action(() =>
+                        {
+                            formMain.labelKodiStatus.Text = "Connected";
+                            formMain.labelKodiStatus.ForeColor = System.Drawing.Color.ForestGreen;
+                            formMain.timerKodiConnect.Interval = 2000;
+                        }));
                         return;
                     }
                 }
@@ -55,7 +68,7 @@ namespace BrodieTheatre
             kodiStatusDisconnect(); 
         }
 
-        public async void kodiReadStream()
+        public static async void kodiReadStream()
         {
             char[] buffer = new char[100000];
             //int bytesRead = 0;
@@ -166,7 +179,11 @@ namespace BrodieTheatre
                 Logging.writeLog("Kodi:  Unable to decode JSON:  " + jsonText);
                 return;
             }
-            if (result.ContainsKey("id") && result["id"] == "99")
+            if (result.ContainsKey("id") && result["id"] == "98")
+            {
+                // Return after showing transparent screen image.  Process no further.
+            }
+            else if (result.ContainsKey("id") && result["id"] == "99")
             {
                 // Our submitted request for Player Get Properties.  Examples:
                 // PLAYING {"id":"99","jsonrpc":"2.0","result":{"currentvideostream":{"codec":"vc1","height":1080,"index":0,"language":"","name":"FraMeSToR VC-1 Video","width":1920},"speed":1,"type":"video"}}
@@ -247,7 +264,7 @@ namespace BrodieTheatre
             }
         }
 
-        public void kodiSendJson(string command)
+        public static void kodiSendJson(string command)
         {
             try
             {
@@ -256,21 +273,27 @@ namespace BrodieTheatre
             }
             catch (IOException)
             {
-                timerKodiConnect.Enabled = true;
+                formMain.BeginInvoke(new Action(() =>
+                {
+                    formMain.timerKodiConnect.Enabled = true;
+                }));
             }
             catch (NullReferenceException) { }
         }
 
-        public void kodiStatusDisconnect(bool enableTimer = true)
+        public static void kodiStatusDisconnect(bool enableTimer = true)
         {
             if (kodiIsConnected)
             {
                 Logging.writeLog("Kodi:  Connection closed to Kodi JSON port");
             }
             kodiIsConnected = false;
-            labelKodiStatus.Text = "Disconnected";
-            labelKodiStatus.ForeColor = System.Drawing.Color.Maroon;
-            timerKodiConnect.Enabled = enableTimer;
+            formMain.BeginInvoke(new Action(() =>
+            {
+                formMain.labelKodiStatus.Text = "Disconnected";
+                formMain.labelKodiStatus.ForeColor = System.Drawing.Color.Maroon;
+                formMain.timerKodiConnect.Enabled = enableTimer;
+            }));
         }
 
         private void kodiPlaybackControl(string command, string media=null)
@@ -289,6 +312,11 @@ namespace BrodieTheatre
                     kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Stop\", \"params\": { \"playerid\" : 1 }, \"id\": \"1\"}");
                     break;
             }
+        }
+
+        public static void kodiShowBehindScreen()
+        {
+            kodiSendJson("{\"jsonrpc\": \"2.0\", \"method\": \"Player.Open\", \"params\": { \"item\": {\"file\": \"" + kodiBehindScreen + "\" }}, \"id\": \"98\"}");
         }
 
         private void timerKodiConnect_Tick(object sender, EventArgs e)

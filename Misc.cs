@@ -32,7 +32,7 @@ namespace BrodieTheatre
 
     public partial class FormMain : Form
     {
-        async Task doDelay(int ms)
+        static async Task doDelay(int ms)
         {
             await Task.Delay(ms);
         }
