@@ -30,13 +30,8 @@ namespace BrodieTheatre
         }
     }
 
-    public partial class FormMain : Form
+    public class Network
     {
-        static async Task doDelay(int ms)
-        {
-            await Task.Delay(ms);
-        }
-
         public static string GetLocalIPAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -48,6 +43,30 @@ namespace BrodieTheatre
                 }
             }
             return null;
+        }
+
+        public static bool IsPortListening(string ip, int port)
+        {
+            using (TcpClient tcpClient = new TcpClient())
+            {
+                try
+                {
+                    tcpClient.Connect(ip, port);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+    }
+
+    public partial class FormMain : Form
+    {
+        static async Task doDelay(int ms)
+        {
+            await Task.Delay(ms);
         }
     }
 }

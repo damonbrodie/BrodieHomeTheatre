@@ -88,6 +88,9 @@ namespace BrodieTheatre
                         switch (parts[1])
                         {
                             case "transparent":
+                                var body = new StreamReader(context.Request.InputStream).ReadToEnd();
+
+                                Logging.writeLog(body.ToString());
                                 Logging.writeLog("Received web request for showing behind the screen");
                                 FormMain.kodiShowBehindScreen();
                                 context.Response.ContentType = "text/html";

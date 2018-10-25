@@ -54,6 +54,7 @@ namespace BrodieTheatre
             Properties.Settings.Default.lightingDelayProjectorOn    = trackBarDelayLightingProjectorStart.Value;
             Properties.Settings.Default.fanDelayOff                 = trackBarExhaustFanDelayOff.Value;
             Properties.Settings.Default.googleCloudCredentialsJSON  = textBoxGoogleCredentialsFile.Text;
+            Properties.Settings.Default.webServerAuthToken          = textBoxAuthToken.Text;
 
             ComboboxSmartSpeakerItem item = comboBoxSmartSpeakers.SelectedItem as ComboboxSmartSpeakerItem;
             Properties.Settings.Default.SmartSpeaker = item.Id.ToString();
@@ -64,6 +65,8 @@ namespace BrodieTheatre
 
         private async void FormSettings_Load(object sender, EventArgs e)
         {
+            string ip = Network.GetLocalIPAddress();
+
             checkBoxStartMinimized.Checked  = Properties.Settings.Default.startMinimized;
             textBoxHarmonyHubIP.Text        = Properties.Settings.Default.harmonyHubIP;
             numericUpDownKodiPort.Value     = (decimal)Properties.Settings.Default.kodiJSONPort;
@@ -73,6 +76,21 @@ namespace BrodieTheatre
             textBoxExhaustFanAddress.Text   = Properties.Settings.Default.fanAddress;
             textBoxMotionSensorAddress.Text = Properties.Settings.Default.motionSensorAddress;
             textBoxDoorSensorAddress.Text   = Properties.Settings.Default.doorSensorAddress;
+            textBoxAuthToken.Text           = Properties.Settings.Default.webServerAuthToken;
+            labelWebServerPort.Text         = Properties.Settings.Default.webServerPort.ToString();
+            labelWebServerIP.Text           = ip;
+
+            if (Network.IsPortListening(ip, Properties.Settings.Default.webServerPort))
+            {
+                labelwebServerStatus.Text = "Listening";
+                labelwebServerStatus.ForeColor = System.Drawing.Color.ForestGreen;
+            }
+
+            else
+            {
+                labelwebServerStatus.Text = "Not Listening";
+                labelwebServerStatus.ForeColor = System.Drawing.Color.Maroon;
+            }
 
             if (File.Exists(Properties.Settings.Default.googleCloudCredentialsJSON))
             {

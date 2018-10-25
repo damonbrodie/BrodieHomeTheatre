@@ -114,6 +114,15 @@
             this.label19 = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.openFileDialogGoogleCredentials = new System.Windows.Forms.OpenFileDialog();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.textBoxAuthToken = new System.Windows.Forms.TextBox();
+            this.label28 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label30 = new System.Windows.Forms.Label();
+            this.labelwebServerStatus = new System.Windows.Forms.Label();
+            this.labelWebServerIP = new System.Windows.Forms.Label();
+            this.labelWebServerPort = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tabPage6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownKodiPort)).BeginInit();
@@ -152,6 +161,15 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.labelWebServerPort);
+            this.tabPage6.Controls.Add(this.labelWebServerIP);
+            this.tabPage6.Controls.Add(this.labelwebServerStatus);
+            this.tabPage6.Controls.Add(this.label30);
+            this.tabPage6.Controls.Add(this.label29);
+            this.tabPage6.Controls.Add(this.label28);
+            this.tabPage6.Controls.Add(this.textBoxAuthToken);
+            this.tabPage6.Controls.Add(this.label27);
+            this.tabPage6.Controls.Add(this.label24);
             this.tabPage6.Controls.Add(this.buttonSelectCredentials);
             this.tabPage6.Controls.Add(this.textBoxGoogleCredentialsFile);
             this.tabPage6.Controls.Add(this.label20);
@@ -1012,6 +1030,90 @@
             this.openFileDialogGoogleCredentials.Filter = "Credentials JSON |*.json";
             this.openFileDialogGoogleCredentials.RestoreDirectory = true;
             // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(17, 249);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(125, 13);
+            this.label24.TabIndex = 56;
+            this.label24.Text = "Internal Web Server:";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(35, 275);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(66, 13);
+            this.label27.TabIndex = 57;
+            this.label27.Text = "Auth Token:";
+            // 
+            // textBoxAuthToken
+            // 
+            this.textBoxAuthToken.Location = new System.Drawing.Point(107, 272);
+            this.textBoxAuthToken.Name = "textBoxAuthToken";
+            this.textBoxAuthToken.Size = new System.Drawing.Size(227, 20);
+            this.textBoxAuthToken.TabIndex = 58;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(23, 302);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(80, 13);
+            this.label28.TabIndex = 59;
+            this.label28.Text = "Listening on IP:";
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(237, 302);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(29, 13);
+            this.label29.TabIndex = 61;
+            this.label29.Text = "Port:";
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(61, 330);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(40, 13);
+            this.label30.TabIndex = 63;
+            this.label30.Text = "Status:";
+            // 
+            // labelwebServerStatus
+            // 
+            this.labelwebServerStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelwebServerStatus.ForeColor = System.Drawing.Color.Maroon;
+            this.labelwebServerStatus.Location = new System.Drawing.Point(107, 327);
+            this.labelwebServerStatus.Name = "labelwebServerStatus";
+            this.labelwebServerStatus.Size = new System.Drawing.Size(120, 19);
+            this.labelwebServerStatus.TabIndex = 64;
+            this.labelwebServerStatus.Text = "Not Listening";
+            this.labelwebServerStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelWebServerIP
+            // 
+            this.labelWebServerIP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelWebServerIP.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.labelWebServerIP.Location = new System.Drawing.Point(107, 299);
+            this.labelWebServerIP.Name = "labelWebServerIP";
+            this.labelWebServerIP.Size = new System.Drawing.Size(120, 19);
+            this.labelWebServerIP.TabIndex = 65;
+            this.labelWebServerIP.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // labelWebServerPort
+            // 
+            this.labelWebServerPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.labelWebServerPort.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.labelWebServerPort.Location = new System.Drawing.Point(272, 299);
+            this.labelWebServerPort.Name = "labelWebServerPort";
+            this.labelWebServerPort.Size = new System.Drawing.Size(62, 19);
+            this.labelWebServerPort.TabIndex = 66;
+            this.labelWebServerPort.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1143,5 +1245,14 @@
         private System.Windows.Forms.OpenFileDialog openFileDialogGoogleCredentials;
         private System.Windows.Forms.Button buttonSelectCredentials;
         private System.Windows.Forms.TextBox textBoxGoogleCredentialsFile;
+        private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.TextBox textBoxAuthToken;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label labelWebServerPort;
+        private System.Windows.Forms.Label labelWebServerIP;
+        private System.Windows.Forms.Label labelwebServerStatus;
     }
 }

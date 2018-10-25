@@ -119,7 +119,7 @@ namespace BrodieTheatre
                 }
             }
 
-            localIP = GetLocalIPAddress();
+            localIP = Network.GetLocalIPAddress();
             ConnectReceiver();
 
             if (Properties.Settings.Default.webServerPort > 0 && Properties.Settings.Default.webServerPort <= 65535)

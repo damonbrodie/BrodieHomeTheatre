@@ -266,18 +266,6 @@ namespace BrodieTheatre.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int voiceConfidenceNoActivity {
-            get {
-                return ((int)(this["voiceConfidenceNoActivity"]));
-            }
-            set {
-                this["voiceConfidenceNoActivity"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int lightingDelayProjectorOn {
             get {
                 return ((int)(this["lightingDelayProjectorOn"]));
@@ -356,6 +344,18 @@ namespace BrodieTheatre.Properties {
             }
             set {
                 this["googleCloudCredentialsJSON"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string webServerAuthToken {
+            get {
+                return ((string)(this["webServerAuthToken"]));
+            }
+            set {
+                this["webServerAuthToken"] = value;
             }
         }
     }
