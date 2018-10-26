@@ -177,7 +177,11 @@ namespace BrodieTheatre
                             }
                         }
                         break;
-
+                    default:
+                        string remoteIP = context.Request.RemoteEndPoint.Address.ToString();
+                        Logging.writeLog("Web Server:  IP Address '" + remoteIP + "' sent unknown request for: " + url);
+                        context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
                 }
             }
             else
