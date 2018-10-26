@@ -8,12 +8,12 @@ using System.Collections.Generic;
 
 
 /*
- *  Numbering for JSON Messages
- * 
- *  99 - GetPlayer
- *  98 - Show Image of behing projector
- * 
- */
+   Numbering for JSON Messages
+  
+   99 - GetPlayer
+   98 - Show Image of behing projector
+  
+*/
 
 namespace BrodieTheatre
 {
