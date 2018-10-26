@@ -105,13 +105,21 @@ namespace BrodieTheatre
                 switch (parts[0])
                 {
                     case "command":
-                        switch (parts[1])
+                        // Commands need to have an auth token supplied in the body
+                        var body = new StreamReader(context.Request.InputStream).ReadToEnd();
+                        if (!IsAuthorizedToken(body))
                         {
-                            case "transparent":
-                                var body = new StreamReader(context.Request.InputStream).ReadToEnd();
-                                Logging.writeLog("Web Server:  Received request for showing behind the screen");
-                                if (IsAuthorizedToken(body))
-                                {
+                            Logging.writeLog("Web Server:  Authorize token failed for command: " + parts[1]);
+                            context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                            return;
+                        }
+                        else
+                        {
+                            switch (parts[1])
+                            {
+                                case "transparent":
+                                    Logging.writeLog("Web Server:  Received request for showing behind the screen");
+                         
                                     FormMain.kodiShowBehindScreen();
                                     context.Response.ContentType = "text/html";
                                     context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
@@ -123,14 +131,14 @@ namespace BrodieTheatre
 
                                     context.Response.OutputStream.Write(bytes, 0, bytes.Length);
                                     context.Response.OutputStream.Flush();
-                                }
-                                else
-                                {
-                                    context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                                }
-                                break;
+                                    context.Response.OutputStream.Close();
+                                    return;
+                                default:
+                                    Logging.writeLog("Web Server:  Unknown command: " + parts[1]);
+                                    context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                                    return;
+                            }
                         }
-                        break;
                     case "cast":
                         string filename = parts[1];
 
@@ -138,7 +146,6 @@ namespace BrodieTheatre
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
                         }
-
 
                         Logging.writeLog("Web Server:  Received request for casting:  " + filename);
                         if (FormMain.textToSpeechFiles.ContainsKey(filename))
@@ -166,7 +173,7 @@ namespace BrodieTheatre
 
                                 context.Response.StatusCode = (int)HttpStatusCode.OK;
                                 context.Response.OutputStream.Flush();
-
+                                context.Response.OutputStream.Close();
                                 // Dispose of the audio Stream
                                 FormMain.textToSpeechFiles.Remove(filename);
                             }
@@ -186,10 +193,10 @@ namespace BrodieTheatre
             }
             else
             {
+                string remoteIP = context.Request.RemoteEndPoint.Address.ToString();
+                Logging.writeLog("Web Server:  IP Address '" + remoteIP + "' sent unknown request for: " + url);
                 context.Response.StatusCode = (int)HttpStatusCode.NotFound;
             }
-
-            context.Response.OutputStream.Close();
         }
 
         private void Initialize(int port)
