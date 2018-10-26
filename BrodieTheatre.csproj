@@ -325,6 +325,7 @@
     <Content Include="Issues.txt" />
     <Content Include="Process Flow.txt" />
     <Content Include="Windows HTPC Guide.txt" />
+    <None Include="README.md" />
     <None Include="Resources\Icon2.ico" />
     <None Include="Resources\Icon1.ico" />
   </ItemGroup>
