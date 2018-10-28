@@ -27,7 +27,7 @@ namespace BrodieTheatre
            F6  - Projector Lens Kodi Menu (Not captured by App)
            F5  - Projector Lens to Narrow aspect ratio
            F4  - Projector Lens to Wide aspect ratio
-           F3  - Kodi next audio languuage (Not captured by App)
+           F3  - Kodi next audio language (Not captured by App)
         */
 
         static FormMain formMain;
