@@ -53,6 +53,7 @@ namespace BrodieTheatre
             }
             catch (Exception ex)
             {
+                
                 Logging.writeLog("Error:  Unable to start web server on port: " + _port.ToString() + " Netsh acl rule missing?");
                 Logging.writeLog(ex.ToString());
             }
@@ -111,6 +112,8 @@ namespace BrodieTheatre
                         {
                             Logging.writeLog("Web Server:  Authorize token failed for command: " + parts[1]);
                             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                            context.Response.OutputStream.Flush();
+                            context.Response.OutputStream.Close();
                             return;
                         }
                         else
@@ -136,6 +139,8 @@ namespace BrodieTheatre
                                 default:
                                     Logging.writeLog("Web Server:  Unknown command: " + parts[1]);
                                     context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                                    context.Response.OutputStream.Flush();
+                                    context.Response.OutputStream.Close();
                                     return;
                             }
                         }
@@ -145,6 +150,9 @@ namespace BrodieTheatre
                         if (string.IsNullOrEmpty(filename))
                         {
                             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                            context.Response.OutputStream.Flush();
+                            context.Response.OutputStream.Close();
+                            return;
                         }
 
                         Logging.writeLog("Web Server:  Received request for casting:  " + filename);
@@ -180,6 +188,8 @@ namespace BrodieTheatre
                             catch (Exception ex)
                             {
                                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                                context.Response.OutputStream.Flush();
+                                context.Response.OutputStream.Close();
                                 Logging.writeLog("Web Server:  Can't Process message: " + ex.ToString());
                             }
                         }
@@ -188,6 +198,8 @@ namespace BrodieTheatre
                         string remoteIP = context.Request.RemoteEndPoint.Address.ToString();
                         Logging.writeLog("Web Server:  IP Address '" + remoteIP + "' sent unknown request for: " + url);
                         context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                        context.Response.OutputStream.Flush();
+                        context.Response.OutputStream.Close();
                         break;
                 }
             }
@@ -196,6 +208,8 @@ namespace BrodieTheatre
                 string remoteIP = context.Request.RemoteEndPoint.Address.ToString();
                 Logging.writeLog("Web Server:  IP Address '" + remoteIP + "' sent unknown request for: " + url);
                 context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+                context.Response.OutputStream.Flush();
+                context.Response.OutputStream.Close();
             }
         }
 
