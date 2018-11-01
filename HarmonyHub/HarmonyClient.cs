@@ -410,7 +410,7 @@ namespace HarmonyHub
 			}
 			else
 			{
-				Debug.WriteLine(ex.ToString());
+				Debug.WriteLine(ex);
 			}
 		}
 

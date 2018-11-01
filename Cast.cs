@@ -39,7 +39,7 @@ namespace BrodieTheatre
             }
             catch (Exception ex)
             {
-                Logging.writeLog("Google Cast:  Timeout casting: " + ex.ToString());
+                Logging.writeLog("Google Cast:  Timeout casting: " + ex);
             }
         }
     }

@@ -70,7 +70,7 @@ namespace BrodieTheatre
                 }
                 catch (Exception ex)
                 {
-                    Logging.writeLog("Web Server Failed: " + ex.ToString());
+                    Logging.writeLog("Web Server Failed: " + ex);
                 }
             }
         }
@@ -190,7 +190,7 @@ namespace BrodieTheatre
                                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                                 context.Response.OutputStream.Flush();
                                 context.Response.OutputStream.Close();
-                                Logging.writeLog("Web Server:  Can't Process message: " + ex.ToString());
+                                Logging.writeLog("Web Server:  Can't Process message: " + ex);
                             }
                         }
                         break;

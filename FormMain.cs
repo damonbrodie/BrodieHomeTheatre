@@ -32,10 +32,10 @@ namespace BrodieTheatre
 
         static FormMain formMain;
         public DateTime globalShutdown;
-        public bool globalShutdownActive = false;
-        public bool globalShutdownWarning = false;
-        public int statusTickCounter = 0;
-        public bool vacancyWarning = false;
+        public bool globalShutdownActive;
+        public bool globalShutdownWarning;
+        private int statusTickCounter = 0;
+        public bool vacancyWarning;
         private SimpleHTTPServer simpleHTTPServer;
         Grpc.Core.Channel googleCloudChannel;
 
@@ -45,8 +45,8 @@ namespace BrodieTheatre
 
         static public Dictionary<string, MemoryStream> textToSpeechFiles = new Dictionary<string, MemoryStream>();
 
-        public bool debugInsteon = false;
-        public bool debugHarmony = false;
+        public bool debugInsteon;
+        public bool debugHarmony;
 
         public FormMain()
         {

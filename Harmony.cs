@@ -53,7 +53,7 @@ namespace BrodieTheatre
             {
                 formMain.BeginInvoke(new Action(() =>
                 {
-                Logging.writeLog("Harmony:  Cannot connect to Harmony Hub - " + ex.ToString());
+                Logging.writeLog("Harmony:  Cannot connect to Harmony Hub - " + ex);
                 }));
                 error = true;
             }
